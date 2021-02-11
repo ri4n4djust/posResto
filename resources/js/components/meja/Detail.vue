@@ -1,0 +1,477 @@
+<template>
+    <div class="mt-3">
+    <section class="content">
+
+      <div class="row">
+        <div class="col-md-3">
+
+          <!-- Profile Image -->
+          <div class="box box-primary">
+            <div class="box-body box-profile">
+
+              <h3 class="profile-username text-center">Meja No. {{post.noMeja}}</h3>
+
+              <p class="text-muted text-center">Max Pax {{post.paxMeja}}</p>
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+
+          <!-- About Me Box -->
+          <div class="box box-primary">
+            <div class="box-header with-border">
+              <h3 class="box-title">Billing</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+
+              
+                <p class="text-muted text-center">
+                <date-picker v-model="tglNota" value-type="format" format="YYYY/MM/DD"></date-picker>
+                </p>
+                <p class="text-muted text-center">
+                <input type="text" class="form-control" v-model="pelanggan" placeholder="Customer">
+                </p>
+                <p class="text-muted text-center">
+                <input type="text" class="form-control" v-model="noNota" placeholder="No nota">
+                </p>
+                
+                <input type="hidden" class="form-control" :value="subtotal" :name="totalTransaksi" >
+                <h3 class="profile-username text-center">Total {{ subtotal  || 0 | currency }}</h3>
+                
+                <p class="text-muted text-center">
+                <a href="#" @click="showModalBayar = true" class="btn btn-primary btn-block"><b>Payment</b></a>
+                </p>
+              
+
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+        </div>
+        <!-- /.col -->
+        <div class="col-md-9">
+          <div class="nav-tabs-custom">
+            <ul class="nav nav-tabs">
+              <li class="active"><a href="#activity" data-toggle="tab">Activity</a></li>
+              <li><a href="#timeline" data-toggle="tab">Timeline</a></li>
+              <li><a href="#settings" data-toggle="tab">Settings</a></li>
+            </ul>
+            <div class="tab-content">
+              <div class="active tab-pane" id="activity">
+
+                <!-- Post -->
+                <a href="#"  @click="showModal = true" class="btn btn-md btn-success"><b>Add Item</b></a>
+                <a href="#"  @click="showModalMenu = true" class="btn btn-md btn-success"><b>Add Menu</b></a>
+                <router-link :to="{ name: 'meja' }" class="btn btn-primary btn-success">KEMBALI</router-link>
+                isi tab aktiifiti
+                <!-- /.post -->
+                <table class="table table-hover table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>Nama </th>
+                                    <th>Qty</th>
+                                    <th>Harga</th>
+                                    <th>Total</th>
+                                    <th>AKSI</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr v-for="trx in trxs" :key="trx.id">
+                                    <td>{{ trx.nmBarangTmp }} </td>
+                                    <td>{{ trx.qtyTmp}}</td>
+                                    <td>{{ trx.hrgJualTmp | currency }}</td>
+                                    <td>{{ trx.totalTmp | currency }}</td>
+                                    <td class="text-center">
+                                        <button @click.prevent="PostDeleteTrx(trx.id)" class="btn btn-sm btn-danger">HAPUS</button>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+              </div>
+              <!-- /.tab-pane -->
+              <div class="tab-pane" id="timeline">
+                <!-- The timeline -->
+                isi timeline
+              </div>
+              <!-- /.tab-pane -->
+
+              <div class="tab-pane" id="settings">
+
+                
+              </div>
+              <!-- /.tab-pane -->
+            </div>
+            <!-- /.tab-content -->
+          </div>
+          <!-- /.nav-tabs-custom -->
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
+
+    </section>
+
+
+
+<!-- modal start -->
+  <div v-if="showModal">
+    <transition name="modal">
+      <div class="modal-mask">
+        <div class="modal-wrapper">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" @click="showModal=false">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Add Item</h4>
+              </div>
+              <div class="modal-body">
+                
+                <select v-model='post1' class="form-control">
+                  <option v-for='post1 in users' v-bind:value='post1' :key="post1.id">{{post1.nmBarang}}</option>
+                </select>
+
+                <div v-if="post1">
+                  <form  @submit.prevent="PostItem" >
+                    <div class="form-group">
+                      <input type="hidden" v-model="post.noMeja">
+                      <input type="hidden" v-model="noNota" placeholder="No nota">
+                      <input type="hidden" v-model="post1.kdBarang">
+                      <input type="hidden" v-model="post1.stkBarang">
+                      <input type="hidden" class="form-control" :value="(post1.stkBarang - qtyBarang)" :name="sisaStok">
+                      <input type="hidden" v-model="post1.ktgBarang" placeholder="type">
+                      <input type="hidden" class="form-control" v-model="post1.nmBarang">
+
+                    </div>
+                    <div class="form-group">
+                      <input type="text" class="form-control" v-model="post1.hrgJual">
+                    </div>
+                    <div class="form-group">
+                      <input type="text" class="form-control" v-model="qtyBarang" placeholder="Qty" required>
+                    </div>
+                    <div class="form-group">
+                      <input type="text" class="form-control" :value="(post1.hrgJual * qtyBarang) || 0" :name="total"  placeholder="total">
+                    </div>
+                    <div class="form-group">
+                    <button type="submit" data-dismiss="showModal" class="btn btn-md btn-success">Add</button>
+                    </div>
+                  </form>
+                </div>
+                <div v-else>
+                  no posts
+                </div>
+                
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </transition>
+  </div>
+  <div v-if="showModalMenu">
+    <transition name="modal">
+      <div class="modal-mask">
+        <div class="modal-wrapper">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" @click="showModalMenu=false">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Add Menu</h4>
+              </div>
+              <div class="modal-body">
+                
+
+                <select v-model='post2' class="form-control">
+                  <option v-for='post2 in menus' v-bind:value='post2' :key="post2.id">{{post2.nmMenu}}</option>
+                </select>
+
+                <div v-if="post2">
+                  <form  @submit.prevent="PostMenu" >
+                    <div class="form-group">
+                      <input type="text" v-model="post.noMeja">
+                      <input type="text" v-model="noNota" placeholder="No nota">
+                      <input type="text" v-model="post2.id">
+                      <input type="text" v-model="post2.kdMenu">
+                      <input type="text" class="form-control" v-model="post2.nmMenu">
+                    </div>
+                    <div class="form-group">
+                      <input type="text" class="form-control" v-model="post2.hargaMenu">
+                    </div>
+                    <div class="form-group">
+                      <input type="text" class="form-control" v-model="qtyBarang" placeholder="Qty" required>
+                    </div>
+                    <div class="form-group">
+                      <input type="text" class="form-control" :value="(post2.hargaMenu * qtyBarang) || 0" :name="total"  placeholder="total">
+                    </div>
+                    <div class="form-group">
+                    <button type="submit"  class="btn btn-md btn-success">Add</button>
+                    </div>
+                  </form>
+                </div>
+                <div v-else>
+                  no posts
+                </div>
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </transition>
+  </div>
+  <div v-if="showModalBayar">
+    <transition name="modal">
+      <div class="modal-mask">
+        <div class="modal-wrapper">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" @click="showModalBayar=false">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Add Payment</h4>
+              </div>
+              <div class="modal-body">
+                
+
+                <form  @submit.prevent="PostTransaksi" >
+                <p class="text-muted text-center">
+                <input type="hidden" class="form-control" v-model="tglNota" >
+                <input type="text" class="form-control" v-model="pelanggan" placeholder="Customer">
+                </p>
+                <p class="text-muted text-center">
+                <input type="hidden" class="form-control" v-model="noNota" placeholder="No nota">
+                </p>
+                <p class="text-muted text-center">
+                <input type="text" class="form-control" v-model="subtotal">
+                </p>
+                <p class="text-muted text-center">
+                <input type="text" class="form-control" v-model="pajak" placeholder="Tax">
+                <input type="hidden" class="form-control" :value="(subtotal * pajak / 100 + subtotal)" :name="totalTransaksipjk" >
+                </p>
+                <p class="text-muted text-center">
+                <input type="text" class="form-control" v-model="diskon" placeholder="Diskon">
+                <input type="hidden" class="form-control" :value="((subtotal * pajak / 100 + subtotal) * diskon / 100)" :name="diskon1" >
+                </p>
+
+                <p class="text-muted text-center">
+                <input type="text" class="form-control" v-model="totalBayar" placeholder="Bayar" required>
+                </p>
+                <p class="text-muted text-center">
+                <input type="hidden" class="form-control" :value="((subtotal * pajak / 100 + subtotal) - ((subtotal * pajak / 100 + subtotal) * diskon / 100))  || 0 " :name="totalTransaksiBayar"  >
+                </p>
+                
+                <h3 class="profile-username ">Total {{ ((subtotal * pajak / 100 + subtotal) - ((subtotal * pajak / 100 + subtotal) * diskon / 100))  || 0 | currency }}</h3>
+                <h3 class="profile-username ">Kembali : {{ totalBayar - ((subtotal * pajak / 100 + subtotal) - ((subtotal * pajak / 100 + subtotal) * diskon / 100))  || 0 | currency }}</h3>
+                <p class="text-muted text-center">
+                <button type="submit"  class="btn btn-md btn-success">Bayar</button>                
+                </p>
+              </form>
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </transition>
+  </div>
+<!---- Modal End ---->
+                    
+    </div>
+
+
+    
+
+</template>
+
+<script>
+  import DatePicker from 'vue2-datepicker';
+  import 'vue2-datepicker/index.css';
+  
+    export default {
+      components: { DatePicker },
+        data() {
+            return {
+                post: {},
+                post1: null,
+                post2: null,
+                users: {},
+                menus: {},
+                trxs: {},
+                validation: [],
+                showModal: false,
+                showModalMenu: false,
+                showModalBayar: false,
+                nmBarang: '',
+                idBarang: '',
+                hargaJual: '',
+                qtyBarang: '',
+                sisaStok: '',
+                noNota: '',
+                pelanggan: 'Cash',
+                noMeja: '',
+                total: '',
+                subtotal: '',
+                pajak: '',
+                diskon: '',
+                diskon1: '',
+                totalTransaksi: '',
+                totalTransaksipjk: '',
+                totalBayar: '',
+                kembalianBayar: '0',
+                totalTransaksiBayar: '',
+                type: '',
+                tglNota: new Date().toJSON().slice(0,10).replace(/-/g,'/'),
+                
+            }
+        },
+        
+        created() {
+            let uri = `/api/meja/${this.$route.params.id}`;
+            this.axios.get(uri).then((response) => {
+                this.post = response.data.data;
+            });
+            this.loadTotal()
+            this.loadNota()
+            this.loadData()
+            this.loadDataMenu()
+            this.loadDataTransaksi()
+            
+            
+        },
+        watch: {
+          post: function() {
+            this.$emit('input', this.post);
+          }
+        },
+        props: ['value'],
+
+        methods: {
+
+            PostUpdate() {
+                let uri = `/api/posts/update/${this.$route.params.id}`;
+                this.axios.post(uri, this.post)
+                    .then((response) => {
+                        this.$router.push({name: 'posts'});
+                    }).catch(error => {
+                    this.validation = error.response.data.data;
+                });
+            },
+            loadTotal:function(){
+                let uri = `/api/totalTrx/${this.$route.params.id}`;
+                this.axios.post(uri).then(response => {
+                this.subtotal = response.data.subTotal;
+                
+            });
+            },
+            loadNota:function(){
+                let uri = `/api/noNota/${this.$route.params.id}`;
+                this.axios.post(uri).then(response => {
+                this.noNota = response.data.noNota;
+                
+            });
+            },
+            loadData:function(){
+                let uri = '/api/posts';
+                this.axios.get(uri).then(response => {
+                this.users = response.data.data;
+                
+            });
+            },
+            loadDataMenu:function(){
+                let uri = '/api/menu';
+                this.axios.get(uri).then(response => {
+                this.menus = response.data.data;
+                
+            });
+            },
+            loadDataTransaksi:function(){
+                let uri = `/api/transaksi/${this.$route.params.id}`;
+                this.axios.post(uri).then(response => {
+                this.trxs = response.data.data;
+                
+                
+            });
+            },
+            PostDeleteTrx(id)
+            {
+                this.axios.delete(`/api/orderDelete/${id}`)
+                    .then(response => {
+                        alert('Berhasil Di Hapus');
+                        this.loadDataTransaksi()
+                        this.loadTotal()
+                    }).catch(error => {
+                    
+                });
+            },
+            PostItem() {
+                let uri = '/api/addItem/store';
+                this.axios.post(uri, 
+                {
+                    noNota: this.noNota,
+                    noMeja: this.post.id,
+                    nmBarang: this.post1.nmBarang,
+                    idBarang: this.post1.kdBarang,
+                    hargaJual: this.post1.hrgJual,
+                    qtyBarang: this.qtyBarang,
+                    total: this.post1.hrgJual * this.qtyBarang,
+                    sisaStok: this.post1.stkBarang - this.qtyBarang,
+                    type: this.post1.ktgBarang
+                })
+                    .then((response) => {
+                        //alert('sukses donkkkkkkkk');
+                        this.loadDataTransaksi()
+                        this.loadTotal()
+                    });
+                
+            },
+            PostMenu() {
+                let uri = '/api/addMenu/store';
+                this.axios.post(uri, 
+                {
+                    noNota: this.noNota,
+                    noMeja: this.post.id,
+                    nmBarang: this.post2.nmMenu,
+                    idBarang: this.post2.kdMenu,
+                    hargaJual: this.post2.hargaMenu,
+                    qtyBarang: this.qtyBarang,
+                    total: this.post2.hargaMenu * this.qtyBarang,
+                    type: this.post2.kdMenu
+                })
+                    .then((response) => {
+                        //alert('sukses donkkkkkkkk');
+                        this.loadDataTransaksi()
+                        this.loadTotal()
+                    });
+                
+            },
+            PostTransaksi() {
+                let uri = '/api/addTransaksi/store';
+                this.axios.post(uri, 
+                {
+                    noNota: this.noNota,
+                    noMeja: this.post.id,
+                    pelanggan: this.pelanggan,
+                    tglNota: this.tglNota,
+                    totalNota: ((this.subtotal * this.pajak / 100 + this.subtotal) - ((this.subtotal * this.pajak / 100 + this.subtotal) * this.diskon / 100)),
+                    bayarNota: this.totalBayar,
+                    kembalianNota: this.totalBayar - ((this.subtotal * this.pajak / 100 + this.subtotal) - ((this.subtotal * this.pajak / 100 + this.subtotal) * this.diskon / 100)),
+                    
+                })
+                    .then((response) => {
+                        alert('Transaksi Selesai');
+                        this.$router.push({name: 'meja'});
+                    });
+                
+            }
+        },
+        
+    }
+</script>
