@@ -21,6 +21,10 @@ Route::get('/home', function () {
     return view('pages.home');
 });
 
+Route::get('/autocomp', function () {
+    return view('pages.autoComp');
+});
+
 Route::get('/barang', function () {
     return view('pages.barang');
 });
@@ -54,3 +58,5 @@ Route::get('/supplier/{any}', function () {
 
 Route::get('/get_countries', 'kategoriController@index');
 Route::get('/get_states', 'CountryStateController@getStates');
+
+Route::get('search', 'salesController@search');

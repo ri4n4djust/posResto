@@ -165,4 +165,12 @@ class salesController extends Controller
             ], 500);
         }
     }
+
+
+    public function search(Request $request)
+    {
+        $categories = Barang::where('nmBarang','LIKE',$request->search.'%')->get();
+
+        return response()->json($categories);
+    }
 }

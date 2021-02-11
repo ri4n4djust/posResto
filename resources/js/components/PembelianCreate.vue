@@ -55,6 +55,12 @@
                     </div>
                     <div class="box-body">
 
+                      <vue-single-select
+                            v-model="users.nmBarang"
+                            :options="[users.nmBarang]"
+                            :required="true"
+                    ></vue-single-select>
+
                     <div class="row">
                         <div class="col-xs-3">
                         <input type="text" class="form-control" placeholder="Kode / Nama Barang">
@@ -134,15 +140,22 @@
 <script>
   import DatePicker from 'vue2-datepicker';
   import 'vue2-datepicker/index.css';
+  import VueSingleSelect from "vue-single-select";
   
     export default {
-        components: { DatePicker },
+        components: { DatePicker, VueSingleSelect },         
         data() {
             return {
                 post: {},
+                users: {},
                 tglPembelian: new Date().toJSON().slice(0,10).replace(/-/g,'/'),
                 validation: [],
             }
+        },
+        created() {
+            this.loadBarang()
+            
+            
         },
         methods: {
             loadTotal:function(){
