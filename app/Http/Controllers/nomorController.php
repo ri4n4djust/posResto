@@ -103,7 +103,7 @@ class nomorController extends Controller
         $kodeBaru = $no + $count + 1  ;
 
         $tahun = date('Y');
-        $post = 'PB-/'.$tahun.'/'.$kodeBaru;
+        $post = 'PB-'.$tahun.'-'.$kodeBaru;
 
         if ($post) {
             return response()->json([

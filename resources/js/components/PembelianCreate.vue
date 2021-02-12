@@ -68,7 +68,7 @@
                 ></vue-single-select>
 
                  
-                  <form  @submit.prevent="PostPembelian" >
+                  <form  @submit.prevent="PostItemPembelian" >
                     <div class="row">
                         <div class="col-xs-3">
                         <select v-model='post1' class="form-control">
@@ -107,10 +107,10 @@
                                 </thead>
                                 <tbody>
                                 <tr v-for="trx in trxs" :key="trx.id">
-                                    <td>{{ trx.nmBarangTmp }} </td>
-                                    <td>{{ trx.qtyTmp}}</td>
-                                    <td>{{ trx.hrgJualTmp | currency }}</td>
-                                    <td>{{ trx.totalTmp | currency }}</td>
+                                    <td>{{ trx.nmBarang }} </td>
+                                    <td>{{ trx.qtyBeli}}</td>
+                                    <td>{{ trx.hrgPokok | currency }}</td>
+                                    <td>{{ trx.totalBeli | currency }}</td>
                                     <td class="text-center">
                                         <button @click.prevent="PostDeleteTrx(trx.id)" class="btn btn-sm btn-danger">HAPUS</button>
                                     </td>
@@ -163,6 +163,10 @@
                 posts: {},
                 post1: {},
                 users: {},
+                trxs: {},
+                qtyBeli: '',
+                hrgBeli: '',
+                subTotal: '',
                 noNotaPembelian: '',
                 tglPembelian: new Date().toJSON().slice(0,10).replace(/-/g,'/'),
                 validation: [],
@@ -172,6 +176,7 @@
             this.loadBarang()
             this.LoadSupplier()
             this.loadNotaPembelian()
+            this.loadTransaksiPembelian()
             
         },
         watch: {
@@ -211,7 +216,7 @@
             });
             },
             loadTransaksiPembelian:function(){
-                let uri = `/api/datapembelian/${this.$route.params.id}`;
+                let uri = '/api/dataPembelian/'+ this.noNotaPembelian;
                 this.axios.post(uri).then(response => {
                 this.trxs = response.data.data;
             });
@@ -231,16 +236,16 @@
                 let uri = '/api/addItemPembelian/store';
                 this.axios.post(uri, 
                 {
-                    noPembelian: this.noPembelian,
-                    idBarang: this.post1.kdBarang,
-                    hargaBeli: this.post1.hargaBeli,
+                    noNotaPembelian: this.noNotaPembelian,
+                    kdBarang: this.post1.kdBarang,
+                    hrgBeli: this.post1.hrgPokok,
                     qtyBeli: this.qtyBeli,
-                    total: this.post1.hrgBeli * this.qtyBeli,
+                    totalBeli: this.post1.hrgPokok * this.qtyBeli,
                 })
                     .then((response) => {
-                        //alert('sukses donkkkkkkkk');
-                        this.loadTransaksiPenjualan()
-                        this.loadTotal()
+                        alert('sukses donkkkkkkkk');
+                        //this.loadTransaksiPenjualan()
+                        //this.loadTotal()
                     });
                 
             },

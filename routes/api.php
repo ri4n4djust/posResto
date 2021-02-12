@@ -60,6 +60,7 @@ Route::post('/addTransaksi/store', 'mejaController@addTransaksi');
 Route::post('/totalTrx/{id}', 'mejaController@totalTrx');
 
 
+
 //=======penomeran
 Route::post('/noNota/{id}', 'nomorController@noNota');
 Route::get('/kodeBarang', 'nomorController@kodeBarang');
@@ -67,6 +68,9 @@ Route::get('/kodeMenu', 'nomorController@kodeMenu');
 Route::get('/kodePembelian', 'nomorController@kodePembelian');
 
 
+//=========Pembelian
+Route::post('/addItemPembelian/store', 'pembelianController@addItemPembelian');
+Route::post('/dataPembelian/{id}', 'pembelianController@listTransaksiPembelian');
 
 //========menu
 Route::get('/menu', 'menuController@index');
