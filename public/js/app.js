@@ -2186,7 +2186,7 @@ __webpack_require__.r(__webpack_exports__);
         _this4.users = response.data.data;
       });
     },
-    loadTransaksiPenjualan: function loadTransaksiPenjualan() {
+    loadTransaksiPembelian: function loadTransaksiPembelian() {
       var _this5 = this;
 
       var uri = "/api/datapembelian/".concat(this.$route.params.id);

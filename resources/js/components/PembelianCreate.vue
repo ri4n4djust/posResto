@@ -207,7 +207,7 @@
                 
             });
             },
-            loadTransaksiPenjualan:function(){
+            loadTransaksiPembelian:function(){
                 let uri = `/api/datapembelian/${this.$route.params.id}`;
                 this.axios.post(uri).then(response => {
                 this.trxs = response.data.data;
