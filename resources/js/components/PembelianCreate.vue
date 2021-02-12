@@ -68,7 +68,7 @@
                 ></vue-single-select>
 
                  
-
+                  <form  @submit.prevent="PostPembelian" >
                     <div class="row">
                         <div class="col-xs-3">
                         <select v-model='post1' class="form-control">
@@ -85,12 +85,15 @@
                         <input type="text" :value="(post1.hrgPokok * qtyBeli) || 0" :name="subTotal" class="form-control" placeholder="Total">
                         </div>
                     </div>
-                    
-                    </div>
                     <button type="submit" class="btn btn-md btn-success">Add</button>
+                    </form>
+                    </div>
+                    
                     <!-- /.box-body -->
-                </div>
+                   </div>
+                   
                 <!-- /.box -->
+                
 
                 <table class="table table-hover table-bordered">
                                 <thead>

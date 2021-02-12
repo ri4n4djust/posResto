@@ -2122,6 +2122,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 
 
@@ -42213,125 +42216,143 @@ var render = function() {
                           }
                         }),
                         _vm._v(" "),
-                        _c("div", { staticClass: "row" }, [
-                          _c("div", { staticClass: "col-xs-3" }, [
-                            _c(
-                              "select",
-                              {
-                                directives: [
+                        _c(
+                          "form",
+                          {
+                            on: {
+                              submit: function($event) {
+                                $event.preventDefault()
+                                return _vm.PostPembelian($event)
+                              }
+                            }
+                          },
+                          [
+                            _c("div", { staticClass: "row" }, [
+                              _c("div", { staticClass: "col-xs-3" }, [
+                                _c(
+                                  "select",
                                   {
-                                    name: "model",
-                                    rawName: "v-model",
-                                    value: _vm.post1,
-                                    expression: "post1"
-                                  }
-                                ],
-                                staticClass: "form-control",
-                                on: {
-                                  change: function($event) {
-                                    var $$selectedVal = Array.prototype.filter
-                                      .call($event.target.options, function(o) {
-                                        return o.selected
-                                      })
-                                      .map(function(o) {
-                                        var val =
-                                          "_value" in o ? o._value : o.value
-                                        return val
-                                      })
-                                    _vm.post1 = $event.target.multiple
-                                      ? $$selectedVal
-                                      : $$selectedVal[0]
-                                  }
-                                }
-                              },
-                              _vm._l(_vm.users, function(post1) {
-                                return _c(
-                                  "option",
-                                  { key: post1.id, domProps: { value: post1 } },
-                                  [_vm._v(_vm._s(post1.nmBarang))]
+                                    directives: [
+                                      {
+                                        name: "model",
+                                        rawName: "v-model",
+                                        value: _vm.post1,
+                                        expression: "post1"
+                                      }
+                                    ],
+                                    staticClass: "form-control",
+                                    on: {
+                                      change: function($event) {
+                                        var $$selectedVal = Array.prototype.filter
+                                          .call($event.target.options, function(
+                                            o
+                                          ) {
+                                            return o.selected
+                                          })
+                                          .map(function(o) {
+                                            var val =
+                                              "_value" in o ? o._value : o.value
+                                            return val
+                                          })
+                                        _vm.post1 = $event.target.multiple
+                                          ? $$selectedVal
+                                          : $$selectedVal[0]
+                                      }
+                                    }
+                                  },
+                                  _vm._l(_vm.users, function(post1) {
+                                    return _c(
+                                      "option",
+                                      {
+                                        key: post1.id,
+                                        domProps: { value: post1 }
+                                      },
+                                      [_vm._v(_vm._s(post1.nmBarang))]
+                                    )
+                                  }),
+                                  0
                                 )
-                              }),
-                              0
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "col-xs-3" }, [
-                            _c("input", {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: _vm.post1.hrgPokok,
-                                  expression: "post1.hrgPokok"
-                                }
-                              ],
-                              staticClass: "form-control",
-                              attrs: { type: "text", placeholder: "Harga" },
-                              domProps: { value: _vm.post1.hrgPokok },
-                              on: {
-                                input: function($event) {
-                                  if ($event.target.composing) {
-                                    return
+                              ]),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "col-xs-3" }, [
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.post1.hrgPokok,
+                                      expression: "post1.hrgPokok"
+                                    }
+                                  ],
+                                  staticClass: "form-control",
+                                  attrs: { type: "text", placeholder: "Harga" },
+                                  domProps: { value: _vm.post1.hrgPokok },
+                                  on: {
+                                    input: function($event) {
+                                      if ($event.target.composing) {
+                                        return
+                                      }
+                                      _vm.$set(
+                                        _vm.post1,
+                                        "hrgPokok",
+                                        $event.target.value
+                                      )
+                                    }
                                   }
-                                  _vm.$set(
-                                    _vm.post1,
-                                    "hrgPokok",
-                                    $event.target.value
-                                  )
-                                }
-                              }
-                            })
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "col-xs-3" }, [
-                            _c("input", {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: _vm.qtyBeli,
-                                  expression: "qtyBeli"
-                                }
-                              ],
-                              staticClass: "form-control",
-                              attrs: { type: "text", placeholder: "Qty" },
-                              domProps: { value: _vm.qtyBeli },
-                              on: {
-                                input: function($event) {
-                                  if ($event.target.composing) {
-                                    return
+                                })
+                              ]),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "col-xs-3" }, [
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.qtyBeli,
+                                      expression: "qtyBeli"
+                                    }
+                                  ],
+                                  staticClass: "form-control",
+                                  attrs: { type: "text", placeholder: "Qty" },
+                                  domProps: { value: _vm.qtyBeli },
+                                  on: {
+                                    input: function($event) {
+                                      if ($event.target.composing) {
+                                        return
+                                      }
+                                      _vm.qtyBeli = $event.target.value
+                                    }
                                   }
-                                  _vm.qtyBeli = $event.target.value
-                                }
-                              }
-                            })
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "col-xs-3" }, [
-                            _c("input", {
-                              staticClass: "form-control",
-                              attrs: {
-                                type: "text",
-                                name: _vm.subTotal,
-                                placeholder: "Total"
+                                })
+                              ]),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "col-xs-3" }, [
+                                _c("input", {
+                                  staticClass: "form-control",
+                                  attrs: {
+                                    type: "text",
+                                    name: _vm.subTotal,
+                                    placeholder: "Total"
+                                  },
+                                  domProps: {
+                                    value: _vm.post1.hrgPokok * _vm.qtyBeli || 0
+                                  }
+                                })
+                              ])
+                            ]),
+                            _vm._v(" "),
+                            _c(
+                              "button",
+                              {
+                                staticClass: "btn btn-md btn-success",
+                                attrs: { type: "submit" }
                               },
-                              domProps: {
-                                value: _vm.post1.hrgPokok * _vm.qtyBeli || 0
-                              }
-                            })
-                          ])
-                        ])
+                              [_vm._v("Add")]
+                            )
+                          ]
+                        )
                       ],
                       1
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-md btn-success",
-                        attrs: { type: "submit" }
-                      },
-                      [_vm._v("Add")]
                     )
                   ]),
                   _vm._v(" "),
