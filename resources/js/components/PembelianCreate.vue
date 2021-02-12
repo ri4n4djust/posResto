@@ -19,10 +19,15 @@
                 <date-picker v-model="tglPembelian" value-type="format" format="YYYY/MM/DD"></date-picker>
                 </p>
                 <p class="text-muted text-center">
-                <input type="text" class="form-control" v-model="supplier" placeholder="supplier">
+                <vue-single-select
+                            v-model="post2"
+                            :options="posts"
+                            :required="true"
+                            optionLabel="nmSupplier" 
+                ></vue-single-select>
                 </p>
                 <p class="text-muted text-center">
-                <input type="text" class="form-control" v-model="noPembelian" placeholder="No nota">
+                <input type="text" class="form-control" v-model="noNotaPembelian" placeholder="No nota">
                 </p>
                 
                 <input type="hidden" class="form-control" :value="subtotal" :name="totalPembelian" >
@@ -152,15 +157,18 @@
         data() {
             return {
                 post: {},
+                posts: {},
                 post1: {},
                 users: {},
+                noNotaPembelian: '',
                 tglPembelian: new Date().toJSON().slice(0,10).replace(/-/g,'/'),
                 validation: [],
             }
         },
         created() {
             this.loadBarang()
-            
+            this.LoadSupplier()
+            this.loadNotaPembelian()
             
         },
         watch: {
@@ -180,9 +188,9 @@
             });
             },
             loadNotaPembelian:function(){
-                let uri = `/api/noNotaPembelian/${this.$route.params.id}`;
-                this.axios.post(uri).then(response => {
-                this.noNota = response.data.noNota;
+                let uri = `/api/kodePembelian/`;
+                this.axios.get(uri).then(response => {
+                this.noNotaPembelian = response.data.kdPembelian;
                 
             });
             },

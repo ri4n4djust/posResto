@@ -64,6 +64,7 @@ Route::post('/totalTrx/{id}', 'mejaController@totalTrx');
 Route::post('/noNota/{id}', 'nomorController@noNota');
 Route::get('/kodeBarang', 'nomorController@kodeBarang');
 Route::get('/kodeMenu', 'nomorController@kodeMenu');
+Route::get('/kodePembelian', 'nomorController@kodePembelian');
 
 
 
