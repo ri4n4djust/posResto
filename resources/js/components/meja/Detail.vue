@@ -128,6 +128,13 @@
                 <h4 class="modal-title">Add Item</h4>
               </div>
               <div class="modal-body">
+
+                <vue-single-select
+                            v-model="post1"
+                            :options="users"
+                            :required="true"
+                            optionLabel="nmBarang" 
+                ></vue-single-select>
                 
                 <select v-model='post1' class="form-control">
                   <option v-for='post1 in users' v-bind:value='post1' :key="post1.id">{{post1.nmBarang}}</option>
@@ -294,9 +301,10 @@
 <script>
   import DatePicker from 'vue2-datepicker';
   import 'vue2-datepicker/index.css';
+  import VueSingleSelect from "vue-single-select";
   
     export default {
-      components: { DatePicker },
+      components: { DatePicker, VueSingleSelect },
         data() {
             return {
                 post: {},
@@ -328,6 +336,7 @@
                 kembalianBayar: '0',
                 totalTransaksiBayar: '',
                 type: '',
+                //optionLabel: users.nmBarang,
                 tglNota: new Date().toJSON().slice(0,10).replace(/-/g,'/'),
                 
             }
@@ -351,7 +360,9 @@
             this.$emit('input', this.post);
           }
         },
-        props: ['value'],
+        //props: ['value'],
+        props: ['optionLabel', 'value'],
+        
 
         methods: {
 

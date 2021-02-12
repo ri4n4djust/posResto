@@ -56,23 +56,28 @@
                     <div class="box-body">
 
                       <vue-single-select
-                            v-model="users.nmBarang"
-                            :options="[users.nmBarang]"
+                            v-model="post1"
+                            :options="users"
                             :required="true"
-                    ></vue-single-select>
+                            optionLabel="nmBarang" 
+                ></vue-single-select>
+
+                 
 
                     <div class="row">
                         <div class="col-xs-3">
-                        <input type="text" class="form-control" placeholder="Kode / Nama Barang">
+                        <select v-model='post1' class="form-control">
+                        <option v-for='post1 in users' v-bind:value='post1' :key="post1.id">{{post1.nmBarang}}</option>
+                        </select>
                         </div>
                         <div class="col-xs-3">
-                        <input type="text" class="form-control" placeholder="Harga">
+                        <input type="text" v-model="post1.hrgPokok" class="form-control" placeholder="Harga">
                         </div>
                         <div class="col-xs-3">
-                        <input type="text" class="form-control" placeholder="Qty">
+                        <input type="text" v-model="qtyBeli" class="form-control" placeholder="Qty">
                         </div>
                         <div class="col-xs-3">
-                        <input type="text" class="form-control" placeholder="Total">
+                        <input type="text" :value="(post1.hrgPokok * qtyBeli) || 0" :name="subTotal" class="form-control" placeholder="Total">
                         </div>
                     </div>
                     
@@ -147,6 +152,7 @@
         data() {
             return {
                 post: {},
+                post1: {},
                 users: {},
                 tglPembelian: new Date().toJSON().slice(0,10).replace(/-/g,'/'),
                 validation: [],
@@ -157,6 +163,14 @@
             
             
         },
+        watch: {
+          post: function() {
+            this.$emit('input', this.post);
+          }
+        },
+        //props: ['value'],
+        props: ['optionLabel', 'value'],
+
         methods: {
             loadTotal:function(){
                 let uri = `/api/totalTrxPembelian/${this.$route.params.id}`;
