@@ -42466,7 +42466,7 @@ var render = function() {
                         "tbody",
                         _vm._l(_vm.pem, function(pe) {
                           return _c("tr", { key: pe.id }, [
-                            _c("td", [_vm._v(_vm._s(pe.kdBarang) + " ")]),
+                            _c("td", [_vm._v(_vm._s(pe.nmBarang) + " ")]),
                             _vm._v(" "),
                             _c("td", [_vm._v(_vm._s(pe.qtyBeli))]),
                             _vm._v(" "),

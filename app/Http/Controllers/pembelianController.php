@@ -48,6 +48,8 @@ class pembelianController extends Controller
     {
         //$post = TransaksiDetail::whereId($id)->first();
         $post = DB::table('tblPembelianDetail')
+                    ->join('tblBarang', 'tblBarang.kdBarang', '=', 'tblPembelianDetail.kdBarang')
+                    ->select('tblPembelianDetail.*', 'tblBarang.nmBarang')
                     ->where('noNotaPembelian', $request->input('np'))->get();
 
         if ($post) {
