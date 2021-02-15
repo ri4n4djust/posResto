@@ -159,6 +159,11 @@ class mejaController extends Controller
 
     public function addItem(Request $request)
     {
+        $brg = DB::table('tblTmp_TransaksiDetail')
+                ->where('kdBarangTmp', $request->input('idBarang'))
+                ->where('noNotaTmp', $request->input('noNota'))
+                ->first();
+        if ($brg == null ){
             
             $post = TransaksiDetail::create([
                 'noNotaTmp'     => $request->input('noNota'),
@@ -178,23 +183,51 @@ class mejaController extends Controller
                 'stkBarang'     => $stokLama - $request->input('qtyBarang')
             ]);
 
-
-            if ($post) {
                 return response()->json([
                     'success' => true,
                     'message' => 'Post Berhasil Disimpan!',
                 ], 200);
             } else {
+
+                $brng = DB::table('tblTmp_TransaksiDetail')
+                ->where('kdBarangTmp', $request->input('idBarang'))
+                ->where('noNotaTmp', $request->input('noNota'))
+                ->first();
+                $qtyB = $brng->qtyTmp ;
+                $totalB = $brng->totalTmp ;
+
+                DB::table('tblTmp_transaksiDetail')
+                    ->where('kdBarangTmp', $request->input('idBarang'))
+                    ->where('noNotaTmp', $request->input('noNota'))
+                    ->update([
+                        'qtyTmp' => $qtyB + $request->input('qtyBarang'),
+                        'totalTmp' => $totalB + $request->input('total'),
+                        ]);
+                
+                $barang = DB::table('tblBarang')->where('kdBarang', $request->input('idBarang'))->first();
+                $stokLama = $barang->stkBarang;
+            
+                DB::table('tblBarang')->where('kdBarang', $request->input('kdBarang'))->update([
+                'stkBarang'     => $stokLama + $request->input('qtyBeli')
+
+                ]);
+
                 return response()->json([
-                    'success' => false,
-                    'message' => 'Post Gagal Disimpan!',
-                ], 400);
+                    'success' => true,
+                    'message' => 'Post Berhasil Disimpan!',
+                ], 200);
             }
         
     }
 
     public function addMenu(Request $request)
     {
+        $brg = DB::table('tblTmp_TransaksiDetail')
+                ->where('kdBarangTmp', $request->input('idBarang'))
+                ->where('noNotaTmp', $request->input('noNota'))
+                ->first();
+        if ($brg == null ){
+
         $post = TransaksiDetail::create([
             'noNotaTmp'     => $request->input('noNota'),
             'noMejaTmp'     => $request->input('noMeja'),
@@ -224,17 +257,34 @@ class mejaController extends Controller
             }
             */
 
-
-            if ($post) {
+            
+            
                 return response()->json([
                     'success' => true,
                     'message' => 'Post Berhasil Disimpan!',
                 ], 200);
+                
             } else {
+
+                $brng = DB::table('tblTmp_TransaksiDetail')
+                ->where('kdBarangTmp', $request->input('idBarang'))
+                ->where('noNotaTmp', $request->input('noNota'))
+                ->first();
+                $qtyB = $brng->qtyTmp ;
+                $totalB = $brng->totalTmp ;
+
+                DB::table('tblTmp_transaksiDetail')
+                    ->where('kdBarangTmp', $request->input('idBarang'))
+                    ->where('noNotaTmp', $request->input('noNota'))
+                    ->update([
+                        'qtyTmp' => $qtyB + $request->input('qtyBarang'),
+                        'totalTmp' => $totalB + $request->input('total'),
+                        ]);
+
                 return response()->json([
-                    'success' => false,
-                    'message' => 'Post Gagal Disimpan!',
-                ], 400);
+                    'success' => true,
+                    'message' => 'Post Berhasil Disimpan!',
+                ], 200);
             }
         
     }

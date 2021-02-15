@@ -17,27 +17,7 @@ class pembelianController extends Controller
                 ->where('kdBarang', $request->input('kdBarang'))
                 ->where('noNotaPembelian', $request->input('noNotaPembelian'))
                 ->first();
-        if (!$brg ){
-
-            $brng = DB::table('tblPembelianDetail')
-                ->where('kdBarang', $request->input('kdBarang'))
-                ->where('noNotaPembelian', $request->input('noNotaPembelian'))
-                ->get();
-            $qtyB = $brng->qtyBeli ;
-
-            DB::table('tblPembelianDetail')
-                ->where('kdBarang', $request->input('kdBarang'))
-                ->where('noNotaPembelian', $request->input('noNotaPembelian'))
-                ->update([
-                    'qtyBeli' => $qtyB + $request->input('qtyBeli'),
-                    ]);
-
-                    return response()->json([
-                        'success' => true,
-                        'message' => 'Post Berhasil Disimpan!',
-                    ], 200);
-
-        } else {
+        if ($brg == null ){
 
             $post = PembelianDetail::create([
                 'noNotaPembelian'     => $request->input('noNotaPembelian'),
@@ -58,9 +38,39 @@ class pembelianController extends Controller
                     'success' => true,
                     'message' => 'Post Berhasil Disimpan!',
                 ], 200);
-                
-            }
+
+        } else {
+
+            $brng = DB::table('tblPembelianDetail')
+                ->where('kdBarang', $request->input('kdBarang'))
+                ->where('noNotaPembelian', $request->input('noNotaPembelian'))
+                ->first();
+            $qtyB = $brng->qtyBeli ;
+            $totalB = $brng->totalBeli ;
+
+            DB::table('tblPembelianDetail')
+                ->where('kdBarang', $request->input('kdBarang'))
+                ->where('noNotaPembelian', $request->input('noNotaPembelian'))
+                ->update([
+                    'qtyBeli' => $qtyB + $request->input('qtyBeli'),
+                    'totalBeli' => $totalB + $request->input('totalBeli'),
+                    ]);
+            
+            $barang = DB::table('tblBarang')->where('kdBarang', $request->input('kdBarang'))->first();
+            $stokLama = $barang->stkBarang;
         
+            DB::table('tblBarang')->where('kdBarang', $request->input('kdBarang'))->update([
+            'stkBarang'     => $stokLama + $request->input('qtyBeli')
+
+            ]);
+
+                    return response()->json([
+                        'success' => true,
+                        'message' => 'Post Berhasil Disimpan!',
+                    ], 200);
+
+            
+        }
     }
 
     public function listTransaksiPembelian(Request $request)
