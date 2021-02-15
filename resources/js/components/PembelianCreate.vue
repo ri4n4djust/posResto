@@ -20,17 +20,20 @@
                 </p>
                 <p class="text-muted text-center">
                 <vue-single-select
-                            v-model="post2"
+                            v-model="post"
                             :options="posts"
                             :required="true"
                             optionLabel="nmSupplier" 
                 ></vue-single-select>
+                
+
+                
                 </p>
                 <p class="text-muted text-center">
                 <input type="text" class="form-control" v-model="noNotaPembelian" placeholder="No nota">
                 </p>
                 
-                <input type="hidden" class="form-control" :value="subtotal" :name="totalPembelian" >
+                <input type="text" class="form-control" :value="subtotal" :name="totalPembelian" >
                 <h3 class="profile-username text-center">Total {{ subtotal  || 0 | currency }}</h3>
                 
                 <p class="text-muted text-center">
@@ -106,11 +109,11 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr v-for="trx in trxs" :key="trx.id">
-                                    <td>{{ trx.nmBarang }} </td>
-                                    <td>{{ trx.qtyBeli}}</td>
-                                    <td>{{ trx.hrgPokok | currency }}</td>
-                                    <td>{{ trx.totalBeli | currency }}</td>
+                                <tr v-for="pe in pem" :key="pe.id">
+                                    <td>{{ pe.kdBarang }} </td>
+                                    <td>{{ pe.qtyBeli}}</td>
+                                    <td>{{ pe.hrgPokok | currency }}</td>
+                                    <td>{{ pe.totalBeli | currency }}</td>
                                     <td class="text-center">
                                         <button @click.prevent="PostDeleteTrx(trx.id)" class="btn btn-sm btn-danger">HAPUS</button>
                                     </td>
@@ -163,35 +166,46 @@
                 posts: {},
                 post1: {},
                 users: {},
-                trxs: {},
+                pem: {},
                 qtyBeli: '',
                 hrgBeli: '',
                 subTotal: '',
+                subtotal: '',
+                //ntp:'',
                 noNotaPembelian: '',
+                totalPembelian: '',
                 tglPembelian: new Date().toJSON().slice(0,10).replace(/-/g,'/'),
                 validation: [],
             }
         },
         created() {
+            this.loadNotaPembelian()
             this.loadBarang()
             this.LoadSupplier()
-            this.loadNotaPembelian()
             this.loadTransaksiPembelian()
+            this.loadTotal()
+            
             
         },
+        mounted(){
+          this.loadTransaksiPembelian()
+          this.loadTotal()
+        },  
         watch: {
           post: function() {
             this.$emit('input', this.post);
           }
         },
         //props: ['value'],
-        props: ['optionLabel', 'value'],
+        props: ['value',], 
 
         methods: {
-            loadTotal:function(){
-                let uri = `/api/totalTrxPembelian/${this.$route.params.id}`;
-                this.axios.post(uri).then(response => {
-                this.subtotal = response.data.subTotal;
+            loadTotal(){
+                let uri = '/api/totalTrxPembelian';
+                this.axios.post(uri, {
+                    ntp: this.noNotaPembelian,
+                }).then(response => {
+                this.subtotal = response.data.subTotalBeli;
                 
             });
             },
@@ -215,10 +229,13 @@
                 
             });
             },
-            loadTransaksiPembelian:function(){
-                let uri = '/api/dataPembelian/'+ this.noNotaPembelian;
-                this.axios.post(uri).then(response => {
-                this.trxs = response.data.data;
+            loadTransaksiPembelian(){
+                let uri = '/api/dataPembelian';
+                this.axios.post(uri, {
+                    np: this.noNotaPembelian,
+                }).then(response => {
+                  //alert('no nota '+ np);
+                this.pem = response.data.data;
             });
             },
             PostDeleteTrx(id)
@@ -243,6 +260,7 @@
                     totalBeli: this.post1.hrgPokok * this.qtyBeli,
                 })
                     .then((response) => {
+                        this.loadTransaksiPembelian()
                         alert('sukses donkkkkkkkk');
                         //this.loadTransaksiPenjualan()
                         //this.loadTotal()

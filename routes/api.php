@@ -70,7 +70,8 @@ Route::get('/kodePembelian', 'nomorController@kodePembelian');
 
 //=========Pembelian
 Route::post('/addItemPembelian/store', 'pembelianController@addItemPembelian');
-Route::post('/dataPembelian/{id}', 'pembelianController@listTransaksiPembelian');
+Route::post('/dataPembelian', 'pembelianController@listTransaksiPembelian');
+Route::post('/totalTrxPembelian', 'pembelianController@totalTrxPembelian');
 
 //========menu
 Route::get('/menu', 'menuController@index');

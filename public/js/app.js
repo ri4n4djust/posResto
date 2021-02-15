@@ -2125,6 +2125,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 
 
@@ -2139,20 +2142,28 @@ __webpack_require__.r(__webpack_exports__);
       posts: {},
       post1: {},
       users: {},
-      trxs: {},
+      pem: {},
       qtyBeli: '',
       hrgBeli: '',
       subTotal: '',
+      subtotal: '',
+      //ntp:'',
       noNotaPembelian: '',
+      totalPembelian: '',
       tglPembelian: new Date().toJSON().slice(0, 10).replace(/-/g, '/'),
       validation: []
     };
   },
   created: function created() {
+    this.loadNotaPembelian();
     this.loadBarang();
     this.LoadSupplier();
-    this.loadNotaPembelian();
     this.loadTransaksiPembelian();
+    this.loadTotal();
+  },
+  mounted: function mounted() {
+    this.loadTransaksiPembelian();
+    this.loadTotal();
   },
   watch: {
     post: function post() {
@@ -2160,14 +2171,16 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   //props: ['value'],
-  props: ['optionLabel', 'value'],
+  props: ['value'],
   methods: {
     loadTotal: function loadTotal() {
       var _this = this;
 
-      var uri = "/api/totalTrxPembelian/".concat(this.$route.params.id);
-      this.axios.post(uri).then(function (response) {
-        _this.subtotal = response.data.subTotal;
+      var uri = '/api/totalTrxPembelian';
+      this.axios.post(uri, {
+        ntp: this.noNotaPembelian
+      }).then(function (response) {
+        _this.subtotal = response.data.subTotalBeli;
       });
     },
     loadNotaPembelian: function loadNotaPembelian() {
@@ -2197,9 +2210,12 @@ __webpack_require__.r(__webpack_exports__);
     loadTransaksiPembelian: function loadTransaksiPembelian() {
       var _this5 = this;
 
-      var uri = '/api/dataPembelian/' + this.noNotaPembelian;
-      this.axios.post(uri).then(function (response) {
-        _this5.trxs = response.data.data;
+      var uri = '/api/dataPembelian';
+      this.axios.post(uri, {
+        np: this.noNotaPembelian
+      }).then(function (response) {
+        //alert('no nota '+ np);
+        _this5.pem = response.data.data;
       });
     },
     PostDeleteTrx: function PostDeleteTrx(id) {
@@ -2214,6 +2230,8 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (error) {});
     },
     PostItemPembelian: function PostItemPembelian() {
+      var _this7 = this;
+
       var uri = '/api/addItemPembelian/store';
       this.axios.post(uri, {
         noNotaPembelian: this.noNotaPembelian,
@@ -2222,12 +2240,14 @@ __webpack_require__.r(__webpack_exports__);
         qtyBeli: this.qtyBeli,
         totalBeli: this.post1.hrgPokok * this.qtyBeli
       }).then(function (response) {
+        _this7.loadTransaksiPembelian();
+
         alert('sukses donkkkkkkkk'); //this.loadTransaksiPenjualan()
         //this.loadTotal()
       });
     },
     SimpanTransaksiPembelian: function SimpanTransaksiPembelian() {
-      var _this7 = this;
+      var _this8 = this;
 
       var uri = '/api/addTransaksi/store';
       this.axios.post(uri, {
@@ -2240,7 +2260,7 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (response) {
         alert('Transaksi Selesai');
 
-        _this7.$router.push({
+        _this8.$router.push({
           name: 'meja'
         });
       });
@@ -42122,11 +42142,11 @@ var render = function() {
                       optionLabel: "nmSupplier"
                     },
                     model: {
-                      value: _vm.post2,
+                      value: _vm.post,
                       callback: function($$v) {
-                        _vm.post2 = $$v
+                        _vm.post = $$v
                       },
-                      expression: "post2"
+                      expression: "post"
                     }
                   })
                 ],
@@ -42159,7 +42179,7 @@ var render = function() {
               _vm._v(" "),
               _c("input", {
                 staticClass: "form-control",
-                attrs: { type: "hidden", name: _vm.totalPembelian },
+                attrs: { type: "text", name: _vm.totalPembelian },
                 domProps: { value: _vm.subtotal }
               }),
               _vm._v(" "),
@@ -42365,18 +42385,18 @@ var render = function() {
                       _vm._v(" "),
                       _c(
                         "tbody",
-                        _vm._l(_vm.trxs, function(trx) {
-                          return _c("tr", { key: trx.id }, [
-                            _c("td", [_vm._v(_vm._s(trx.nmBarang) + " ")]),
+                        _vm._l(_vm.pem, function(pe) {
+                          return _c("tr", { key: pe.id }, [
+                            _c("td", [_vm._v(_vm._s(pe.kdBarang) + " ")]),
                             _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(trx.qtyBeli))]),
+                            _c("td", [_vm._v(_vm._s(pe.qtyBeli))]),
                             _vm._v(" "),
                             _c("td", [
-                              _vm._v(_vm._s(_vm._f("currency")(trx.hrgPokok)))
+                              _vm._v(_vm._s(_vm._f("currency")(pe.hrgPokok)))
                             ]),
                             _vm._v(" "),
                             _c("td", [
-                              _vm._v(_vm._s(_vm._f("currency")(trx.totalBeli)))
+                              _vm._v(_vm._s(_vm._f("currency")(pe.totalBeli)))
                             ]),
                             _vm._v(" "),
                             _c("td", { staticClass: "text-center" }, [
@@ -42387,7 +42407,7 @@ var render = function() {
                                   on: {
                                     click: function($event) {
                                       $event.preventDefault()
-                                      return _vm.PostDeleteTrx(trx.id)
+                                      return _vm.PostDeleteTrx(_vm.trx.id)
                                     }
                                   }
                                 },
