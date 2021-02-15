@@ -18,15 +18,12 @@ class nomorController extends Controller
     //
     public function noNota($id)
     {
-        //$post = TransaksiDetail::whereId($id)->first();
-        //$post = DB::table('tblTmp_TransaksiDetail')
-        //            ->where('noMejaTmp',$id)->get();
-        //$count = Penjualan::latest()->first();
-        //$lama = $count->id;
-        //$kodeBaru = $lama + 1  ;
+        $no = 0 ;
+        $count = Penjualan::latest()->count();
+        $kodeBaru = $no + $count + 1  ;
 
         $tahun = date('Y');
-        $post = 'INV-/'.$tahun.'/'.$id.'/'. rand(0, 99999999);
+        $post = 'INV-'.$tahun.'-'.$id.'-'.$kodeBaru;
 
         if ($post) {
             return response()->json([
@@ -44,18 +41,12 @@ class nomorController extends Controller
     }
     public function kodeBarang()
     {
-        //$post = TransaksiDetail::whereId($id)->first();
-        //$post = DB::table('tblTmp_TransaksiDetail')
-                    //->where('noMejaTmp',$id)->get();
-        //$count = Barang::latest()->first();
-        //$lama = $count->id;
-        //$kodeBaru = $lama + 1  ;
+        $no = 0 ;
+        $count = Barang::latest()->count();
+        $kodeBaru = $no + $count + 1  ;
 
         $tahun = date('Y');
-        $post = 'DB-/'.$tahun.'/'.rand(0, 99999);
-        //$post = DB::table('tblBarang')
-                    //->where('kdBarang',$post)->get();
-        
+        $post = 'DB-'.$tahun.'-'.$kodeBaru;
 
         if ($post) {
             return response()->json([
@@ -73,13 +64,12 @@ class nomorController extends Controller
     }
     public function kodeMenu()
     {
-        //$post = TransaksiDetail::whereId($id)->first();
-        //$count = Menu::latest()->first();
-        //$lama = $count->id;
-        //$kodeBaru = $lama + 1  ;
+        $no = 0 ;
+        $count = Menu::latest()->count();
+        $kodeBaru = $no + $count + 1  ;
 
         $tahun = date('Y');
-        $post = 'MN-/'.$tahun.'/'.rand(0, 999999);
+        $post = 'MN-'.$tahun.'-'.$kodeBaru;
 
         if ($post) {
             return response()->json([

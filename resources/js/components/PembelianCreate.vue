@@ -14,7 +14,7 @@
             <!-- /.box-header -->
             <div class="box-body">
 
-              
+            <form  @submit.prevent="PostPembelian" >  
                 <p class="text-muted text-center">
                 <date-picker v-model="tglPembelian" value-type="format" format="YYYY/MM/DD"></date-picker>
                 </p>
@@ -40,9 +40,10 @@
                 <a href="#" @click="showModalBayar = true" class="btn btn-primary btn-block"><b>Payment</b></a>
                 </p>
               
-
+            </form>
             </div>
             <!-- /.box-body -->
+
           </div>
           <!-- /.box -->
         </div>
@@ -144,9 +145,68 @@
 
     </section>
 
-    
+ <!-- /Modal -->
+ <div v-if="showModalBayar">
+    <transition name="modal">
+      <div class="modal-mask">
+        <div class="modal-wrapper">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" @click="showModalBayar=false">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Add Payment</h4>
+              </div>
+              <div class="modal-body">
+                
+
+                <form  @submit.prevent="PostTransaksi" >
+                <p class="text-muted text-center">
+                <input type="hidden" class="form-control" v-model="tglNota" >
+                <input type="text" class="form-control" v-model="pelanggan" placeholder="Customer">
+                </p>
+                <p class="text-muted text-center">
+                <input type="hidden" class="form-control" v-model="noNota" placeholder="No nota">
+                </p>
+                <p class="text-muted text-center">
+                <input type="text" class="form-control" v-model="subtotal">
+                </p>
+                <p class="text-muted text-center">
+                <input type="text" class="form-control" v-model="pajak" placeholder="Tax">
+                <input type="hidden" class="form-control" :value="(subtotal * pajak / 100 + subtotal)" :name="totalTransaksipjk" >
+                </p>
+                <p class="text-muted text-center">
+                <input type="text" class="form-control" v-model="diskon" placeholder="Diskon">
+                <input type="hidden" class="form-control" :value="((subtotal * pajak / 100 + subtotal) * diskon / 100)" :name="diskon1" >
+                </p>
+
+                <p class="text-muted text-center">
+                <input type="text" class="form-control" v-model="totalBayar" placeholder="Bayar" required>
+                </p>
+                <p class="text-muted text-center">
+                <input type="hidden" class="form-control" :value="((subtotal * pajak / 100 + subtotal) - ((subtotal * pajak / 100 + subtotal) * diskon / 100))  || 0 " :name="totalTransaksiBayar"  >
+                </p>
+                
+                <h3 class="profile-username ">Total {{ ((subtotal * pajak / 100 + subtotal) - ((subtotal * pajak / 100 + subtotal) * diskon / 100))  || 0 | currency }}</h3>
+                <h3 class="profile-username ">Kembali : {{ totalBayar - ((subtotal * pajak / 100 + subtotal) - ((subtotal * pajak / 100 + subtotal) * diskon / 100))  || 0 | currency }}</h3>
+                <p class="text-muted text-center">
+                <button type="submit"  class="btn btn-md btn-success">Bayar</button>                
+                </p>
+              </form>
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </transition>
+  </div>
+
     
     </div>
+
       
   
   
@@ -171,29 +231,21 @@
                 hrgBeli: '',
                 subTotal: '',
                 subtotal: '',
-                //ntp:'',
+                ntp:'',
                 noNotaPembelian: '',
                 totalPembelian: '',
                 tglPembelian: new Date().toJSON().slice(0,10).replace(/-/g,'/'),
                 validation: [],
+                showModal: false,
+                showModalMenu: false,
+                showModalBayar: false,
             }
         },
-        created() {
-            this.loadNotaPembelian()
-            this.loadBarang()
-            this.LoadSupplier()
-            this.loadTransaksiPembelian()
-            this.loadTotal()
-            
-            
-        },
-        mounted(){
-          this.loadTransaksiPembelian()
-          this.loadTotal()
-        },  
+
         watch: {
           post: function() {
             this.$emit('input', this.post);
+            
           }
         },
         //props: ['value'],
@@ -202,7 +254,7 @@
         methods: {
             loadTotal(){
                 let uri = '/api/totalTrxPembelian';
-                this.axios.post(uri, {
+                axios.post(uri, {
                     ntp: this.noNotaPembelian,
                 }).then(response => {
                 this.subtotal = response.data.subTotalBeli;
@@ -285,6 +337,15 @@
                     });
                 
             }
-        }
+        },
+        created() {
+            this.loadNotaPembelian()
+            this.loadBarang()
+            this.LoadSupplier()
+            this.loadTransaksiPembelian()
+            this.loadTotal()
+            
+            
+        },
     }
 </script>
