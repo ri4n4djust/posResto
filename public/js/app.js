@@ -2188,6 +2188,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 
 
@@ -2223,15 +2226,16 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   //props: ['value'],
-  props: ['value'],
+  props: ['optionLabel', 'value'],
   methods: {
     loadTotal: function loadTotal() {
       var _this = this;
 
       var uri = '/api/totalTrxPembelian';
-      axios.post(uri, {
+      this.axios.post(uri, {
         ntp: this.noNotaPembelian
       }).then(function (response) {
+        //alert('mount' + this.noNotaPembelian)
         _this.subtotal = response.data.subTotalBeli;
       });
     },
@@ -2276,9 +2280,9 @@ __webpack_require__.r(__webpack_exports__);
       this.axios["delete"]("/api/pembelianDelete/".concat(id)).then(function (response) {
         alert('Berhasil Di Hapus');
 
-        _this6.loadDataTransaksi();
-
         _this6.loadTotal();
+
+        _this6.loadTransaksiPembelian();
       })["catch"](function (error) {});
     },
     PostItemPembelian: function PostItemPembelian() {
@@ -2292,29 +2296,28 @@ __webpack_require__.r(__webpack_exports__);
         qtyBeli: this.qtyBeli,
         totalBeli: this.post1.hrgPokok * this.qtyBeli
       }).then(function (response) {
+        _this7.loadTotal();
+
         _this7.loadTransaksiPembelian();
 
         alert('sukses donkkkkkkkk'); //this.loadTransaksiPenjualan()
         //this.loadTotal()
       });
     },
-    SimpanTransaksiPembelian: function SimpanTransaksiPembelian() {
+    PostPembelian: function PostPembelian() {
       var _this8 = this;
 
-      var uri = '/api/addTransaksi/store';
+      var uri = '/api/addPembelian/store';
       this.axios.post(uri, {
-        noNota: this.noNota,
-        supplier: this.pelanggan,
-        tglNota: this.tglNota,
-        totalNota: this.subtotal * this.pajak / 100 + this.subtotal - (this.subtotal * this.pajak / 100 + this.subtotal) * this.diskon / 100,
-        bayarNota: this.totalBayar,
-        kembalianNota: this.totalBayar - (this.subtotal * this.pajak / 100 + this.subtotal - (this.subtotal * this.pajak / 100 + this.subtotal) * this.diskon / 100)
+        noNotaPembelian: this.noNotaPembelian,
+        idSupplier: this.post.id,
+        tglNotaPembelian: this.tglPembelian,
+        totalNotaPembelian: this.subtotal
       }).then(function (response) {
         alert('Transaksi Selesai');
 
-        _this8.$router.push({
-          name: 'meja'
-        });
+        _this8.$router.go(0); //this.$router.push({name: 'pembelian'});
+
       });
     }
   },
@@ -42173,109 +42176,118 @@ var render = function() {
             _vm._v(" "),
             _c("div", { staticClass: "box-body" }, [
               _c(
-                "form",
-                {
+                "p",
+                { staticClass: "text-muted text-center" },
+                [
+                  _c("date-picker", {
+                    attrs: { "value-type": "format", format: "YYYY/MM/DD" },
+                    model: {
+                      value: _vm.tglPembelian,
+                      callback: function($$v) {
+                        _vm.tglPembelian = $$v
+                      },
+                      expression: "tglPembelian"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "p",
+                { staticClass: "text-muted text-center" },
+                [
+                  _c("vue-single-select", {
+                    attrs: {
+                      options: _vm.posts,
+                      required: true,
+                      optionLabel: "nmSupplier"
+                    },
+                    model: {
+                      value: _vm.post,
+                      callback: function($$v) {
+                        _vm.post = $$v
+                      },
+                      expression: "post"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c("p", { staticClass: "text-muted text-center" }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.post.id,
+                      expression: "post.id"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: { type: "hidden", placeholder: "No nota" },
+                  domProps: { value: _vm.post.id },
                   on: {
-                    submit: function($event) {
-                      $event.preventDefault()
-                      return _vm.PostPembelian($event)
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.post, "id", $event.target.value)
                     }
                   }
-                },
-                [
-                  _c(
-                    "p",
-                    { staticClass: "text-muted text-center" },
-                    [
-                      _c("date-picker", {
-                        attrs: { "value-type": "format", format: "YYYY/MM/DD" },
-                        model: {
-                          value: _vm.tglPembelian,
-                          callback: function($$v) {
-                            _vm.tglPembelian = $$v
-                          },
-                          expression: "tglPembelian"
-                        }
-                      })
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "p",
-                    { staticClass: "text-muted text-center" },
-                    [
-                      _c("vue-single-select", {
-                        attrs: {
-                          options: _vm.posts,
-                          required: true,
-                          optionLabel: "nmSupplier"
-                        },
-                        model: {
-                          value: _vm.post,
-                          callback: function($$v) {
-                            _vm.post = $$v
-                          },
-                          expression: "post"
-                        }
-                      })
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c("p", { staticClass: "text-muted text-center" }, [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.noNotaPembelian,
-                          expression: "noNotaPembelian"
-                        }
-                      ],
-                      staticClass: "form-control",
-                      attrs: { type: "text", placeholder: "No nota" },
-                      domProps: { value: _vm.noNotaPembelian },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.noNotaPembelian = $event.target.value
-                        }
+                })
+              ]),
+              _vm._v(" "),
+              _c("p", { staticClass: "text-muted text-center" }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.noNotaPembelian,
+                      expression: "noNotaPembelian"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: { type: "text", placeholder: "No nota" },
+                  domProps: { value: _vm.noNotaPembelian },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
                       }
-                    })
-                  ]),
-                  _vm._v(" "),
-                  _c("input", {
-                    staticClass: "form-control",
-                    attrs: { type: "text", name: _vm.totalPembelian },
-                    domProps: { value: _vm.subtotal }
-                  }),
-                  _vm._v(" "),
-                  _c("h3", { staticClass: "profile-username text-center" }, [
-                    _vm._v(
-                      "Total " + _vm._s(_vm._f("currency")(_vm.subtotal || 0))
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c("p", { staticClass: "text-muted text-center" }, [
-                    _c(
-                      "a",
-                      {
-                        staticClass: "btn btn-primary btn-block",
-                        attrs: { href: "#" },
-                        on: {
-                          click: function($event) {
-                            _vm.showModalBayar = true
-                          }
-                        }
-                      },
-                      [_c("b", [_vm._v("Payment")])]
-                    )
-                  ])
-                ]
-              )
+                      _vm.noNotaPembelian = $event.target.value
+                    }
+                  }
+                })
+              ]),
+              _vm._v(" "),
+              _c("input", {
+                staticClass: "form-control",
+                attrs: { type: "hidden", name: _vm.totalPembelian },
+                domProps: { value: _vm.subtotal }
+              }),
+              _vm._v(" "),
+              _c("h3", { staticClass: "profile-username text-center" }, [
+                _vm._v("Total " + _vm._s(_vm._f("currency")(_vm.subtotal || 0)))
+              ]),
+              _vm._v(" "),
+              _c("p", { staticClass: "text-muted text-center" }, [
+                _c(
+                  "a",
+                  {
+                    staticClass: "btn btn-primary btn-block",
+                    attrs: { href: "#" },
+                    on: {
+                      click: function($event) {
+                        _vm.showModalBayar = true
+                      }
+                    }
+                  },
+                  [_c("b", [_vm._v("Payment")])]
+                )
+              ])
             ])
           ])
         ]),
@@ -42433,17 +42445,10 @@ var render = function() {
                                     value: _vm.post1.hrgPokok * _vm.qtyBeli || 0
                                   }
                                 })
-                              ])
-                            ]),
-                            _vm._v(" "),
-                            _c(
-                              "button",
-                              {
-                                staticClass: "btn btn-md btn-success",
-                                attrs: { type: "submit" }
-                              },
-                              [_vm._v("Add")]
-                            )
+                              ]),
+                              _vm._v(" "),
+                              _vm._m(3)
+                            ])
                           ]
                         )
                       ],
@@ -42455,7 +42460,7 @@ var render = function() {
                     "table",
                     { staticClass: "table table-hover table-bordered" },
                     [
-                      _vm._m(3),
+                      _vm._m(4),
                       _vm._v(" "),
                       _c(
                         "tbody",
@@ -42481,7 +42486,7 @@ var render = function() {
                                   on: {
                                     click: function($event) {
                                       $event.preventDefault()
-                                      return _vm.PostDeleteTrx(_vm.trx.id)
+                                      return _vm.PostDeleteTrx(pe.id)
                                     }
                                   }
                                 },
@@ -42550,7 +42555,7 @@ var render = function() {
                             on: {
                               submit: function($event) {
                                 $event.preventDefault()
-                                return _vm.PostTransaksi($event)
+                                return _vm.PostPembelian($event)
                               }
                             }
                           },
@@ -42576,33 +42581,82 @@ var render = function() {
                                     _vm.tglNota = $event.target.value
                                   }
                                 }
-                              }),
-                              _vm._v(" "),
-                              _c("input", {
-                                directives: [
-                                  {
-                                    name: "model",
-                                    rawName: "v-model",
-                                    value: _vm.pelanggan,
-                                    expression: "pelanggan"
-                                  }
-                                ],
-                                staticClass: "form-control",
-                                attrs: {
-                                  type: "text",
-                                  placeholder: "Customer"
-                                },
-                                domProps: { value: _vm.pelanggan },
-                                on: {
-                                  input: function($event) {
-                                    if ($event.target.composing) {
-                                      return
-                                    }
-                                    _vm.pelanggan = $event.target.value
-                                  }
-                                }
                               })
                             ]),
+                            _vm._v(" "),
+                            _c(
+                              "p",
+                              { staticClass: "text-muted text-center" },
+                              [
+                                _c("vue-single-select", {
+                                  attrs: {
+                                    options: _vm.posts,
+                                    required: true,
+                                    optionLabel: "nmSupplier"
+                                  },
+                                  model: {
+                                    value: _vm.post,
+                                    callback: function($$v) {
+                                      _vm.post = $$v
+                                    },
+                                    expression: "post"
+                                  }
+                                }),
+                                _vm._v(" "),
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.post.id,
+                                      expression: "post.id"
+                                    }
+                                  ],
+                                  staticClass: "form-control",
+                                  attrs: {
+                                    type: "hidden",
+                                    placeholder: "Supplier",
+                                    required: ""
+                                  },
+                                  domProps: { value: _vm.post.id },
+                                  on: {
+                                    input: function($event) {
+                                      if ($event.target.composing) {
+                                        return
+                                      }
+                                      _vm.$set(
+                                        _vm.post,
+                                        "id",
+                                        $event.target.value
+                                      )
+                                    }
+                                  }
+                                }),
+                                _vm._v(" "),
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.tglPembelian,
+                                      expression: "tglPembelian"
+                                    }
+                                  ],
+                                  staticClass: "form-control",
+                                  attrs: { type: "text" },
+                                  domProps: { value: _vm.tglPembelian },
+                                  on: {
+                                    input: function($event) {
+                                      if ($event.target.composing) {
+                                        return
+                                      }
+                                      _vm.tglPembelian = $event.target.value
+                                    }
+                                  }
+                                })
+                              ],
+                              1
+                            ),
                             _vm._v(" "),
                             _c("p", { staticClass: "text-muted text-center" }, [
                               _c("input", {
@@ -42610,22 +42664,19 @@ var render = function() {
                                   {
                                     name: "model",
                                     rawName: "v-model",
-                                    value: _vm.noNota,
-                                    expression: "noNota"
+                                    value: _vm.noNotaPembelian,
+                                    expression: "noNotaPembelian"
                                   }
                                 ],
                                 staticClass: "form-control",
-                                attrs: {
-                                  type: "hidden",
-                                  placeholder: "No nota"
-                                },
-                                domProps: { value: _vm.noNota },
+                                attrs: { type: "text", placeholder: "No nota" },
+                                domProps: { value: _vm.noNotaPembelian },
                                 on: {
                                   input: function($event) {
                                     if ($event.target.composing) {
                                       return
                                     }
-                                    _vm.noNota = $event.target.value
+                                    _vm.noNotaPembelian = $event.target.value
                                   }
                                 }
                               })
@@ -42661,79 +42712,6 @@ var render = function() {
                                   {
                                     name: "model",
                                     rawName: "v-model",
-                                    value: _vm.pajak,
-                                    expression: "pajak"
-                                  }
-                                ],
-                                staticClass: "form-control",
-                                attrs: { type: "text", placeholder: "Tax" },
-                                domProps: { value: _vm.pajak },
-                                on: {
-                                  input: function($event) {
-                                    if ($event.target.composing) {
-                                      return
-                                    }
-                                    _vm.pajak = $event.target.value
-                                  }
-                                }
-                              }),
-                              _vm._v(" "),
-                              _c("input", {
-                                staticClass: "form-control",
-                                attrs: {
-                                  type: "hidden",
-                                  name: _vm.totalTransaksipjk
-                                },
-                                domProps: {
-                                  value:
-                                    (_vm.subtotal * _vm.pajak) / 100 +
-                                    _vm.subtotal
-                                }
-                              })
-                            ]),
-                            _vm._v(" "),
-                            _c("p", { staticClass: "text-muted text-center" }, [
-                              _c("input", {
-                                directives: [
-                                  {
-                                    name: "model",
-                                    rawName: "v-model",
-                                    value: _vm.diskon,
-                                    expression: "diskon"
-                                  }
-                                ],
-                                staticClass: "form-control",
-                                attrs: { type: "text", placeholder: "Diskon" },
-                                domProps: { value: _vm.diskon },
-                                on: {
-                                  input: function($event) {
-                                    if ($event.target.composing) {
-                                      return
-                                    }
-                                    _vm.diskon = $event.target.value
-                                  }
-                                }
-                              }),
-                              _vm._v(" "),
-                              _c("input", {
-                                staticClass: "form-control",
-                                attrs: { type: "hidden", name: _vm.diskon1 },
-                                domProps: {
-                                  value:
-                                    (((_vm.subtotal * _vm.pajak) / 100 +
-                                      _vm.subtotal) *
-                                      _vm.diskon) /
-                                    100
-                                }
-                              })
-                            ]),
-                            _vm._v(" "),
-                            _c("p", { staticClass: "text-muted text-center" }, [
-                              _c("input", {
-                                directives: [
-                                  {
-                                    name: "model",
-                                    rawName: "v-model",
                                     value: _vm.totalBayar,
                                     expression: "totalBayar"
                                   }
@@ -42756,38 +42734,10 @@ var render = function() {
                               })
                             ]),
                             _vm._v(" "),
-                            _c("p", { staticClass: "text-muted text-center" }, [
-                              _c("input", {
-                                staticClass: "form-control",
-                                attrs: {
-                                  type: "hidden",
-                                  name: _vm.totalTransaksiBayar
-                                },
-                                domProps: {
-                                  value:
-                                    (_vm.subtotal * _vm.pajak) / 100 +
-                                      _vm.subtotal -
-                                      (((_vm.subtotal * _vm.pajak) / 100 +
-                                        _vm.subtotal) *
-                                        _vm.diskon) /
-                                        100 || 0
-                                }
-                              })
-                            ]),
-                            _vm._v(" "),
                             _c("h3", { staticClass: "profile-username " }, [
                               _vm._v(
                                 "Total " +
-                                  _vm._s(
-                                    _vm._f("currency")(
-                                      (_vm.subtotal * _vm.pajak) / 100 +
-                                        _vm.subtotal -
-                                        (((_vm.subtotal * _vm.pajak) / 100 +
-                                          _vm.subtotal) *
-                                          _vm.diskon) /
-                                          100 || 0
-                                    )
-                                  )
+                                  _vm._s(_vm._f("currency")(_vm.subtotal || 0))
                               )
                             ]),
                             _vm._v(" "),
@@ -42796,13 +42746,7 @@ var render = function() {
                                 "Kembali : " +
                                   _vm._s(
                                     _vm._f("currency")(
-                                      _vm.totalBayar -
-                                        ((_vm.subtotal * _vm.pajak) / 100 +
-                                          _vm.subtotal -
-                                          (((_vm.subtotal * _vm.pajak) / 100 +
-                                            _vm.subtotal) *
-                                            _vm.diskon) /
-                                            100) || 0
+                                      _vm.totalBayar - _vm.subtotal || 0
                                     )
                                   )
                               )
@@ -42871,6 +42815,18 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "box-header with-border" }, [
       _c("h3", { staticClass: "box-title" }, [_vm._v("Cari Barang")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-xs-3" }, [
+      _c(
+        "button",
+        { staticClass: "btn btn-md btn-success", attrs: { type: "submit" } },
+        [_vm._v("Add")]
+      )
     ])
   },
   function() {

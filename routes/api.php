@@ -72,6 +72,9 @@ Route::get('/kodePembelian', 'nomorController@kodePembelian');
 Route::post('/addItemPembelian/store', 'pembelianController@addItemPembelian');
 Route::post('/dataPembelian', 'pembelianController@listTransaksiPembelian');
 Route::post('/totalTrxPembelian', 'pembelianController@totalTrxPembelian');
+Route::delete('/pembelianDelete/{id?}', 'pembelianController@destroy1');
+Route::post('/addPembelian/store', 'pembelianController@addTransaksiPembelian');
+
 
 //========menu
 Route::get('/menu', 'menuController@index');

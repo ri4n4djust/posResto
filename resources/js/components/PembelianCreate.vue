@@ -14,7 +14,6 @@
             <!-- /.box-header -->
             <div class="box-body">
 
-            <form  @submit.prevent="PostPembelian" >  
                 <p class="text-muted text-center">
                 <date-picker v-model="tglPembelian" value-type="format" format="YYYY/MM/DD"></date-picker>
                 </p>
@@ -30,17 +29,19 @@
                 
                 </p>
                 <p class="text-muted text-center">
+                <input type="hidden" class="form-control" v-model="post.id" placeholder="No nota">
+                </p>
+                <p class="text-muted text-center">
                 <input type="text" class="form-control" v-model="noNotaPembelian" placeholder="No nota">
                 </p>
                 
-                <input type="text" class="form-control" :value="subtotal" :name="totalPembelian" >
+                <input type="hidden" class="form-control" :value="subtotal" :name="totalPembelian" >
                 <h3 class="profile-username text-center">Total {{ subtotal  || 0 | currency }}</h3>
                 
                 <p class="text-muted text-center">
                 <a href="#" @click="showModalBayar = true" class="btn btn-primary btn-block"><b>Payment</b></a>
                 </p>
               
-            </form>
             </div>
             <!-- /.box-body -->
 
@@ -69,7 +70,7 @@
                             :options="users"
                             :required="true"
                             optionLabel="nmBarang" 
-                ></vue-single-select>
+                    ></vue-single-select>
 
                  
                   <form  @submit.prevent="PostItemPembelian" >
@@ -88,8 +89,11 @@
                         <div class="col-xs-3">
                         <input type="text" :value="(post1.hrgPokok * qtyBeli) || 0" :name="subTotal" class="form-control" placeholder="Total">
                         </div>
+                        <div class="col-xs-3">
+                          <button type="submit" class="btn btn-md btn-success">Add</button>                        
+                        </div>
                     </div>
-                    <button type="submit" class="btn btn-md btn-success">Add</button>
+                    
                     </form>
                     </div>
                     
@@ -116,7 +120,7 @@
                                     <td>{{ pe.hrgPokok | currency }}</td>
                                     <td>{{ pe.totalBeli | currency }}</td>
                                     <td class="text-center">
-                                        <button @click.prevent="PostDeleteTrx(trx.id)" class="btn btn-sm btn-danger">HAPUS</button>
+                                        <button @click.prevent="PostDeleteTrx(pe.id)" class="btn btn-sm btn-danger">HAPUS</button>
                                     </td>
                                 </tr>
                                 </tbody>
@@ -161,35 +165,34 @@
               <div class="modal-body">
                 
 
-                <form  @submit.prevent="PostTransaksi" >
+                <form  @submit.prevent="PostPembelian" >
                 <p class="text-muted text-center">
                 <input type="hidden" class="form-control" v-model="tglNota" >
-                <input type="text" class="form-control" v-model="pelanggan" placeholder="Customer">
                 </p>
                 <p class="text-muted text-center">
-                <input type="hidden" class="form-control" v-model="noNota" placeholder="No nota">
+                  <vue-single-select
+                            v-model="post"
+                            :options="posts"
+                            :required="true"
+                            optionLabel="nmSupplier" 
+                ></vue-single-select>
+
+                <input type="hidden" class="form-control" v-model="post.id" placeholder="Supplier" required>
+                <input type="text" class="form-control" v-model="tglPembelian"  >
+                </p>
+                <p class="text-muted text-center">
+                <input type="text" class="form-control" v-model="noNotaPembelian" placeholder="No nota">
                 </p>
                 <p class="text-muted text-center">
                 <input type="text" class="form-control" v-model="subtotal">
                 </p>
-                <p class="text-muted text-center">
-                <input type="text" class="form-control" v-model="pajak" placeholder="Tax">
-                <input type="hidden" class="form-control" :value="(subtotal * pajak / 100 + subtotal)" :name="totalTransaksipjk" >
-                </p>
-                <p class="text-muted text-center">
-                <input type="text" class="form-control" v-model="diskon" placeholder="Diskon">
-                <input type="hidden" class="form-control" :value="((subtotal * pajak / 100 + subtotal) * diskon / 100)" :name="diskon1" >
-                </p>
-
+               
                 <p class="text-muted text-center">
                 <input type="text" class="form-control" v-model="totalBayar" placeholder="Bayar" required>
                 </p>
-                <p class="text-muted text-center">
-                <input type="hidden" class="form-control" :value="((subtotal * pajak / 100 + subtotal) - ((subtotal * pajak / 100 + subtotal) * diskon / 100))  || 0 " :name="totalTransaksiBayar"  >
-                </p>
-                
-                <h3 class="profile-username ">Total {{ ((subtotal * pajak / 100 + subtotal) - ((subtotal * pajak / 100 + subtotal) * diskon / 100))  || 0 | currency }}</h3>
-                <h3 class="profile-username ">Kembali : {{ totalBayar - ((subtotal * pajak / 100 + subtotal) - ((subtotal * pajak / 100 + subtotal) * diskon / 100))  || 0 | currency }}</h3>
+                      
+                <h3 class="profile-username ">Total {{ subtotal || 0 | currency }}</h3>
+                <h3 class="profile-username ">Kembali : {{ totalBayar - subtotal  || 0 | currency }}</h3>
                 <p class="text-muted text-center">
                 <button type="submit"  class="btn btn-md btn-success">Bayar</button>                
                 </p>
@@ -242,21 +245,21 @@
             }
         },
 
-        watch: {
+       watch: {
           post: function() {
             this.$emit('input', this.post);
-            
           }
         },
         //props: ['value'],
-        props: ['value',], 
+        props: ['optionLabel', 'value'],
 
         methods: {
-            loadTotal(){
+            loadTotal:function(){
                 let uri = '/api/totalTrxPembelian';
-                axios.post(uri, {
+                this.axios.post(uri, {
                     ntp: this.noNotaPembelian,
                 }).then(response => {
+                  //alert('mount' + this.noNotaPembelian)
                 this.subtotal = response.data.subTotalBeli;
                 
             });
@@ -281,7 +284,7 @@
                 
             });
             },
-            loadTransaksiPembelian(){
+            loadTransaksiPembelian:function(){
                 let uri = '/api/dataPembelian';
                 this.axios.post(uri, {
                     np: this.noNotaPembelian,
@@ -295,8 +298,8 @@
                 this.axios.delete(`/api/pembelianDelete/${id}`)
                     .then(response => {
                         alert('Berhasil Di Hapus');
-                        this.loadDataTransaksi()
                         this.loadTotal()
+                        this.loadTransaksiPembelian()
                     }).catch(error => {
                     
                 });
@@ -312,6 +315,7 @@
                     totalBeli: this.post1.hrgPokok * this.qtyBeli,
                 })
                     .then((response) => {
+                        this.loadTotal()
                         this.loadTransaksiPembelian()
                         alert('sukses donkkkkkkkk');
                         //this.loadTransaksiPenjualan()
@@ -319,21 +323,20 @@
                     });
                 
             },
-            SimpanTransaksiPembelian() {
-                let uri = '/api/addTransaksi/store';
+            PostPembelian() {
+                let uri = '/api/addPembelian/store';
                 this.axios.post(uri, 
                 {
-                    noNota: this.noNota,
-                    supplier: this.pelanggan,
-                    tglNota: this.tglNota,
-                    totalNota: ((this.subtotal * this.pajak / 100 + this.subtotal) - ((this.subtotal * this.pajak / 100 + this.subtotal) * this.diskon / 100)),
-                    bayarNota: this.totalBayar,
-                    kembalianNota: this.totalBayar - ((this.subtotal * this.pajak / 100 + this.subtotal) - ((this.subtotal * this.pajak / 100 + this.subtotal) * this.diskon / 100)),
+                    noNotaPembelian: this.noNotaPembelian,
+                    idSupplier: this.post.id,
+                    tglNotaPembelian: this.tglPembelian,
+                    totalNotaPembelian: this.subtotal,
                     
                 })
                     .then((response) => {
                         alert('Transaksi Selesai');
-                        this.$router.push({name: 'meja'});
+                        this.$router.go(0);
+                        //this.$router.push({name: 'pembelian'});
                     });
                 
             }

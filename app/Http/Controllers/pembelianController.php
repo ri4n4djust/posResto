@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\PembelianDetail;
+use App\Pembelian;
 
 use Illuminate\Support\Facades\DB;
 
@@ -82,6 +83,47 @@ class pembelianController extends Controller
                 'message' => 'Post Tidak Ditemukan!',
                 'subTotalBeli'    => ''
             ], 404);
+        }
+    }
+
+    public function addTransaksiPembelian(Request $request)
+    {
+        $post = Pembelian::create([
+            'noNotaPembelian'     => $request->input('noNotaPembelian'),
+            'idSupplier'     => $request->input('idSupplier'),
+            'tglNotaPembelian'     => $request->input('tglNotaPembelian'),
+            'totalNotaPembelian'     => $request->input('totalNotaPembelian'),
+        ]);
+
+            if ($post) {
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Post Berhasil Disimpan!',
+                ], 200);
+            } else {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Post Gagal Disimpan!',
+                ], 400);
+            }
+        
+    }
+
+    public function destroy1($id)
+    {
+        $post = PembelianDetail::findOrFail($id);
+        $post->delete();
+
+        if ($post) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Post Berhasil Dihapus!',
+            ], 200);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Post Gagal Dihapus!',
+            ], 500);
         }
     }
 }
