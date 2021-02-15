@@ -2169,28 +2169,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -42293,223 +42271,189 @@ var render = function() {
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "col-md-9" }, [
-          _c("div", { staticClass: "nav-tabs-custom" }, [
+          _c("div", { staticClass: "box box-danger" }, [
             _vm._m(1),
             _vm._v(" "),
-            _c("div", { staticClass: "tab-content" }, [
-              _c(
-                "div",
-                { staticClass: "active tab-pane", attrs: { id: "activity" } },
-                [
-                  _c("div", { staticClass: "box box-danger" }, [
-                    _vm._m(2),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      { staticClass: "box-body" },
-                      [
-                        _c("vue-single-select", {
-                          attrs: {
-                            options: _vm.users,
-                            required: true,
-                            optionLabel: "nmBarang"
-                          },
-                          model: {
-                            value: _vm.post1,
-                            callback: function($$v) {
-                              _vm.post1 = $$v
-                            },
-                            expression: "post1"
-                          }
-                        }),
-                        _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "box-body" },
+              [
+                _c("vue-single-select", {
+                  attrs: {
+                    options: _vm.users,
+                    required: true,
+                    optionLabel: "nmBarang"
+                  },
+                  model: {
+                    value: _vm.post1,
+                    callback: function($$v) {
+                      _vm.post1 = $$v
+                    },
+                    expression: "post1"
+                  }
+                }),
+                _vm._v(" "),
+                _c(
+                  "form",
+                  {
+                    on: {
+                      submit: function($event) {
+                        $event.preventDefault()
+                        return _vm.PostItemPembelian($event)
+                      }
+                    }
+                  },
+                  [
+                    _c("div", { staticClass: "row" }, [
+                      _c("div", { staticClass: "col-xs-3" }, [
                         _c(
-                          "form",
+                          "select",
                           {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.post1,
+                                expression: "post1"
+                              }
+                            ],
+                            staticClass: "form-control",
                             on: {
-                              submit: function($event) {
-                                $event.preventDefault()
-                                return _vm.PostItemPembelian($event)
+                              change: function($event) {
+                                var $$selectedVal = Array.prototype.filter
+                                  .call($event.target.options, function(o) {
+                                    return o.selected
+                                  })
+                                  .map(function(o) {
+                                    var val = "_value" in o ? o._value : o.value
+                                    return val
+                                  })
+                                _vm.post1 = $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
                               }
                             }
                           },
-                          [
-                            _c("div", { staticClass: "row" }, [
-                              _c("div", { staticClass: "col-xs-3" }, [
-                                _c(
-                                  "select",
-                                  {
-                                    directives: [
-                                      {
-                                        name: "model",
-                                        rawName: "v-model",
-                                        value: _vm.post1,
-                                        expression: "post1"
-                                      }
-                                    ],
-                                    staticClass: "form-control",
-                                    on: {
-                                      change: function($event) {
-                                        var $$selectedVal = Array.prototype.filter
-                                          .call($event.target.options, function(
-                                            o
-                                          ) {
-                                            return o.selected
-                                          })
-                                          .map(function(o) {
-                                            var val =
-                                              "_value" in o ? o._value : o.value
-                                            return val
-                                          })
-                                        _vm.post1 = $event.target.multiple
-                                          ? $$selectedVal
-                                          : $$selectedVal[0]
-                                      }
-                                    }
-                                  },
-                                  _vm._l(_vm.users, function(post1) {
-                                    return _c(
-                                      "option",
-                                      {
-                                        key: post1.id,
-                                        domProps: { value: post1 }
-                                      },
-                                      [_vm._v(_vm._s(post1.nmBarang))]
-                                    )
-                                  }),
-                                  0
-                                )
-                              ]),
-                              _vm._v(" "),
-                              _c("div", { staticClass: "col-xs-3" }, [
-                                _c("input", {
-                                  directives: [
-                                    {
-                                      name: "model",
-                                      rawName: "v-model",
-                                      value: _vm.post1.hrgPokok,
-                                      expression: "post1.hrgPokok"
-                                    }
-                                  ],
-                                  staticClass: "form-control",
-                                  attrs: { type: "text", placeholder: "Harga" },
-                                  domProps: { value: _vm.post1.hrgPokok },
-                                  on: {
-                                    input: function($event) {
-                                      if ($event.target.composing) {
-                                        return
-                                      }
-                                      _vm.$set(
-                                        _vm.post1,
-                                        "hrgPokok",
-                                        $event.target.value
-                                      )
-                                    }
-                                  }
-                                })
-                              ]),
-                              _vm._v(" "),
-                              _c("div", { staticClass: "col-xs-3" }, [
-                                _c("input", {
-                                  directives: [
-                                    {
-                                      name: "model",
-                                      rawName: "v-model",
-                                      value: _vm.qtyBeli,
-                                      expression: "qtyBeli"
-                                    }
-                                  ],
-                                  staticClass: "form-control",
-                                  attrs: { type: "text", placeholder: "Qty" },
-                                  domProps: { value: _vm.qtyBeli },
-                                  on: {
-                                    input: function($event) {
-                                      if ($event.target.composing) {
-                                        return
-                                      }
-                                      _vm.qtyBeli = $event.target.value
-                                    }
-                                  }
-                                })
-                              ]),
-                              _vm._v(" "),
-                              _c("div", { staticClass: "col-xs-3" }, [
-                                _c("input", {
-                                  staticClass: "form-control",
-                                  attrs: {
-                                    type: "text",
-                                    name: _vm.subTotal,
-                                    placeholder: "Total"
-                                  },
-                                  domProps: {
-                                    value: _vm.post1.hrgPokok * _vm.qtyBeli || 0
-                                  }
-                                })
-                              ]),
-                              _vm._v(" "),
-                              _vm._m(3)
-                            ])
-                          ]
+                          _vm._l(_vm.users, function(post1) {
+                            return _c(
+                              "option",
+                              { key: post1.id, domProps: { value: post1 } },
+                              [_vm._v(_vm._s(post1.nmBarang))]
+                            )
+                          }),
+                          0
                         )
-                      ],
-                      1
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c(
-                    "table",
-                    { staticClass: "table table-hover table-bordered" },
-                    [
-                      _vm._m(4),
+                      ]),
                       _vm._v(" "),
-                      _c(
-                        "tbody",
-                        _vm._l(_vm.pem, function(pe) {
-                          return _c("tr", { key: pe.id }, [
-                            _c("td", [_vm._v(_vm._s(pe.nmBarang) + " ")]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(pe.qtyBeli))]),
-                            _vm._v(" "),
-                            _c("td", [
-                              _vm._v(_vm._s(_vm._f("currency")(pe.hrgPokok)))
-                            ]),
-                            _vm._v(" "),
-                            _c("td", [
-                              _vm._v(_vm._s(_vm._f("currency")(pe.totalBeli)))
-                            ]),
-                            _vm._v(" "),
-                            _c("td", { staticClass: "text-center" }, [
-                              _c(
-                                "button",
-                                {
-                                  staticClass: "btn btn-sm btn-danger",
-                                  on: {
-                                    click: function($event) {
-                                      $event.preventDefault()
-                                      return _vm.PostDeleteTrx(pe.id)
-                                    }
-                                  }
-                                },
-                                [_vm._v("HAPUS")]
+                      _c("div", { staticClass: "col-xs-3" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.post1.hrgPokok,
+                              expression: "post1.hrgPokok"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          attrs: { type: "text", placeholder: "Harga" },
+                          domProps: { value: _vm.post1.hrgPokok },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.post1,
+                                "hrgPokok",
+                                $event.target.value
                               )
-                            ])
-                          ])
-                        }),
-                        0
-                      )
-                    ]
-                  )
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "tab-pane", attrs: { id: "timeline" } },
-                [_vm._v("\n               isi timeline\n             ")]
-              ),
-              _vm._v(" "),
-              _c("div", { staticClass: "tab-pane", attrs: { id: "settings" } })
-            ])
+                            }
+                          }
+                        })
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-xs-3" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.qtyBeli,
+                              expression: "qtyBeli"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          attrs: { type: "text", placeholder: "Qty" },
+                          domProps: { value: _vm.qtyBeli },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.qtyBeli = $event.target.value
+                            }
+                          }
+                        })
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-xs-3" }, [
+                        _c("input", {
+                          staticClass: "form-control",
+                          attrs: {
+                            type: "text",
+                            name: _vm.subTotal,
+                            placeholder: "Total"
+                          },
+                          domProps: {
+                            value: _vm.post1.hrgPokok * _vm.qtyBeli || 0
+                          }
+                        })
+                      ]),
+                      _vm._v(" "),
+                      _vm._m(2)
+                    ])
+                  ]
+                )
+              ],
+              1
+            )
+          ]),
+          _vm._v(" "),
+          _c("table", { staticClass: "table table-hover table-bordered" }, [
+            _vm._m(3),
+            _vm._v(" "),
+            _c(
+              "tbody",
+              _vm._l(_vm.pem, function(pe) {
+                return _c("tr", { key: pe.id }, [
+                  _c("td", [_vm._v(_vm._s(pe.nmBarang) + " ")]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(pe.qtyBeli))]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(_vm._f("currency")(pe.hrgPokok)))]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(_vm._f("currency")(pe.totalBeli)))]),
+                  _vm._v(" "),
+                  _c("td", { staticClass: "text-center" }, [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-sm btn-danger",
+                        on: {
+                          click: function($event) {
+                            $event.preventDefault()
+                            return _vm.PostDeleteTrx(pe.id)
+                          }
+                        }
+                      },
+                      [_vm._v("HAPUS")]
+                    )
+                  ])
+                ])
+              }),
+              0
+            )
           ])
         ])
       ])
@@ -42783,30 +42727,6 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "box-header with-border" }, [
       _c("h3", { staticClass: "box-title" }, [_vm._v("Pembelian")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("ul", { staticClass: "nav nav-tabs" }, [
-      _c("li", { staticClass: "active" }, [
-        _c("a", { attrs: { href: "#activity", "data-toggle": "tab" } }, [
-          _vm._v("Activity")
-        ])
-      ]),
-      _vm._v(" "),
-      _c("li", [
-        _c("a", { attrs: { href: "#timeline", "data-toggle": "tab" } }, [
-          _vm._v("Timeline")
-        ])
-      ]),
-      _vm._v(" "),
-      _c("li", [
-        _c("a", { attrs: { href: "#settings", "data-toggle": "tab" } }, [
-          _vm._v("Settings")
-        ])
-      ])
     ])
   },
   function() {

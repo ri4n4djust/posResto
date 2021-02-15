@@ -113,7 +113,20 @@ class pembelianController extends Controller
 
     public function destroy1($id)
     {
+        
+
         $post = PembelianDetail::findOrFail($id);
+
+        $kodebarang = $post->kdBarang;
+        $qtybarang = $post->qtyBeli;
+
+        $barang = DB::table('tblBarang')->where('kdBarang', $kodebarang)->first();
+        $stokLama = $barang->stkBarang;
+
+        DB::table('tblBarang')->where('kdBarang', $kodebarang)->update([
+                'stkBarang'     => $stokLama - $qtybarang
+        ]);
+
         $post->delete();
 
         if ($post) {
