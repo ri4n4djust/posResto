@@ -13,7 +13,32 @@ class pembelianController extends Controller
     //
     public function addItemPembelian(Request $request)
     {
-            
+        $brg = DB::table('tblPembelianDetail')
+                ->where('kdBarang', $request->input('kdBarang'))
+                ->where('noNotaPembelian', $request->input('noNotaPembelian'))
+                ->first();
+        if (!$brg ){
+
+            $brng = DB::table('tblPembelianDetail')
+                ->where('kdBarang', $request->input('kdBarang'))
+                ->where('noNotaPembelian', $request->input('noNotaPembelian'))
+                ->get();
+            $qtyB = $brng->qtyBeli ;
+
+            DB::table('tblPembelianDetail')
+                ->where('kdBarang', $request->input('kdBarang'))
+                ->where('noNotaPembelian', $request->input('noNotaPembelian'))
+                ->update([
+                    'qtyBeli' => $qtyB + $request->input('qtyBeli'),
+                    ]);
+
+                    return response()->json([
+                        'success' => true,
+                        'message' => 'Post Berhasil Disimpan!',
+                    ], 200);
+
+        } else {
+
             $post = PembelianDetail::create([
                 'noNotaPembelian'     => $request->input('noNotaPembelian'),
                 'kdBarang'     => $request->input('kdBarang'),
@@ -29,17 +54,11 @@ class pembelianController extends Controller
                 'stkBarang'     => $stokLama + $request->input('qtyBeli')
             ]);
 
-
-            if ($post) {
                 return response()->json([
                     'success' => true,
                     'message' => 'Post Berhasil Disimpan!',
                 ], 200);
-            } else {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Post Gagal Disimpan!',
-                ], 400);
+                
             }
         
     }
