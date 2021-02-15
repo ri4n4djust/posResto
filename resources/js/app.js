@@ -50,6 +50,10 @@ import EditMenuComponent from './components/menu/Edit.vue';
 
 import CreatePembelian from './components/PembelianCreate.vue';
 
+import LaporanPenjualanComponent from './components/laporan/laporanPenjualan.vue';
+import LaporanPembelianComponent from './components/laporan/laporanPembelian.vue';
+import StokOpnameComponent from './components/laporan/laporanStokOpname.vue';
+
 Vue.use(VueCurrencyFilter,
     {
       symbol : 'Rp.',
@@ -134,6 +138,23 @@ const routes = [
         name: 'pembelian',
         path: '/pembelian',
         component: CreatePembelian
+    },
+
+    //=======Laporan
+    {
+        name: 'laporanpenjualan',
+        path: '/laporanpenjualan',
+        component: LaporanPenjualanComponent
+    },
+    {
+        name: 'laporanpembelian',
+        path: '/laporanpembelian',
+        component: LaporanPembelianComponent
+    },
+    {
+        name: 'laporanstokopname',
+        path: '/laporanstokopname',
+        component: StokOpnameComponent
     }
 ];
 

@@ -44,6 +44,7 @@
                             
 
                             <div class="form-group">
+                                <router-link :to="{ name: 'menu' }" class="btn btn-primary btn-success">KEMBALI</router-link>
                                 <button type="submit" class="btn btn-md btn-success">UPDATE</button>
                                 <button type="reset" class="btn btn-md btn-danger">RESET</button>
                             </div>
