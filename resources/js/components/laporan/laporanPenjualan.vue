@@ -28,11 +28,11 @@
                                 </tbody>
                             </table>
 
-                            <data-table
-                                url="/api/posts"
-                                :per-page="perPage"
-                                :columns="columns">
-                            </data-table>
+                        
+                            <div>
+                                <data-table v-bind="bindings"/>
+                            </div>
+                        
 
                         </div>
 
@@ -43,40 +43,49 @@
 
 <script>
 import Vue from 'vue';
-import DataTable from 'laravel-vue-datatable';
-Vue.use(DataTable);
+import "@andresouzaabreu/vue-data-table/dist/DataTable.css";
+import DataTable from "@andresouzaabreu/vue-data-table";
+
+//import datas from '';
+
+Vue.component("data-table", DataTable);
 
     export default {
 
         data() {
             return {
                 posts: [],
-                perPage: ['10', '25', '50'],
-                columns: [
-                    {
-                        label: 'Kode Barang',
-                        name: 'kdBarang',
-                        filterable: true,
-                    },
-                    {
-                        label: 'Nama Barang',
-                        name: 'nmBarang',
-                        filterable: true,
-                    },
-                    {
-                        label: 'Harga',
-                        name: 'hrgPokok',
-                        filterable: true,
-                    },
-                    {
-                        label: 'Action',
-                        name: 'View',
-                        filterable: false,
-                    },
-                ]
+                
                 
             }
 
+        },
+        computed: {
+            bindings() {
+                return {
+                    columns: [
+                        {
+                            key: "kdBarang",
+                        },
+                        {
+                            key: "nmBarang",
+                            title: "Nama Barang",
+                            sortable: false,
+                        },
+                        {
+                            key: "hrgPokok",
+                            sortable: false,
+                            searchable: false,
+                            /* this will make this column appear to the right of the table
+                            since its index is greater than others*/
+                            index: 100,
+                        },
+                        
+                    ],
+                    data: [],
+                    /* other props...*/
+                }
+            }
         },
         created() {
             let uri = '/api/posts';
