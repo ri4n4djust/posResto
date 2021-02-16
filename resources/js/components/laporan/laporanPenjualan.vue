@@ -28,9 +28,11 @@
                                 </tbody>
                             </table>
 
-                            <div id="vue-root">
-                                <datatable :columns="columns" :data="rows" class="table table-hover table-bordered"></datatable>
-                            </div>
+                            <data-table
+                                url="/api/posts"
+                                :per-page="perPage"
+                                :columns="columns">
+                            </data-table>
 
                         </div>
 
@@ -41,51 +43,38 @@
 
 <script>
 import Vue from 'vue';
-import { VuejsDatatableFactory } from 'vuejs-datatable';
-
-Vue.use( VuejsDatatableFactory );
+import DataTable from 'laravel-vue-datatable';
+Vue.use(DataTable);
 
     export default {
-        components: { VuejsDatatableFactory},
+
         data() {
             return {
                 posts: [],
+                perPage: ['10', '25', '50'],
                 columns: [
-                    {label: 'id', field: 'id'},
-                    {label: 'Username', field: 'user.username', headerClass: 'class-in-header second-class'},
-                    {label: 'First Name', field: 'user.firstName'},
-                    {label: 'Last Name', field: 'user.lastName'},
-                    {label: 'Email', field: 'user.email'},
-                    {label: 'Address', representedAs: ({address, city, state}) => `${address}<br />${city}, ${state}`, interpolate: true}
-                ],
-                rows: [
-                    //...
                     {
-                        id: 1,
-                        user: {
-                            username: "dprice0",
-                            firstName: "Daniel",
-                            lastName: "Price",
-                            email: "dprice0@blogs.com"
-                        },
-                        address: "3 Toban Park",
-                        city: "Pocatello",
-                        state: "Idaho"
+                        label: 'Kode Barang',
+                        name: 'kdBarang',
+                        filterable: true,
                     },
                     {
-                        id: 2,
-                        user: {
-                            username: "hahah",
-                            firstName: "Daniel",
-                            lastName: "Price",
-                            email: "dprice0@blogs.com"
-                        },
-                        address: "3 Toban Park",
-                        city: "Pocatello",
-                        state: "Idaho"
-                    }
-                    //...
+                        label: 'Nama Barang',
+                        name: 'nmBarang',
+                        filterable: true,
+                    },
+                    {
+                        label: 'Harga',
+                        name: 'hrgPokok',
+                        filterable: true,
+                    },
+                    {
+                        label: 'Action',
+                        name: 'View',
+                        filterable: false,
+                    },
                 ]
+                
             }
 
         },
