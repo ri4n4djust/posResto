@@ -4,8 +4,22 @@
                         <h3>Laporan Penjualan</h3>
                             
                             <div>
-                                <data-table v-bind="bindings"/>
+                                <data-table v-bind="bindings" @actionTriggered="handleAction"/>
+                                <template>
+                                    <div class="action-buttons">
+                                        <button class="btn btn-outline-success" @click="handleAction('view')">
+                                            <i class="fa fa-eye"></i>
+                                        </button>
+                                        <button class="btn btn-outline-primary" @click="handleAction('edit')">
+                                            <i class="fa fa-edit"></i>
+                                        </button>
+                                        <button class="btn btn-outline-dark" @click="handleAction('delete')">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </template>
                             </div>
+                            
                         
 
                         </div>
@@ -20,7 +34,7 @@ import Vue from 'vue';
 import "@andresouzaabreu/vue-data-table/dist/DataTable.css";
 import DataTable from "@andresouzaabreu/vue-data-table";
 
-
+import ActionButtons from './componentAksi.vue';
 Vue.component("data-table", DataTable);
     export default {
         data() {
@@ -32,6 +46,8 @@ Vue.component("data-table", DataTable);
         computed: {
             bindings() {
                 return {
+                    actionMode: "multiple",
+                    name: "ActionButtons",
                     columns: [
                         {
                             key: "kdBarang",
@@ -43,16 +59,33 @@ Vue.component("data-table", DataTable);
                         },
                         {
                             key: "hrgPokok",
+                            title: "Harga Pokok",
                             sortable: false,
                             searchable: false,
                             /* this will make this column appear to the right of the table
                             since its index is greater than others*/
-                            index: 100,
+                            
+                        },
+                        {
+                            title: "Action",
+                            sortable: false,
+                            searchable: false,
+                            /* this will make this column appear to the right of the table
+                            since its index is greater than others*/
+                           
+                            component: ActionButtons,
+                            index:100,
                         },
                         
                     ],
                     data: this.posts,
                     /* other props...*/
+                    props: {
+                        data: {
+                            type: Object,
+                            required: true,
+                        },
+                    },
                 }
             }
         },
@@ -71,7 +104,13 @@ Vue.component("data-table", DataTable);
                     }).catch(error => {
                     alert('system error!');
                 });
+            },
+            
+            handleAction(actionName, data) {
+            console.log(actionName, data);
+            window.alert("check out the console to see the logs");
             }
-        }
+        },
+        
     }
 </script>
