@@ -8844,7 +8844,7 @@ __webpack_require__.r(__webpack_exports__);
   name: "ActionButtons",
   data: function data() {
     return {
-      posts: posts,
+      posts: [],
       data: this.posts
     };
   },
@@ -8857,18 +8857,28 @@ __webpack_require__.r(__webpack_exports__);
     });
   },
   methods: {
-    PostDelete: function PostDelete(id, index) {
+    loadData: function loadData() {
       var _this2 = this;
 
-      this.axios["delete"]("/api/posts/".concat(id)).then(function (response) {
-        _this2.posts.splice(index, 1);
-      })["catch"](function (error) {
-        alert('system error!');
+      var uri = '/api/posts';
+      this.axios.get(uri).then(function (response) {
+        _this2.posts = response.data.data;
       });
     },
-    handleAction: function handleAction(actionName, data) {
-      console.log(actionName, data);
-      window.alert("check out the console to see the logs" + this.posts.id);
+    EditAction: function EditAction() {
+      var path = '/barang/edit/' + this.data.id;
+      this.$router.push(path); //alert('edit' + this.data.id)
+      //this.$store.commit(edit, this.data)
+    },
+    ViewAction: function ViewAction() {
+      alert('View' + this.data.id); //this.$store.commit(edit, this.data)
+    },
+    DeleteAction: function DeleteAction(index) {
+      this.axios["delete"]('/api/posts/' + this.data.id); //this.posts = response.data.data;
+      //this.loadData()
+
+      this.posts.splice(index, 1);
+      alert('Sukses Delete' + this.data.nmbarang); //this.$store.commit(edit, this.data)
     }
   },
   props: {
@@ -8897,6 +8907,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _andresouzaabreu_vue_data_table__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @andresouzaabreu/vue-data-table */ "./node_modules/@andresouzaabreu/vue-data-table/dist/DataTable.umd.js");
 /* harmony import */ var _andresouzaabreu_vue_data_table__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_andresouzaabreu_vue_data_table__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _componentAksi_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./componentAksi.vue */ "./resources/js/components/laporan/componentAksi.vue");
+//
 //
 //
 //
@@ -8997,10 +9008,6 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component("data-table", _andresouzaab
       })["catch"](function (error) {
         alert('system error!');
       });
-    },
-    handleAction: function handleAction(actionName, data) {
-      console.log(actionName, data);
-      window.alert("check out the console to see the logs");
     }
   }
 });
@@ -49515,7 +49522,7 @@ var render = function() {
         staticClass: "btn btn-outline-success",
         on: {
           click: function($event) {
-            return _vm.handleAction("view")
+            return _vm.ViewAction("view")
           }
         }
       },
@@ -49528,7 +49535,7 @@ var render = function() {
         staticClass: "btn btn-outline-primary",
         on: {
           click: function($event) {
-            return _vm.handleAction("edit")
+            return _vm.EditAction("edit")
           }
         }
       },
@@ -49541,7 +49548,7 @@ var render = function() {
         staticClass: "btn btn-outline-dark",
         on: {
           click: function($event) {
-            return _vm.handleAction("delete")
+            return _vm.DeleteAction("delete")
           }
         }
       },

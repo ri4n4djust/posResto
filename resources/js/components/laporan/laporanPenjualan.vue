@@ -4,6 +4,7 @@
                         <h3>Laporan Penjualan</h3>
                             
                             <div>
+                                
                                 <data-table v-bind="bindings" @actionTriggered="handleAction"/>
                                 <template>
                                     <div class="action-buttons">
@@ -72,7 +73,7 @@ Vue.component("data-table", DataTable);
                             searchable: false,
                             /* this will make this column appear to the right of the table
                             since its index is greater than others*/
-                           
+                            
                             component: ActionButtons,
                             index:100,
                         },
@@ -106,10 +107,7 @@ Vue.component("data-table", DataTable);
                 });
             },
             
-            handleAction(actionName, data) {
-            console.log(actionName, data);
-            window.alert("check out the console to see the logs");
-            }
+           
         },
         
     }
