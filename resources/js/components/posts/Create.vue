@@ -233,6 +233,7 @@
                         this.loadKdBarang()
                         this.loadData()
                         //this.resetForm()
+                        alert('sukses Tambah Barang')
                         
                     }).catch(error => {
                     this.validation = error.response.data.data;
