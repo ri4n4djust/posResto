@@ -124,11 +124,17 @@ class salesController extends Controller
         } else {
 
             $post = Barang::whereId($request->input('id'))->update([
+                'kdBarang'     => $request->input('kdBarang'),
                 'nmBarang'     => $request->input('nmBarang'),
                 'hrgPokok'   => $request->input('hrgPokok'),
                 'hrgJual'   => $request->input('hrgJual'),
                 'stkBarang'   => $request->input('stkBarang'),
-                'deskripsi'   => $request->input('deskripsi')
+                'deskripsi'   => $request->input('deskripsi'),
+                'ktgBarang' => $request->input('ktgBarang'),
+                'satuanBarang' => $request->input('satuanBarang'),
+                'merek' => $request->input('merek'),
+                'qtyMin' => $request->input('qtyMin'),
+                'qtyMax' => $request->input('qtyMax')
             ]);
 
 

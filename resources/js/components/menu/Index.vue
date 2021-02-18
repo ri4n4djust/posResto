@@ -50,12 +50,14 @@
         methods: {
             PostDelete(id, index)
             {
+            if(confirm("Do you really want to delete?")){
                 this.axios.delete(`/api/menu/${id}`)
                     .then(response => {
                         this.posts.splice(index, 1);
                     }).catch(error => {
                     alert('system error!');
                 });
+            }
             }
         }
     }

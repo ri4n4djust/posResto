@@ -6,11 +6,13 @@
 
                         <form @submit.prevent="PostUpdate">
 
-                            <div class="form-group">
-                                <label>Kode</label>
-                                <input type="text" class="form-control" v-model="post.kdBarang"
-                                       disabled>
-                            </div>
+                            <div class="col-md-6">
+          <!-- general form elements -->
+                <div class="box box-primary">
+                            
+                             <div class="form-group">
+                                <input type="text" class="form-control" :value="post.kdBarang" :name="kdBarang" disabled >
+                             </div>
                             <div class="form-group">
                                 <label>TITLE</label>
                                 <input type="text" class="form-control" v-model="post.nmBarang"
@@ -21,6 +23,7 @@
                                     </div>
                                 </div>
                             </div>
+
                             <div class="form-group">
                                 <label>Harga Pokok</label>
                                 <input type="text" class="form-control" v-model="post.hrgPokok"
@@ -31,6 +34,7 @@
                                     </div>
                                 </div>
                             </div>
+
                             <div class="form-group">
                                 <label>Harga Jual</label>
                                 <input type="text" class="form-control" v-model="post.hrgJual"
@@ -41,8 +45,27 @@
                                     </div>
                                 </div>
                             </div>
+
                             <div class="form-group">
-                                <label>Stok Barang</label>
+                            <label>Select Kategori:</label>
+                            <select class='form-control' v-model='post.ktgBarang'>
+                                <option value='0' >Select Kategori</option>
+                                <option v-for='data in countries' :value='data.kodeKtg' :key='data.id'>{{ data.namaKtg }}</option>
+                            </select>
+                        </div>
+
+                </div>
+            </div>
+    
+
+      
+        <!-- left column -->
+            <div class="col-md-6">
+          <!-- general form elements -->
+                <div class="box box-info">
+
+                            <div class="form-group">
+                                <label>Stok</label>
                                 <input type="text" class="form-control" v-model="post.stkBarang"
                                        placeholder="Stok Barang">
                                 <div v-if="validation.stkBarang">
@@ -51,8 +74,49 @@
                                     </div>
                                 </div>
                             </div>
+
                             <div class="form-group">
-                                <label>Deskripsi</label>
+                                <label>Satuan</label>
+                                <input type="text" class="form-control" v-model="post.satuanBarang">
+                                <div v-if="validation.satuanBarang">
+                                    <div class="alert alert-danger mt-1" role="alert">
+                                        {{ validation.satuanBarang[0] }}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>QTY Min</label>
+                                <input type="text" class="form-control" v-model="post.qtyMin">
+                                <div v-if="validation.qtyMin">
+                                    <div class="alert alert-danger mt-1" role="alert">
+                                        {{ validation.qtyMin[0] }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>QTY Max</label>
+                                <input type="text" class="form-control" v-model="post.qtyMax">
+                                <div v-if="validation.qtyMax">
+                                    <div class="alert alert-danger mt-1" role="alert">
+                                        {{ validation.qtyMax[0] }}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Merek</label>
+                                <input type="text" class="form-control" v-model="post.merek">
+                                <div v-if="validation.merek">
+                                    <div class="alert alert-danger mt-1" role="alert">
+                                        {{ validation.merek[0] }}
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label>KONTEN</label>
                                 <textarea class="form-control" v-model="post.deskripsi" rows="5"
                                           placeholder="Masukkan Konten"></textarea>
                                 <div v-if="validation.deskripsi">
@@ -61,23 +125,15 @@
                                     </div>
                                 </div>
                             </div>
-
-                            <div class="form-group">
-                            <label>Select Country:</label>
-                            <select class='form-control' v-model='post.ktgBarang' selected >
-                                <option value='0' >Select Country</option>
-                                <option  v-for='data in countries' :value='data.kodeKtg' :key='data.id'>{{ data.namaKtg }}</option>
-                            </select>
-                            
-                        </div>
                         
-                   <input type="text" class="form-control"  v-model="post.ktgBarang">
-
-
+                                         
+                    
+                </div>
+            </div>
                             <div class="form-group">
                                 <button type="submit" class="btn btn-md btn-success">UPDATE </button>
-                                <button @click.prevent="PostDeleteTrx(post.id)" class="btn btn-sm btn-danger">HAPUS</button>
-                                <button type="reset" class="btn btn-md btn-danger">RESET</button>
+                                <button @click.prevent="PostDeleteTrx(post.id)" class="btn btn-md btn-danger">HAPUS</button>
+                                <router-link :to="{ name: 'posts' }" class="btn btn-primary btn-success">KEMBALI</router-link>
                             
                             </div>
 
@@ -126,6 +182,7 @@
             },
             PostDeleteTrx(id)
             {
+            if(confirm("Do you really want to delete?")){
                this.axios.delete(`/api/posts/${id}`)
                     .then(response => {
                         this.$router.push({name: 'posts'});
@@ -133,6 +190,7 @@
                     }).catch(error => {
                     alert('system error!');
                 });
+            }
             },
            
         },

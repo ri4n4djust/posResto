@@ -1,11 +1,39 @@
 <template>
     <div >
-        <button class="btn btn-outline-success" @click="ViewAction('view')">
+        <button class="btn btn-outline-success" @click="showModalDetail = true">
             <i class="fa fa-eye"></i>
         </button>
-        <button class="btn btn-outline-primary" @click="EditAction('edit')">
+        <button class="btn btn-outline-primary" @click="EditAction('edit')" >
             <i class="fa fa-edit"></i>
         </button>
+                        
+                        <div v-if="showModalDetail">
+                            <transition name="modal">
+                            <div class="modal-mask">
+                                <div class="modal-wrapper">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" @click="showModalDetail=false">
+                                        <span aria-hidden="true">&times;</span>
+                                        </button>
+                                        <h4 class="modal-title">Add Item</h4>
+                                    </div>
+                                    <div class="modal-body">
+
+                                        detail
+
+                                        {{data.id}} {{data.nmBarang}}
+                                        
+
+                                    </div>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+                            </transition>
+                        </div>
+        
        
     </div>
 </template>
@@ -15,7 +43,8 @@ export default {
     data() {
             return {
                 posts: [],
-                //data: this.posts,
+                showModalDetail: false,
+                data: this.posts,
             }
 
         },

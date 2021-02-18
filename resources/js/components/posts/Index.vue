@@ -11,19 +11,17 @@
                                 <data-table v-bind="bindings" @actionTriggered="ActionButtons"/>
                                 
                             </div>
-                            
-                        
+                    
 
-                        </div>
 
-                
+                    </div>
 
 </template>
 
 
 <script>
 import Vue from 'vue';
-import "@andresouzaabreu/vue-data-table/dist/DataTable.css";
+
 import DataTable from "@andresouzaabreu/vue-data-table";
 
 import ActionButtons from './componentAksi.vue';
@@ -32,6 +30,9 @@ Vue.component("data-table", DataTable);
         data() {
             return {
                 posts: [],
+                ActionButtons: null,
+                actionTriggered: {},
+                //showModal: false,
             }
 
         },
@@ -39,7 +40,7 @@ Vue.component("data-table", DataTable);
             bindings() {
                 return {
                     actionMode: "multiple",
-                    //name: "ActionButtons",
+                    name: "ActionButtons",
                     columns: [
                         {
                             key: "kdBarang",
@@ -50,8 +51,14 @@ Vue.component("data-table", DataTable);
                             sortable: false,
                         },
                         {
-                            key: "hrgPokok",
+                            key: 'hrgPokok',
                             title: "Harga Pokok",
+                            sortable: false,
+                            searchable: false,
+                        },
+                        {
+                            key: "hrgJual",
+                            title: "Harga Jual",
                             sortable: false,
                             searchable: false,
                         },
@@ -70,6 +77,24 @@ Vue.component("data-table", DataTable);
                         {
                             key: "ktgBarang",
                             title: "Kategori",
+                            sortable: false,
+                            searchable: false,
+                        },
+                        {
+                            key: "qtyMin",
+                            title: "Qty Min",
+                            sortable: false,
+                            searchable: false,
+                        },
+                        {
+                            key: "qtyMax",
+                            title: "Qty Max",
+                            sortable: false,
+                            searchable: false,
+                        },
+                        {
+                            key: "deskripsi",
+                            title: "Keterangan",
                             sortable: false,
                             searchable: false,
                         },
@@ -106,21 +131,17 @@ Vue.component("data-table", DataTable);
                 
             });
             },
-            intervalFetchData1: function () {
-            setInterval(() => {    
-                this.bindings();
-                }, 1000);    
-            },
+            
             intervalFetchData: function () {
             setInterval(() => {    
                 this.loadData();
-                }, 1000);    
+                }, 3000);    
             }
         },
         mounted () {
-            this.intervalFetchData1();
-            this.intervalFetchData();
-            this.bindings()
+            //this.intervalFetchData1();
+            //this.intervalFetchData();
+            //this.bindings()
             this.loadData()
         },
 

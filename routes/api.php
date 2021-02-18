@@ -89,3 +89,6 @@ Route::get('/komposisi', 'komposisiController@index');
 Route::get('/komposisi/detail/{id}', 'komposisiController@detail');
 Route::post('/komposisi/store', 'komposisiController@store');
 Route::delete('/komposisi/{id?}', 'komposisiController@destroy');
+
+//=====Laporan Penjualan
+Route::get('/penjualan', 'penjualanController@index');

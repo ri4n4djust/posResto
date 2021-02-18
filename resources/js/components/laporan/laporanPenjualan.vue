@@ -2,16 +2,28 @@
 
                     <div class="card-body">
                         <h3>Laporan Penjualan</h3>
+
+                        <form  @submit.prevent="PostItemPembelian" >
+                        <div class="row">
+                            
+                            <div class="col-xs-3">
+                            <input type="text" v-model="hrgPokok" class="form-control" placeholder="Harga">
+                            </div>
+                            <div class="col-xs-3">
+                            <input type="text" v-model="qtyBeli" class="form-control" placeholder="Qty">
+                            </div>
+                            <div class="col-xs-3">
+                            <button type="submit" class="btn btn-md btn-success">Add</button>                        
+                            </div>
+                        </div>
+                        
+                        </form>
                             
                             <div>
-                                
                                 <data-table v-bind="bindings" @actionTriggered="ActionButtons"/>
-                                
                             </div>
-                            
-                        
 
-                        </div>
+                    </div>
 
                 
 
@@ -39,16 +51,41 @@ Vue.component("data-table", DataTable);
                     //name: "ActionButtons",
                     columns: [
                         {
-                            key: "kdBarang",
-                        },
-                        {
-                            key: "nmBarang",
-                            title: "Nama Barang",
+                            key: "noNota",
+                            title: "No Nota",
                             sortable: false,
                         },
                         {
-                            key: "hrgPokok",
-                            title: "Harga Pokok",
+                            key: "pelangganNota",
+                            title: "Pelanggan",
+                            sortable: false,
+                        },
+                        {
+                            key: "tglNota",
+                            title: "Tgl Nota",
+                            sortable: false,
+                        },
+                        {
+                            key: "totalNota",
+                            title: "Total",
+                            sortable: false,
+                            searchable: false,
+                            /* this will make this column appear to the right of the table
+                            since its index is greater than others*/
+                            
+                        },
+                        {
+                            key: "bayarNota",
+                            title: "Bayar",
+                            sortable: false,
+                            searchable: false,
+                            /* this will make this column appear to the right of the table
+                            since its index is greater than others*/
+                            
+                        },
+                        {
+                            key: "kembalianNota",
+                            title: "Kembalian",
                             sortable: false,
                             searchable: false,
                             /* this will make this column appear to the right of the table
@@ -74,7 +111,7 @@ Vue.component("data-table", DataTable);
             }
         },
         created() {
-            let uri = '/api/posts';
+            let uri = '/api/penjualan';
             this.axios.get(uri).then(response => {
                 this.posts = response.data.data;
             });
@@ -82,7 +119,7 @@ Vue.component("data-table", DataTable);
         methods: {
             PostDelete(id, index)
             {
-                this.axios.delete(`/api/posts/${id}`)
+                this.axios.delete(`/api/penjualan/${id}`)
                     .then(response => {
                         this.posts.splice(index, 1);
                     }).catch(error => {

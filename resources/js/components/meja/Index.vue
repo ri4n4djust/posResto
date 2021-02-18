@@ -5,7 +5,7 @@
                         <router-link :to="{ name: 'createMeja' }" class="btn btn-md btn-success">TAMBAH MEJA</router-link>
                         </h3>
 
-                        <div v-for="(post, index) in posts" :key="post.id" class="col-lg-3 col-xs-6" >
+                        <div v-for="post in posts" :key="post.id" class="col-lg-3 col-xs-6" >
                         <!-- small box -->
                         <div class="small-box bg-aqua">
                             <div class="inner">
@@ -28,7 +28,6 @@
                             </div>
 
                                 
-                                <a @click.prevent="PostDelete(post.id, index)" class="btn btn-sm btn-danger"></a>
                         </div>
                         </div>
 

@@ -9,9 +9,9 @@
           <!-- general form elements -->
                 <div class="box box-primary">
                             
-                             
-                                <input type="hidden" class="form-control" :value="post.kdBarang" :name="kdBarang" disabled >
-
+                             <div class="form-group">
+                                <input type="text" class="form-control" :value="post.kdBarang" :name="kdBarang" disabled >
+                             </div>
                             <div class="form-group">
                                 <label>TITLE</label>
                                 <input type="text" class="form-control" v-model="post.nmBarang"
@@ -170,7 +170,6 @@
                                     <td class="text-center">
                                         <router-link :to="{name: 'detail', params: { id: post1.id }}" class="btn btn-sm btn-primary">Detail</router-link>
                                         <router-link :to="{name: 'edit', params: { id: post1.id }}" class="btn btn-sm btn-primary">EDIT</router-link>
-                                        <button @click.prevent="PostDelete(post1.id, index)" class="btn btn-sm btn-danger">HAPUS</button>
                                     </td>
                                 </tr>
                                 </tbody>
