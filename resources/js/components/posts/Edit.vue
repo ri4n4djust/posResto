@@ -76,7 +76,9 @@
 
                             <div class="form-group">
                                 <button type="submit" class="btn btn-md btn-success">UPDATE </button>
+                                <button @click.prevent="PostDeleteTrx(post.id)" class="btn btn-sm btn-danger">HAPUS</button>
                                 <button type="reset" class="btn btn-md btn-danger">RESET</button>
+                            
                             </div>
 
                         </form>
@@ -121,6 +123,16 @@
                     .then(function (response) {
                         this.countries = response.data;
                     }.bind(this));
+            },
+            PostDeleteTrx(id)
+            {
+               this.axios.delete(`/api/posts/${id}`)
+                    .then(response => {
+                        this.$router.push({name: 'posts'});
+                        alert('Sukses Hapus' + this.post.nmBarang);
+                    }).catch(error => {
+                    alert('system error!');
+                });
             },
            
         },

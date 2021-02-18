@@ -5,20 +5,8 @@
                             
                             <div>
                                 
-                                <data-table v-bind="bindings" @actionTriggered="handleAction"/>
-                                <template>
-                                    <div class="action-buttons">
-                                        <button class="btn btn-outline-success" @click="handleAction('view')">
-                                            <i class="fa fa-eye"></i>
-                                        </button>
-                                        <button class="btn btn-outline-primary" @click="handleAction('edit')">
-                                            <i class="fa fa-edit"></i>
-                                        </button>
-                                        <button class="btn btn-outline-dark" @click="handleAction('delete')">
-                                            <i class="fa fa-trash"></i>
-                                        </button>
-                                    </div>
-                                </template>
+                                <data-table v-bind="bindings" @actionTriggered="ActionButtons"/>
+                                
                             </div>
                             
                         
@@ -48,7 +36,7 @@ Vue.component("data-table", DataTable);
             bindings() {
                 return {
                     actionMode: "multiple",
-                    name: "ActionButtons",
+                    //name: "ActionButtons",
                     columns: [
                         {
                             key: "kdBarang",
@@ -81,12 +69,7 @@ Vue.component("data-table", DataTable);
                     ],
                     data: this.posts,
                     /* other props...*/
-                    props: {
-                        data: {
-                            type: Object,
-                            required: true,
-                        },
-                    },
+                    
                 }
             }
         },

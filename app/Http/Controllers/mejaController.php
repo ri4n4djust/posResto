@@ -54,7 +54,8 @@ class mejaController extends Controller
 
             $post = Meja::create([
                 'noMeja'     => $request->input('noMeja'),
-                'paxMeja'   => $request->input('paxMeja')
+                'paxMeja'   => $request->input('paxMeja'),
+                'status'   => 0
             ]);
 
 
