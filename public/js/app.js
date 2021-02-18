@@ -10722,9 +10722,21 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component("data-table", _andresouzaab
           title: "Harga Pokok",
           sortable: false,
           searchable: false
-          /* this will make this column appear to the right of the table
-          since its index is greater than others*/
-
+        }, {
+          key: "stkBarang",
+          title: "Stok",
+          sortable: false,
+          searchable: false
+        }, {
+          key: "satuanBarang",
+          title: "Satuan",
+          sortable: false,
+          searchable: false
+        }, {
+          key: "ktgBarang",
+          title: "Kategori",
+          sortable: false,
+          searchable: false
         }, {
           title: "Action",
           sortable: false,
@@ -10742,23 +10754,41 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component("data-table", _andresouzaab
     }
   },
   created: function created() {
-    var _this = this;
-
-    var uri = '/api/posts';
-    this.axios.get(uri).then(function (response) {
-      _this.posts = response.data.data;
-    });
+    this.loadData(); //this.pollData()
+    //setInterval(this.loadData(),60000)
   },
   methods: {
-    PostDelete: function PostDelete(id, index) {
+    loadData: function loadData() {
+      var _this = this;
+
+      var uri = '/api/posts';
+      this.axios.get(uri).then(function (response) {
+        _this.posts = response.data.data;
+      });
+    },
+    intervalFetchData1: function intervalFetchData1() {
       var _this2 = this;
 
-      this.axios["delete"]("/api/posts/".concat(id)).then(function (response) {
-        _this2.posts.splice(index, 1);
-      })["catch"](function (error) {
-        alert('system error!');
-      });
+      setInterval(function () {
+        _this2.bindings();
+      }, 1000);
+    },
+    intervalFetchData: function intervalFetchData() {
+      var _this3 = this;
+
+      setInterval(function () {
+        _this3.loadData();
+      }, 1000);
     }
+  },
+  mounted: function mounted() {
+    this.intervalFetchData1();
+    this.intervalFetchData();
+    this.bindings();
+    this.loadData();
+  },
+  beforeDestroy: function beforeDestroy() {
+    clearInterval(this.posts);
   }
 });
 

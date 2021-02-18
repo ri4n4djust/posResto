@@ -54,9 +54,24 @@ Vue.component("data-table", DataTable);
                             title: "Harga Pokok",
                             sortable: false,
                             searchable: false,
-                            /* this will make this column appear to the right of the table
-                            since its index is greater than others*/
-                            
+                        },
+                        {
+                            key: "stkBarang",
+                            title: "Stok",
+                            sortable: false,
+                            searchable: false,
+                        },
+                        {
+                            key: "satuanBarang",
+                            title: "Satuan",
+                            sortable: false,
+                            searchable: false,
+                        },
+                        {
+                            key: "ktgBarang",
+                            title: "Kategori",
+                            sortable: false,
+                            searchable: false,
                         },
                         {
                             title: "Action",
@@ -77,23 +92,40 @@ Vue.component("data-table", DataTable);
             }
         },
         created() {
-            let uri = '/api/posts';
-            this.axios.get(uri).then(response => {
-                this.posts = response.data.data;
-            });
+            this.loadData()
+            //this.pollData()
+            //setInterval(this.loadData(),60000)
+            
         },
         methods: {
-            PostDelete(id, index)
-            {
-                this.axios.delete(`/api/posts/${id}`)
-                    .then(response => {
-                        this.posts.splice(index, 1);
-                    }).catch(error => {
-                    alert('system error!');
-                });
-            },
             
-           
+            loadData:function(){
+                let uri = '/api/posts';
+                this.axios.get(uri).then(response => {
+                this.posts = response.data.data;
+                
+            });
+            },
+            intervalFetchData1: function () {
+            setInterval(() => {    
+                this.bindings();
+                }, 1000);    
+            },
+            intervalFetchData: function () {
+            setInterval(() => {    
+                this.loadData();
+                }, 1000);    
+            }
+        },
+        mounted () {
+            this.intervalFetchData1();
+            this.intervalFetchData();
+            this.bindings()
+            this.loadData()
+        },
+
+        beforeDestroy () {
+            clearInterval(this.posts)
         },
         
     }
