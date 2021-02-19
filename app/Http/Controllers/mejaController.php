@@ -297,6 +297,8 @@ class mejaController extends Controller
             'noMeja'     => $request->input('noMeja'),
             'tglNota'     => $request->input('tglNota'),
             'totalNota'     => $request->input('totalNota'),
+            'taxNota'     => $request->input('taxNota'),
+            'diskonNota'     => $request->input('diskonNota'),
             'bayarNota'     => $request->input('bayarNota'),
             'kembalianNota'     => $request->input('kembalianNota'),
             'pelangganNota'     => $request->input('pelanggan'),

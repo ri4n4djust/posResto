@@ -477,6 +477,8 @@
                     noMeja: this.post.id,
                     pelanggan: this.pelanggan,
                     tglNota: this.tglNota,
+                    taxNota: (this.subtotal * this.pajak / 100 + this.subtotal),
+                    diskonNota: ((this.subtotal * this.pajak / 100 + this.subtotal) * this.diskon / 100),
                     totalNota: ((this.subtotal * this.pajak / 100 + this.subtotal) - ((this.subtotal * this.pajak / 100 + this.subtotal) * this.diskon / 100)),
                     bayarNota: this.totalBayar,
                     kembalianNota: this.totalBayar - ((this.subtotal * this.pajak / 100 + this.subtotal) - ((this.subtotal * this.pajak / 100 + this.subtotal) * this.diskon / 100)),

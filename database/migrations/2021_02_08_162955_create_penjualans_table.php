@@ -19,6 +19,8 @@ class CreatePenjualansTable extends Migration
             $table->string('pelangganNota');
             $table->string('tglNota');
             $table->string('totalNota');
+            $table->string('taxNota');
+            $table->string('diskonNota');
             $table->string('bayarNota');
             $table->string('kembalianNota');
             $table->timestamps();

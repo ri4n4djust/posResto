@@ -10,6 +10,6 @@ class Penjualan extends Model
     protected $table = 'tblPenjualan';
 
     protected $fillable = [
-        'noNota', 'noMeja', 'tglNota', 'totalNota', 'bayarNota', 'kembalianNota', 'pelangganNota'
+        'noNota', 'noMeja', 'tglNota', 'totalNota', 'bayarNota', 'kembalianNota', 'pelangganNota', 'taxNota', 'diskonNota'
     ];
 }

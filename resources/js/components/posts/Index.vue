@@ -17,7 +17,16 @@
                     </div>
 
 </template>
+<style >
+.data-table {
+	display: grid;
+	width: 100%;
+	height: 100%;
+	
+}
+</style>
 
+</style>
 
 <script>
 import Vue from 'vue';

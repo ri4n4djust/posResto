@@ -26,6 +26,12 @@
                                             <label>No Nota : </label>
                                         {{data.noNota}}
                                         </p>
+
+                                        <p class="text-muted text-left">
+                                            <label>Pelanggan : </label>
+                                        {{data.pelangganNota}}
+                                        <input type="text" v-model="data.pelangganNota">
+                                        </p>
                                         
                                         
                                         <h3 class="profile-username text-left">
@@ -82,36 +88,20 @@ export default {
 
         },
     created() {
-            let uri = '/api/penjualan';
-            this.axios.get(uri).then(response => {
-                this.posts = response.data.data;
-            });
+            this.loadData()
             this.loadDetailPenjualan()
         },
-    computed:{
-            loadDetailPenjualan:function(){
-                let uri = '/api/detailenjualan';
-                this.axios.post(uri, {
-                    np: this.data.noNota,
-                }).then(response => {
-                  //alert('no nota '+ np);
-                this.pem = response.data.data;
-            });
-            },
+    
+    watch: {
+          post: function() {
+            this.$emit('input', this.post);
+          }
+        },
+    mounted() {
+        this.loadData()
+        this.loadDetailPenjualan()
     },
-    watch:{
-        pem: function(){
-           
-                let uri = '/api/detailenjualan';
-                this.axios.post(uri, {
-                    np: this.data.noNota,
-                }).then(response => {
-                  //alert('no nota '+ np);
-                this.pem = response.data.data;
-            });
-          
-        }
-    },
+    
     methods: {
 
             loadData:function(){
@@ -126,7 +116,7 @@ export default {
                 this.axios.post(uri, {
                     np: this.data.noNota,
                 }).then(response => {
-                  //alert('no nota '+ np);
+                alert('no nota '+ np);
                 this.pem = response.data.data;
             });
             },
