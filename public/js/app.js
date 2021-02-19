@@ -8897,7 +8897,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _andresouzaabreu_vue_data_table_dist_DataTable_css__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_andresouzaabreu_vue_data_table_dist_DataTable_css__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _andresouzaabreu_vue_data_table__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @andresouzaabreu/vue-data-table */ "./node_modules/@andresouzaabreu/vue-data-table/dist/DataTable.umd.js");
 /* harmony import */ var _andresouzaabreu_vue_data_table__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_andresouzaabreu_vue_data_table__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _componentAksi_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./componentAksi.vue */ "./resources/js/components/laporan/componentAksi.vue");
+/* harmony import */ var vue2_datepicker__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue2-datepicker */ "./node_modules/vue2-datepicker/index.esm.js");
+/* harmony import */ var vue2_datepicker_index_css__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vue2-datepicker/index.css */ "./node_modules/vue2-datepicker/index.css");
+/* harmony import */ var vue2_datepicker_index_css__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(vue2_datepicker_index_css__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var vue_single_select__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! vue-single-select */ "./node_modules/vue-single-select/dist/index.js");
+/* harmony import */ var _componentAksi_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./componentAksi.vue */ "./resources/js/components/laporan/componentAksi.vue");
 //
 //
 //
@@ -8930,15 +8934,67 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
 
 
 
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component("data-table", _andresouzaabreu_vue_data_table__WEBPACK_IMPORTED_MODULE_2___default.a);
 /* harmony default export */ __webpack_exports__["default"] = ({
+  components: {
+    DatePicker: vue2_datepicker__WEBPACK_IMPORTED_MODULE_3__["default"],
+    VueSingleSelect: vue_single_select__WEBPACK_IMPORTED_MODULE_5__["default"]
+  },
   data: function data() {
     return {
-      posts: []
+      posts: [],
+      posts1: [],
+      startDate: '',
+      endDate: ''
     };
   },
   computed: {
@@ -8989,7 +9045,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component("data-table", _andresouzaab
 
           /* this will make this column appear to the right of the table
           since its index is greater than others*/
-          component: _componentAksi_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
+          component: _componentAksi_vue__WEBPACK_IMPORTED_MODULE_6__["default"],
           index: 100
         }],
         data: this.posts
@@ -9014,6 +9070,21 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component("data-table", _andresouzaab
         _this2.posts.splice(index, 1);
       })["catch"](function (error) {
         alert('system error!');
+      });
+    },
+    lapPenjualan: function lapPenjualan() {
+      var _this3 = this;
+
+      var uri = '/api/lapPenjualan';
+      this.axios.post(uri, {
+        startDate: this.startDate,
+        endDate: this.endDate
+      }).then(function (response) {
+        _this3.posts1 = response.data.data; //alert('Data Ditampilkan');
+
+        _this3.loadDataSorting();
+
+        _this3.loadTotal();
       });
     }
   }
@@ -10478,7 +10549,7 @@ __webpack_require__.r(__webpack_exports__);
       countries: [],
       total: {},
       kdBarang: '',
-      tes: ''
+      isNumber: ''
     };
   },
   created: function created() {
@@ -10524,6 +10595,15 @@ __webpack_require__.r(__webpack_exports__);
       axios.get('/get_countries').then(function (response) {
         this.countries = response.data;
       }.bind(this));
+    },
+    isNumber: function isNumber($event) {
+      //console.log($event.keyCode); //keyCodes value
+      var keyCode = $event.keyCode ? $event.keyCode : $event.which;
+
+      if ((keyCode < 48 || keyCode > 57) && keyCode !== 46) {
+        // 46 is dot
+        $event.preventDefault();
+      }
     },
     loadData: function loadData() {
       var _this3 = this;
@@ -10840,7 +10920,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component("data-table", _andresouzaab
           sortable: false,
           searchable: false
         }, {
-          key: "ktgBarang",
+          key: "namaKtg",
           title: "Kategori",
           sortable: false,
           searchable: false
@@ -49804,86 +49884,151 @@ var render = function() {
   return _c("div", { staticClass: "card-body" }, [
     _c("h3", [_vm._v("Laporan Penjualan")]),
     _vm._v(" "),
-    _c(
-      "form",
-      {
-        on: {
-          submit: function($event) {
-            $event.preventDefault()
-            return _vm.PostItemPembelian($event)
-          }
-        }
-      },
-      [
-        _c("div", { staticClass: "row" }, [
-          _c("div", { staticClass: "col-xs-3" }, [
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.hrgPokok,
-                  expression: "hrgPokok"
-                }
-              ],
-              staticClass: "form-control",
-              attrs: { type: "text", placeholder: "Harga" },
-              domProps: { value: _vm.hrgPokok },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.hrgPokok = $event.target.value
-                }
-              }
-            })
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-xs-3" }, [
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.qtyBeli,
-                  expression: "qtyBeli"
-                }
-              ],
-              staticClass: "form-control",
-              attrs: { type: "text", placeholder: "Qty" },
-              domProps: { value: _vm.qtyBeli },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.qtyBeli = $event.target.value
-                }
-              }
-            })
-          ]),
-          _vm._v(" "),
-          _vm._m(0)
-        ])
-      ]
-    ),
-    _vm._v(" "),
-    _c(
-      "div",
-      [
+    _c("div", { staticClass: "box box-primary" }, [
+      _c("div", { staticClass: "box-body box-profile" }, [
         _c(
-          "data-table",
-          _vm._b(
-            { on: { actionTriggered: _vm.ActionButtons } },
-            "data-table",
-            _vm.bindings,
-            false
-          )
+          "form",
+          {
+            on: {
+              submit: function($event) {
+                $event.preventDefault()
+                return _vm.lapPenjualan($event)
+              }
+            }
+          },
+          [
+            _c(
+              "p",
+              { staticClass: "text-muted text-left" },
+              [
+                _c("label", [_vm._v("Start Date")]),
+                _vm._v(" "),
+                _c("date-picker", {
+                  attrs: {
+                    "value-type": "format",
+                    format: "YYYY/MM/DD",
+                    required: true
+                  },
+                  model: {
+                    value: _vm.startDate,
+                    callback: function($$v) {
+                      _vm.startDate = $$v
+                    },
+                    expression: "startDate"
+                  }
+                })
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "p",
+              { staticClass: "text-muted text-left" },
+              [
+                _c("label", [_vm._v("End Date")]),
+                _vm._v(" "),
+                _c("date-picker", {
+                  attrs: {
+                    "value-type": "format",
+                    format: "YYYY/MM/DD",
+                    required: true
+                  },
+                  model: {
+                    value: _vm.endDate,
+                    callback: function($$v) {
+                      _vm.endDate = $$v
+                    },
+                    expression: "endDate"
+                  }
+                })
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _vm._m(0)
+          ]
         )
-      ],
-      1
-    )
+      ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "box box-primary" }, [
+      _c("div", { staticClass: "box-body box-profile" }, [
+        _c("table", { staticClass: "table table-hover table-bordered" }, [
+          _vm._m(1),
+          _vm._v(" "),
+          _c(
+            "tbody",
+            _vm._l(_vm.posts1, function(post1) {
+              return _c("tr", { key: post1.id }, [
+                _c("td", [_vm._v(_vm._s(post1.noNota))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(post1.pelangganNota))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(post1.tglNota))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(_vm._f("currency")(post1.totalNota)))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(_vm._f("currency")(post1.bayarNota)))]),
+                _vm._v(" "),
+                _c("td", [
+                  _vm._v(_vm._s(_vm._f("currency")(post1.kembalianNota)))
+                ]),
+                _vm._v(" "),
+                _c(
+                  "td",
+                  { staticClass: "text-center" },
+                  [
+                    _c(
+                      "router-link",
+                      {
+                        staticClass: "btn btn-sm btn-primary",
+                        attrs: {
+                          to: { name: "detail", params: { id: post1.id } }
+                        }
+                      },
+                      [_vm._v("Detail")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "router-link",
+                      {
+                        staticClass: "btn btn-sm btn-primary",
+                        attrs: {
+                          to: { name: "edit", params: { id: post1.id } }
+                        }
+                      },
+                      [_vm._v("EDIT")]
+                    )
+                  ],
+                  1
+                )
+              ])
+            }),
+            0
+          )
+        ])
+      ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "box box-primary" }, [
+      _c("div", { staticClass: "box-body box-profile" }, [
+        _c(
+          "div",
+          [
+            _c(
+              "data-table",
+              _vm._b(
+                { on: { actionTriggered: _vm.ActionButtons } },
+                "data-table",
+                _vm.bindings,
+                false
+              )
+            )
+          ],
+          1
+        )
+      ])
+    ])
   ])
 }
 var staticRenderFns = [
@@ -49891,12 +50036,34 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-xs-3" }, [
+    return _c("p", { staticClass: "text-muted text-left" }, [
       _c(
         "button",
         { staticClass: "btn btn-md btn-success", attrs: { type: "submit" } },
-        [_vm._v("Add")]
+        [_vm._v("View Data")]
       )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", [_vm._v("No Nota")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Customer")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Tgl")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Total")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Bayar")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Kembalian")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Aksi")])
+      ])
     ])
   }
 ]
@@ -52690,6 +52857,9 @@ var render = function() {
                   attrs: { type: "text", placeholder: "Harga Pokok" },
                   domProps: { value: _vm.post.hrgPokok },
                   on: {
+                    keypress: function($event) {
+                      return _vm.isNumber()
+                    },
                     input: function($event) {
                       if ($event.target.composing) {
                         return
@@ -52816,30 +52986,30 @@ var render = function() {
                 )
               ]),
               _vm._v(" "),
-              _c("div", { staticClass: "form-group" }, [
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-md btn-success",
-                    attrs: { type: "submit" }
-                  },
-                  [_vm._v("SIMPAN")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-md btn-danger",
-                    attrs: { type: "reset" },
-                    on: {
-                      click: function($event) {
-                        return _vm.reset()
-                      }
-                    }
-                  },
-                  [_vm._v("RESET")]
-                )
-              ])
+              _c(
+                "div",
+                { staticClass: "form-group" },
+                [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-md btn-success",
+                      attrs: { type: "submit" }
+                    },
+                    [_vm._v("SIMPAN")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "router-link",
+                    {
+                      staticClass: "btn btn-primary btn-success",
+                      attrs: { to: { name: "posts" } }
+                    },
+                    [_vm._v("KEMBALI")]
+                  )
+                ],
+                1
+              )
             ])
           ]),
           _vm._v(" "),
@@ -53143,7 +53313,7 @@ var render = function() {
               )
             ]),
             _vm._v(" "),
-            _c("td", [_vm._v(_vm._s(post1.ktgBarang))]),
+            _c("td", [_vm._v(_vm._s(post1.namaKtg))]),
             _vm._v(" "),
             _c("td", [_vm._v(_vm._s(post1.satuanBarang))]),
             _vm._v(" "),

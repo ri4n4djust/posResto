@@ -14,7 +14,9 @@ class salesController extends Controller
     //
     public function index()
     {
-        $posts = Barang::latest()->get();
+        $posts = Barang::join('tblKategori', 'tblBarang.ktgBarang', '=', 'tblKategori.kodeKtg')
+               ->get(['tblBarang.*', 'tblKategori.namaKtg']);
+        //$posts = Barang::latest()->get();
         $count = Barang::count();
         return response([
             'success' => true,

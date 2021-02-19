@@ -75,7 +75,7 @@ Vue.component("data-table", DataTable);
                             searchable: false,
                         },
                         {
-                            key: "ktgBarang",
+                            key: "namaKtg",
                             title: "Kategori",
                             sortable: false,
                             searchable: false,

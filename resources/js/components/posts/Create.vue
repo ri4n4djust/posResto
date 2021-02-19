@@ -26,7 +26,7 @@
                             <div class="form-group">
                                 <label>Harga Pokok</label>
                                 <input type="text" class="form-control" v-model="post.hrgPokok"
-                                       placeholder="Harga Pokok">
+                                       placeholder="Harga Pokok" @keypress="isNumber()">
                                 <div v-if="validation.hrgPokok">
                                     <div class="alert alert-danger mt-1" role="alert">
                                         {{ validation.hrgPokok[0] }}
@@ -56,7 +56,7 @@
                             
                             <div class="form-group">
                                 <button type="submit"  class="btn btn-md btn-success">SIMPAN</button>
-                                <button type="reset" @click="reset()" class="btn btn-md btn-danger">RESET</button>
+                                <router-link :to="{ name: 'posts' }" class="btn btn-primary btn-success">KEMBALI</router-link>
                             </div>
                 </div>
             </div>
@@ -164,7 +164,7 @@
                                     
                                     <td>{{ post1.stkBarang }}</td>
                                     <td>{{ post1.hrgPokok * post1.stkBarang | currency }}</td>
-                                    <td>{{ post1.ktgBarang }}</td>
+                                    <td>{{ post1.namaKtg }}</td>
                                     <td>{{ post1.satuanBarang }}</td>
                                     <td>{{ post1.deskripsi }}</td>
                                     <td class="text-center">
@@ -210,7 +210,7 @@
                 countries: [],
                 total: {},
                 kdBarang: '',
-                tes: '',
+                isNumber: '',
             }
             
         },
@@ -260,6 +260,13 @@
                     .then(function (response) {
                         this.countries = response.data;
                     }.bind(this));
+            },
+            isNumber ($event) {
+            //console.log($event.keyCode); //keyCodes value
+            let keyCode = ($event.keyCode ? $event.keyCode : $event.which);
+            if ((keyCode < 48 || keyCode > 57) && keyCode !== 46) { // 46 is dot
+                $event.preventDefault();
+            }
             },
             loadData:function(){
                 let uri = '/api/posts';

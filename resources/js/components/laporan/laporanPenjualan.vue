@@ -2,26 +2,68 @@
 
                     <div class="card-body">
                         <h3>Laporan Penjualan</h3>
-
-                        <form  @submit.prevent="PostItemPembelian" >
-                        <div class="row">
+                        <div class="box box-primary">
+                        <div class="box-body box-profile">
+                        <form  @submit.prevent="lapPenjualan" >
                             
-                            <div class="col-xs-3">
-                            <input type="text" v-model="hrgPokok" class="form-control" placeholder="Harga">
-                            </div>
-                            <div class="col-xs-3">
-                            <input type="text" v-model="qtyBeli" class="form-control" placeholder="Qty">
-                            </div>
-                            <div class="col-xs-3">
-                            <button type="submit" class="btn btn-md btn-success">Add</button>                        
-                            </div>
-                        </div>
-                        
+                                <p class="text-muted text-left">
+                                <label>Start Date</label>
+                            <date-picker v-model="startDate" value-type="format" format="YYYY/MM/DD" :required="true"></date-picker>
+                                </p>
+                                <p class="text-muted text-left">
+                                <label>End Date</label>
+                            <date-picker v-model="endDate" value-type="format" format="YYYY/MM/DD" :required="true"></date-picker>
+                                </p>
+                                <p class="text-muted text-left">
+                            <button type="submit" class="btn btn-md btn-success">View Data</button> 
+                                </p>                       
+                            
                         </form>
-                            
+                        </div>
+                        </div>
+
+                        <div class="box box-primary">
+                        <div class="box-body box-profile">
+                            <table class="table table-hover table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>No Nota</th>
+                                    <th>Customer</th>
+                                    <th>Tgl</th>
+                                    <th>Total</th>
+                                    <th>Bayar</th>
+                                    <th>Kembalian</th>
+                                    <th>Aksi</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr v-for="post1 in posts1" :key="post1.id">
+                                    <td>{{ post1.noNota }}</td>
+                                    <td>{{ post1.pelangganNota }}</td>
+                                    <td>{{ post1.tglNota }}</td>
+                                    <td>{{ post1.totalNota | currency }}</td>
+                                    <td>{{ post1.bayarNota | currency }}</td>
+                                    <td>{{ post1.kembalianNota | currency}}</td>
+                                    <td class="text-center">
+                                        <router-link :to="{name: 'detail', params: { id: post1.id }}" class="btn btn-sm btn-primary">Detail</router-link>
+                                        <router-link :to="{name: 'edit', params: { id: post1.id }}" class="btn btn-sm btn-primary">EDIT</router-link>
+                                    </td>
+                                </tr>
+                                </tbody>
+                                
+                            </table>
+
+                        </div>
+                        </div>
+
+
+                        <div class="box box-primary">
+                        <div class="box-body box-profile">    
                             <div>
                                 <data-table v-bind="bindings" @actionTriggered="ActionButtons"/>
                             </div>
+                        </div>
+                        </div>
 
                     </div>
 
@@ -35,12 +77,20 @@ import Vue from 'vue';
 import "@andresouzaabreu/vue-data-table/dist/DataTable.css";
 import DataTable from "@andresouzaabreu/vue-data-table";
 
+import DatePicker from 'vue2-datepicker';
+import 'vue2-datepicker/index.css';
+import VueSingleSelect from "vue-single-select";
+
 import ActionButtons from './componentAksi.vue';
 Vue.component("data-table", DataTable);
     export default {
+        components: { DatePicker, VueSingleSelect },
         data() {
             return {
                 posts: [],
+                posts1: [],
+                startDate: '',
+                endDate: '',
             }
 
         },
@@ -126,7 +176,21 @@ Vue.component("data-table", DataTable);
                     alert('system error!');
                 });
             },
-            
+            lapPenjualan() {
+                let uri = '/api/lapPenjualan';
+                this.axios.post(uri, 
+                {
+                    startDate: this.startDate,
+                    endDate: this.endDate,
+                })
+                    .then((response) => {
+                        this.posts1 = response.data.data;
+                        //alert('Data Ditampilkan');
+                        this.loadDataSorting()
+                        this.loadTotal()
+                    });
+                
+            },
            
         },
         
