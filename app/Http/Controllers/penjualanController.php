@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Penjualan;
 //use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 
 class penjualanController extends Controller
 {
@@ -37,6 +38,28 @@ class penjualanController extends Controller
             'data' => $posts
         ], 200);
 
+    }
+    public function listDetailPenjualan(Request $request)
+    {
+        //$post = TransaksiDetail::whereId($id)->first();
+        $post = DB::table('tblPenjualanDetail')
+                    ->join('tblBarang', 'tblBarang.kdBarang', '=', 'tblPenjualanDetail.kdBarang')
+                    ->select('tblPenjualanDetail.*', 'tblBarang.nmBarang')
+                    ->where('noNota', $request->input('np'))->get();
+
+        if ($post) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Detail Post!',
+                'data'    => $post
+            ], 200);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Post Tidak Ditemukan!',
+                'data'    => ''
+            ], 404);
+        }
     }
     
 }

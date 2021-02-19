@@ -49,6 +49,7 @@ import CreateMenuComponent from './components/menu/Create.vue';
 import EditMenuComponent from './components/menu/Edit.vue';
 
 import CreatePembelian from './components/PembelianCreate.vue';
+import liveorder from './components/LiveOrder.vue';
 
 import LaporanPenjualanComponent from './components/laporan/laporanPenjualan.vue';
 import LaporanPembelianComponent from './components/laporan/laporanPembelian.vue';
@@ -138,6 +139,12 @@ const routes = [
         name: 'pembelian',
         path: '/pembelian',
         component: CreatePembelian
+    },
+    //=======Pembelian
+    {
+        name: 'liveorder',
+        path: '/liveorder',
+        component: liveorder
     },
 
     //=======Laporan

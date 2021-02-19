@@ -43,6 +43,16 @@
           </a>
         </li>
         <li>
+          <a href="{{url('/pelanggan')}}">
+            <i class="fa fa-calendar"></i> <span>Customer</span>
+          </a>
+        </li>
+        <li>
+          <a href="{{url('/liveorder')}}">
+            <i class="fa fa-calendar"></i> <span>Live Order</span>
+          </a>
+        </li>
+        <li>
           <a href="{{url('/meja')}}">
             <i class="fa fa-calendar"></i> <span>Table</span>
           </a>

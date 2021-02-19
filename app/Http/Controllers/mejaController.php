@@ -357,6 +357,27 @@ class mejaController extends Controller
         }
     }
 
+    public function listOrder()
+    {
+        //$post = TransaksiDetail::whereId($id)->first();
+        $post = TransaksiDetail::join('tblmeja', 'tbltmp_transaksidetail.noMejaTmp', '=', 'tblmeja.id')
+                ->get();
+
+        if ($post) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Detail Post!',
+                'data'    => $post
+            ], 200);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Post Tidak Ditemukan!',
+                'data'    => ''
+            ], 404);
+        }
+    }
+
     public function totalTrx($id)
     {
         $totalNota = DB::table('tblTmp_TransaksiDetail')

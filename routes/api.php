@@ -75,6 +75,8 @@ Route::post('/totalTrxPembelian', 'pembelianController@totalTrxPembelian');
 Route::delete('/pembelianDelete/{id?}', 'pembelianController@destroy1');
 Route::post('/addPembelian/store', 'pembelianController@addTransaksiPembelian');
 
+//=======live Order
+Route::get('/orderlist', 'mejaController@listOrder');
 
 //========menu
 Route::get('/menu', 'menuController@index');
@@ -93,3 +95,4 @@ Route::delete('/komposisi/{id?}', 'komposisiController@destroy');
 //=====Laporan Penjualan
 Route::get('/penjualan', 'penjualanController@index');
 Route::post('/lapPenjualan', 'penjualanController@sorting');
+Route::post('/detailpenjualan', 'penjualanController@listDetailPenjualan');

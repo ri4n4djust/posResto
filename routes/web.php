@@ -43,6 +43,9 @@ Route::get('/menu', function () {
 Route::get('/pembelian', function () {
     return view('pages.pembelian');
 });
+Route::get('/liveorder', function () {
+    return view('pages.order');
+});
 
 Route::get('/laporanpenjualan', function () {
     return view('pages.laporan');
@@ -51,6 +54,7 @@ Route::get('/laporanpenjualan', function () {
 Route::get('/barang/{any}', function () {
     return view('app');
 })->where('any','.*');
+
 
 
 Route::get('/supplier', function () {

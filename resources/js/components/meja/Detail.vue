@@ -192,6 +192,12 @@
               </div>
               <div class="modal-body">
                 
+                <vue-single-select
+                            v-model="post2"
+                            :options="menus"
+                            :required="true"
+                            optionLabel="nmMenu" 
+                ></vue-single-select>
 
                 <select v-model='post2' class="form-control">
                   <option v-for='post2 in menus' v-bind:value='post2' :key="post2.id">{{post2.nmMenu}}</option>
@@ -200,11 +206,11 @@
                 <div v-if="post2">
                   <form  @submit.prevent="PostMenu" >
                     <div class="form-group">
-                      <input type="text" v-model="post.noMeja">
-                      <input type="text" v-model="noNota" placeholder="No nota">
-                      <input type="text" v-model="post2.id">
-                      <input type="text" v-model="post2.kdMenu">
-                      <input type="text" class="form-control" v-model="post2.nmMenu">
+                      <input type="hidden" v-model="post.noMeja">
+                      <input type="hidden" v-model="noNota" placeholder="No nota">
+                      <input type="hidden" v-model="post2.id">
+                      <input type="hidden" v-model="post2.kdMenu">
+                      <input type="hidden" class="form-control" v-model="post2.nmMenu">
                     </div>
                     <div class="form-group">
                       <input type="text" class="form-control" v-model="post2.hargaMenu">
