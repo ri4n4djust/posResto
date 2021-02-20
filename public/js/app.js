@@ -9790,6 +9790,31 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -10180,7 +10205,31 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (error) {
         alert('system error!');
       });
+    },
+    loadData: function loadData() {
+      var _this3 = this;
+
+      var uri = '/api/meja';
+      this.axios.get(uri).then(function (response) {
+        _this3.posts = response.data.data;
+      });
+    },
+    intervalFetchData: function intervalFetchData() {
+      var _this4 = this;
+
+      setInterval(function () {
+        _this4.loadData();
+      }, 3000);
     }
+  },
+  mounted: function mounted() {
+    //this.intervalFetchData1();
+    this.intervalFetchData(); //this.bindings()
+
+    this.loadData();
+  },
+  beforeDestroy: function beforeDestroy() {
+    clearInterval(this.posts);
   }
 });
 
@@ -50182,7 +50231,7 @@ var render = function() {
                                 ],
                                 staticClass: "form-control",
                                 attrs: {
-                                  type: "text",
+                                  type: "number",
                                   placeholder: "Bayar",
                                   required: ""
                                 },
@@ -51496,7 +51545,7 @@ var render = function() {
                                         ],
                                         staticClass: "form-control",
                                         attrs: {
-                                          type: "text",
+                                          type: "number",
                                           placeholder: "Qty",
                                           required: ""
                                         },
@@ -51835,7 +51884,7 @@ var render = function() {
                                         ],
                                         staticClass: "form-control",
                                         attrs: {
-                                          type: "text",
+                                          type: "number",
                                           placeholder: "Qty",
                                           required: ""
                                         },
@@ -52054,7 +52103,7 @@ var render = function() {
                                   }
                                 ],
                                 staticClass: "form-control",
-                                attrs: { type: "text", placeholder: "Tax" },
+                                attrs: { type: "number", placeholder: "Tax" },
                                 domProps: { value: _vm.pajak },
                                 on: {
                                   input: function($event) {
@@ -52091,7 +52140,10 @@ var render = function() {
                                   }
                                 ],
                                 staticClass: "form-control",
-                                attrs: { type: "text", placeholder: "Diskon" },
+                                attrs: {
+                                  type: "number",
+                                  placeholder: "Diskon"
+                                },
                                 domProps: { value: _vm.diskon },
                                 on: {
                                   input: function($event) {
@@ -52128,7 +52180,7 @@ var render = function() {
                                 ],
                                 staticClass: "form-control",
                                 attrs: {
-                                  type: "text",
+                                  type: "number",
                                   placeholder: "Bayar",
                                   required: ""
                                 },
@@ -52240,80 +52292,162 @@ var render = function() {
                             )
                           ]),
                           _vm._v(" "),
-                          _c("p", { staticClass: "text-muted text-center" }, [
-                            _vm._v(
-                              "\n                 Tax & Service : " +
-                                _vm._s(
-                                  _vm._f("currency")(
-                                    (_vm.subtotal * _vm.pajak) / 100 +
-                                      _vm.subtotal
-                                  )
-                                ) +
-                                "\n                "
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("p", { staticClass: "text-muted text-center" }, [
-                            _vm._v(
-                              "\n                 Diskon : " +
-                                _vm._s(
-                                  _vm._f("currency")(
-                                    (((_vm.subtotal * _vm.pajak) / 100 +
-                                      _vm.subtotal) *
-                                      _vm.diskon) /
-                                      100
-                                  )
-                                ) +
-                                "\n                "
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("p", { staticClass: "text-muted text-center" }, [
-                            _vm._v(
-                              "\n                Payment : " +
-                                _vm._s(_vm._f("currency")(_vm.totalBayar)) +
-                                "\n                "
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("h3", { staticClass: "profile-username " }, [
-                            _c("p", { staticClass: "text-muted text-center" }, [
-                              _vm._v(
-                                "\n                  Total " +
-                                  _vm._s(
-                                    _vm._f("currency")(
-                                      (_vm.subtotal * _vm.pajak) / 100 +
-                                        _vm.subtotal -
-                                        (((_vm.subtotal * _vm.pajak) / 100 +
-                                          _vm.subtotal) *
-                                          _vm.diskon) /
-                                          100 || 0
+                          _c(
+                            "table",
+                            { staticClass: "table table-hover table-bordered" },
+                            [
+                              _c("thead", [
+                                _c("tr", [
+                                  _c("th", [_vm._v("Nama ")]),
+                                  _vm._v(" "),
+                                  _c("th", [_vm._v("Qty")]),
+                                  _vm._v(" "),
+                                  _c("th", [_vm._v("Harga")]),
+                                  _vm._v(" "),
+                                  _c("th", [_vm._v("Total")])
+                                ])
+                              ]),
+                              _vm._v(" "),
+                              _c(
+                                "tbody",
+                                _vm._l(_vm.trxs, function(trx) {
+                                  return _c("tr", { key: trx.id }, [
+                                    _c("td", [
+                                      _vm._v(_vm._s(trx.nmBarangTmp) + " ")
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("td", [_vm._v(_vm._s(trx.qtyTmp))]),
+                                    _vm._v(" "),
+                                    _c("td", [
+                                      _vm._v(
+                                        _vm._s(
+                                          _vm._f("currency")(trx.hrgJualTmp)
+                                        )
+                                      )
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("td", [
+                                      _vm._v(
+                                        _vm._s(_vm._f("currency")(trx.totalTmp))
+                                      )
+                                    ])
+                                  ])
+                                }),
+                                0
+                              ),
+                              _vm._v(" "),
+                              _c("tfoot", [
+                                _c("tr", [
+                                  _c("th", { attrs: { colspan: "3" } }, [
+                                    _vm._v("subTotal :")
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("th", [
+                                    _vm._v(
+                                      _vm._s(_vm._f("currency")(_vm.subtotal))
                                     )
-                                  ) +
-                                  "\n                  "
-                              )
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c("h3", { staticClass: "profile-username " }, [
-                            _c("p", { staticClass: "text-muted text-center" }, [
-                              _vm._v(
-                                "\n                    Kembali : " +
-                                  _vm._s(
-                                    _vm._f("currency")(
-                                      _vm.totalBayar -
-                                        ((_vm.subtotal * _vm.pajak) / 100 +
-                                          _vm.subtotal -
+                                  ])
+                                ]),
+                                _vm._v(" "),
+                                _c("tr", [
+                                  _c("th", { attrs: { colspan: "3" } }, [
+                                    _vm._v("Tax & Service :")
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("th", [
+                                    _vm._v(
+                                      _vm._s(
+                                        _vm._f("currency")(
+                                          (_vm.subtotal * _vm.pajak) / 100
+                                        )
+                                      )
+                                    )
+                                  ])
+                                ]),
+                                _vm._v(" "),
+                                _c("tr", [
+                                  _c("th", { attrs: { colspan: "3" } }, [
+                                    _vm._v("Discount")
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("th", [
+                                    _vm._v(
+                                      _vm._s(
+                                        _vm._f("currency")(
                                           (((_vm.subtotal * _vm.pajak) / 100 +
                                             _vm.subtotal) *
                                             _vm.diskon) /
-                                            100) || 0
+                                            100
+                                        )
+                                      )
                                     )
-                                  ) +
-                                  "\n                  "
-                              )
-                            ])
-                          ])
+                                  ])
+                                ]),
+                                _vm._v(" "),
+                                _c("tr", [
+                                  _c("th", { attrs: { colspan: "3" } }, [
+                                    _vm._v("subTotal :")
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("th", [
+                                    _vm._v(
+                                      _vm._s(
+                                        _vm._f("currency")(
+                                          (_vm.subtotal * _vm.pajak) / 100 +
+                                            _vm.subtotal -
+                                            (((_vm.subtotal * _vm.pajak) / 100 +
+                                              _vm.subtotal) *
+                                              _vm.diskon) /
+                                              100 || 0
+                                        )
+                                      )
+                                    )
+                                  ])
+                                ]),
+                                _vm._v(" "),
+                                _c("tr", [
+                                  _c("th", { attrs: { colspan: "3" } }, [
+                                    _vm._v("Payment :")
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("th", [
+                                    _vm._v(
+                                      _vm._s(_vm._f("currency")(_vm.totalBayar))
+                                    )
+                                  ])
+                                ]),
+                                _vm._v(" "),
+                                _c("tr", [
+                                  _c("th", { attrs: { colspan: "3" } }, [
+                                    _vm._v("Kembalian :")
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("th", [
+                                    _vm._v(
+                                      _vm._s(
+                                        _vm._f("currency")(
+                                          _vm.totalBayar -
+                                            ((_vm.subtotal * _vm.pajak) / 100 +
+                                              _vm.subtotal -
+                                              (((_vm.subtotal * _vm.pajak) /
+                                                100 +
+                                                _vm.subtotal) *
+                                                _vm.diskon) /
+                                                100) || 0
+                                        )
+                                      )
+                                    )
+                                  ])
+                                ]),
+                                _vm._v(" "),
+                                _c("tr", [
+                                  _c("th", { attrs: { colspan: "5" } }, [
+                                    _vm._v("Terima Kasih Telah Berbelanja")
+                                  ])
+                                ])
+                              ])
+                            ]
+                          )
                         ])
                       ])
                     ])

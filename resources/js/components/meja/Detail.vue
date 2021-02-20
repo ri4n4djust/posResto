@@ -156,7 +156,7 @@
                       <input type="text" class="form-control" v-model="post1.hrgJual">
                     </div>
                     <div class="form-group">
-                      <input type="text" class="form-control" v-model="qtyBarang" placeholder="Qty" required>
+                      <input type="number" class="form-control" v-model="qtyBarang" placeholder="Qty" required>
                     </div>
                     <div class="form-group">
                       <input type="text" class="form-control" :value="(post1.hrgJual * qtyBarang) || 0" :name="total"  placeholder="total">
@@ -216,7 +216,7 @@
                       <input type="text" class="form-control" v-model="post2.hargaMenu">
                     </div>
                     <div class="form-group">
-                      <input type="text" class="form-control" v-model="qtyBarang" placeholder="Qty" required>
+                      <input type="number" class="form-control" v-model="qtyBarang" placeholder="Qty" required>
                     </div>
                     <div class="form-group">
                       <input type="text" class="form-control" :value="(post2.hargaMenu * qtyBarang) || 0" :name="total"  placeholder="total">
@@ -265,16 +265,16 @@
                 <input type="text" class="form-control" v-model="subtotal">
                 </p>
                 <p class="text-muted text-center">
-                <input type="text" class="form-control" v-model="pajak" placeholder="Tax">
+                <input type="number" class="form-control" v-model="pajak" placeholder="Tax">
                 <input type="hidden" class="form-control" :value="(subtotal * pajak / 100 + subtotal)" :name="totalTransaksipjk" >
                 </p>
                 <p class="text-muted text-center">
-                <input type="text" class="form-control" v-model="diskon" placeholder="Diskon">
+                <input type="number" class="form-control" v-model="diskon" placeholder="Diskon">
                 <input type="hidden" class="form-control" :value="((subtotal * pajak / 100 + subtotal) * diskon / 100)" :name="diskon1" >
                 </p>
 
                 <p class="text-muted text-center">
-                <input type="text" class="form-control" v-model="totalBayar" placeholder="Bayar" required>
+                <input type="number" class="form-control" v-model="totalBayar" placeholder="Bayar" required>
                 </p>
                 <p class="text-muted text-center">
                 <input type="hidden" class="form-control" :value="((subtotal * pajak / 100 + subtotal) - ((subtotal * pajak / 100 + subtotal) * diskon / 100))  || 0 " :name="totalTransaksiBayar"  >
@@ -292,7 +292,6 @@
                 <h3>
                   <p class="text-muted text-center">Nota</p>
                 </h3>
-                
                 <p class="text-muted text-center">
                  Tgl : {{tglNota}}
                 </p>
@@ -302,28 +301,54 @@
                 <p class="text-muted text-center">
                  No Invoice : {{noNota}}
                 </p>
-                <p class="text-muted text-center">
-                 Tax & Service : {{ (subtotal * pajak / 100 + subtotal) | currency}}
-                </p>
-                <p class="text-muted text-center">
-                 Diskon : {{ ((subtotal * pajak / 100 + subtotal) * diskon / 100) | currency}}
-                </p>
-                <p class="text-muted text-center">
-                Payment : {{totalBayar | currency}}
-                </p>
-                
-                <h3 class="profile-username ">
-                  <p class="text-muted text-center">
-                  Total {{ ((subtotal * pajak / 100 + subtotal) - ((subtotal * pajak / 100 + subtotal) * diskon / 100))  || 0 | currency }}
-                  </p>
-                </h3>
-                <h3 class="profile-username ">
-                  <p class="text-muted text-center">
-                    Kembali : {{ totalBayar - ((subtotal * pajak / 100 + subtotal) - ((subtotal * pajak / 100 + subtotal) * diskon / 100))  || 0 | currency }}
-                  </p>
-                </h3>
-                
-                
+                <table class="table table-hover table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>Nama </th>
+                                    <th>Qty</th>
+                                    <th>Harga</th>
+                                    <th>Total</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr v-for="trx in trxs" :key="trx.id">
+                                    <td>{{ trx.nmBarangTmp }} </td>
+                                    <td>{{ trx.qtyTmp}}</td>
+                                    <td>{{ trx.hrgJualTmp | currency }}</td>
+                                    <td>{{ trx.totalTmp | currency }}</td>
+                                </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th colspan="3">subTotal :</th>
+                                        <th>{{subtotal | currency}}</th>
+                                    </tr>
+                                    <tr>
+                                        <th colspan="3">Tax & Service :</th>
+                                        <th>{{ (subtotal * pajak / 100 ) | currency}}</th>
+                                    </tr>
+                                    <tr>
+                                        <th colspan="3">Discount</th>
+                                        <th>{{ ((subtotal * pajak / 100 + subtotal) * diskon / 100) | currency}}</th>
+                                    </tr>
+                                    <tr>
+                                        <th colspan="3">subTotal :</th>
+                                        <th>{{ ((subtotal * pajak / 100 + subtotal) - ((subtotal * pajak / 100 + subtotal) * diskon / 100))  || 0 | currency }}</th>
+                                    </tr>
+                                    <tr>
+                                        <th colspan="3">Payment :</th>
+                                        <th>{{totalBayar | currency}}</th>
+                                    </tr>
+                                    <tr>
+                                        <th colspan="3">Kembalian :</th>
+                                        <th>{{ totalBayar - ((subtotal * pajak / 100 + subtotal) - ((subtotal * pajak / 100 + subtotal) * diskon / 100))  || 0 | currency }}</th>
+                                    </tr>
+                                    <tr>
+                                        <th colspan="5">Terima Kasih Telah Berbelanja</th>
+
+                                    </tr>
+                                </tfoot>
+                            </table>
               </div>
 
 

@@ -114,7 +114,6 @@ export default {
             });
             },
             loadDetailPenjualan:function(){
-
                 let uri = '/api/detailpenjualan/'+ this.data.noNota;
                 this.axios.post(uri).then(response => {
                     this.pem = response.data.data;

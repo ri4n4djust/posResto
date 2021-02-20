@@ -166,7 +166,7 @@
                 </p>
                
                 <p class="text-muted text-center">
-                <input type="text" class="form-control" v-model="totalBayar" placeholder="Bayar" required>
+                <input type="number" class="form-control" v-model="totalBayar" placeholder="Bayar" required>
                 </p>
                       
                 <h3 class="profile-username ">Total {{ subtotal || 0 | currency }}</h3>

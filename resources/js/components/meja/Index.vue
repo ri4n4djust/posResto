@@ -73,7 +73,28 @@
                     alert('system error!');
                 });
             },
+            loadData: function () {
+                let uri = '/api/meja';
+                this.axios.get(uri).then(response => {
+                    this.posts = response.data.data;
+                });
+            },
+            intervalFetchData: function () {
+            setInterval(() => {    
+                this.loadData();
+                }, 3000);    
+            },
             
-        }
+        },
+        mounted () {
+            //this.intervalFetchData1();
+            this.intervalFetchData();
+            //this.bindings()
+            this.loadData()
+        },
+
+        beforeDestroy () {
+            clearInterval(this.posts)
+        },
     }
 </script>
