@@ -69,8 +69,6 @@
             <li><a href="{{url('/laporanpenjualan')}}"><i class="fa fa-circle-o"></i>Laporan Penjualan</a></li>
             <li><a href="{{url('/laporanpembelian')}}"><i class="fa fa-circle-o"></i>Laporan Pembelian</a></li>
             <li><a href="{{url('/laporanstokopname')}}"><i class="fa fa-circle-o"></i>Laporan Stok Opname</a></li>
-            <li><a href="#"><i class="fa fa-circle-o"></i>Laporan Operasional</a></li>
-            <li><a href="#"><i class="fa fa-circle-o"></i>Laporan Tagihan</a></li>
           </ul>
         </li>
         
