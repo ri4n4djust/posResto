@@ -45,9 +45,9 @@
                                         <th>No Nota</th>
                                         <th>Customer</th>
                                         <th>Tgl</th>
+                                        <th>Pajak</th>
+                                        <th>Diskon</th>
                                         <th>Total</th>
-                                        <th>Bayar</th>
-                                        <th>Kembalian</th>
                                         <th>Aksi</th>
                                     </tr>
                                     </thead>
@@ -56,9 +56,9 @@
                                         <td>{{ post1.noNota }}</td>
                                         <td>{{ post1.pelangganNota }}</td>
                                         <td>{{ post1.tglNota }}</td>
-                                        <td>{{ post1.totalNota | currency }}</td>
-                                        <td>{{ post1.bayarNota | currency }}</td>
-                                        <td>{{ post1.kembalianNota | currency}}</td>
+                                        <td>{{ post1.taxlNota | currency }}</td>
+                                        <td>{{ post1.diskonNota | currency }}</td>
+                                        <td>{{ post1.totalNota | currency}}</td>
                                         <td class="text-center">
                                             <router-link :to="{name: 'detail', params: { id: post1.id }}" class="btn btn-outline-success" ><i class="fa fa-eye"></i></router-link>
                                             <router-link :to="{name: 'edit', params: { id: post1.id }}" class="btn btn-outline-success"><i class="fa fa-edit"></i></router-link>
@@ -72,7 +72,7 @@
                                             <td></td>
                                             <td></td>
                                             <td></td>
-                                            <td>{{totalSumm}}</td>
+                                            <td><box v-bind:totalS="totalS"></box></td>
                                             <td></td>
                                         </tr>
                                     </tfoot>
@@ -85,9 +85,9 @@
                                         <th>No Nota</th>
                                         <th>Customer</th>
                                         <th>Tgl</th>
+                                        <th>Pajak</th>
+                                        <th>Diskon</th>
                                         <th>Total</th>
-                                        <th>Bayar</th>
-                                        <th>Kembalian</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -95,9 +95,9 @@
                                         <td>{{ post1.noNota }}</td>
                                         <td>{{ post1.pelangganNota }}</td>
                                         <td>{{ post1.tglNota }}</td>
-                                        <td>{{ post1.totalNota | currency }}</td>
-                                        <td>{{ post1.bayarNota | currency }}</td>
-                                        <td>{{ post1.kembalianNota | currency}}</td>
+                                        <td>{{ post1.taxNota | currency }}</td>
+                                        <td>{{ post1.diskonNota | currency }}</td>
+                                        <td>{{ post1.totalNota | currency}}</td>
                                     </tr>
                                     <tfoot>
                                         <tr>
@@ -106,7 +106,7 @@
                                             <td></td>
                                             <td></td>
                                             <td></td>
-                                            <td>{{totalSumm}}</td>
+                                            <td>{{totalSum}}</td>
                                         </tr>
                                     </tfoot>
                                     </tbody>
@@ -179,16 +179,15 @@ Vue.component("data-table", DataTable);
                 posts1: [],
                 startDate: '',
                 endDate: '',
-                totalSumm: null,
+                ActionButtons: null,
+                validation: null,
+                //actionTriggered: null,
+                totalS: [],
+                //totalSum: '',
             }
 
         },
         computed: {
-            totalSumm: function(){
-              return this.posts1.reduce(function(total, post1){
-                return total + post1.kembalianNota; 
-              },0);
-            }, 
             bindings() {
                 return {
                     actionMode: "multiple",
@@ -210,31 +209,34 @@ Vue.component("data-table", DataTable);
                             sortable: false,
                         },
                         {
+                            key: "taxNota",
+                            title: "Pajak",
+                            sortable: false,
+                            searchable: false,
+                        },
+                        {
+                            key: "diskonNota",
+                            title: "Diskon",
+                            sortable: false,
+                            searchable: false,
+                        },
+                        {
                             key: "totalNota",
                             title: "Total",
                             sortable: false,
                             searchable: false,
-                            /* this will make this column appear to the right of the table
-                            since its index is greater than others*/
-                            
                         },
                         {
                             key: "bayarNota",
                             title: "Bayar",
                             sortable: false,
                             searchable: false,
-                            /* this will make this column appear to the right of the table
-                            since its index is greater than others*/
-                            
                         },
                         {
                             key: "kembalianNota",
                             title: "Kembalian",
                             sortable: false,
                             searchable: false,
-                            /* this will make this column appear to the right of the table
-                            since its index is greater than others*/
-                            
                         },
                         {
                             title: "Action",
@@ -261,6 +263,7 @@ Vue.component("data-table", DataTable);
             });
         },
         methods: {
+            
             PostDelete(id, index)
             {
                 this.axios.delete(`/api/penjualan/${id}`)
@@ -279,9 +282,10 @@ Vue.component("data-table", DataTable);
                 })
                     .then((response) => {
                         this.posts1 = response.data.data;
+                        this.totalS = response.data.totalSum;
                         //alert('Data Ditampilkan');
-                        this.loadDataSorting()
-                        this.loadTotal()
+                        //this.loadDataSorting()
+                        //this.loadTotal()
                     });
                 
             },

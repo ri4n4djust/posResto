@@ -28,6 +28,9 @@ class penjualanController extends Controller
         $endDate = $request->input('endDate');
 
         $posts = Penjualan::whereBetween('tglNota', [$startDate, $endDate])->get();
+        $NotalTOtal = Penjualan::whereBetween('tglNota', [$startDate, $endDate])->sum('totalNota');
+        $pajakSum = Penjualan::whereBetween('tglNota', [$startDate, $endDate])->sum('taxNota');
+        $diskonSum = Penjualan::whereBetween('tglNota', [$startDate, $endDate])->sum('diskonNota');
 
         //$posts = Penjualan::latest()->get();
         return response([
@@ -35,6 +38,9 @@ class penjualanController extends Controller
             'message' => 'List Semua SPenjualan',
             'startDate' => $startDate,
             'endDate' => $endDate,
+            'notaSum' => $NotalTOtal,
+            'pajakSum' => $pajakSum,
+            'diskonSum' => $diskonSum,
             'data' => $posts
         ], 200);
 

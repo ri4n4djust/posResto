@@ -83,27 +83,28 @@ export default {
                 posts: [],
                 pem: [],
                 showModalPenjualan: false,
-                data: this.posts,
+                
             }
 
         },
     created() {
             this.loadData()
-            this.loadDetailPenjualan()
+            //this.loadDetailPenjualan()
         },
     
     watch: {
           post: function() {
-            this.$emit('input', this.post);
+            this.$emit('input', this.pem);
           }
         },
-    mounted() {
-        this.loadData()
-        this.loadDetailPenjualan()
-    },
+
     
     methods: {
-
+            something() {
+                return new Promise((resolve) => {
+                resolve('np:'+ this.data.noNota);
+                });
+            },
             loadData:function(){
                 let uri = '/api/penjualan';
                 this.axios.get(uri).then(response => {
