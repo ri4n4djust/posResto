@@ -22,7 +22,6 @@
                             <!-- /.tab-pane -->
                             <div class="tab-pane" id="timeline">
                                 <!-- The timeline -->
-                                isi timeline
                                 <form  @submit.prevent="lapPenjualan" >
                                     
                                         <p class="text-muted text-left">
@@ -45,10 +44,9 @@
                                         <th>No Nota</th>
                                         <th>Customer</th>
                                         <th>Tgl</th>
-                                        <th>Pajak</th>
+                                        <th>PPn</th>
                                         <th>Diskon</th>
                                         <th>Total</th>
-                                        <th>Aksi</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -59,21 +57,16 @@
                                         <td>{{ post1.taxlNota | currency }}</td>
                                         <td>{{ post1.diskonNota | currency }}</td>
                                         <td>{{ post1.totalNota | currency}}</td>
-                                        <td class="text-center">
-                                            <router-link :to="{name: 'detail', params: { id: post1.id }}" class="btn btn-outline-success" ><i class="fa fa-eye"></i></router-link>
-                                            <router-link :to="{name: 'edit', params: { id: post1.id }}" class="btn btn-outline-success"><i class="fa fa-edit"></i></router-link>
-                                        </td>
                                     </tr>
                                     </tbody>
                                     <tfoot>
                                         <tr>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td><box v-bind:totalS="totalS"></box></td>
-                                            <td></td>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th>{{pajakS | currency}}</th>
+                                            <th>{{diskonS | currency}}</th>
+                                            <th>{{totalS | currency}}</th>
                                         </tr>
                                     </tfoot>
                                 </table>
@@ -101,12 +94,12 @@
                                     </tr>
                                     <tfoot>
                                         <tr>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td>{{totalSum}}</td>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th>{{pajakS | currency}}</th>
+                                            <th>{{diskonS | currency}}</th>
+                                            <th>{{totalS | currency}}</th>
                                         </tr>
                                     </tfoot>
                                     </tbody>
@@ -172,7 +165,7 @@ Vue.use(VueHtmlToPaper, options);
 import ActionButtons from './componentAksi.vue';
 Vue.component("data-table", DataTable);
     export default {
-        components: { DatePicker, VueSingleSelect },
+        components: { DatePicker, VueSingleSelect,  },
         data() {
             return {
                 posts: [],
@@ -183,6 +176,8 @@ Vue.component("data-table", DataTable);
                 validation: null,
                 //actionTriggered: null,
                 totalS: [],
+                pajakS: [],
+                diskonS: [],
                 //totalSum: '',
             }
 
@@ -210,7 +205,7 @@ Vue.component("data-table", DataTable);
                         },
                         {
                             key: "taxNota",
-                            title: "Pajak",
+                            title: "PPn",
                             sortable: false,
                             searchable: false,
                         },
@@ -256,6 +251,7 @@ Vue.component("data-table", DataTable);
                 }
             }
         },
+
         created() {
             let uri = '/api/penjualan';
             this.axios.get(uri).then(response => {
@@ -282,7 +278,9 @@ Vue.component("data-table", DataTable);
                 })
                     .then((response) => {
                         this.posts1 = response.data.data;
-                        this.totalS = response.data.totalSum;
+                        this.totalS = response.data.notaSum;
+                        this.pajakS = response.data.pajakSum;
+                        this.diskonS = response.data.diskonSum;
                         //alert('Data Ditampilkan');
                         //this.loadDataSorting()
                         //this.loadTotal()

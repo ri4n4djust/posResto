@@ -287,6 +287,45 @@
                 </p>
               </form>
 
+              <div id="printMe">
+                
+                <h3>
+                  <p class="text-muted text-center">Nota</p>
+                </h3>
+                
+                <p class="text-muted text-center">
+                 Tgl : {{tglNota}}
+                </p>
+                <p class="text-muted text-center">
+                Customer : {{pelanggan}}
+                </p>
+                <p class="text-muted text-center">
+                 No Invoice : {{noNota}}
+                </p>
+                <p class="text-muted text-center">
+                 Tax & Service : {{ (subtotal * pajak / 100 + subtotal) | currency}}
+                </p>
+                <p class="text-muted text-center">
+                 Diskon : {{ ((subtotal * pajak / 100 + subtotal) * diskon / 100) | currency}}
+                </p>
+                <p class="text-muted text-center">
+                Payment : {{totalBayar | currency}}
+                </p>
+                
+                <h3 class="profile-username ">
+                  <p class="text-muted text-center">
+                  Total {{ ((subtotal * pajak / 100 + subtotal) - ((subtotal * pajak / 100 + subtotal) * diskon / 100))  || 0 | currency }}
+                  </p>
+                </h3>
+                <h3 class="profile-username ">
+                  <p class="text-muted text-center">
+                    Kembali : {{ totalBayar - ((subtotal * pajak / 100 + subtotal) - ((subtotal * pajak / 100 + subtotal) * diskon / 100))  || 0 | currency }}
+                  </p>
+                </h3>
+                
+                
+              </div>
+
 
               </div>
             </div>
@@ -308,9 +347,10 @@
   import DatePicker from 'vue2-datepicker';
   import 'vue2-datepicker/index.css';
   import VueSingleSelect from "vue-single-select";
+ 
   
     export default {
-      components: { DatePicker, VueSingleSelect },
+      components: { DatePicker, VueSingleSelect, },
         data() {
             return {
                 post: {},
@@ -485,10 +525,15 @@
                     
                 })
                     .then((response) => {
-                        alert('Transaksi Selesai');
+                        this.print()
+                        //alert('Transaksi Selesai');
                         this.$router.push({name: 'meja'});
                     });
                 
+            },
+            print () {
+            // Pass the element id here
+            this.$htmlToPaper('printMe');
             }
         },
         

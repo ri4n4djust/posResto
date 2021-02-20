@@ -45,13 +45,11 @@ class penjualanController extends Controller
         ], 200);
 
     }
-    public function listDetailPenjualan(Request $request)
+    public function listDetailPenjualan($id)
     {
         //$post = TransaksiDetail::whereId($id)->first();
         $post = DB::table('tblPenjualanDetail')
-                    ->join('tblBarang', 'tblBarang.kdBarang', '=', 'tblPenjualanDetail.kdBarang')
-                    ->select('tblPenjualanDetail.*', 'tblBarang.nmBarang')
-                    ->where('noNota', $request->input('np'))->get();
+                    ->where('noNota', $id)->get();
 
         if ($post) {
             return response()->json([

@@ -70,7 +70,7 @@ Route::get('/kodePembelian', 'nomorController@kodePembelian');
 
 //=========Pembelian
 Route::post('/addItemPembelian/store', 'pembelianController@addItemPembelian');
-Route::post('/dataPembelian', 'pembelianController@listTransaksiPembelian');
+Route::post('/dataPembelian/{id}', 'pembelianController@listTransaksiPembelian');
 Route::post('/totalTrxPembelian', 'pembelianController@totalTrxPembelian');
 Route::delete('/pembelianDelete/{id?}', 'pembelianController@destroy1');
 Route::post('/addPembelian/store', 'pembelianController@addTransaksiPembelian');
@@ -95,4 +95,4 @@ Route::delete('/komposisi/{id?}', 'komposisiController@destroy');
 //=====Laporan Penjualan
 Route::get('/penjualan', 'penjualanController@index');
 Route::post('/lapPenjualan', 'penjualanController@sorting');
-Route::post('/detailpenjualan', 'penjualanController@listDetailPenjualan');
+Route::post('/detailpenjualan/{id}', 'penjualanController@listDetailPenjualan');

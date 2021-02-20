@@ -18,7 +18,7 @@ window.Vue = require('vue');
 
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
-import VueCurrencyFilter from 'vue-currency-filter'
+
 
 import VueRouter from 'vue-router';
 Vue.use(VueRouter);
@@ -28,6 +28,21 @@ import axios from 'axios';
 
 import App from './App.vue';
 Vue.use(VueAxios, axios);
+
+import VueHtmlToPaper from 'vue-html-to-paper';
+const options = {
+  name: '_blank',
+  specs: [
+    'fullscreen=yes',
+    'titlebar=yes',
+    'scrollbars=yes'
+  ],
+  styles: [
+    'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css',
+    'https://unpkg.com/kidlat-css/css/kidlat.css'
+  ]
+}
+Vue.use(VueHtmlToPaper, options);
 
 Vue.component('modal', require('./components/ModalComponent.vue'));
 
@@ -55,6 +70,7 @@ import LaporanPenjualanComponent from './components/laporan/laporanPenjualan.vue
 import LaporanPembelianComponent from './components/laporan/laporanPembelian.vue';
 import StokOpnameComponent from './components/laporan/laporanStokOpname.vue';
 
+import VueCurrencyFilter from 'vue-currency-filter'
 Vue.use(VueCurrencyFilter,
     {
       symbol : 'Rp.',

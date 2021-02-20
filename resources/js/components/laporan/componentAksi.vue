@@ -3,6 +3,8 @@
         <button  @click="showModalPenjualan = true">
             <i class="fa fa-eye"></i>
         </button>
+       
+
                         <div v-if="showModalPenjualan">
                             <transition name="modal">
                             <div class="modal-mask">
@@ -21,27 +23,28 @@
                                             <label>Tgl : </label>
                                         {{data.tglNota}}
                                         </p>
-                                        
                                         <p class="text-muted text-left">
                                             <label>No Nota : </label>
                                         {{data.noNota}}
                                         </p>
-
                                         <p class="text-muted text-left">
                                             <label>Pelanggan : </label>
                                         {{data.pelangganNota}}
-                                        <input type="text" v-model="data.pelangganNota">
                                         </p>
-                                        
-                                        
+                                        <p class="text-muted text-left">
+                                            <label>Pajak : </label>
+                                        {{data.taxNota | currency}}
+                                        </p>
+                                        <p class="text-muted text-left">
+                                            <label>Diskon : </label>
+                                        {{data.diskonNota | currency}}
+                                        </p>
                                         <h3 class="profile-username text-left">
                                             <label>Total : </label>
                                             {{ data.totalNota  || 0 | currency }}</h3>
                                         
                                         <p class="text-muted text-center">
-                                       
                                         </p>
-
 
                                                     <table class="table table-hover table-bordered">
                                                         <thead>
@@ -83,22 +86,19 @@ export default {
                 posts: [],
                 pem: [],
                 showModalPenjualan: false,
+                np: this.data.noNota,
+                sukses: '',
                 
             }
 
         },
     created() {
             this.loadData()
-            //this.loadDetailPenjualan()
+            //this.something()
+            this.loadDetailPenjualan()
         },
-    
-    watch: {
-          post: function() {
-            this.$emit('input', this.pem);
-          }
-        },
-
-    
+   
+       
     methods: {
             something() {
                 return new Promise((resolve) => {
@@ -110,15 +110,15 @@ export default {
                 this.axios.get(uri).then(response => {
                 this.posts = response.data.data;
                 
+                
             });
             },
             loadDetailPenjualan:function(){
-                let uri = '/api/detailenjualan';
-                this.axios.post(uri, {
-                    np: this.data.noNota,
-                }).then(response => {
-                alert('no nota '+ np);
-                this.pem = response.data.data;
+
+                let uri = '/api/detailpenjualan/'+ this.data.noNota;
+                this.axios.post(uri).then(response => {
+                    this.pem = response.data.data;
+                   // alert('no nota '+ this.data.noNota);
             });
             },
                       

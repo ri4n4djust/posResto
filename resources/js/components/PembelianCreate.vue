@@ -263,16 +263,15 @@
             });
             },
             loadTransaksiPembelian:function(){
-                let uri = '/api/dataPembelian';
-                this.axios.post(uri, {
-                    np: this.noNotaPembelian,
-                }).then(response => {
-                  //alert('no nota '+ np);
-                this.pem = response.data.data;
+                let uri = '/api/dataPembelian/'+ this.noNotaPembelian;
+                this.axios.post(uri).then(response => {
+                    this.pem = response.data.data;
+                   // alert('no nota '+ this.data.noNota);
             });
             },
             PostDeleteTrx(id)
             {
+              if(confirm("Do you really want to delete?")){
                 this.axios.delete(`/api/pembelianDelete/${id}`)
                     .then(response => {
                         alert('Berhasil Di Hapus');
@@ -281,6 +280,7 @@
                     }).catch(error => {
                     
                 });
+              }
             },
             PostItemPembelian() {
                 let uri = '/api/addItemPembelian/store';

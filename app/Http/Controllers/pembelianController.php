@@ -73,13 +73,13 @@ class pembelianController extends Controller
         }
     }
 
-    public function listTransaksiPembelian(Request $request)
+    public function listTransaksiPembelian($id)
     {
         //$post = TransaksiDetail::whereId($id)->first();
         $post = DB::table('tblPembelianDetail')
                     ->join('tblBarang', 'tblBarang.kdBarang', '=', 'tblPembelianDetail.kdBarang')
                     ->select('tblPembelianDetail.*', 'tblBarang.nmBarang')
-                    ->where('noNotaPembelian', $request->input('np'))->get();
+                    ->where('noNotaPembelian', $id)->get();
 
         if ($post) {
             return response()->json([

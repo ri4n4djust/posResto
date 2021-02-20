@@ -124,19 +124,25 @@
               </div>
               <div class="modal-body">
                 
-                <select v-model='post1'>
-                  <option v-for='post1 in users' v-bind:value='post1' :key="post1.id">{{post1.nmBarang}}</option>
+                <vue-single-select
+                            v-model="post1"
+                            :options="users"
+                            :required="true"
+                            optionLabel="nmBarang" 
+                ></vue-single-select>
+                <select v-model='post1' class="form-control">
+                  <option v-for='post1 in users' v-bind:value='post1' :key="post1.id" >{{post1.nmBarang}}</option>
                 </select>
 
                 <div v-if="post1">
                   <form  @submit.prevent="PostItem" >
                     <div class="form-group">
-                        <input type="text" ref="kodebarang" class="form-control" v-model="post1.nmBarang">
+                        <input type="hidden" ref="kodebarang" class="form-control" v-model="post1.nmBarang">
                     </div>
                     <div class="form-group">
                         <input type="hidden" class="form-control" v-model="post.id">
                         <input type="hidden" class="form-control" v-model="post1.id">
-                        <input type="text" class="form-control" v-model="hargaBarang" placeholder="Harga">
+                        <input type="text" class="form-control" v-model="post1.hrgJual" placeholder="Harga">
                     </div>
                     <div class="form-group">
                         <input type="text" class="form-control" name="qtyBarang" v-model="qtyBarang" placeholder="Qty">
@@ -166,9 +172,11 @@
 </template>
 
 <script>
+ import VueSingleSelect from "vue-single-select";
     export default {
-
+components: { VueSingleSelect },
         data() {
+
             return {
                 post: {},
                 validation: [],
@@ -237,7 +245,7 @@
                 {
                     idMenu: this.post.id,
                     idBarang: this.post1.id,
-                    hargaBarang: this.hargaBarang,
+                    hargaBarang: this.post1.hrgJual,
                     qtyBarang: this.qtyBarang
                 })
                     .then((response) => {

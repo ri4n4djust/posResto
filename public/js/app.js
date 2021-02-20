@@ -8850,24 +8850,23 @@ __webpack_require__.r(__webpack_exports__);
     loadTransaksiPembelian: function loadTransaksiPembelian() {
       var _this5 = this;
 
-      var uri = '/api/dataPembelian';
-      this.axios.post(uri, {
-        np: this.noNotaPembelian
-      }).then(function (response) {
-        //alert('no nota '+ np);
-        _this5.pem = response.data.data;
+      var uri = '/api/dataPembelian/' + this.noNotaPembelian;
+      this.axios.post(uri).then(function (response) {
+        _this5.pem = response.data.data; // alert('no nota '+ this.data.noNota);
       });
     },
     PostDeleteTrx: function PostDeleteTrx(id) {
       var _this6 = this;
 
-      this.axios["delete"]("/api/pembelianDelete/".concat(id)).then(function (response) {
-        alert('Berhasil Di Hapus');
+      if (confirm("Do you really want to delete?")) {
+        this.axios["delete"]("/api/pembelianDelete/".concat(id)).then(function (response) {
+          alert('Berhasil Di Hapus');
 
-        _this6.loadTotal();
+          _this6.loadTotal();
 
-        _this6.loadTransaksiPembelian();
-      })["catch"](function (error) {});
+          _this6.loadTransaksiPembelian();
+        })["catch"](function (error) {});
+      }
     },
     PostItemPembelian: function PostItemPembelian() {
       var _this7 = this;
@@ -9002,22 +9001,24 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "ActionButtons",
   data: function data() {
     return {
       posts: [],
       pem: [],
-      showModalPenjualan: false
+      showModalPenjualan: false,
+      np: this.data.noNota,
+      sukses: ''
     };
   },
   created: function created() {
-    this.loadData(); //this.loadDetailPenjualan()
-  },
-  watch: {
-    post: function post() {
-      this.$emit('input', this.pem);
-    }
+    this.loadData(); //this.something()
+
+    this.loadDetailPenjualan();
   },
   methods: {
     something: function something() {
@@ -9038,12 +9039,9 @@ __webpack_require__.r(__webpack_exports__);
     loadDetailPenjualan: function loadDetailPenjualan() {
       var _this3 = this;
 
-      var uri = '/api/detailenjualan';
-      this.axios.post(uri, {
-        np: this.data.noNota
-      }).then(function (response) {
-        alert('no nota ' + np);
-        _this3.pem = response.data.data;
+      var uri = '/api/detailpenjualan/' + this.data.noNota;
+      this.axios.post(uri).then(function (response) {
+        _this3.pem = response.data.data; // alert('no nota '+ this.data.noNota);
       });
     }
   },
@@ -9217,13 +9215,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -9253,7 +9244,9 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component("data-table", _andresouzaab
       ActionButtons: null,
       validation: null,
       //actionTriggered: null,
-      totalS: [] //totalSum: '',
+      totalS: [],
+      pajakS: [],
+      diskonS: [] //totalSum: '',
 
     };
   },
@@ -9276,7 +9269,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component("data-table", _andresouzaab
           sortable: false
         }, {
           key: "taxNota",
-          title: "Pajak",
+          title: "PPn",
           sortable: false,
           searchable: false
         }, {
@@ -9342,7 +9335,9 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component("data-table", _andresouzaab
         endDate: this.endDate
       }).then(function (response) {
         _this3.posts1 = response.data.data;
-        _this3.totalS = response.data.totalSum; //alert('Data Ditampilkan');
+        _this3.totalS = response.data.notaSum;
+        _this3.pajakS = response.data.pajakSum;
+        _this3.diskonS = response.data.diskonSum; //alert('Data Ditampilkan');
         //this.loadDataSorting()
         //this.loadTotal()
       });
@@ -9450,6 +9445,45 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue2_datepicker_index_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue2-datepicker/index.css */ "./node_modules/vue2-datepicker/index.css");
 /* harmony import */ var vue2_datepicker_index_css__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue2_datepicker_index_css__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var vue_single_select__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue-single-select */ "./node_modules/vue-single-select/dist/index.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -9939,12 +9973,17 @@ __webpack_require__.r(__webpack_exports__);
         bayarNota: this.totalBayar,
         kembalianNota: this.totalBayar - (this.subtotal * this.pajak / 100 + this.subtotal - (this.subtotal * this.pajak / 100 + this.subtotal) * this.diskon / 100)
       }).then(function (response) {
-        alert('Transaksi Selesai');
+        _this11.print(); //alert('Transaksi Selesai');
+
 
         _this11.$router.push({
           name: 'meja'
         });
       });
+    },
+    print: function print() {
+      // Pass the element id here
+      this.$htmlToPaper('printMe');
     }
   }
 });
@@ -10269,6 +10308,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vue_single_select__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-single-select */ "./node_modules/vue-single-select/dist/index.js");
 //
 //
 //
@@ -10436,7 +10476,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
+  components: {
+    VueSingleSelect: vue_single_select__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
   data: function data() {
     return {
       post: {},
@@ -10512,7 +10562,7 @@ __webpack_require__.r(__webpack_exports__);
       this.axios.post(uri, {
         idMenu: this.post.id,
         idBarang: this.post1.id,
-        hargaBarang: this.hargaBarang,
+        hargaBarang: this.post1.hrgJual,
         qtyBarang: this.qtyBarang
       }).then(function (response) {
         alert('sukses donkkkkkkkk');
@@ -16122,7 +16172,7 @@ exports = module.exports = __webpack_require__(/*! ../css-loader/lib/css-base.js
 
 
 // module
-exports.push([module.i, ".mx-icon-left:before,.mx-icon-right:before,.mx-icon-double-left:before,.mx-icon-double-right:before,.mx-icon-double-left:after,.mx-icon-double-right:after{content:\"\";position:relative;top:-1px;display:inline-block;width:10px;height:10px;vertical-align:middle;border-style:solid;border-color:currentColor;border-width:2px 0 0 2px;border-radius:1px;-webkit-box-sizing:border-box;box-sizing:border-box;-webkit-transform-origin:center;transform-origin:center;-webkit-transform:rotate(-45deg) scale(0.7);transform:rotate(-45deg) scale(0.7)}.mx-icon-double-left:after{left:-4px}.mx-icon-double-right:before{left:4px}.mx-icon-right:before,.mx-icon-double-right:before,.mx-icon-double-right:after{-webkit-transform:rotate(135deg) scale(0.7);transform:rotate(135deg) scale(0.7)}.mx-btn{-webkit-box-sizing:border-box;box-sizing:border-box;line-height:1;font-size:14px;font-weight:500;padding:7px 15px;margin:0;cursor:pointer;background-color:transparent;outline:none;border:1px solid rgba(0,0,0,.1);border-radius:4px;color:#73879c;white-space:nowrap}.mx-btn:hover{border-color:#1284e7;color:#1284e7}.mx-btn-text{border:0;padding:0 4px;text-align:left;line-height:inherit}.mx-scrollbar{height:100%}.mx-scrollbar:hover .mx-scrollbar-track{opacity:1}.mx-scrollbar-wrap{height:100%;overflow-x:hidden;overflow-y:auto}.mx-scrollbar-track{position:absolute;top:2px;right:2px;bottom:2px;width:6px;z-index:1;border-radius:4px;opacity:0;-webkit-transition:opacity .24s ease-out;transition:opacity .24s ease-out}.mx-scrollbar-track .mx-scrollbar-thumb{position:absolute;width:100%;height:0;cursor:pointer;border-radius:inherit;background-color:rgba(144,147,153,.3);-webkit-transition:background-color .3s;transition:background-color .3s}.mx-zoom-in-down-enter-active,.mx-zoom-in-down-leave-active{opacity:1;-webkit-transform:scaleY(1);transform:scaleY(1);-webkit-transition:opacity .3s cubic-bezier(0.23, 1, 0.32, 1),-webkit-transform .3s cubic-bezier(0.23, 1, 0.32, 1);transition:opacity .3s cubic-bezier(0.23, 1, 0.32, 1),-webkit-transform .3s cubic-bezier(0.23, 1, 0.32, 1);transition:transform .3s cubic-bezier(0.23, 1, 0.32, 1),opacity .3s cubic-bezier(0.23, 1, 0.32, 1);transition:transform .3s cubic-bezier(0.23, 1, 0.32, 1),opacity .3s cubic-bezier(0.23, 1, 0.32, 1),-webkit-transform .3s cubic-bezier(0.23, 1, 0.32, 1);-webkit-transform-origin:center top;transform-origin:center top}.mx-zoom-in-down-enter,.mx-zoom-in-down-leave-to{opacity:0;-webkit-transform:scaleY(0);transform:scaleY(0)}.mx-datepicker{position:relative;display:inline-block;width:210px}.mx-datepicker svg{width:1em;height:1em;vertical-align:-0.15em;fill:currentColor;overflow:hidden}.mx-datepicker-range{width:320px}.mx-datepicker-inline{width:auto}.mx-input-wrapper{position:relative}.mx-input-wrapper .mx-icon-clear{display:none}.mx-input-wrapper:hover .mx-icon-clear{display:block}.mx-input-wrapper:hover .mx-icon-clear+.mx-icon-calendar{display:none}.mx-input{display:inline-block;-webkit-box-sizing:border-box;box-sizing:border-box;width:100%;height:34px;padding:6px 30px;padding-left:10px;font-size:14px;line-height:1.4;color:#555;background-color:#fff;border:1px solid #ccc;border-radius:4px;-webkit-box-shadow:inset 0 1px 1px rgba(0,0,0,.075);box-shadow:inset 0 1px 1px rgba(0,0,0,.075)}.mx-input:hover,.mx-input:focus{border-color:#409aff}.mx-input:disabled,.mx-input.disabled{color:#ccc;background-color:#f3f3f3;border-color:#ccc;cursor:not-allowed}.mx-input:focus{outline:none}.mx-input::-ms-clear{display:none}.mx-icon-calendar,.mx-icon-clear{position:absolute;top:50%;right:8px;-webkit-transform:translateY(-50%);transform:translateY(-50%);font-size:16px;line-height:1;color:rgba(0,0,0,.5);vertical-align:middle}.mx-icon-clear{cursor:pointer}.mx-icon-clear:hover{color:rgba(0,0,0,.8)}.mx-datepicker-main{font:14px/1.5 \"Helvetica Neue\",Helvetica,Arial,\"Microsoft Yahei\",sans-serif;color:#73879c;background-color:#fff;border:1px solid #e8e8e8}.mx-datepicker-popup{position:absolute;margin-top:1px;margin-bottom:1px;-webkit-box-shadow:0 6px 12px rgba(0,0,0,.175);box-shadow:0 6px 12px rgba(0,0,0,.175);z-index:2001}.mx-datepicker-sidebar{float:left;-webkit-box-sizing:border-box;box-sizing:border-box;width:100px;padding:6px;overflow:auto}.mx-datepicker-sidebar+.mx-datepicker-content{margin-left:100px;border-left:1px solid #e8e8e8}.mx-datepicker-body{position:relative;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.mx-btn-shortcut{display:block;padding:0 6px;line-height:24px}.mx-range-wrapper{display:-webkit-box;display:-ms-flexbox;display:flex}@media(max-width: 750px){.mx-range-wrapper{-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-direction:column;flex-direction:column}}.mx-datepicker-header{padding:6px 8px;border-bottom:1px solid #e8e8e8}.mx-datepicker-footer{padding:6px 8px;text-align:right;border-top:1px solid #e8e8e8}.mx-calendar{-webkit-box-sizing:border-box;box-sizing:border-box;width:248px;padding:6px 12px}.mx-calendar+.mx-calendar{border-left:1px solid #e8e8e8}.mx-calendar-header,.mx-time-header{-webkit-box-sizing:border-box;box-sizing:border-box;height:34px;line-height:34px;text-align:center;overflow:hidden}.mx-btn-icon-left,.mx-btn-icon-double-left{float:left}.mx-btn-icon-right,.mx-btn-icon-double-right{float:right}.mx-calendar-header-label{font-size:14px}.mx-calendar-decade-separator{margin:0 2px}.mx-calendar-decade-separator:after{content:\"~\"}.mx-calendar-content{position:relative;height:224px;-webkit-box-sizing:border-box;box-sizing:border-box}.mx-calendar-content .cell{cursor:pointer}.mx-calendar-content .cell:hover{color:#73879c;background-color:#f3f9fe}.mx-calendar-content .cell.active{color:#fff;background-color:#1284e7}.mx-calendar-content .cell.in-range,.mx-calendar-content .cell.hover-in-range{color:#73879c;background-color:#dbedfb}.mx-calendar-content .cell.disabled{cursor:not-allowed;color:#ccc;background-color:#f3f3f3}.mx-calendar-week-mode .mx-date-row{cursor:pointer}.mx-calendar-week-mode .mx-date-row:hover{background-color:#f3f9fe}.mx-calendar-week-mode .mx-date-row.mx-active-week{background-color:#dbedfb}.mx-calendar-week-mode .mx-date-row .cell:hover{color:inherit;background-color:transparent}.mx-calendar-week-mode .mx-date-row .cell.active{color:inherit;background-color:transparent}.mx-week-number{opacity:.5}.mx-table{table-layout:fixed;border-collapse:separate;border-spacing:0;width:100%;height:100%;-webkit-box-sizing:border-box;box-sizing:border-box;text-align:center;vertical-align:middle}.mx-table th{padding:0;font-weight:500}.mx-table td{padding:0}.mx-table-date td,.mx-table-date th{height:32px;font-size:12px}.mx-table-date .today{color:#2a90e9}.mx-table-date .cell.not-current-month{color:#ccc;background:none}.mx-time{-webkit-box-flex:1;-ms-flex:1;flex:1;width:224px;background:#fff}.mx-time+.mx-time{border-left:1px solid #e8e8e8}.mx-calendar-time{position:absolute;top:0;left:0;width:100%;height:100%}.mx-time-header{border-bottom:1px solid #e8e8e8}.mx-time-content{height:224px;-webkit-box-sizing:border-box;box-sizing:border-box;overflow:hidden}.mx-time-columns{display:-webkit-box;display:-ms-flexbox;display:flex;width:100%;height:100%;overflow:hidden}.mx-time-column{-webkit-box-flex:1;-ms-flex:1;flex:1;position:relative;border-left:1px solid #e8e8e8;text-align:center}.mx-time-column:first-child{border-left:0}.mx-time-column .mx-time-list{margin:0;padding:0;list-style:none}.mx-time-column .mx-time-list::after{content:\"\";display:block;height:192px}.mx-time-column .mx-time-item{cursor:pointer;font-size:12px;height:32px;line-height:32px}.mx-time-column .mx-time-item:hover{color:#73879c;background-color:#f3f9fe}.mx-time-column .mx-time-item.active{color:#1284e7;background-color:transparent;font-weight:700}.mx-time-column .mx-time-item.disabled{cursor:not-allowed;color:#ccc;background-color:#f3f3f3}.mx-time-option{cursor:pointer;padding:8px 10px;font-size:14px;line-height:20px}.mx-time-option:hover{color:#73879c;background-color:#f3f9fe}.mx-time-option.active{color:#1284e7;background-color:transparent;font-weight:700}.mx-time-option.disabled{cursor:not-allowed;color:#ccc;background-color:#f3f3f3}\n", ""]);
+exports.push([module.i, ".mx-icon-left:before,.mx-icon-right:before,.mx-icon-double-left:before,.mx-icon-double-right:before,.mx-icon-double-left:after,.mx-icon-double-right:after{content:\"\";position:relative;top:-1px;display:inline-block;width:10px;height:10px;vertical-align:middle;border-style:solid;border-color:currentColor;border-width:2px 0 0 2px;border-radius:1px;-webkit-box-sizing:border-box;box-sizing:border-box;-webkit-transform-origin:center;transform-origin:center;-webkit-transform:rotate(-45deg) scale(0.7);transform:rotate(-45deg) scale(0.7)}.mx-icon-double-left:after{left:-4px}.mx-icon-double-right:before{left:4px}.mx-icon-right:before,.mx-icon-double-right:before,.mx-icon-double-right:after{-webkit-transform:rotate(135deg) scale(0.7);transform:rotate(135deg) scale(0.7)}.mx-btn{-webkit-box-sizing:border-box;box-sizing:border-box;line-height:1;font-size:14px;font-weight:500;padding:7px 15px;margin:0;cursor:pointer;background-color:transparent;outline:none;border:1px solid rgba(0,0,0,.1);border-radius:4px;color:#73879c;white-space:nowrap}.mx-btn:hover{border-color:#1284e7;color:#1284e7}.mx-btn-text{border:0;padding:0 4px;text-align:left;line-height:inherit}.mx-scrollbar{height:100%}.mx-scrollbar:hover .mx-scrollbar-track{opacity:1}.mx-scrollbar-wrap{height:100%;overflow-x:hidden;overflow-y:auto}.mx-scrollbar-track{position:absolute;top:2px;right:2px;bottom:2px;width:6px;z-index:1;border-radius:4px;opacity:0;-webkit-transition:opacity .24s ease-out;transition:opacity .24s ease-out}.mx-scrollbar-track .mx-scrollbar-thumb{position:absolute;width:100%;height:0;cursor:pointer;border-radius:inherit;background-color:rgba(144,147,153,.3);-webkit-transition:background-color .3s;transition:background-color .3s}.mx-zoom-in-down-enter-active,.mx-zoom-in-down-leave-active{opacity:1;-webkit-transform:scaleY(1);transform:scaleY(1);-webkit-transition:opacity .3s cubic-bezier(0.23, 1, 0.32, 1),-webkit-transform .3s cubic-bezier(0.23, 1, 0.32, 1);transition:opacity .3s cubic-bezier(0.23, 1, 0.32, 1),-webkit-transform .3s cubic-bezier(0.23, 1, 0.32, 1);transition:transform .3s cubic-bezier(0.23, 1, 0.32, 1),opacity .3s cubic-bezier(0.23, 1, 0.32, 1);transition:transform .3s cubic-bezier(0.23, 1, 0.32, 1),opacity .3s cubic-bezier(0.23, 1, 0.32, 1),-webkit-transform .3s cubic-bezier(0.23, 1, 0.32, 1);-webkit-transform-origin:center top;transform-origin:center top}.mx-zoom-in-down-enter,.mx-zoom-in-down-leave-to{opacity:0;-webkit-transform:scaleY(0);transform:scaleY(0)}.mx-datepicker{position:relative;display:inline-block;width:210px}.mx-datepicker svg{width:1em;height:1em;vertical-align:-0.15em;fill:currentColor;overflow:hidden}.mx-datepicker-range{width:320px}.mx-datepicker-inline{width:auto}.mx-input-wrapper{position:relative}.mx-input-wrapper .mx-icon-clear{display:none}.mx-input-wrapper:hover .mx-icon-clear{display:block}.mx-input-wrapper:hover .mx-icon-clear+.mx-icon-calendar{display:none}.mx-input{display:inline-block;-webkit-box-sizing:border-box;box-sizing:border-box;width:100%;height:34px;padding:6px 30px;padding-left:10px;font-size:14px;line-height:1.4;color:#555;background-color:#fff;border:1px solid #ccc;border-radius:4px;-webkit-box-shadow:inset 0 1px 1px rgba(0,0,0,.075);box-shadow:inset 0 1px 1px rgba(0,0,0,.075)}.mx-input:hover,.mx-input:focus{border-color:#409aff}.mx-input:disabled,.mx-input.disabled{color:#ccc;background-color:#f3f3f3;border-color:#ccc;cursor:not-allowed}.mx-input:focus{outline:none}.mx-input::-ms-clear{display:none}.mx-icon-calendar,.mx-icon-clear{position:absolute;top:50%;right:8px;-webkit-transform:translateY(-50%);transform:translateY(-50%);font-size:16px;line-height:1;color:rgba(0,0,0,.5);vertical-align:middle}.mx-icon-clear{cursor:pointer}.mx-icon-clear:hover{color:rgba(0,0,0,.8)}.mx-datepicker-main{font:14px/1.5 \"Helvetica Neue\",Helvetica,Arial,\"Microsoft Yahei\",sans-serif;color:#73879c;background-color:#fff;border:1px solid #e8e8e8}.mx-datepicker-popup{position:absolute;margin-top:1px;margin-bottom:1px;-webkit-box-shadow:0 6px 12px rgba(0,0,0,.175);box-shadow:0 6px 12px rgba(0,0,0,.175);z-index:2001}.mx-datepicker-sidebar{float:left;-webkit-box-sizing:border-box;box-sizing:border-box;width:100px;padding:6px;overflow:auto}.mx-datepicker-sidebar+.mx-datepicker-content{margin-left:100px;border-left:1px solid #e8e8e8}.mx-datepicker-body{position:relative;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.mx-btn-shortcut{display:block;padding:0 6px;line-height:24px}.mx-range-wrapper{display:-webkit-box;display:-ms-flexbox;display:flex}@media(max-width: 750px){.mx-range-wrapper{-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-direction:column;flex-direction:column}}.mx-datepicker-header{padding:6px 8px;border-bottom:1px solid #e8e8e8}.mx-datepicker-footer{padding:6px 8px;text-align:right;border-top:1px solid #e8e8e8}.mx-calendar{-webkit-box-sizing:border-box;box-sizing:border-box;width:248px;padding:6px 12px}.mx-calendar+.mx-calendar{border-left:1px solid #e8e8e8}.mx-calendar-header,.mx-time-header{-webkit-box-sizing:border-box;box-sizing:border-box;height:34px;line-height:34px;text-align:center;overflow:hidden}.mx-btn-icon-left,.mx-btn-icon-double-left{float:left}.mx-btn-icon-right,.mx-btn-icon-double-right{float:right}.mx-calendar-header-label{font-size:14px}.mx-calendar-decade-separator{margin:0 2px}.mx-calendar-decade-separator:after{content:\"~\"}.mx-calendar-content{position:relative;height:224px;-webkit-box-sizing:border-box;box-sizing:border-box}.mx-calendar-content .cell{cursor:pointer}.mx-calendar-content .cell:hover{color:#73879c;background-color:#f3f9fe}.mx-calendar-content .cell.active{color:#fff;background-color:#1284e7}.mx-calendar-content .cell.in-range,.mx-calendar-content .cell.hover-in-range{color:#73879c;background-color:#dbedfb}.mx-calendar-content .cell.disabled{cursor:not-allowed;color:#ccc;background-color:#f3f3f3}.mx-calendar-week-mode .mx-date-row{cursor:pointer}.mx-calendar-week-mode .mx-date-row:hover{background-color:#f3f9fe}.mx-calendar-week-mode .mx-date-row.mx-active-week{background-color:#dbedfb}.mx-calendar-week-mode .mx-date-row .cell:hover{color:inherit;background-color:transparent}.mx-calendar-week-mode .mx-date-row .cell.active{color:inherit;background-color:transparent}.mx-week-number{opacity:.5}.mx-table{table-layout:fixed;border-collapse:separate;border-spacing:0;width:100%;height:100%;-webkit-box-sizing:border-box;box-sizing:border-box;text-align:center;vertical-align:middle}.mx-table th{padding:0;font-weight:500}.mx-table td{padding:0}.mx-table-date td,.mx-table-date th{height:32px;font-size:12px}.mx-table-date .today{color:#2a90e9}.mx-table-date .cell.not-current-month{color:#ccc;background:none}.mx-time{-webkit-box-flex:1;-ms-flex:1;flex:1;width:224px;background:#fff}.mx-time+.mx-time{border-left:1px solid #e8e8e8}.mx-calendar-time{position:absolute;top:0;left:0;width:100%;height:100%}.mx-time-header{border-bottom:1px solid #e8e8e8}.mx-time-content{height:224px;-webkit-box-sizing:border-box;box-sizing:border-box;overflow:hidden}.mx-time-columns{display:-webkit-box;display:-ms-flexbox;display:flex;width:100%;height:100%;overflow:hidden}.mx-time-column{-webkit-box-flex:1;-ms-flex:1;flex:1;position:relative;border-left:1px solid #e8e8e8;text-align:center}.mx-time-column:first-child{border-left:0}.mx-time-column .mx-time-list{margin:0;padding:0;list-style:none}.mx-time-column .mx-time-list::after{content:\"\";display:block;height:192px}.mx-time-column .mx-time-item{cursor:pointer;font-size:12px;height:32px;line-height:32px}.mx-time-column .mx-time-item:hover{color:#73879c;background-color:#f3f9fe}.mx-time-column .mx-time-item.active{color:#1284e7;background-color:transparent;font-weight:700}.mx-time-column .mx-time-item.disabled{cursor:not-allowed;color:#ccc;background-color:#f3f3f3}.mx-time-option{cursor:pointer;padding:8px 10px;font-size:14px;line-height:20px}.mx-time-option:hover{color:#73879c;background-color:#f3f9fe}.mx-time-option.active{color:#1284e7;background-color:transparent;font-weight:700}.mx-time-option.disabled{cursor:not-allowed;color:#ccc;background-color:#f3f3f3}\r\n", ""]);
 
 // exports
 
@@ -16160,7 +16210,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.data-table {\n\tdisplay: grid;\n\twidth: 100%;\n\theight: 100%;\n}\n", ""]);
+exports.push([module.i, "\n.data-table {\r\n\tdisplay: grid;\r\n\twidth: 100%;\r\n\theight: 100%;\n}\r\n", ""]);
 
 // exports
 
@@ -49549,7 +49599,7 @@ var render = function() {
             { staticClass: "modal-header" },
             [
               _vm._t("header", [
-                _vm._v("\n              default header\n            ")
+                _vm._v("\r\n              default header\r\n            ")
               ])
             ],
             2
@@ -49560,7 +49610,7 @@ var render = function() {
             { staticClass: "modal-body" },
             [
               _vm._t("body", [
-                _vm._v("\n              default body\n            ")
+                _vm._v("\r\n              default body\r\n            ")
               ])
             ],
             2
@@ -49571,7 +49621,7 @@ var render = function() {
             { staticClass: "modal-footer" },
             [
               _vm._t("footer", [
-                _vm._v("\n              default footer\n              "),
+                _vm._v("\r\n              default footer\r\n              "),
                 _c(
                   "button",
                   {
@@ -49582,7 +49632,7 @@ var render = function() {
                       }
                     }
                   },
-                  [_vm._v("\n                OK\n              ")]
+                  [_vm._v("\r\n                OK\r\n              ")]
                 )
               ])
             ],
@@ -50330,31 +50380,25 @@ var render = function() {
                             "\n                                    " +
                               _vm._s(_vm.data.pelangganNota) +
                               "\n                                    "
-                          ),
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.data.pelangganNota,
-                                expression: "data.pelangganNota"
-                              }
-                            ],
-                            attrs: { type: "text" },
-                            domProps: { value: _vm.data.pelangganNota },
-                            on: {
-                              input: function($event) {
-                                if ($event.target.composing) {
-                                  return
-                                }
-                                _vm.$set(
-                                  _vm.data,
-                                  "pelangganNota",
-                                  $event.target.value
-                                )
-                              }
-                            }
-                          })
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("p", { staticClass: "text-muted text-left" }, [
+                          _c("label", [_vm._v("Pajak : ")]),
+                          _vm._v(
+                            "\n                                    " +
+                              _vm._s(_vm._f("currency")(_vm.data.taxNota)) +
+                              "\n                                    "
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("p", { staticClass: "text-muted text-left" }, [
+                          _c("label", [_vm._v("Diskon : ")]),
+                          _vm._v(
+                            "\n                                    " +
+                              _vm._s(_vm._f("currency")(_vm.data.diskonNota)) +
+                              "\n                                    "
+                          )
                         ]),
                         _vm._v(" "),
                         _c(
@@ -50481,7 +50525,6 @@ var render = function() {
           ),
           _vm._v(" "),
           _c("div", { staticClass: "tab-pane", attrs: { id: "timeline" } }, [
-            _vm._v("\n            isi timeline\n            "),
             _c(
               "form",
               {
@@ -50568,36 +50611,7 @@ var render = function() {
                     _vm._v(" "),
                     _c("td", [
                       _vm._v(_vm._s(_vm._f("currency")(post1.totalNota)))
-                    ]),
-                    _vm._v(" "),
-                    _c(
-                      "td",
-                      { staticClass: "text-center" },
-                      [
-                        _c(
-                          "router-link",
-                          {
-                            staticClass: "btn btn-outline-success",
-                            attrs: {
-                              to: { name: "detail", params: { id: post1.id } }
-                            }
-                          },
-                          [_c("i", { staticClass: "fa fa-eye" })]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "router-link",
-                          {
-                            staticClass: "btn btn-outline-success",
-                            attrs: {
-                              to: { name: "edit", params: { id: post1.id } }
-                            }
-                          },
-                          [_c("i", { staticClass: "fa fa-edit" })]
-                        )
-                      ],
-                      1
-                    )
+                    ])
                   ])
                 }),
                 0
@@ -50605,19 +50619,17 @@ var render = function() {
               _vm._v(" "),
               _c("tfoot", [
                 _c("tr", [
-                  _c("td"),
+                  _c("th"),
                   _vm._v(" "),
-                  _c("td"),
+                  _c("th"),
                   _vm._v(" "),
-                  _c("td"),
+                  _c("th"),
                   _vm._v(" "),
-                  _c("td"),
+                  _c("th", [_vm._v(_vm._s(_vm._f("currency")(_vm.pajakS)))]),
                   _vm._v(" "),
-                  _c("td"),
+                  _c("th", [_vm._v(_vm._s(_vm._f("currency")(_vm.diskonS)))]),
                   _vm._v(" "),
-                  _c("td", [_c("box", { attrs: { totalS: _vm.totalS } })], 1),
-                  _vm._v(" "),
-                  _c("td")
+                  _c("th", [_vm._v(_vm._s(_vm._f("currency")(_vm.totalS)))])
                 ])
               ])
             ]),
@@ -50653,17 +50665,23 @@ var render = function() {
                     _vm._v(" "),
                     _c("tfoot", [
                       _c("tr", [
-                        _c("td"),
+                        _c("th"),
                         _vm._v(" "),
-                        _c("td"),
+                        _c("th"),
                         _vm._v(" "),
-                        _c("td"),
+                        _c("th"),
                         _vm._v(" "),
-                        _c("td"),
+                        _c("th", [
+                          _vm._v(_vm._s(_vm._f("currency")(_vm.pajakS)))
+                        ]),
                         _vm._v(" "),
-                        _c("td"),
+                        _c("th", [
+                          _vm._v(_vm._s(_vm._f("currency")(_vm.diskonS)))
+                        ]),
                         _vm._v(" "),
-                        _c("td", [_vm._v(_vm._s(_vm.totalSum))])
+                        _c("th", [
+                          _vm._v(_vm._s(_vm._f("currency")(_vm.totalS)))
+                        ])
                       ])
                     ])
                   ],
@@ -50737,13 +50755,11 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", [_vm._v("Tgl")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Pajak")]),
+        _c("th", [_vm._v("PPn")]),
         _vm._v(" "),
         _c("th", [_vm._v("Diskon")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Total")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Aksi")])
+        _c("th", [_vm._v("Total")])
       ])
     ])
   },
@@ -52191,7 +52207,114 @@ var render = function() {
                               )
                             ])
                           ]
-                        )
+                        ),
+                        _vm._v(" "),
+                        _c("div", { attrs: { id: "printMe" } }, [
+                          _c("h3", [
+                            _c("p", { staticClass: "text-muted text-center" }, [
+                              _vm._v("Nota")
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("p", { staticClass: "text-muted text-center" }, [
+                            _vm._v(
+                              "\n                 Tgl : " +
+                                _vm._s(_vm.tglNota) +
+                                "\n                "
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("p", { staticClass: "text-muted text-center" }, [
+                            _vm._v(
+                              "\n                Customer : " +
+                                _vm._s(_vm.pelanggan) +
+                                "\n                "
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("p", { staticClass: "text-muted text-center" }, [
+                            _vm._v(
+                              "\n                 No Invoice : " +
+                                _vm._s(_vm.noNota) +
+                                "\n                "
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("p", { staticClass: "text-muted text-center" }, [
+                            _vm._v(
+                              "\n                 Tax & Service : " +
+                                _vm._s(
+                                  _vm._f("currency")(
+                                    (_vm.subtotal * _vm.pajak) / 100 +
+                                      _vm.subtotal
+                                  )
+                                ) +
+                                "\n                "
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("p", { staticClass: "text-muted text-center" }, [
+                            _vm._v(
+                              "\n                 Diskon : " +
+                                _vm._s(
+                                  _vm._f("currency")(
+                                    (((_vm.subtotal * _vm.pajak) / 100 +
+                                      _vm.subtotal) *
+                                      _vm.diskon) /
+                                      100
+                                  )
+                                ) +
+                                "\n                "
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("p", { staticClass: "text-muted text-center" }, [
+                            _vm._v(
+                              "\n                Payment : " +
+                                _vm._s(_vm._f("currency")(_vm.totalBayar)) +
+                                "\n                "
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("h3", { staticClass: "profile-username " }, [
+                            _c("p", { staticClass: "text-muted text-center" }, [
+                              _vm._v(
+                                "\n                  Total " +
+                                  _vm._s(
+                                    _vm._f("currency")(
+                                      (_vm.subtotal * _vm.pajak) / 100 +
+                                        _vm.subtotal -
+                                        (((_vm.subtotal * _vm.pajak) / 100 +
+                                          _vm.subtotal) *
+                                          _vm.diskon) /
+                                          100 || 0
+                                    )
+                                  ) +
+                                  "\n                  "
+                              )
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("h3", { staticClass: "profile-username " }, [
+                            _c("p", { staticClass: "text-muted text-center" }, [
+                              _vm._v(
+                                "\n                    Kembali : " +
+                                  _vm._s(
+                                    _vm._f("currency")(
+                                      _vm.totalBayar -
+                                        ((_vm.subtotal * _vm.pajak) / 100 +
+                                          _vm.subtotal -
+                                          (((_vm.subtotal * _vm.pajak) / 100 +
+                                            _vm.subtotal) *
+                                            _vm.diskon) /
+                                            100) || 0
+                                    )
+                                  ) +
+                                  "\n                  "
+                              )
+                            ])
+                          ])
+                        ])
                       ])
                     ])
                   ])
@@ -53119,210 +53242,236 @@ var render = function() {
                         ])
                       ]),
                       _vm._v(" "),
-                      _c("div", { staticClass: "modal-body" }, [
-                        _c(
-                          "select",
-                          {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.post1,
-                                expression: "post1"
-                              }
-                            ],
-                            on: {
-                              change: function($event) {
-                                var $$selectedVal = Array.prototype.filter
-                                  .call($event.target.options, function(o) {
-                                    return o.selected
-                                  })
-                                  .map(function(o) {
-                                    var val = "_value" in o ? o._value : o.value
-                                    return val
-                                  })
-                                _vm.post1 = $event.target.multiple
-                                  ? $$selectedVal
-                                  : $$selectedVal[0]
-                              }
+                      _c(
+                        "div",
+                        { staticClass: "modal-body" },
+                        [
+                          _c("vue-single-select", {
+                            attrs: {
+                              options: _vm.users,
+                              required: true,
+                              optionLabel: "nmBarang"
+                            },
+                            model: {
+                              value: _vm.post1,
+                              callback: function($$v) {
+                                _vm.post1 = $$v
+                              },
+                              expression: "post1"
                             }
-                          },
-                          _vm._l(_vm.users, function(post1) {
-                            return _c(
-                              "option",
-                              { key: post1.id, domProps: { value: post1 } },
-                              [_vm._v(_vm._s(post1.nmBarang))]
-                            )
                           }),
-                          0
-                        ),
-                        _vm._v(" "),
-                        _vm.post1
-                          ? _c("div", [
-                              _c(
-                                "form",
+                          _vm._v(" "),
+                          _c(
+                            "select",
+                            {
+                              directives: [
                                 {
-                                  on: {
-                                    submit: function($event) {
-                                      $event.preventDefault()
-                                      return _vm.PostItem($event)
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.post1,
+                                  expression: "post1"
+                                }
+                              ],
+                              staticClass: "form-control",
+                              on: {
+                                change: function($event) {
+                                  var $$selectedVal = Array.prototype.filter
+                                    .call($event.target.options, function(o) {
+                                      return o.selected
+                                    })
+                                    .map(function(o) {
+                                      var val =
+                                        "_value" in o ? o._value : o.value
+                                      return val
+                                    })
+                                  _vm.post1 = $event.target.multiple
+                                    ? $$selectedVal
+                                    : $$selectedVal[0]
+                                }
+                              }
+                            },
+                            _vm._l(_vm.users, function(post1) {
+                              return _c(
+                                "option",
+                                { key: post1.id, domProps: { value: post1 } },
+                                [_vm._v(_vm._s(post1.nmBarang))]
+                              )
+                            }),
+                            0
+                          ),
+                          _vm._v(" "),
+                          _vm.post1
+                            ? _c("div", [
+                                _c(
+                                  "form",
+                                  {
+                                    on: {
+                                      submit: function($event) {
+                                        $event.preventDefault()
+                                        return _vm.PostItem($event)
+                                      }
                                     }
-                                  }
-                                },
-                                [
-                                  _c("div", { staticClass: "form-group" }, [
-                                    _c("input", {
-                                      directives: [
-                                        {
-                                          name: "model",
-                                          rawName: "v-model",
-                                          value: _vm.post1.nmBarang,
-                                          expression: "post1.nmBarang"
-                                        }
-                                      ],
-                                      ref: "kodebarang",
-                                      staticClass: "form-control",
-                                      attrs: { type: "text" },
-                                      domProps: { value: _vm.post1.nmBarang },
-                                      on: {
-                                        input: function($event) {
-                                          if ($event.target.composing) {
-                                            return
+                                  },
+                                  [
+                                    _c("div", { staticClass: "form-group" }, [
+                                      _c("input", {
+                                        directives: [
+                                          {
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value: _vm.post1.nmBarang,
+                                            expression: "post1.nmBarang"
                                           }
-                                          _vm.$set(
-                                            _vm.post1,
-                                            "nmBarang",
-                                            $event.target.value
-                                          )
-                                        }
-                                      }
-                                    })
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("div", { staticClass: "form-group" }, [
-                                    _c("input", {
-                                      directives: [
-                                        {
-                                          name: "model",
-                                          rawName: "v-model",
-                                          value: _vm.post.id,
-                                          expression: "post.id"
-                                        }
-                                      ],
-                                      staticClass: "form-control",
-                                      attrs: { type: "hidden" },
-                                      domProps: { value: _vm.post.id },
-                                      on: {
-                                        input: function($event) {
-                                          if ($event.target.composing) {
-                                            return
+                                        ],
+                                        ref: "kodebarang",
+                                        staticClass: "form-control",
+                                        attrs: { type: "hidden" },
+                                        domProps: { value: _vm.post1.nmBarang },
+                                        on: {
+                                          input: function($event) {
+                                            if ($event.target.composing) {
+                                              return
+                                            }
+                                            _vm.$set(
+                                              _vm.post1,
+                                              "nmBarang",
+                                              $event.target.value
+                                            )
                                           }
-                                          _vm.$set(
-                                            _vm.post,
-                                            "id",
-                                            $event.target.value
-                                          )
                                         }
-                                      }
-                                    }),
+                                      })
+                                    ]),
                                     _vm._v(" "),
-                                    _c("input", {
-                                      directives: [
-                                        {
-                                          name: "model",
-                                          rawName: "v-model",
-                                          value: _vm.post1.id,
-                                          expression: "post1.id"
-                                        }
-                                      ],
-                                      staticClass: "form-control",
-                                      attrs: { type: "hidden" },
-                                      domProps: { value: _vm.post1.id },
-                                      on: {
-                                        input: function($event) {
-                                          if ($event.target.composing) {
-                                            return
+                                    _c("div", { staticClass: "form-group" }, [
+                                      _c("input", {
+                                        directives: [
+                                          {
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value: _vm.post.id,
+                                            expression: "post.id"
                                           }
-                                          _vm.$set(
-                                            _vm.post1,
-                                            "id",
-                                            $event.target.value
-                                          )
+                                        ],
+                                        staticClass: "form-control",
+                                        attrs: { type: "hidden" },
+                                        domProps: { value: _vm.post.id },
+                                        on: {
+                                          input: function($event) {
+                                            if ($event.target.composing) {
+                                              return
+                                            }
+                                            _vm.$set(
+                                              _vm.post,
+                                              "id",
+                                              $event.target.value
+                                            )
+                                          }
                                         }
-                                      }
-                                    }),
+                                      }),
+                                      _vm._v(" "),
+                                      _c("input", {
+                                        directives: [
+                                          {
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value: _vm.post1.id,
+                                            expression: "post1.id"
+                                          }
+                                        ],
+                                        staticClass: "form-control",
+                                        attrs: { type: "hidden" },
+                                        domProps: { value: _vm.post1.id },
+                                        on: {
+                                          input: function($event) {
+                                            if ($event.target.composing) {
+                                              return
+                                            }
+                                            _vm.$set(
+                                              _vm.post1,
+                                              "id",
+                                              $event.target.value
+                                            )
+                                          }
+                                        }
+                                      }),
+                                      _vm._v(" "),
+                                      _c("input", {
+                                        directives: [
+                                          {
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value: _vm.post1.hrgJual,
+                                            expression: "post1.hrgJual"
+                                          }
+                                        ],
+                                        staticClass: "form-control",
+                                        attrs: {
+                                          type: "text",
+                                          placeholder: "Harga"
+                                        },
+                                        domProps: { value: _vm.post1.hrgJual },
+                                        on: {
+                                          input: function($event) {
+                                            if ($event.target.composing) {
+                                              return
+                                            }
+                                            _vm.$set(
+                                              _vm.post1,
+                                              "hrgJual",
+                                              $event.target.value
+                                            )
+                                          }
+                                        }
+                                      })
+                                    ]),
                                     _vm._v(" "),
-                                    _c("input", {
-                                      directives: [
-                                        {
-                                          name: "model",
-                                          rawName: "v-model",
-                                          value: _vm.hargaBarang,
-                                          expression: "hargaBarang"
-                                        }
-                                      ],
-                                      staticClass: "form-control",
-                                      attrs: {
-                                        type: "text",
-                                        placeholder: "Harga"
-                                      },
-                                      domProps: { value: _vm.hargaBarang },
-                                      on: {
-                                        input: function($event) {
-                                          if ($event.target.composing) {
-                                            return
+                                    _c("div", { staticClass: "form-group" }, [
+                                      _c("input", {
+                                        directives: [
+                                          {
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value: _vm.qtyBarang,
+                                            expression: "qtyBarang"
                                           }
-                                          _vm.hargaBarang = $event.target.value
-                                        }
-                                      }
-                                    })
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("div", { staticClass: "form-group" }, [
-                                    _c("input", {
-                                      directives: [
-                                        {
-                                          name: "model",
-                                          rawName: "v-model",
-                                          value: _vm.qtyBarang,
-                                          expression: "qtyBarang"
-                                        }
-                                      ],
-                                      staticClass: "form-control",
-                                      attrs: {
-                                        type: "text",
-                                        name: "qtyBarang",
-                                        placeholder: "Qty"
-                                      },
-                                      domProps: { value: _vm.qtyBarang },
-                                      on: {
-                                        input: function($event) {
-                                          if ($event.target.composing) {
-                                            return
+                                        ],
+                                        staticClass: "form-control",
+                                        attrs: {
+                                          type: "text",
+                                          name: "qtyBarang",
+                                          placeholder: "Qty"
+                                        },
+                                        domProps: { value: _vm.qtyBarang },
+                                        on: {
+                                          input: function($event) {
+                                            if ($event.target.composing) {
+                                              return
+                                            }
+                                            _vm.qtyBarang = $event.target.value
                                           }
-                                          _vm.qtyBarang = $event.target.value
                                         }
-                                      }
-                                    })
-                                  ]),
-                                  _vm._v(" "),
-                                  _c(
-                                    "button",
-                                    {
-                                      staticClass: "btn btn-md btn-success",
-                                      attrs: { type: "submit" }
-                                    },
-                                    [_vm._v("Add")]
-                                  )
-                                ]
-                              )
-                            ])
-                          : _c("div", [
-                              _vm._v(
-                                "\n                  no Slected\n                "
-                              )
-                            ])
-                      ])
+                                      })
+                                    ]),
+                                    _vm._v(" "),
+                                    _c(
+                                      "button",
+                                      {
+                                        staticClass: "btn btn-md btn-success",
+                                        attrs: { type: "submit" }
+                                      },
+                                      [_vm._v("Add")]
+                                    )
+                                  ]
+                                )
+                              ])
+                            : _c("div", [
+                                _vm._v(
+                                  "\n                  no Slected\n                "
+                                )
+                              ])
+                        ],
+                        1
+                      )
                     ])
                   ])
                 ])
@@ -74855,13 +75004,14 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var vue_currency_filter__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-currency-filter */ "./node_modules/vue-currency-filter/dist/vue-currency-filter.module.js");
-/* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
-/* harmony import */ var vue_axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue-axios */ "./node_modules/vue-axios/dist/vue-axios.es5.js");
-/* harmony import */ var vue_axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(vue_axios__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _App_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./App.vue */ "./resources/js/App.vue");
+/* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
+/* harmony import */ var vue_axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-axios */ "./node_modules/vue-axios/dist/vue-axios.es5.js");
+/* harmony import */ var vue_axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue_axios__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _App_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./App.vue */ "./resources/js/App.vue");
+/* harmony import */ var vue_html_to_paper__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vue-html-to-paper */ "./node_modules/vue-html-to-paper/dist/index.js");
+/* harmony import */ var vue_html_to_paper__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(vue_html_to_paper__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var _components_posts_Index_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/posts/Index.vue */ "./resources/js/components/posts/Index.vue");
 /* harmony import */ var _components_posts_Create_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/posts/Create.vue */ "./resources/js/components/posts/Create.vue");
 /* harmony import */ var _components_posts_Edit_vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/posts/Edit.vue */ "./resources/js/components/posts/Edit.vue");
@@ -74880,6 +75030,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_laporan_laporanPenjualan_vue__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./components/laporan/laporanPenjualan.vue */ "./resources/js/components/laporan/laporanPenjualan.vue");
 /* harmony import */ var _components_laporan_laporanPembelian_vue__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./components/laporan/laporanPembelian.vue */ "./resources/js/components/laporan/laporanPembelian.vue");
 /* harmony import */ var _components_laporan_laporanStokOpname_vue__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./components/laporan/laporanStokOpname.vue */ "./resources/js/components/laporan/laporanStokOpname.vue");
+/* harmony import */ var vue_currency_filter__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! vue-currency-filter */ "./node_modules/vue-currency-filter/dist/vue-currency-filter.module.js");
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -74899,12 +75050,18 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 
-
-Vue.use(vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]);
-
+Vue.use(vue_router__WEBPACK_IMPORTED_MODULE_0__["default"]);
 
 
-Vue.use(vue_axios__WEBPACK_IMPORTED_MODULE_2___default.a, axios__WEBPACK_IMPORTED_MODULE_3___default.a);
+
+Vue.use(vue_axios__WEBPACK_IMPORTED_MODULE_1___default.a, axios__WEBPACK_IMPORTED_MODULE_2___default.a);
+
+var options = {
+  name: '_blank',
+  specs: ['fullscreen=yes', 'titlebar=yes', 'scrollbars=yes'],
+  styles: ['https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css', 'https://unpkg.com/kidlat-css/css/kidlat.css']
+};
+Vue.use(vue_html_to_paper__WEBPACK_IMPORTED_MODULE_4___default.a, options);
 Vue.component('modal', __webpack_require__(/*! ./components/ModalComponent.vue */ "./resources/js/components/ModalComponent.vue"));
 
 
@@ -74924,7 +75081,8 @@ Vue.component('modal', __webpack_require__(/*! ./components/ModalComponent.vue *
 
 
 
-Vue.use(vue_currency_filter__WEBPACK_IMPORTED_MODULE_0__["default"], {
+
+Vue.use(vue_currency_filter__WEBPACK_IMPORTED_MODULE_23__["default"], {
   symbol: 'Rp.',
   thousandsSeparator: '.',
   fractionCount: 0,
@@ -75011,13 +75169,13 @@ var routes = [{
   path: '/laporanstokopname',
   component: _components_laporan_laporanStokOpname_vue__WEBPACK_IMPORTED_MODULE_22__["default"]
 }];
-var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
+var router = new vue_router__WEBPACK_IMPORTED_MODULE_0__["default"]({
   mode: 'history',
   routes: routes
 });
 var app = new Vue(Vue.util.extend({
   router: router
-}, _App_vue__WEBPACK_IMPORTED_MODULE_4__["default"])).$mount('#app');
+}, _App_vue__WEBPACK_IMPORTED_MODULE_3__["default"])).$mount('#app');
 
 /***/ }),
 
@@ -76477,8 +76635,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Users/max/Documents/Web/posResto/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /Users/max/Documents/Web/posResto/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\WinMax\Documents\GitHub\posResto\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\WinMax\Documents\GitHub\posResto\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
