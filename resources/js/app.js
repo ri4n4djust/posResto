@@ -66,6 +66,8 @@ import EditMenuComponent from './components/menu/Edit.vue';
 import CreatePembelian from './components/PembelianCreate.vue';
 import liveorder from './components/LiveOrder.vue';
 
+import tesComponent from './components/tes.vue';
+
 import LaporanPenjualanComponent from './components/laporan/laporanPenjualan.vue';
 import LaporanPembelianComponent from './components/laporan/laporanPembelian.vue';
 import StokOpnameComponent from './components/laporan/laporanStokOpname.vue';
@@ -178,6 +180,13 @@ const routes = [
         name: 'laporanstokopname',
         path: '/laporanstokopname',
         component: StokOpnameComponent
+    },
+
+    //=========tes
+    {
+        name: 'tes',
+        path: '/tes',
+        component: tesComponent
     }
 ];
 

@@ -17,13 +17,64 @@
                                         <button type="button" class="close" @click="showModalDetail=false">
                                         <span aria-hidden="true">&times;</span>
                                         </button>
-                                        <h4 class="modal-title">Add Item</h4>
+                                        <h4 class="modal-title">Detail</h4>
                                     </div>
                                     <div class="modal-body">
 
-                                        detail
+                                         {{data.kdBarang}}
 
-                                        {{data.id}} {{data.nmBarang}}
+                                        <div class="nav-tabs-custom">
+                                        <ul class="nav nav-tabs">
+
+                                        <li><a href="#timeline" data-toggle="tab">Kartu Stok</a></li>
+                                        <li><a href="#settings" data-toggle="tab">Settings</a></li>
+                                        </ul>
+                                        <div class="tab-content">
+                                        
+                                            <!-- /.tab-pane -->
+                                            <div class="tab-pane" id="timeline">
+                                                <!-- The timeline -->
+                                                   
+                                                        <table class="table table-hover table-bordered">
+                                                        <thead>
+                                                        <tr>
+                                                            <th>Nama Barang </th>
+                                                            <th>Tgl</th>
+                                                            <th>Qty Masuk</th>
+                                                            <th>Qty Keluar</th>
+                                                            <th>No. Transaksi</th>
+                                                            <th>Keterangan</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        <tr v-for="pe in pem" :key="pe.id">
+                                                            <td>{{ pe.kdBarang }} </td>
+                                                            <td>{{ pe.tglKartu }}</td>
+                                                            <td>{{ pe.qtyMasuk}}</td>
+                                                            <td>{{ pe.qtyKeluar}}</td>
+                                                            <td>{{ pe.noTransaksi}}</td>
+                                                            <td>{{ pe.keteranganKartu }}</td>
+
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+                                            </div>
+                                            <!-- /.tab-pane -->
+                                            <div class="tab-pane" id="settings">
+
+                                                    Seting
+                                            </div>
+                                            
+                                            <!-- /.tab-pane -->
+                                            </div>
+                                            <!-- /.tab-content -->
+                                        </div>
+                                        <!-- /.nav-tabs-custom -->
+                                       
+
+                                        
+
+
                                         
 
                                     </div>
@@ -43,16 +94,16 @@ export default {
     data() {
             return {
                 posts: [],
+                //pem: [],
                 showModalDetail: false,
                 data: this.posts,
             }
 
         },
     created() {
-            let uri = '/api/posts';
-            this.axios.get(uri).then(response => {
-                this.posts = response.data.data;
-            });
+            this.loadData()
+            //this.something()
+            this.loadDetailStok()
         },
     methods: {
 
@@ -61,6 +112,14 @@ export default {
                 this.axios.get(uri).then(response => {
                 this.posts = response.data.data;
                 
+            });
+            },
+            
+            loadDetailStok:function(){
+                let uri = '/api/detailstok/'+ this.data.kdBarang;
+                this.axios.post(uri).then(response => {
+                    this.pem = response.data.data;
+                   // alert('no nota '+ this.data.noNota);
             });
             },
             

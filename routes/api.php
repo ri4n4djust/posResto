@@ -96,3 +96,7 @@ Route::delete('/komposisi/{id?}', 'komposisiController@destroy');
 Route::get('/penjualan', 'penjualanController@index');
 Route::post('/lapPenjualan', 'penjualanController@sorting');
 Route::post('/detailpenjualan/{id}', 'penjualanController@listDetailPenjualan');
+
+//=========Stok
+Route::post('/detailstok/{id}', 'stokController@DetailStok');
+Route::get('/stokopname', 'stokController@index');

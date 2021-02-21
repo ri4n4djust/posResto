@@ -88,7 +88,7 @@
         },
         mounted () {
             //this.intervalFetchData1();
-            this.intervalFetchData();
+            //this.intervalFetchData();
             //this.bindings()
             this.loadData()
         },

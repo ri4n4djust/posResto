@@ -1,20 +1,43 @@
 <template>
 
-                    <div class="card-body">
-                        <h3>Daftar barang</h3>
-                        <h3>
-                        <router-link :to="{ name: 'create' }" class="btn btn-md btn-success">TAMBAH BARANG</router-link>
-                        </h3>
-                            
-                            <div>
-                                
+    <div class="card-body">
+                        <h3>Laporan Stok Opname</h3>
+
+                        <div class="col-md-12">
+                        <div class="nav-tabs-custom">
+                            <ul class="nav nav-tabs">
+                            <li class="active"><a href="#activity" data-toggle="tab">All Stok</a></li>
+                            <li><a href="#timeline" data-toggle="tab">Stok Opname</a></li>
+                            </ul>
+                            <div class="tab-content">
+                            <div class="active tab-pane" id="activity">
+
+                                <div>
                                 <data-table v-bind="bindings" @actionTriggered="ActionButtons"/>
+                                </div>
+                                
+                               
                                 
                             </div>
+                            <!-- /.tab-pane -->
+                            <div class="tab-pane" id="timeline">
+                                <!-- The timeline -->
+                                Stok Opname
+                            </div>
+                            <!-- /.tab-pane -->
+
+                            
+                            <!-- /.tab-pane -->
+                            </div>
+                            <!-- /.tab-content -->
+                        </div>
+                        <!-- /.nav-tabs-custom -->
+                        </div>                            
+                            
                     
 
 
-                    </div>
+    </div>
 
 </template>
 <style >
@@ -33,7 +56,7 @@ import Vue from 'vue';
 
 import DataTable from "@andresouzaabreu/vue-data-table";
 
-import ActionButtons from './componentAksi.vue';
+import ActionButtons from './componentAksiStok.vue';
 Vue.component("data-table", DataTable);
     export default {
         data() {
@@ -59,18 +82,7 @@ Vue.component("data-table", DataTable);
                             title: "Nama Barang",
                             sortable: false,
                         },
-                        {
-                            key: 'hrgPokok',
-                            title: "Harga Pokok",
-                            sortable: false,
-                            searchable: false,
-                        },
-                        {
-                            key: "hrgJual",
-                            title: "Harga Jual",
-                            sortable: false,
-                            searchable: false,
-                        },
+                        
                         {
                             key: "stkBarang",
                             title: "Stok",

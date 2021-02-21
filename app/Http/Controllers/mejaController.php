@@ -8,6 +8,7 @@ use App\TransaksiDetail;
 use App\Transaksi;
 use App\Barang;
 use App\Penjualan;
+use App\KartuStok;
 
 use Illuminate\Support\Facades\DB;
 
@@ -179,9 +180,19 @@ class mejaController extends Controller
             
             $barang = DB::table('tblBarang')->where('kdBarang', $request->input('idBarang'))->first();
             $stokLama = $barang->stkBarang;
+            $satuanBarang = $barang->satuanBarang;
 
             DB::table('tblBarang')->where('kdBarang', $request->input('idBarang'))->update([
                 'stkBarang'     => $stokLama - $request->input('qtyBarang')
+            ]);
+            KartuStok::create([
+                'kdBarang'     => $request->input('idBarang'),
+                'tglKartu'     => $request->input('tglNota'),
+                'qtyMasuk'     => '0',
+                'qtyKeluar'     => $request->input('qtyBarang'),
+                'noTransaksi'     => $request->input('noNota'),
+                'keteranganKartu'     => 'Penjualan',
+                'satuanKartu' => $satuanBarang,
             ]);
 
                 return response()->json([
@@ -209,9 +220,22 @@ class mejaController extends Controller
                 $stokLama = $barang->stkBarang;
             
                 DB::table('tblBarang')->where('kdBarang', $request->input('kdBarang'))->update([
-                'stkBarang'     => $stokLama + $request->input('qtyBeli')
+                'stkBarang'     => $stokLama - $request->input('qtyBarang')
 
                 ]);
+                //=========Update Kartu Stok
+                    $brngstok = DB::table('tblKartuStok')
+                    ->where('kdBarang', $request->input('idBarang'))
+                    ->where('noTransaksi', $request->input('noNota'))
+                    ->first();
+                $qtyS = $brngstok->qtyKeluar ;
+                DB::table('tblKartuStok')
+                    ->where('kdBarang', $request->input('idBarang'))
+                    ->where('noTransaksi', $request->input('noNota'))
+                    ->update([
+                        'qtyKeluar' => $qtyS + $request->input('qtyBarang'),
+                        ]);
+                //=========endKartu stok
 
                 return response()->json([
                     'success' => true,
@@ -404,6 +428,23 @@ class mejaController extends Controller
     public function destroy1($id)
     {
         $post = TransaksiDetail::findOrFail($id);
+
+        $noNotaTmp = $post->noNotaTmp;
+        $kodebarang = $post->kdBarangTmp;
+        $qtybarang = $post->qtyTmp;
+
+        $barang = DB::table('tblBarang')->where('kdBarang', $kodebarang)->first();
+        $stokLama = $barang->stkBarang;
+
+        DB::table('tblBarang')->where('kdBarang', $kodebarang)->update([
+                'stkBarang'     => $stokLama + $qtybarang
+        ]);
+
+        DB::table('tblKartuStok')
+            ->where('kdBarang', $kodebarang)
+            ->where('noTransaksi', $noNotaTmp)
+            ->delete();
+
         $post->delete();
 
         if ($post) {

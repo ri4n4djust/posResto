@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\PembelianDetail;
 use App\Pembelian;
+use App\KartuStok;
 
 use Illuminate\Support\Facades\DB;
 
@@ -29,9 +30,19 @@ class pembelianController extends Controller
             
             $barang = DB::table('tblBarang')->where('kdBarang', $request->input('kdBarang'))->first();
             $stokLama = $barang->stkBarang;
+            $satuanKartu = $barang->satuanBarang;
 
             DB::table('tblBarang')->where('kdBarang', $request->input('kdBarang'))->update([
                 'stkBarang'     => $stokLama + $request->input('qtyBeli')
+            ]);
+            KartuStok::create([
+                'kdBarang'     => $request->input('kdBarang'),
+                'tglKartu'     => $request->input('tglNotaPembelian'),
+                'qtyMasuk'     => $request->input('qtyBeli'),
+                'qtyKeluar'     => '0',
+                'noTransaksi'     => $request->input('noNotaPembelian'),
+                'keteranganKartu'     => 'Pembelian',
+                'satuanKartu' => $satuanKartu,
             ]);
 
                 return response()->json([
@@ -41,13 +52,15 @@ class pembelianController extends Controller
 
         } else {
 
+            //=========PembelianDetail
             $brng = DB::table('tblPembelianDetail')
                 ->where('kdBarang', $request->input('kdBarang'))
                 ->where('noNotaPembelian', $request->input('noNotaPembelian'))
                 ->first();
             $qtyB = $brng->qtyBeli ;
             $totalB = $brng->totalBeli ;
-
+            
+            
             DB::table('tblPembelianDetail')
                 ->where('kdBarang', $request->input('kdBarang'))
                 ->where('noNotaPembelian', $request->input('noNotaPembelian'))
@@ -61,8 +74,23 @@ class pembelianController extends Controller
         
             DB::table('tblBarang')->where('kdBarang', $request->input('kdBarang'))->update([
             'stkBarang'     => $stokLama + $request->input('qtyBeli')
-
             ]);
+            //=========EndPembelianDetail
+            //=========Update Kartu Stok
+            $brngstok = DB::table('tblKartuStok')
+                ->where('kdBarang', $request->input('kdBarang'))
+                ->where('noTransaksi', $request->input('noNotaPembelian'))
+                ->first();
+            $qtyS = $brngstok->qtyMasuk ;
+            DB::table('tblKartuStok')
+                ->where('kdBarang', $request->input('kdBarang'))
+                ->where('noTransaksi', $request->input('noNotaPembelian'))
+                ->update([
+                    'qtyMasuk' => $qtyS + $request->input('qtyBeli'),
+                    ]);
+            //=========endKartu stok
+
+            
 
                     return response()->json([
                         'success' => true,
@@ -146,6 +174,7 @@ class pembelianController extends Controller
 
         $post = PembelianDetail::findOrFail($id);
 
+        $noNotaPembelian = $post->noNotaPembelian;
         $kodebarang = $post->kdBarang;
         $qtybarang = $post->qtyBeli;
 
@@ -155,6 +184,11 @@ class pembelianController extends Controller
         DB::table('tblBarang')->where('kdBarang', $kodebarang)->update([
                 'stkBarang'     => $stokLama - $qtybarang
         ]);
+
+        DB::table('tblKartuStok')
+            ->where('kdBarang', $kodebarang)
+            ->where('noTransaksi', $noNotaPembelian)
+            ->delete();
 
         $post->delete();
 

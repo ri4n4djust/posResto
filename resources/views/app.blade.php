@@ -191,9 +191,7 @@
 
             <!-- /.box-header -->
             <div class="box-body">
-                <div id="app">
-                <dropdown-component></dropdown-component>
-                </div>
+                <div id="app"></div>
             </div>
             <!-- /.box-body -->
             <script src="{{ mix('js/app.js') }}" type="text/javascript"></script>
@@ -236,18 +234,5 @@
 <script src="{{asset('assets/dist/js/adminlte.min.js')}}"></script>
 <!-- AdminLTE for demo purposes -->
 <!-- page script -->
-<script>
-  $(function () {
-    $('#example1').DataTable()
-    $('#example2').DataTable({
-      'paging'      : true,
-      'lengthChange': false,
-      'searching'   : false,
-      'ordering'    : true,
-      'info'        : true,
-      'autoWidth'   : false
-    })
-  })
-</script>
 </body>
 </html>

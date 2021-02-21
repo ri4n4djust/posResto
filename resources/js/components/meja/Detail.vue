@@ -505,7 +505,8 @@
                     qtyBarang: this.qtyBarang,
                     total: this.post1.hrgJual * this.qtyBarang,
                     sisaStok: this.post1.stkBarang - this.qtyBarang,
-                    type: this.post1.ktgBarang
+                    type: this.post1.ktgBarang,
+                    tglNota: this.tglNota,
                 })
                     .then((response) => {
                         //alert('sukses donkkkkkkkk');

@@ -54,18 +54,13 @@ Route::get('/laporanstokopname', function () {
     return view('pages.stok');
 });
 
-Route::get('/barang/{any}', function () {
-    return view('app');
-})->where('any','.*');
-
-
-
 Route::get('/supplier', function () {
     return view('pages.supplier');
 });
-Route::get('/supplier/{any}', function () {
+
+Route::get('/tes', function () {
     return view('app');
-})->where('any','.*');
+});
 
 Route::get('/get_countries', 'kategoriController@index');
 Route::get('/get_states', 'CountryStateController@getStates');

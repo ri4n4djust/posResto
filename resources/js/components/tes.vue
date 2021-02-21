@@ -229,7 +229,7 @@
           }
         },
         //props: ['value'],
-        props: ['options', 'value'],
+        props: ['optionLabel', 'value'],
 
         methods: {
             loadTotal:function(){
@@ -291,7 +291,6 @@
                     hrgBeli: this.post1.hrgPokok,
                     qtyBeli: this.qtyBeli,
                     totalBeli: this.post1.hrgPokok * this.qtyBeli,
-                    tglNotaPembelian: this.tglPembelian,
                 })
                     .then((response) => {
                         this.loadTotal()

@@ -15,7 +15,6 @@
             <div class="box-body">
 
             <div id="app">
-            <ModalComponent></ModalComponent>
             </div>
               <script src="{{ mix('js/app.js') }}" type="text/javascript"></script>
             
