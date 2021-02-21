@@ -88,7 +88,7 @@ Route::delete('/menu/{id?}', 'menuController@destroy');
 
 //========komposisi
 Route::get('/komposisi', 'komposisiController@index');
-Route::get('/komposisi/detail/{id}', 'komposisiController@detail');
+Route::post('/komposisi/detail/{id}', 'komposisiController@detail');
 Route::post('/komposisi/store', 'komposisiController@store');
 Route::delete('/komposisi/{id?}', 'komposisiController@destroy');
 

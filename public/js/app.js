@@ -10855,6 +10855,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -10914,8 +10915,8 @@ __webpack_require__.r(__webpack_exports__);
     loadDataKomposisi: function loadDataKomposisi() {
       var _this4 = this;
 
-      var uri = "/api/komposisi/detail/".concat(this.$route.params.id);
-      this.axios.get(uri).then(function (response) {
+      var uri = '/api/komposisi/detail/' + this.post.kdMenu;
+      this.axios.post(uri).then(function (response) {
         _this4.komposisis = response.data.data;
       });
     },
@@ -10933,8 +10934,8 @@ __webpack_require__.r(__webpack_exports__);
 
       var uri = '/api/komposisi/store';
       this.axios.post(uri, {
-        idMenu: this.post.id,
-        idBarang: this.post1.id,
+        idMenu: this.post.kdMenu,
+        idBarang: this.post1.kdBarang,
         hargaBarang: this.post1.hrgJual,
         qtyBarang: this.qtyBarang
       }).then(function (response) {
@@ -54551,6 +54552,32 @@ var render = function() {
                                           {
                                             name: "model",
                                             rawName: "v-model",
+                                            value: _vm.post1.kdBarang,
+                                            expression: "post1.kdBarang"
+                                          }
+                                        ],
+                                        staticClass: "form-control",
+                                        attrs: { type: "hidden" },
+                                        domProps: { value: _vm.post1.kdBarang },
+                                        on: {
+                                          input: function($event) {
+                                            if ($event.target.composing) {
+                                              return
+                                            }
+                                            _vm.$set(
+                                              _vm.post1,
+                                              "kdBarang",
+                                              $event.target.value
+                                            )
+                                          }
+                                        }
+                                      }),
+                                      _vm._v(" "),
+                                      _c("input", {
+                                        directives: [
+                                          {
+                                            name: "model",
+                                            rawName: "v-model",
                                             value: _vm.post1.hrgJual,
                                             expression: "post1.hrgJual"
                                           }
@@ -76822,7 +76849,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_menu_Edit_vue__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./components/menu/Edit.vue */ "./resources/js/components/menu/Edit.vue");
 /* harmony import */ var _components_PembelianCreate_vue__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./components/PembelianCreate.vue */ "./resources/js/components/PembelianCreate.vue");
 /* harmony import */ var _components_LiveOrder_vue__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./components/LiveOrder.vue */ "./resources/js/components/LiveOrder.vue");
-/* harmony import */ var _components_tes_vue__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./components/tes.vue */ "./resources/js/components/tes.vue");
+/* harmony import */ var _components_tes_vue__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./components/tes.vue */ "./resources/js/components/tes.vue");
 /* harmony import */ var _components_laporan_laporanPenjualan_vue__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./components/laporan/laporanPenjualan.vue */ "./resources/js/components/laporan/laporanPenjualan.vue");
 /* harmony import */ var _components_laporan_laporanPembelian_vue__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./components/laporan/laporanPembelian.vue */ "./resources/js/components/laporan/laporanPembelian.vue");
 /* harmony import */ var _components_laporan_laporanStokOpname_vue__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./components/laporan/laporanStokOpname.vue */ "./resources/js/components/laporan/laporanStokOpname.vue");
@@ -76969,7 +76996,7 @@ var routes = [{
 {
   name: 'tes',
   path: '/tes',
-  component: _components_tes_vue__WEBPACK_IMPORTED_MODULE_25__["default"]
+  component: _components_tes_vue__WEBPACK_IMPORTED_MODULE_20__["default"]
 }];
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_0__["default"]({
   mode: 'history',

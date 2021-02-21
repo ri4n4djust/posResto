@@ -142,6 +142,7 @@
                     <div class="form-group">
                         <input type="hidden" class="form-control" v-model="post.id">
                         <input type="hidden" class="form-control" v-model="post1.id">
+                        <input type="hidden" class="form-control" v-model="post1.kdBarang">
                         <input type="text" class="form-control" v-model="post1.hrgJual" placeholder="Harga">
                     </div>
                     <div class="form-group">
@@ -223,8 +224,8 @@ components: { VueSingleSelect },
                 });
             },
             loadDataKomposisi:function(){
-                let uri = `/api/komposisi/detail/${this.$route.params.id}`;
-                this.axios.get(uri).then(response => {
+                let uri = '/api/komposisi/detail/'+ this.post.kdMenu;
+                this.axios.post(uri).then(response => {
                 this.komposisis = response.data.data;
                 
             });
@@ -243,8 +244,8 @@ components: { VueSingleSelect },
                 let uri = '/api/komposisi/store';
                 this.axios.post(uri, 
                 {
-                    idMenu: this.post.id,
-                    idBarang: this.post1.id,
+                    idMenu: this.post.kdMenu,
+                    idBarang: this.post1.kdBarang,
                     hargaBarang: this.post1.hrgJual,
                     qtyBarang: this.qtyBarang
                 })

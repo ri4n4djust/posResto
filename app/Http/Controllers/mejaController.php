@@ -265,23 +265,23 @@ class mejaController extends Controller
         ]);
 
         /*
-            $barang = DB::table('tblMenu')->where('id', $request->input('idBarang'))->first();
+            $barang = DB::table('tblMenu')->where('kdMenu', $request->input('idBarang'))->first();
             foreach ($barang as $b) {
 
-                $komposisi = DB::table('tblKomposisi')->where('idMenu', $b->id)->first();
+                $komposisi = DB::table('tblKomposisi')->where('idMenu', $b->idMenu)->first();
                 $qtyKomposisi = $komposisi->qtyBarang;
                 $idBarang = $komposisi->idBarang;
 
-                $barang = DB::table('tblBarang')->where('kdBarang', $request->input('idBarang'))->first();
+                $barang = DB::table('tblBarang')->where('kdBarang', $idBarang)->first();
                 $stokLama = $barang->stkBarang;
 
-                DB::table('tblBarang')->where('id', $request->input('idBarang'))->update([
+                DB::table('tblBarang')->where('kdBarang', $idBarang)->update([
                     'stkBarang'     => $stokLama - $qtyKomposisi
                 ]);
             
             }
-            */
-
+        */    
+            
             
             
                 return response()->json([
@@ -432,10 +432,12 @@ class mejaController extends Controller
         $noNotaTmp = $post->noNotaTmp;
         $kodebarang = $post->kdBarangTmp;
         $qtybarang = $post->qtyTmp;
-
+        
+        
+        if (Barang::where('kdBarang', $kodebarang)->exists()) {
+            // exists
         $barang = DB::table('tblBarang')->where('kdBarang', $kodebarang)->first();
         $stokLama = $barang->stkBarang;
-
         DB::table('tblBarang')->where('kdBarang', $kodebarang)->update([
                 'stkBarang'     => $stokLama + $qtybarang
         ]);
@@ -445,19 +447,22 @@ class mejaController extends Controller
             ->where('noTransaksi', $noNotaTmp)
             ->delete();
 
-        $post->delete();
-
-        if ($post) {
+            $post->delete();
             return response()->json([
                 'success' => true,
                 'message' => 'Post Berhasil Dihapus!',
             ], 200);
+
         } else {
+
+        
+            $post->delete();
             return response()->json([
-                'success' => false,
-                'message' => 'Post Gagal Dihapus!',
-            ], 500);
+                'success' => true,
+                'message' => 'Post Berhasil Dihapus!',
+            ], 200);
         }
+        
     }
 
     public function destroy($id)

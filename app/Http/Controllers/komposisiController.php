@@ -16,7 +16,7 @@ class komposisiController extends Controller
 
         $posts = DB::table('tblKomposisi')
                //->where('idBarang', $id)
-               ->join('tblBarang', 'tblKomposisi.idBarang', 'tblBarang.id')
+               ->join('tblBarang', 'tblKomposisi.kdBarang', 'tblBarang.kdBarang')
                ->get();
         //$posts = Komposisi::latest()->get();
         return response([
@@ -54,7 +54,7 @@ class komposisiController extends Controller
     {
         $post = DB::table('tblKomposisi')
                ->where('tblKomposisi.idMenu', $id)
-               ->join('tblBarang', 'tblKomposisi.idBarang', 'tblBarang.id')
+               ->join('tblBarang', 'tblKomposisi.idBarang', 'tblBarang.kdBarang')
                ->get(['tblBarang.nmBarang', 'tblKomposisi.*']);
         //$post = Komposisi::where('idMenu',$id)->get();
 
