@@ -53,6 +53,9 @@ Route::get('/liveorder', function () {
 Route::get('/laporanpenjualan', function () {
     return view('pages.laporan');
 });
+Route::get('/laporanpembelian', function () {
+    return view('pages.laporanpembelian');
+});
 Route::get('/laporanstokopname', function () {
     return view('pages.stok');
 });

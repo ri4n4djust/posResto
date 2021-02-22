@@ -12,6 +12,55 @@ use Illuminate\Support\Facades\DB;
 class pembelianController extends Controller
 {
     //
+    public function index()
+    {
+        $posts = Pembelian::join('tblSupplier', 'tblPembelian.idSupplier', '=', 'tblSupplier.id')->get();
+        return response([
+            'success' => true,
+            'message' => 'List Semua SPenjualan',
+            'data' => $posts
+        ], 200);
+    }
+    public function sorting(Request $request)
+    {
+        //$from = date('2021/02/01');
+        //$to = date('2021/02/02');
+        $startDate = $request->input('startDate');
+        $endDate = $request->input('endDate');
+
+        $posts = Pembelian::whereBetween('tglNotaPembelian', [$startDate, $endDate])->get();
+
+        //$posts = Penjualan::latest()->get();
+        return response([
+            'success' => true,
+            'message' => 'List Semua SPenjualan',
+            'startDate' => $startDate,
+            'endDate' => $endDate,
+            'data' => $posts
+        ], 200);
+
+    }
+    public function listDetailPembelian($id)
+    {
+        //$post = TransaksiDetail::whereId($id)->first();
+        $post = DB::table('tblPembelianDetail')
+                    ->where('noNotaPembelian', $id)->get();
+
+        if ($post) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Detail Post!',
+                'data'    => $post
+            ], 200);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Post Tidak Ditemukan!',
+                'data'    => ''
+            ], 404);
+        }
+    }
+
     public function addItemPembelian(Request $request)
     {
         $brg = DB::table('tblPembelianDetail')

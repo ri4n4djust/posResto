@@ -99,6 +99,11 @@ Route::get('/penjualan', 'penjualanController@index');
 Route::post('/lapPenjualan', 'penjualanController@sorting');
 Route::post('/detailpenjualan/{id}', 'penjualanController@listDetailPenjualan');
 
+//=====Laporan Pembelian
+Route::get('/pembelian', 'pembelianController@index');
+Route::post('/lapPembelian', 'pembelianController@sorting');
+Route::post('/detailpembelian/{id}', 'pembelianController@listDetailPembelian');
+
 //=========Stok
 Route::post('/detailstok/{id}', 'stokController@DetailStok');
 Route::get('/stokopname', 'stokController@index');

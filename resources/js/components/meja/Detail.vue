@@ -534,7 +534,8 @@
                     hargaJual: this.post2.hargaMenu,
                     qtyBarang: this.qtyBarang,
                     total: this.post2.hargaMenu * this.qtyBarang,
-                    type: this.post2.kdMenu
+                    type: this.post2.kdMenu,
+                    tglNota: this.tglNota,
                 })
                     .then((response) => {
                         //alert('sukses donkkkkkkkk');

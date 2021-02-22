@@ -275,11 +275,26 @@ class mejaController extends Controller
 
                         $barang = DB::table('tblBarang')->where('kdBarang', $ko)->first();
                         $stokLama = $barang->stkBarang;
+                        $satuanBarang = $barang->satuanBarang;
 
                         DB::table('tblBarang')->where('kdBarang', $ko)
                         ->update(array('stkBarang' => $stokLama - $qtyCost ));
 
-                }           
+                        //=========Update Kartu Stok
+                        KartuStok::insert([
+                            'kdBarang'     => $k->idBarang,
+                            'tglKartu'     => $request->input('tglNota'),
+                            'qtyMasuk'     => '0',
+                            'qtyKeluar'     => $qtyCost,
+                            'noTransaksi'     => $request->input('noNota'),
+                            'keteranganKartu'     => 'Penjualan Menu',
+                            'satuanKartu' => $satuanBarang,
+                        ]);
+                        //=========endKartu stok
+
+                }
+                
+                
             
             
                 return response()->json([
@@ -314,11 +329,40 @@ class mejaController extends Controller
 
                     $barang = DB::table('tblBarang')->where('kdBarang', $ko)->first();
                     $stokLama = $barang->stkBarang;
+                    $satuanBarang = $barang->satuanBarang;
 
                     DB::table('tblBarang')->where('kdBarang', $ko)
                     ->update(array('stkBarang' => $stokLama - $qtyCost ));
 
+                   //=========Update Kartu Stok
+                     //$brngstok = DB::table('tblKartuStok')
+                     //   ->where('kdBarang', $k0)
+                     //   ->where('noTransaksi', $request->input('noNota'))
+                     //   ->first();
+
+                    //$qtyS = $brngstok->qtyKeluar ;
+
+                    /* DB::table('tblKartuStok')
+                        ->where('kdBarang', $ko)
+                        ->where('noTransaksi', $request->input('noNota'))
+                        ->update(array([
+                            'qtyKeluar' => $qtyS + $qtyCost,
+                            ]));
+                    */
+                    KartuStok::insert([
+                        'kdBarang'     => $k->idBarang,
+                        'tglKartu'     => $request->input('tglNota'),
+                        'qtyMasuk'     => '0',
+                        'qtyKeluar'     => $qtyCost,
+                        'noTransaksi'     => $request->input('noNota'),
+                        'keteranganKartu'     => 'Penjualan Menu',
+                        'satuanKartu' => $satuanBarang,
+                    ]);
+                    //=========endKartu stok
+                
                 }  
+
+                
 
                 return response()->json([
                     'success' => true,
@@ -468,6 +512,29 @@ class mejaController extends Controller
             ], 200);
 
         } else {
+
+                $kompo = DB::table('tblKomposisi')
+                            ->where('idMenu', '=', $kodebarang)
+                            ->get();
+                foreach ($kompo as $k){
+                        $ko = $k->idBarang;
+                        $qtyCost = $k->qtyBarang * $qtybarang; 
+
+                        $barang = DB::table('tblBarang')->where('kdBarang', $ko)->first();
+                        $stokLama = $barang->stkBarang;
+                        $satuanBarang = $barang->satuanBarang;
+
+                        DB::table('tblBarang')->where('kdBarang', $ko)
+                        ->update(array('stkBarang' => $stokLama + $qtyCost ));
+
+                        //=========Update Kartu Stok
+                        DB::table('tblKartuStok')
+                            ->where('kdBarang', $ko)
+                            ->where('noTransaksi', $noNotaTmp)
+                            ->delete();
+                        //=========endKartu stok
+
+                }
 
         
             $post->delete();

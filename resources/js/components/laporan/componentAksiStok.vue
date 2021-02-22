@@ -57,6 +57,7 @@
                                                         </tr>
                                                         </tbody>
                                                     </table>
+                                            
                                             </div>
                                             <!-- /.tab-pane -->
                                             <div class="tab-pane" id="settings">
