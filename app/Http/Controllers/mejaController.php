@@ -219,7 +219,7 @@ class mejaController extends Controller
                 $barang = DB::table('tblBarang')->where('kdBarang', $request->input('idBarang'))->first();
                 $stokLama = $barang->stkBarang;
             
-                DB::table('tblBarang')->where('kdBarang', $request->input('kdBarang'))->update([
+                DB::table('tblBarang')->where('kdBarang', $request->input('idBarang'))->update([
                 'stkBarang'     => $stokLama - $request->input('qtyBarang')
 
                 ]);
@@ -264,28 +264,27 @@ class mejaController extends Controller
             'nmBarangTmp'     => $request->input('nmBarang'),
         ]);
 
-        /*
-            $barang = DB::table('tblMenu')->where('kdMenu', $request->input('idBarang'))->first();
-            foreach ($barang as $b) {
+        
 
-                $komposisi = DB::table('tblKomposisi')->where('idMenu', $b->idMenu)->first();
-                $qtyKomposisi = $komposisi->qtyBarang;
-                $idBarang = $komposisi->idBarang;
+                $kompo = DB::table('tblKomposisi')
+                            ->where('idMenu', '=', $request->input('idBarang'))
+                            ->get();
+                foreach ($kompo as $k){
+                        $ko = $k->idBarang;
+                        $qtyCost = $k->qtyBarang * $request->input('qtyBarang'); 
 
-                $barang = DB::table('tblBarang')->where('kdBarang', $idBarang)->first();
-                $stokLama = $barang->stkBarang;
+                        $barang = DB::table('tblBarang')->where('kdBarang', $ko)->first();
+                        $stokLama = $barang->stkBarang;
 
-                DB::table('tblBarang')->where('kdBarang', $idBarang)->update([
-                    'stkBarang'     => $stokLama - $qtyKomposisi
-                ]);
-            
-            }
-        */    
-            
+                        DB::table('tblBarang')->where('kdBarang', $ko)
+                        ->update(array('stkBarang' => $stokLama - $qtyCost ));
+
+                }           
             
             
                 return response()->json([
                     'success' => true,
+                    'komposisi' => $kompo,
                     'message' => 'Post Berhasil Disimpan!',
                 ], 200);
                 
@@ -305,6 +304,21 @@ class mejaController extends Controller
                         'qtyTmp' => $qtyB + $request->input('qtyBarang'),
                         'totalTmp' => $totalB + $request->input('total'),
                         ]);
+                
+                $kompo = DB::table('tblKomposisi')
+                        ->where('idMenu', '=', $request->input('idBarang'))
+                        ->get();
+                foreach ($kompo as $k){
+                    $ko = $k->idBarang;
+                    $qtyCost = $k->qtyBarang * $request->input('qtyBarang'); 
+
+                    $barang = DB::table('tblBarang')->where('kdBarang', $ko)->first();
+                    $stokLama = $barang->stkBarang;
+
+                    DB::table('tblBarang')->where('kdBarang', $ko)
+                    ->update(array('stkBarang' => $stokLama - $qtyCost ));
+
+                }  
 
                 return response()->json([
                     'success' => true,

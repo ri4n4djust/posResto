@@ -22,6 +22,7 @@ class Kartustok extends Migration
             $table->string('qtyKeluar');
             $table->string('noTransaksi');
             $table->string('keteranganKartu');
+            $table->string('satuanKartu');
             $table->timestamps();
         });
     }

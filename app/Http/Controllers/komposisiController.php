@@ -33,6 +33,7 @@ class komposisiController extends Controller
                 'idBarang'     => $request->input('idBarang'),
                 'hargaBarang'     => $request->input('hargaBarang'),
                 'qtyBarang'     => $request->input('qtyBarang'),
+                'satuanBarang'     => $request->input('satuanBarang'),
                 'totalBarang'     => $request->input('hargaBarang') * $request->input('qtyBarang') ,
             ]);
 

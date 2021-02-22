@@ -144,6 +144,7 @@
                   <form  @submit.prevent="PostItem" >
                     <div class="form-group">
                       <input type="hidden" v-model="post.noMeja">
+                      <input type="hidden" v-model="post.id">
                       <input type="hidden" v-model="noNota" placeholder="No nota">
                       <input type="hidden" v-model="post1.kdBarang">
                       <input type="hidden" v-model="post1.stkBarang">
@@ -162,6 +163,7 @@
                       <input type="text" class="form-control" :value="(post1.hrgJual * qtyBarang) || 0" :name="total"  placeholder="total">
                     </div>
                     <div class="form-group">
+                      <h3 class="profile-username text-center">Sisa sTok {{ post1.stkBarang - qtyBarang  }}</h3>
                     <button type="submit" data-dismiss="showModal" class="btn btn-md btn-success">Add</button>
                     </div>
                   </form>
@@ -407,6 +409,7 @@
                 kembalianBayar: '0',
                 totalTransaksiBayar: '',
                 type: '',
+                brg: '',
                 //optionLabel: users.nmBarang,
                 tglNota: new Date().toJSON().slice(0,10).replace(/-/g,'/'),
                 
@@ -436,6 +439,9 @@
         
 
         methods: {
+            cekStok() {
+                this.brg = this.post1 - this.qtyBarang;
+            },
 
             PostUpdate() {
                 let uri = `/api/posts/update/${this.$route.params.id}`;
@@ -504,7 +510,7 @@
                     hargaJual: this.post1.hrgJual,
                     qtyBarang: this.qtyBarang,
                     total: this.post1.hrgJual * this.qtyBarang,
-                    sisaStok: this.post1.stkBarang - this.qtyBarang,
+                    //sisaStok: this.post1.stkBarang - this.qtyBarang,
                     type: this.post1.ktgBarang,
                     tglNota: this.tglNota,
                 })

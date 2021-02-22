@@ -86,7 +86,7 @@ Vue.component("data-table", DataTable);
                         {
                             key: "stkBarang",
                             title: "Stok",
-                            sortable: false,
+                            sortable: true,
                             searchable: false,
                         },
                         {
