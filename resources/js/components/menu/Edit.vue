@@ -74,6 +74,7 @@
                                 <tr>
                                     <th>Nama </th>
                                     <th>Qty</th>
+                                    <th>Satuan</th>
                                     <th>Harga</th>
                                     <th>Total</th>
                                     <th>AKSI</th>
@@ -83,6 +84,7 @@
                                 <tr v-for="post in komposisis" :key="post.id">
                                     <td>{{ post.nmBarang }}</td>
                                     <td>{{ post.qtyBarang }}</td>
+                                    <td>{{ post.satuanBarang }}</td>
                                     <td>{{ post.hargaBarang | currency }}</td>
                                     <td>{{ post.totalBarang | currency }}</td>
                                     <td class="text-center">
@@ -143,8 +145,8 @@
                     </div>
                     <div class="form-group">
                         <input type="hidden" class="form-control" v-model="post.id">
-                        <input type="hidden" class="form-control" v-model="post1.id">
                         <input type="hidden" class="form-control" v-model="post1.kdBarang">
+                        <input type="hidden" class="form-control" v-model="post1.satuanBarang">
                         <input type="text" class="form-control" v-model="post1.hrgJual" placeholder="Harga">
                     </div>
                     <div class="form-group">
@@ -231,12 +233,13 @@ components: { VueSingleSelect },
                 });
             },
             loadData:function(){
-                let uri = '/api/posts';
+                let uri = '/api/semuabarang';
                 this.axios.get(uri).then(response => {
                 this.users = response.data.data;
                 
                 });
             },
+            
             loadDataKomposisi:function(){
                 let uri = `/api/komposisi/detail/${this.$route.params.id}`;
                 this.axios.post(uri).then(response => {
@@ -262,6 +265,7 @@ components: { VueSingleSelect },
                     idMenu: this.post.kdMenu,
                     idBarang: this.post1.kdBarang,
                     hargaBarang: this.post1.hrgJual,
+                    satuanBarang: this.post1.satuanBarang,
                     qtyBarang: this.qtyBarang,
                     toalBarang: this.qtyBarang * this.post1.hrgJual,
                 })

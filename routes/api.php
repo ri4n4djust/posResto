@@ -20,6 +20,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 //======barang
 Route::get('/posts', 'salesController@index');
+Route::get('/semuabarang', 'salesController@semua');
 Route::get('/mentah', 'salesController@mentah');
 Route::post('/posts/store', 'salesController@store');
 Route::get('/posts/{id?}', 'salesController@show');

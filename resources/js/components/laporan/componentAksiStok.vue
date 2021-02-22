@@ -21,7 +21,6 @@
                                     </div>
                                     <div class="modal-body">
 
-                                         {{data.kdBarang}}
 
                                         <div class="nav-tabs-custom">
                                         <ul class="nav nav-tabs">

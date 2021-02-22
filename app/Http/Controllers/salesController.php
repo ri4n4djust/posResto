@@ -27,6 +27,21 @@ class salesController extends Controller
         ], 200);
     }
 
+    public function semua()
+    {
+        $posts = Barang::join('tblKategori', 'tblBarang.ktgBarang', '=', 'tblKategori.kodeKtg')
+                ->get(['tblBarang.*', 'tblKategori.namaKtg']);
+        //$posts = Barang::latest()->get();
+        $count = Barang::count();
+        return response([
+            'success' => true,
+            'message' => 'List Semua Posts',
+            'kdBarang' => $count + 1,
+            'data' => $posts
+        ], 200);
+    }
+
+
     public function mentah()
     {
         $posts = Barang::join('tblKategori', 'tblBarang.ktgBarang', '=', 'tblKategori.kodeKtg')
