@@ -49,6 +49,7 @@ Vue.component('modal', require('./components/ModalComponent.vue'));
 import IndexComponent from './components/posts/Index.vue';
 import CreateComponent from './components/posts/Create.vue';
 import EditComponent from './components/posts/Edit.vue';
+import mentahComponent from './components/posts/barangMentah.vue';
 
 import IndexSupComponent from './components/supplier/Index.vue';
 import CreateSupComponent from './components/supplier/Create.vue';
@@ -88,6 +89,11 @@ const routes = [
         name: 'posts',
         path: '/barang',
         component: IndexComponent
+    },
+    {
+        name: 'barangmentah',
+        path: '/barangmentah',
+        component: mentahComponent
     },
     {
         name: 'create',

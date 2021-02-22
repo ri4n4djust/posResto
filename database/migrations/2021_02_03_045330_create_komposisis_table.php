@@ -19,6 +19,7 @@ class CreateKomposisisTable extends Migration
             $table->string('idBarang');
             $table->double('qtyBarang');
             $table->double('hargaBarang');
+            $table->double('totalBarang');
             $table->timestamps();
         });
     }

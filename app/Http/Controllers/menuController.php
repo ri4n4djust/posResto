@@ -69,7 +69,7 @@ class menuController extends Controller
 
     public function show($id)
     {
-        $post = Menu::whereId($id)->first();
+        $post = Menu::where('kdMenu', '=', $id)->first();
 
         if ($post) {
             return response()->json([
@@ -88,7 +88,7 @@ class menuController extends Controller
 
     public function detail($id)
     {
-        $post = Menu::whereId($id)->first();
+        $post = Menu::where('kdMenu', $id)->first();
 
         if ($post) {
             return response()->json([

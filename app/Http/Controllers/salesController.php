@@ -15,6 +15,22 @@ class salesController extends Controller
     public function index()
     {
         $posts = Barang::join('tblKategori', 'tblBarang.ktgBarang', '=', 'tblKategori.kodeKtg')
+                ->where('tblBarang.stsBarang', '1')
+                ->get(['tblBarang.*', 'tblKategori.namaKtg']);
+        //$posts = Barang::latest()->get();
+        $count = Barang::count();
+        return response([
+            'success' => true,
+            'message' => 'List Semua Posts',
+            'kdBarang' => $count + 1,
+            'data' => $posts
+        ], 200);
+    }
+
+    public function mentah()
+    {
+        $posts = Barang::join('tblKategori', 'tblBarang.ktgBarang', '=', 'tblKategori.kodeKtg')
+                ->where('tblBarang.stsBarang', '2')
                ->get(['tblBarang.*', 'tblKategori.namaKtg']);
         //$posts = Barang::latest()->get();
         $count = Barang::count();
@@ -64,7 +80,8 @@ class salesController extends Controller
                 'satuanBarang' => $request->input('satuanBarang'),
                 'merek' => $request->input('merek'),
                 'qtyMin' => $request->input('qtyMin'),
-                'qtyMax' => $request->input('qtyMax')
+                'qtyMax' => $request->input('qtyMax'),
+                'stsBarang' => $request->input('stsBarang'),
             ]);
 
 
@@ -136,7 +153,8 @@ class salesController extends Controller
                 'satuanBarang' => $request->input('satuanBarang'),
                 'merek' => $request->input('merek'),
                 'qtyMin' => $request->input('qtyMin'),
-                'qtyMax' => $request->input('qtyMax')
+                'qtyMax' => $request->input('qtyMax'),
+                'stsBarang' => $request->input('stsBarang'),
             ]);
 
 

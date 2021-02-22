@@ -510,8 +510,10 @@
                 })
                     .then((response) => {
                         //alert('sukses donkkkkkkkk');
+                        alert('sukses ditambahkan');
                         this.loadDataTransaksi()
                         this.loadTotal()
+                        this.showModal = false
                     });
                 
             },
@@ -530,8 +532,10 @@
                 })
                     .then((response) => {
                         //alert('sukses donkkkkkkkk');
+                        alert('sukses ditambahkan');
                         this.loadDataTransaksi()
                         this.loadTotal()
+                        this.showModalMenu = false
                     });
                 
             },

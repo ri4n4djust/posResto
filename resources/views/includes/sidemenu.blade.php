@@ -28,6 +28,7 @@
           </a>
           <ul class="treeview-menu">
             <li><a href="{{url('/barang')}}"><i class="fa fa-circle-o"></i>Daftar Barang</a></li>
+            <li><a href="{{url('/barangmentah')}}"><i class="fa fa-circle-o"></i>Barang Mentah</a></li>
             <li><a href="{{url('/menu')}}"><i class="fa fa-circle-o"></i>Daftar Menu</a></li>
             <li><a href="{{url('/kategori')}}"><i class="fa fa-circle-o"></i>Kategori Barang</a></li>
           </ul>

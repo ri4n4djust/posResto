@@ -10,6 +10,6 @@ class Komposisi extends Model
     protected $table = 'tblKomposisi';
 
     protected $fillable = [
-        'idMenu', 'idBarang', 'qtyBarang', 'hargaBarang'
+        'idMenu', 'idBarang', 'qtyBarang', 'hargaBarang', 'totalBarang'
     ];
 }

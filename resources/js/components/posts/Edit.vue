@@ -52,7 +52,15 @@
                                 <option value='0' >Select Kategori</option>
                                 <option v-for='data in countries' :value='data.kodeKtg' :key='data.id'>{{ data.namaKtg }}</option>
                             </select>
-                        </div>
+                            </div>
+
+                            <div class="form-group">
+                            <label>Jenis Barang: {{ stsBarang }}</label>
+                            <select class='form-control' v-model='post.stsBarang'>
+                                <option value='1' >Barang Jadi</option>
+                                <option value='2' >Barang Mentah</option>
+                            </select>
+                            </div>
 
                 </div>
             </div>

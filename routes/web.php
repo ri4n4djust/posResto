@@ -28,6 +28,9 @@ Route::get('/autocomp', function () {
 Route::get('/barang', function () {
     return view('pages.barang');
 });
+Route::get('/barangmentah', function () {
+    return view('pages.barangmentah');
+});
 Route::get('/marketing', function () {
     return view('pages.marketing');
 });

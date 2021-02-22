@@ -12,7 +12,7 @@
 
                             <div class="form-group">
                                 <label>Nama Menu</label>
-                                {{post.id}}
+                                
                                 <input type="text" class="form-control" v-model="post.nmMenu"
                                        placeholder="Masukkan Nama">
                                 <div v-if="validation.nmMenu">
@@ -75,14 +75,16 @@
                                     <th>Nama </th>
                                     <th>Qty</th>
                                     <th>Harga</th>
+                                    <th>Total</th>
                                     <th>AKSI</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <tr v-for="post in komposisis" :key="post.id">
-                                    <td>{{ post.nmBarang }}  {{ post.id }}</td>
+                                    <td>{{ post.nmBarang }}</td>
                                     <td>{{ post.qtyBarang }}</td>
                                     <td>{{ post.hargaBarang | currency }}</td>
+                                    <td>{{ post.totalBarang | currency }}</td>
                                     <td class="text-center">
                                         <button @click.prevent="PostDelete(post.id)" class="btn btn-sm btn-danger">HAPUS</button>
                                     </td>
@@ -90,7 +92,7 @@
                                 </tbody>
                             </table>
 
-
+                    <h3 class="profile-username text-center">Total Cost Untuk Menu : {{ this.tot | currency }}</h3>
                 <!-- /.post -->
               </div>
               <!-- /.tab-pane -->
@@ -148,6 +150,9 @@
                     <div class="form-group">
                         <input type="text" class="form-control" name="qtyBarang" v-model="qtyBarang" placeholder="Qty">
                     </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" :value="post1.hrgJual * qtyBarang" :name="totalBarang">
+                    </div>
                     <button type="submit"  class="btn btn-md btn-success">Add</button>
                   </form>
                 </div>
@@ -189,6 +194,7 @@ components: { VueSingleSelect },
                 idBarang: '',
                 hargaBarang: '',
                 qtyBarang: '',
+                tot: '',
             }
         },
         created() {
@@ -205,6 +211,14 @@ components: { VueSingleSelect },
           }
         },
         props: ['value'],
+
+        mounted () {
+            //this.intervalFetchData1();
+            //this.intervalFetchData();
+            //this.bindings()
+            this.loadData()
+            this.loadDataKomposisi()
+        },
 
         methods: {
             PostUpdate() {
@@ -224,9 +238,10 @@ components: { VueSingleSelect },
                 });
             },
             loadDataKomposisi:function(){
-                let uri = '/api/komposisi/detail/'+ this.post.kdMenu;
+                let uri = `/api/komposisi/detail/${this.$route.params.id}`;
                 this.axios.post(uri).then(response => {
                 this.komposisis = response.data.data;
+                this.tot = response.data.sumtotal;
                 
             });
             },
@@ -247,11 +262,13 @@ components: { VueSingleSelect },
                     idMenu: this.post.kdMenu,
                     idBarang: this.post1.kdBarang,
                     hargaBarang: this.post1.hrgJual,
-                    qtyBarang: this.qtyBarang
+                    qtyBarang: this.qtyBarang,
+                    toalBarang: this.qtyBarang * this.post1.hrgJual,
                 })
                     .then((response) => {
-                        alert('sukses donkkkkkkkk');
+                        alert('sukses ditambahkan');
                         this.loadDataKomposisi()
+                        this.showModal = false
                     });
                 
             }

@@ -33,6 +33,7 @@ class komposisiController extends Controller
                 'idBarang'     => $request->input('idBarang'),
                 'hargaBarang'     => $request->input('hargaBarang'),
                 'qtyBarang'     => $request->input('qtyBarang'),
+                'totalBarang'     => $request->input('hargaBarang') * $request->input('qtyBarang') ,
             ]);
 
 
@@ -56,12 +57,16 @@ class komposisiController extends Controller
                ->where('tblKomposisi.idMenu', $id)
                ->join('tblBarang', 'tblKomposisi.idBarang', 'tblBarang.kdBarang')
                ->get(['tblBarang.nmBarang', 'tblKomposisi.*']);
+        $sumtot = DB::table('tblKomposisi')
+                ->where('idMenu', '=', $id)
+               ->sum('totalBarang');
         //$post = Komposisi::where('idMenu',$id)->get();
 
         if ($post) {
             return response()->json([
                 'success' => true,
                 'message' => 'Detail Post!',
+                'sumtotal' => $sumtot,
                 'data'    => $post
             ], 200);
         } else {
