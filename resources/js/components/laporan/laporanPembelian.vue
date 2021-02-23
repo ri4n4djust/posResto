@@ -22,7 +22,7 @@
                             <!-- /.tab-pane -->
                             <div class="tab-pane" id="timeline">
                                 <!-- The timeline -->
-                                <form  @submit.prevent="lapPenjualan" >
+                                <form  @submit.prevent="lapPembelian" >
                                     
                                         <p class="text-muted text-left">
                                         <label>Start Date</label>
@@ -49,9 +49,9 @@
                                     </thead>
                                     <tbody>
                                     <tr v-for="post1 in posts1" :key="post1.id">
-                                        <td>{{ post1.noNota }}</td>
-                                        <td>{{ post1.pelangganNota }}</td>
-                                        <td>{{ post1.tglNota }}</td>
+                                        <td>{{ post1.noNotaPembelian }}</td>
+                                        <td>{{ post1.nmSupplier }}</td>
+                                        <td>{{ post1.tglNotaPembelian }}</td>
                                         <td>{{ post1.totalNotaPembelian | currency}}</td>
                                     </tr>
                                     </tbody>
@@ -60,7 +60,7 @@
                                             <th></th>
                                             <th></th>
                                             <th></th>
-                                            <th>{{totalS | currency}}</th>
+                                            <th>{{totalP | currency}}</th>
                                         </tr>
                                     </tfoot>
                                 </table>
@@ -87,7 +87,7 @@
                                             <th></th>
                                             <th></th>
                                             <th></th>
-                                            <th>{{totalS | currency}}</th>
+                                            <th>{{totalP | currency}}</th>
                                         </tr>
                                     </tfoot>
                                     </tbody>
@@ -158,6 +158,7 @@ Vue.component("data-table", DataTable);
             return {
                 posts: [],
                 posts1: [],
+                totalP: [],
                 startDate: '',
                 endDate: '',
                 ActionButtons: null,
@@ -181,7 +182,7 @@ Vue.component("data-table", DataTable);
                         },
                         {
                             key: "nmSupplier",
-                            title: "Pelanggan",
+                            title: "Supplier",
                             sortable: false,
                         },
                         {
@@ -242,7 +243,7 @@ Vue.component("data-table", DataTable);
                 })
                     .then((response) => {
                         this.posts1 = response.data.data;
-
+                        this.totalP = response.data.notaSum;
                         //alert('Data Ditampilkan');
                         //this.loadDataSorting()
                         //this.loadTotal()

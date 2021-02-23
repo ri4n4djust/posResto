@@ -7,7 +7,6 @@
                         <form @submit.prevent="PostStore">
 
                             
-                                {{post.kdMenu}}
                                 <input type="text" class="form-control" :value="post.kdMenu" :name="kdMenu" disabled >
 
 

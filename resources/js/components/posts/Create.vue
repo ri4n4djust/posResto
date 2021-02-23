@@ -54,7 +54,7 @@
 
                             <div class="form-group">
                             <label>Select Kategori: {{ stsBarang }}</label>
-                            <select class='form-control' v-model='post.stsBarang'>
+                            <select class='form-control' v-model='post.stsBarang' required>
                                 <option  value='1' >Barang Jadi</option>
                                 <option value='2' >Barang Mentah</option>
                             </select>

@@ -7,6 +7,10 @@
                         <form @submit.prevent="PostStore">
 
                             <div class="form-group">
+                                <input type="text" class="form-control" v-model="post.kdSupplier" disabled required>
+                            </div>
+
+                            <div class="form-group">
                                 <label>Nama Supplier</label>
                                 <input type="text" class="form-control" v-model="post.nmSupplier"
                                        placeholder="Masukkan Nama">
@@ -76,23 +80,33 @@
                 validation: []
             }
         },
+        created: function(){
+            this.loadKdSupplier()
+        },
         methods: {
-            onImageChange(e){
-                console.log(e.target.files[0]);
-                this.image = e.target.files[0];
-
-            },
+            
             PostStore() {
-                let uri = 'http://localhost:8000/api/supplier/store';
+                let uri = '/api/supplier/store';
                 this.axios.post(uri, this.post)
                     .then((response) => {
+                        alert('berhasil ditambahkan');
                         this.$router.push({
                             name: 'supplier'
+                            
                         });
                     }).catch(error => {
                     this.validation = error.response.data.data;
                 });
-            }
+            },
+
+            loadKdSupplier:function(){
+                let uri = '/api/kodeSupplier/';
+                this.axios.get(uri).then(response => {
+                this.post.kdSupplier = response.data.kdSupplier;
+                
+            });
+            },
+            
         }
     }
 </script>

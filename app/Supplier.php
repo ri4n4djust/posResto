@@ -10,6 +10,6 @@ class Supplier extends Model
     protected $table = 'tblSupplier';
 
     protected $fillable = [
-        'nmSupplier', 'almtSupplier', 'noHp', 'kontakSupplier'
+        'kdSupplier', 'nmSupplier', 'almtSupplier', 'noHp', 'kontakSupplier'
     ];
 }

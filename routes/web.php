@@ -63,10 +63,17 @@ Route::get('/laporanstokopname', function () {
 Route::get('/supplier', function () {
     return view('pages.supplier');
 });
+Route::get('/kategori', function () {
+    return view('pages.kategori');
+});
 
 Route::get('/tes', function () {
     return view('app');
 });
+
+//Route::get('{any}', function () { 
+//    return view('pages.barang'); 
+//})->where('any', '.*'); 
 
 Route::get('/get_countries', 'kategoriController@index');
 Route::get('/get_states', 'CountryStateController@getStates');

@@ -11,6 +11,7 @@ use App\Transaksi;
 use App\Penjualan;
 use App\Pembelian;
 use App\PembelianDetail;
+use App\Supplier;
 use Illuminate\Support\Facades\DB;
 
 class nomorController extends Controller
@@ -106,6 +107,30 @@ class nomorController extends Controller
                 'success' => false,
                 'message' => 'Post Tidak Ditemukan!',
                 'kdPembelian'    => ''
+            ], 404);
+        }
+    }
+
+    public function kodeSupplier()
+    {
+        $no = 0 ;
+        $count = Supplier::latest()->count();
+        $kodeBaru = $no + $count + 1  ;
+
+        $tahun = date('Y');
+        $post = 'SP-'.$tahun.'-'.$kodeBaru;
+
+        if ($post) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Detail Post!',
+                'kdSupplier'    => $post
+            ], 200);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Post Tidak Ditemukan!',
+                'kdSupplier'    => ''
             ], 404);
         }
     }

@@ -1,18 +1,18 @@
 <template>
     <div >
-        <button  @click="showModalPenjualan = true">
+        <button  @click="showModalPembelian = true">
             <i class="fa fa-eye"></i>
         </button>
        
 
-                        <div v-if="showModalPenjualan">
+                        <div v-if="showModalPembelian">
                             <transition name="modal">
                             <div class="modal-mask">
                                 <div class="modal-wrapper">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                     <div class="modal-header">
-                                        <button type="button" class="close" @click="showModalPenjualan=false">
+                                        <button type="button" class="close" @click="showModalPembelian=false">
                                         <span aria-hidden="true">&times;</span>
                                         </button>
                                         <h4 class="modal-title">Detail Penjualan</h4>
@@ -50,10 +50,10 @@
                                                         </thead>
                                                         <tbody>
                                                         <tr v-for="pe in pem" :key="pe.id">
-                                                            <td>{{ pe.nmBarang }} </td>
-                                                            <td>{{ pe.qty}}</td>
-                                                            <td>{{ pe.hrgBeli | currency }}</td>
-                                                            <td>{{ pe.qty * pe.hrgBeli | currency }}</td>
+                                                            <td>{{ pe.kdBarang }} </td>
+                                                            <td>{{ pe.qtyBeli}}</td>
+                                                            <td>{{ pe.hrgPokok | currency }}</td>
+                                                            <td>{{ pe.qtyBeli * pe.hrgPokok | currency }}</td>
 
                                                         </tr>
                                                         </tbody>
@@ -78,7 +78,7 @@ export default {
             return {
                 posts: [],
                 pem: [],
-                showModalPenjualan: false,
+                showModalPembelian: false,
                 np: this.data.noNota,
                 sukses: '',
                 
@@ -87,17 +87,12 @@ export default {
         },
     created() {
             this.loadData()
-            //this.something()
             this.loadDetailPenjualan()
         },
    
        
     methods: {
-            something() {
-                return new Promise((resolve) => {
-                resolve('np:'+ this.data.noNota);
-                });
-            },
+            
             loadData:function(){
                 let uri = '/api/pembelian';
                 this.axios.get(uri).then(response => {
@@ -107,7 +102,7 @@ export default {
             });
             },
             loadDetailPenjualan:function(){
-                let uri = '/api/detailpembelian/'+ this.data.noNota;
+                let uri = '/api/detailpembelian/'+ this.data.noNotaPembelian;
                 this.axios.post(uri).then(response => {
                     this.pem = response.data.data;
                    // alert('no nota '+ this.data.noNota);

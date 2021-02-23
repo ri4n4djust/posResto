@@ -51,6 +51,7 @@ class supplierController extends Controller
             //$request->image->move(public_path('images'), $imageName);
 
             $post = Supplier::create([
+                'kdSupplier'     => $request->input('kdSupplier'),
                 'nmSupplier'     => $request->input('nmSupplier'),
                 'almtSupplier'   => $request->input('almtSupplier'),
                 'noHp'   => $request->input('noHp'),

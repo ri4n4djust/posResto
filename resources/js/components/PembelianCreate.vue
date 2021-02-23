@@ -29,7 +29,7 @@
                 
                 </p>
                 <p class="text-muted text-center">
-                <input type="hidden" class="form-control" v-model="post.id" placeholder="No nota">
+                <input type="hidden" class="form-control" v-model="post.kdSupplier" placeholder="No nota">
                 </p>
                 <p class="text-muted text-center">
                 <input type="text" class="form-control" v-model="noNotaPembelian" placeholder="No nota">
@@ -145,7 +145,6 @@
 
                 <form  @submit.prevent="PostPembelian" >
                 <p class="text-muted text-center">
-                <input type="hidden" class="form-control" v-model="tglNota" >
                 </p>
                 <p class="text-muted text-center">
                   <vue-single-select
@@ -211,6 +210,7 @@
                 qtyBeli: '',
                 hrgBeli: '',
                 subTotal: '',
+                totalBayar: '',
                 subtotal: '',
                 ntp:'',
                 noNotaPembelian: '',
@@ -229,7 +229,7 @@
           }
         },
         //props: ['value'],
-        props: ['options', 'value'],
+        props: ['value'],
 
         methods: {
             loadTotal:function(){
@@ -307,7 +307,7 @@
                 this.axios.post(uri, 
                 {
                     noNotaPembelian: this.noNotaPembelian,
-                    idSupplier: this.post.id,
+                    idSupplier: this.post.kdSupplier,
                     tglNotaPembelian: this.tglPembelian,
                     totalNotaPembelian: this.subtotal,
                     

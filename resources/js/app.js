@@ -55,6 +55,10 @@ import IndexSupComponent from './components/supplier/Index.vue';
 import CreateSupComponent from './components/supplier/Create.vue';
 import EditSupComponent from './components/supplier/Edit.vue';
 
+import IndexKatComponent from './components/kategori/Index.vue';
+import CreateKatComponent from './components/kategori/Create.vue';
+import EditKatComponent from './components/kategori/Edit.vue';
+
 import IndexMejaComponent from './components/meja/Index.vue';
 import CreateMejaComponent from './components/meja/Create.vue';
 import EditMejaComponent from './components/meja/Edit.vue';
@@ -120,6 +124,22 @@ const routes = [
         name: 'editSupplier',
         path: '/supplier/edit/:id',
         component: EditSupComponent
+    },
+    //Kategori
+    {
+        name: 'kategori',
+        path: '/kategori',
+        component: IndexKatComponent
+    },
+    {
+        name: 'createKategori',
+        path: '/kategori/create',
+        component: CreateKatComponent
+    },
+    {
+        name: 'editKategori',
+        path: '/kategori/edit/:id',
+        component: EditKatComponent
     },
     //meja
     {

@@ -41,6 +41,13 @@ Route::get('/supplier/{id?}', 'supplierController@show');
 Route::post('/supplier/update/{id?}', 'supplierController@update');
 Route::delete('/supplier/{id?}', 'supplierController@destroy');
 
+//========Kategori
+Route::get('/kategori', 'kategoriController@index');
+Route::post('/kategori/store', 'kategoriController@store');
+Route::get('/kategori/{id?}', 'kategoriController@show');
+Route::post('/kategori/update/{id?}', 'kategoriController@update');
+Route::delete('/kategori/{id?}', 'kategoriController@destroy');
+
 
 //========meja
 Route::get('/meja', 'mejaController@index');
@@ -68,6 +75,7 @@ Route::post('/noNota/{id}', 'nomorController@noNota');
 Route::get('/kodeBarang', 'nomorController@kodeBarang');
 Route::get('/kodeMenu', 'nomorController@kodeMenu');
 Route::get('/kodePembelian', 'nomorController@kodePembelian');
+Route::get('/kodeSupplier', 'nomorController@kodeSupplier');
 
 
 //=========Pembelian

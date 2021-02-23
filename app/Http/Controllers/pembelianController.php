@@ -14,7 +14,7 @@ class pembelianController extends Controller
     //
     public function index()
     {
-        $posts = Pembelian::join('tblSupplier', 'tblPembelian.idSupplier', '=', 'tblSupplier.id')->get();
+        $posts = Pembelian::join('tblSupplier', 'tblPembelian.idSupplier', '=', 'tblSupplier.kdSupplier')->get();
         return response([
             'success' => true,
             'message' => 'List Semua SPenjualan',
@@ -28,14 +28,20 @@ class pembelianController extends Controller
         $startDate = $request->input('startDate');
         $endDate = $request->input('endDate');
 
-        $posts = Pembelian::whereBetween('tglNotaPembelian', [$startDate, $endDate])->get();
+        $posts = Pembelian::join('tblSupplier', 'tblPembelian.idSupplier', '=', 'tblSupplier.kdSupplier')
+                            ->whereBetween('tblPembelian.tglNotaPembelian', [$startDate, $endDate])
+                            ->get();
+        $NotalTOtal = Pembelian::join('tblSupplier', 'tblPembelian.idSupplier', '=', 'tblSupplier.kdSupplier')
+                            ->whereBetween('tblPembelian.tglNotaPembelian', [$startDate, $endDate])
+                            ->sum('totalNotaPembelian');
 
         //$posts = Penjualan::latest()->get();
         return response([
             'success' => true,
-            'message' => 'List Semua SPenjualan',
+            'message' => 'List Semua Pembelian',
             'startDate' => $startDate,
             'endDate' => $endDate,
+            'notaSum' => $NotalTOtal,
             'data' => $posts
         ], 200);
 
@@ -202,6 +208,12 @@ class pembelianController extends Controller
             'tglNotaPembelian'     => $request->input('tglNotaPembelian'),
             'totalNotaPembelian'     => $request->input('totalNotaPembelian'),
         ]);
+
+        DB::table('tblKartuStok')
+                ->where('noTransaksi', $request->input('noNotaPembelian'))
+                ->update([
+                    'tglKartu' => $request->input('tglNotaPembelian'),
+                    ]);
 
             if ($post) {
                 return response()->json([

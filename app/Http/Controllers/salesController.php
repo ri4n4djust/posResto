@@ -65,7 +65,7 @@ class salesController extends Controller
             'hrgJual'   => 'required',
         ],
             [
-                'nmBarang.required' => 'Masukkan Title Post !',
+                'nmBarang.required' => 'Masukkan Nama Barang !',
                 'hrgJual.required' => 'Masukkan Harga !',
             ]
         );
