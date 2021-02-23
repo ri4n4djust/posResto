@@ -11,7 +11,7 @@
                 <div class="box box-primary">
                             
                              <div class="form-group">
-                                <input type="text" class="form-control" :value="post.kdBarang" :name="kdBarang" disabled >
+                                <input type="text" class="form-control" v-model="post.kdBarang" disabled >
                              </div>
                             <div class="form-group">
                                 <label>TITLE</label>
@@ -55,7 +55,7 @@
                             </div>
 
                             <div class="form-group">
-                            <label>Jenis Barang: {{ stsBarang }}</label>
+                            <label>Jenis Barang: </label>
                             <select class='form-control' v-model='post.stsBarang'>
                                 <option value='1' >Barang Jadi</option>
                                 <option value='2' >Barang Mentah</option>

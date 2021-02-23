@@ -26,6 +26,8 @@ class nomorController extends Controller
         $tahun = date('Y');
         $post = 'INV-'.$tahun.'-'.$id.'-'.$kodeBaru;
 
+        
+
         if ($post) {
             return response()->json([
                 'success' => true,
@@ -43,24 +45,31 @@ class nomorController extends Controller
     public function kodeBarang()
     {
         $no = 0 ;
-        $count = Barang::latest()->count();
-        $kodeBaru = $no + $count + 1  ;
+        $count = Barang::latest()->first();
+        //$kodeBaru = $count->kdBarang  ;
+        $terakhir = substr($count->kdBarang, 8,  20);
+        $kodeBaru = $terakhir + 1  ;
 
         $tahun = date('Y');
         $post = 'DB-'.$tahun.'-'.$kodeBaru;
 
-        if ($post) {
+        if (Barang::where('kdBarang', $post)->exists()) {
+            // exists
+            $kodeBarulagi = $kodeBaru + 1 ;
+            $post = 'DB-'.$tahun.'-'.$kodeBarulagi;
             return response()->json([
                 'success' => true,
                 'message' => 'Detail Post!',
+                'ada' => 'gggada',
                 'kdBarang'    => $post
             ], 200);
         } else {
             return response()->json([
-                'success' => false,
-                'message' => 'Post Tidak Ditemukan!',
-                'data'    => ''
-            ], 404);
+                'success' => true,
+                'ada' => 'tidak ada',
+                'message' => 'Detail Post!',
+                'kdBarang'    => $post
+            ], 200);
         }
     }
     public function kodeMenu()
