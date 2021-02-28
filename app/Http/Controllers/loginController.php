@@ -36,8 +36,8 @@ class loginController extends Controller
        
         if(Hash::check($request->password, $users->password)){
             
-            //$xx = Session::flash('message','This is a message!');
-           //$ss = Session::put('user', $users->name);
+           // Session::flash('message','This is a message!');
+           //Session::put('user', $users->name);
            //Session::put('nmp', $users->name);
            //$aa = session(['user' => $users->name]);
            return response([

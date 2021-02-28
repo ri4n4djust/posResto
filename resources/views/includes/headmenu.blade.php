@@ -29,9 +29,7 @@
                 <img src="{{url('images/logo.png')}}" >
 
                 <p>username</p>
-               
-
-
+                {{ Session::get('message') }}
                 
               </li>
               <!-- Menu Body -->

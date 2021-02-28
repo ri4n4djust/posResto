@@ -2,8 +2,9 @@
 
                     <div class="card-body">
                         <h3>Daftar barang</h3>
-                        <h3>
+                        <h3> {{ this.$session.getAll() }}
                         <router-link :to="{ name: 'create' }" class="btn btn-md btn-success">TAMBAH BARANG</router-link>
+                        {{ this.$session.get('user') }}
                         </h3>
                             
                             <div>

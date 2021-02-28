@@ -29,6 +29,10 @@ import axios from 'axios';
 import App from './App.vue';
 Vue.use(VueAxios, axios);
 
+import VueSession from 'vue-session';
+Vue.use(VueSession);
+
+
 import VueHtmlToPaper from 'vue-html-to-paper';
 const options = {
   name: '_blank',

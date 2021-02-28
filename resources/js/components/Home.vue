@@ -36,8 +36,7 @@
 
 
 <script>
-  
-    export default {
+  export default {
         data() {
             return {
                 username: '',
@@ -59,16 +58,13 @@
             postLogin(){
                 let uri = '/api/login';
                 this.axios.post(uri, this.post).then(response => {
-                  if (response.data.success === true) {
-                    // do success thing
+                  if (response.data.success === true ) {
+                    this.$session.start()
+                    this.$session.set('user', response.data.data.name)
+                    //Vue.http.headers.common['Authorization'] = 'Bearer ' + response.body.token
                     alert('suskes Login')
                     window.location.href = "/barang"
-                  } else {
-                    // do error thing
-                    alert('username Atau Password Salah')
                   }
-                  //alert('suskes Login' + this.username)
-                  //
                 
             }).catch(error => {
                     alert('username Atau Password Salah');

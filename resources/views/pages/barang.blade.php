@@ -13,8 +13,6 @@
 
             <div class="box-body">
 
-            {{$password = Hash::make('admin')}}
-
               <div id="app"></div>
               <script src="{{ mix('js/app.js') }}" type="text/javascript"></script>
               
