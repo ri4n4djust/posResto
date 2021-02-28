@@ -71,7 +71,7 @@ import EditMenuComponent from './components/menu/Edit.vue';
 import CreatePembelian from './components/PembelianCreate.vue';
 import liveorder from './components/LiveOrder.vue';
 
-import tesComponent from './components/tes.vue';
+import homeComponent from './components/Home.vue';
 
 import LaporanPenjualanComponent from './components/laporan/laporanPenjualan.vue';
 import LaporanPembelianComponent from './components/laporan/laporanPembelian.vue';
@@ -210,9 +210,9 @@ const routes = [
 
     //=========tes
     {
-        name: 'tes',
-        path: '/tes',
-        component: tesComponent
+        name: 'home',
+        path: '/',
+        component: homeComponent
     }
 ];
 

@@ -4,6 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use Cookie;
+use Tracker;
+use Session;
+use Auth;
+
 
 use App\Barang;
 //use Illuminate\Http\Request;

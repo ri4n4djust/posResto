@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('pages.awal');
 });
 
 Route::get('/home', function () {
@@ -79,3 +79,4 @@ Route::get('/get_countries', 'kategoriController@index');
 Route::get('/get_states', 'CountryStateController@getStates');
 
 Route::get('search', 'salesController@search');
+

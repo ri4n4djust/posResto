@@ -26,9 +26,13 @@
             <ul class="dropdown-menu">
               <!-- User image -->
               <li class="user-header">
-                <img src="{{url('images/logoL.png')}}" >
+                <img src="{{url('images/logo.png')}}" >
 
-                <p>{{ Session::get('user') }}</p>
+                <p>username {{ data.id }}</p>
+               
+
+
+                
               </li>
               <!-- Menu Body -->
               

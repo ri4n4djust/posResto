@@ -18,6 +18,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::post('/login', 'loginController@login');
+
 //======barang
 Route::get('/posts', 'salesController@index');
 Route::get('/semuabarang', 'salesController@semua');
