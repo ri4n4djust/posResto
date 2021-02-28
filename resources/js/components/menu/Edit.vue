@@ -144,7 +144,6 @@
                         <input type="hidden" ref="kodebarang" class="form-control" v-model="post1.nmBarang">
                     </div>
                     <div class="form-group">
-                        <input type="hidden" class="form-control" v-model="post.id">
                         <input type="hidden" class="form-control" v-model="post1.kdBarang">
                         <input type="hidden" class="form-control" v-model="post1.satuanBarang">
                         <input type="text" class="form-control" v-model="post1.hrgJual" placeholder="Harga">
@@ -195,6 +194,7 @@ components: { VueSingleSelect },
                 idMenu: '',
                 idBarang: '',
                 hargaBarang: '',
+                totalBarang: '',
                 qtyBarang: '',
                 tot: '',
             }

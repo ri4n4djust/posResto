@@ -44,7 +44,7 @@ export default {
             return {
                 posts: [],
                 showModalDetail: false,
-                data: this.posts,
+                //data: this.posts,
             }
 
         },
