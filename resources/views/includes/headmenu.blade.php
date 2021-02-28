@@ -28,7 +28,7 @@
               <li class="user-header">
                 <img src="{{url('images/logo.png')}}" >
 
-                <p>username {{ data.id }}</p>
+                <p>username</p>
                
 
 
