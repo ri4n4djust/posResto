@@ -58,8 +58,13 @@
                 posts: []
             }
         },
+        beforeCreate: function () {
+            if (!this.$session.exists()) {
+            this.$router.push('/')
+            }
+        },
         created() {
-            let uri = 'http://localhost:8000/api/supplier';
+            let uri = '/api/supplier';
             this.axios.get(uri).then(response => {
                 this.posts = response.data.data;
             });
@@ -67,7 +72,7 @@
         methods: {
             PostDelete(id, index)
             {
-                this.axios.delete(`http://localhost:8000/api/supplier/${id}`)
+                this.axios.delete(`/api/supplier/${id}`)
                     .then(response => {
                         this.posts.splice(index, 1);
                     }).catch(error => {

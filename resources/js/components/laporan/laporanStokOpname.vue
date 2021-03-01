@@ -137,6 +137,11 @@ Vue.component("data-table", DataTable);
                 }
             }
         },
+        beforeCreate: function () {
+            if (!this.$session.exists()) {
+            this.$router.push('/')
+            }
+        },
         created() {
             this.loadData()
             //this.pollData()

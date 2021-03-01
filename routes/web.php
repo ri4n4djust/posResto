@@ -13,67 +13,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('pages.awal');
-});
 
-Route::get('/home', function () {
-    return view('pages.home');
-});
 
-Route::get('/autocomp', function () {
-    return view('pages.autoComp');
-});
 
-Route::get('/barang', function () {
-    return view('pages.barang');
-});
-Route::get('/barangmentah', function () {
-    return view('pages.barangmentah');
-});
-Route::get('/marketing', function () {
-    return view('pages.marketing');
-});
-
-Route::get('/meja', function () {
-    return view('pages.meja');
-});
-
-Route::get('/menu', function () {
-    return view('pages.menu');
-});
-
-Route::get('/pembelian', function () {
-    return view('pages.pembelian');
-});
-Route::get('/liveorder', function () {
-    return view('pages.order');
-});
-
-Route::get('/laporanpenjualan', function () {
-    return view('pages.laporan');
-});
-Route::get('/laporanpembelian', function () {
-    return view('pages.laporanpembelian');
-});
-Route::get('/laporanstokopname', function () {
-    return view('pages.stok');
-});
-
-Route::get('/supplier', function () {
-    return view('pages.supplier');
-});
-Route::get('/kategori', function () {
-    return view('pages.kategori');
-});
-
-Route::get('/tes', function () {
-    return view('app');
-});
-
-//Route::get('{any}', function () { 
-//    return view('pages.barang'); 
-//})->where('any', '.*'); 
+Route::get('{any}', function () { 
+    return view('pages.resto'); 
+})->where('any', '.*'); 
 
 Route::get('/get_countries', 'kategoriController@index');
 Route::get('/get_states', 'CountryStateController@getStates');

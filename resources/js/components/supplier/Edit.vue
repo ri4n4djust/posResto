@@ -68,15 +68,20 @@
                 validation: []
             }
         },
+        beforeCreate: function () {
+            if (!this.$session.exists()) {
+            this.$router.push('/')
+            }
+        },
         created() {
-            let uri = `http://localhost:8000/api/supplier/${this.$route.params.id}`;
+            let uri = `/api/supplier/${this.$route.params.id}`;
             this.axios.get(uri).then((response) => {
                 this.post = response.data.data;
             });
         },
         methods: {
             PostUpdate() {
-                let uri = `http://localhost:8000/api/supplier/update/${this.$route.params.id}`;
+                let uri = `/api/supplier/update/${this.$route.params.id}`;
                 this.axios.post(uri, this.post)
                     .then((response) => {
                         this.$router.push({name: 'supplier'});

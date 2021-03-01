@@ -199,6 +199,11 @@ components: { VueSingleSelect },
                 tot: '',
             }
         },
+        beforeCreate: function () {
+            if (!this.$session.exists()) {
+            this.$router.push('/')
+            }
+        },
         created() {
             let uri = `/api/menu/${this.$route.params.id}`;
             this.axios.get(uri).then((response) => {

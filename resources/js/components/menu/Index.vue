@@ -47,6 +47,11 @@
                 this.posts = response.data.data;
             });
         },
+        beforeCreate: function () {
+            if (!this.$session.exists()) {
+            this.$router.push('/')
+            }
+        },
         methods: {
             PostDelete(id, index)
             {

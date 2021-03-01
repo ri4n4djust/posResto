@@ -68,6 +68,11 @@
                 validation: []
             }
         },
+        beforeCreate: function () {
+            if (!this.$session.exists()) {
+            this.$router.push('/')
+            }
+        },
         created() {
             let uri = `http://localhost:8000/api/supplier/${this.$route.params.id}`;
             this.axios.get(uri).then((response) => {

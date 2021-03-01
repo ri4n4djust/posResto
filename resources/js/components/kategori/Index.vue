@@ -52,6 +52,11 @@
                 posts: []
             }
         },
+        beforeCreate: function () {
+            if (!this.$session.exists()) {
+            this.$router.push('/')
+            }
+        },
         created() {
             let uri = '/api/kategori';
             this.axios.get(uri).then(response => {

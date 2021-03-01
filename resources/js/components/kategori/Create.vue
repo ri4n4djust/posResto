@@ -76,6 +76,11 @@
                 validation: []
             }
         },
+        beforeCreate: function () {
+            if (!this.$session.exists()) {
+            this.$router.push('/')
+            }
+        },
         methods: {
             onImageChange(e){
                 console.log(e.target.files[0]);

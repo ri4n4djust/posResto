@@ -48,7 +48,6 @@ const options = {
 }
 Vue.use(VueHtmlToPaper, options);
 
-Vue.component('modal', require('./components/ModalComponent.vue'));
 
 import IndexComponent from './components/posts/Index.vue';
 import CreateComponent from './components/posts/Create.vue';

@@ -4,7 +4,7 @@
         
        <!-- /.login-logo -->
   <div class="login-box-body">
-    <p class="login-box-msg"><img src="#" class="img-responsive" ></p>
+    <p class="login-box-msg"><img :src="'/images/logo.png'"></p>
     <p class="login-box-msg">Sign in to start your session</p>
 
     <form @submit.prevent="postLogin">
@@ -64,6 +64,8 @@
                     //Vue.http.headers.common['Authorization'] = 'Bearer ' + response.body.token
                     alert('suskes Login')
                     window.location.href = "/barang"
+                  } else {
+                    alert('username Atau Password Salah')
                   }
                 
             }).catch(error => {

@@ -21,7 +21,9 @@ class loginController extends Controller
     {
         $username = $request->username;
         
-        $users = User::where(['email'=>$username])->first();
+        $users = User::where(['email'=>$username])
+                        ->orWhere(['username'=>$username])
+                        ->first();
 
 
         if($users==''){
@@ -36,10 +38,6 @@ class loginController extends Controller
        
         if(Hash::check($request->password, $users->password)){
             
-           // Session::flash('message','This is a message!');
-           //Session::put('user', $users->name);
-           //Session::put('nmp', $users->name);
-           //$aa = session(['user' => $users->name]);
            return response([
             'success' => true,
             'message' => 'Berhasil Login',

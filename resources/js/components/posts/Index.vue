@@ -1,10 +1,34 @@
 <template>
+<div class="mt-3">
+  
+
+      <div class="row">
+        <div class="col-md-3">
+
+          <!-- About Me Box -->
+          <div class="box box-primary">
+            <div class="box-header with-border">
+              <h5 class="box-title">
+                  Login As {{ this.$session.get('user') }}
+                  <button type="button" class="btn-sm btn-success" @click="logout()">Log Out</button>
+              </h5>
+
+              
+            </div>
+            <!-- /.box-header -->
+
+          </div>
+          <!-- /.box -->
+        </div>
+        <!-- /.col -->
+      </div>
+
 
                     <div class="card-body">
                         <h3>Daftar barang</h3>
-                        <h3> {{ this.$session.getAll() }}
+                        <h3> 
                         <router-link :to="{ name: 'create' }" class="btn btn-md btn-success">TAMBAH BARANG</router-link>
-                        {{ this.$session.get('user') }}
+                        
                         </h3>
                             
                             <div>
@@ -16,7 +40,7 @@
 
 
                     </div>
-
+</div>
 </template>
 <style >
 .data-table {
@@ -126,6 +150,11 @@ Vue.component("data-table", DataTable);
                 }
             }
         },
+        beforeCreate: function () {
+            if (!this.$session.exists()) {
+            this.$router.push('/')
+            }
+        },
         created() {
             this.loadData()
             //this.pollData()
@@ -146,7 +175,12 @@ Vue.component("data-table", DataTable);
             setInterval(() => {    
                 this.loadData();
                 }, 3000);    
-            }
+            },
+
+            logout: function () {
+            this.$session.destroy()
+            this.$router.push('/')
+            },
         },
         mounted () {
             //this.intervalFetchData1();

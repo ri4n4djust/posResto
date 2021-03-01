@@ -165,6 +165,11 @@
                 
             }
         },
+        beforeCreate: function () {
+            if (!this.$session.exists()) {
+            this.$router.push('/')
+            }
+        },
         created() {
             let uri = `/api/posts/${this.$route.params.id}`;
             this.axios.get(uri).then((response) => {

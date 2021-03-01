@@ -320,6 +320,11 @@
                 
             }
         },
+        beforeCreate: function () {
+            if (!this.$session.exists()) {
+            this.$router.push('/')
+            }
+        },
         created() {
             this.loadNotaPembelian()
             this.loadBarang()

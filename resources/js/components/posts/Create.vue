@@ -228,6 +228,11 @@
             this.loadData()
             
         },
+        beforeCreate: function () {
+            if (!this.$session.exists()) {
+            this.$router.push('/')
+            }
+        },
         
 
         methods: {

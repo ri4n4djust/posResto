@@ -251,7 +251,11 @@ Vue.component("data-table", DataTable);
                 }
             }
         },
-
+        beforeCreate: function () {
+            if (!this.$session.exists()) {
+            this.$router.push('/')
+            }
+        },
         created() {
             let uri = '/api/penjualan';
             this.axios.get(uri).then(response => {
