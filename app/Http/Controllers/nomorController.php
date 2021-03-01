@@ -20,15 +20,18 @@ class nomorController extends Controller
     public function noNota($id)
     {
         $no = 0 ;
-        $count = Penjualan::latest()->count();
-        $kodeBaru = $no + $count + 1  ;
+        $count = Penjualan::latest()->first();
+        $terakhir = substr($count->noNota, 11,  20);
+        $kodeBaru = $terakhir + 1  ;
 
         $tahun = date('Y');
         $post = 'INV-'.$tahun.'-'.$id.'-'.$kodeBaru;
 
         
 
-        if ($post) {
+        if (Penjualan::where('noNota', $post)->exists()) {
+            $kodeBarulagi = $kodeBaru + 1 ;
+            $post = 'INV-'.$tahun.'-'.$id.'-'.$kodeBarulagi;
             return response()->json([
                 'success' => true,
                 'message' => 'Detail Post!',
@@ -36,10 +39,10 @@ class nomorController extends Controller
             ], 200);
         } else {
             return response()->json([
-                'success' => false,
+                'success' => true,
                 'message' => 'Post Tidak Ditemukan!',
-                'data'    => ''
-            ], 404);
+                'noNota'    => $post
+            ], 200);
         }
     }
     public function kodeBarang()
@@ -75,13 +78,16 @@ class nomorController extends Controller
     public function kodeMenu()
     {
         $no = 0 ;
-        $count = Menu::latest()->count();
-        $kodeBaru = $no + $count + 1  ;
+        $count = Menu::latest()->first();
+        $terakhir = substr($count->kdMenu, 8,  20);
+        $kodeBaru = $terakhir + 1  ;
 
         $tahun = date('Y');
         $post = 'MN-'.$tahun.'-'.$kodeBaru;
 
-        if ($post) {
+        if (Menu::where('kdMenu', $post)->exists()) {
+            $kodeBarulagi = $kodeBaru + 1 ;
+            $post = 'DB-'.$tahun.'-'.$kodeBarulagi;
             return response()->json([
                 'success' => true,
                 'message' => 'Detail Post!',
@@ -89,10 +95,10 @@ class nomorController extends Controller
             ], 200);
         } else {
             return response()->json([
-                'success' => false,
+                'success' => true,
                 'message' => 'Post Tidak Ditemukan!',
-                'kdMenu'    => ''
-            ], 404);
+                'kdMenu'    => $post
+            ], 202);
         }
     }
 

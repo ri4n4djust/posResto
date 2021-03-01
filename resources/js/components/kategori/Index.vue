@@ -13,12 +13,12 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr v-for="(post, index) in posts" :key="post.id">
+                                <tr v-for="post in posts" :key="post.id">
                                     <td>{{ post.kodeKtg }}</td>
                                     <td>{{ post.namaKtg }}</td>
                                     <td class="text-center">
                                         <router-link :to="{name: 'editKategori', params: { id: post.id }}" class="btn btn-sm btn-primary">EDIT</router-link>
-                                        <button @click.prevent="PostDelete(post.id, index)" class="btn btn-sm btn-danger">HAPUS</button>
+                                        <button @click.prevent="PostDelete(post.id)" class="btn btn-sm btn-danger">HAPUS</button>
                                     </td>
                                 </tr>
                                 </tbody>
@@ -28,28 +28,12 @@
                 
 
 </template>
-<script>
-    export default {
-        data() {
-            return {
-                posts: []
-            }
-        },
-        created() {
-            let uri = '/api/kategori';
-            this.axios.get(uri).then(response => {
-                this.posts = response.data.data;
-            });
-        }
-    }
-</script>
-
 
 <script>
     export default {
         data() {
             return {
-                posts: []
+                posts: {}
             }
         },
         beforeCreate: function () {
