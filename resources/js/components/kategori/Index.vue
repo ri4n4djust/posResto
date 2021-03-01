@@ -13,12 +13,12 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr v-for="post in posts" :key="post.id">
+                                <tr v-for="(post, index) in posts" :key="post.id">
                                     <td>{{ post.kodeKtg }}</td>
                                     <td>{{ post.namaKtg }}</td>
                                     <td class="text-center">
                                         <router-link :to="{name: 'editKategori', params: { id: post.id }}" class="btn btn-sm btn-primary">EDIT</router-link>
-                                        <button @click.prevent="PostDelete(post.id)" class="btn btn-sm btn-danger">HAPUS</button>
+                                        <button @click.prevent="PostDelete(post.id, index)" class="btn btn-sm btn-danger">HAPUS</button>
                                     </td>
                                 </tr>
                                 </tbody>
@@ -50,12 +50,14 @@
         methods: {
             PostDelete(id, index)
             {
+                if(confirm("Do you really want to delete?")){
                 this.axios.delete(`/api/kategori/${id}`)
                     .then(response => {
                         this.posts.splice(index, 1);
                     }).catch(error => {
                     alert('system error!');
                 });
+                }f
             }
         }
     }

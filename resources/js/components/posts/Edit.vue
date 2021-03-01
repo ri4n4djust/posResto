@@ -161,7 +161,7 @@
                 validation: [],
                 selected : '',
                 country: 0,
-                countries: [],
+                countries: {},
                 
             }
         },
@@ -188,9 +188,9 @@
                 });
             },
             getCountries: function(){
-                axios.get('/get_countries')
+                axios.get('/api/kategori')
                     .then(function (response) {
-                        this.countries = response.data;
+                        this.countries = response.data.data;
                     }.bind(this));
             },
             PostDeleteTrx(id)

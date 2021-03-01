@@ -21,7 +21,7 @@
 
         <li class="treeview">
         <a href="#">
-            <i class="fa fa-table"></i> <span>Barang</span>
+            <i class="fa fa-table"></i> <span>Master</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
@@ -31,6 +31,7 @@
             <li><a href="{{url('/barangmentah')}}"><i class="fa fa-circle-o"></i>Barang Mentah</a></li>
             <li><a href="{{url('/menu')}}"><i class="fa fa-circle-o"></i>Daftar Menu</a></li>
             <li><a href="{{url('/kategori')}}"><i class="fa fa-circle-o"></i>Kategori Barang</a></li>
+            <li><a href="{{url('/stokopname')}}"><i class="fa fa-circle-o"></i>Stok Opname</a></li>
           </ul>
         </li>
         <li >

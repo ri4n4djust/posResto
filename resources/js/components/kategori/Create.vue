@@ -7,49 +7,22 @@
                         <form @submit.prevent="PostStore">
 
                             <div class="form-group">
-                                <label>Nama Supplier</label>
-                                <input type="text" class="form-control" v-model="post.nmSupplier"
-                                       placeholder="Masukkan Nama">
-                                <div v-if="validation.nmSupplier">
-                                    <div class="alert alert-danger mt-1" role="alert">
-                                        {{ validation.nmSupplier[0] }}
-                                    </div>
-                                </div>
+                                <label>Kode Kategori</label>
+                                <input type="text" class="form-control" v-model="post.kodeKtg" disabled>
                             </div>
 
                             <div class="form-group">
-                                <label>Alamat Supplier</label>
-                                <input type="text" class="form-control" v-model="post.almtSupplier"
+                                <label>Nama Kategori</label>
+                                <input type="text" class="form-control" v-model="post.namaKtg"
                                        placeholder="Alamat Supplier">
-                                <div v-if="validation.almtSupplier">
+                                <div v-if="validation.namaKtg">
                                     <div class="alert alert-danger mt-1" role="alert">
-                                        {{ validation.almtSupplier[0] }}
+                                        {{ validation.namaKtg[0] }}
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="form-group">
-                                <label>No HP</label>
-                                <input type="text" class="form-control" v-model="post.noHp"
-                                       placeholder="No Tlp">
-                                <div v-if="validation.noHp">
-                                    <div class="alert alert-danger mt-1" role="alert">
-                                        {{ validation.noHp[0] }}
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label>Kontak Person</label>
-                                <input type="text" class="form-control" v-model="post.kontakSupplier"
-                                       placeholder="KOntak Person">
-                                <div v-if="validation.kontakSupplier">
-                                    <div class="alert alert-danger mt-1" role="alert">
-                                        {{ validation.kontakSupplier[0] }}
-                                    </div>
-                                </div>
-                            </div>
-
+                            
 
                             <div class="form-group">
                                 <button type="submit" class="btn btn-md btn-success">SIMPAN</button>
@@ -73,7 +46,8 @@
         data() {
             return {
                 post: {},
-                validation: []
+                validation: [],
+                kodeKtg: '',
             }
         },
         beforeCreate: function () {
@@ -81,23 +55,32 @@
             this.$router.push('/')
             }
         },
+        created: function(){
+            this.loadKodeKtg()
+        },
         methods: {
-            onImageChange(e){
-                console.log(e.target.files[0]);
-                this.image = e.target.files[0];
-
-            },
             PostStore() {
-                let uri = 'http://localhost:8000/api/supplier/store';
-                this.axios.post(uri, this.post)
+                let uri = '/api/kategori/store';
+                this.axios.post(uri, 
+                {
+                    kodeKtg: this.post.kodeKtg,
+                    namaKtg: this.post.namaKtg,
+                })
                     .then((response) => {
                         this.$router.push({
-                            name: 'supplier'
+                            name: 'kategori'
                         });
                     }).catch(error => {
                     this.validation = error.response.data.data;
                 });
-            }
+            },
+            loadKodeKtg:function(){
+                let uri = '/api/kodeKategori/';
+                this.axios.get(uri).then(response => {
+                this.post.kodeKtg = response.data.kodeKtg;
+                
+            });
+            },
         }
     }
 </script>

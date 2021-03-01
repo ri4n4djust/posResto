@@ -12,6 +12,7 @@ use App\Penjualan;
 use App\Pembelian;
 use App\PembelianDetail;
 use App\Supplier;
+use App\Kategori;
 use Illuminate\Support\Facades\DB;
 
 class nomorController extends Controller
@@ -105,13 +106,16 @@ class nomorController extends Controller
     public function kodePembelian()
     {
         $no = 0 ;
-        $count = Pembelian::latest()->count();
-        $kodeBaru = $no + $count + 1  ;
+        $count = Pembelian::latest()->first();
+        $terakhir = substr($count->noNotaPembelian, 8,  20);
+        $kodeBaru = $terakhir + 1  ;
 
         $tahun = date('Y');
         $post = 'PB-'.$tahun.'-'.$kodeBaru;
 
-        if ($post) {
+        if (Pembelian::where('noNotaPembelian', $post)->exists()) {
+            $kodeBarulagi = $kodeBaru + 1 ;
+            $post = 'PB-'.$tahun.'-'.$kodeBarulagi;
             return response()->json([
                 'success' => true,
                 'message' => 'Detail Post!',
@@ -119,23 +123,26 @@ class nomorController extends Controller
             ], 200);
         } else {
             return response()->json([
-                'success' => false,
-                'message' => 'Post Tidak Ditemukan!',
-                'kdPembelian'    => ''
-            ], 404);
+                'success' => true,
+                'message' => 'Detail Post!',
+                'kdPembelian'    => $post
+            ], 200);
         }
     }
 
     public function kodeSupplier()
     {
         $no = 0 ;
-        $count = Supplier::latest()->count();
-        $kodeBaru = $no + $count + 1  ;
+        $count = Supplier::latest()->first();
+        $terakhir = substr($count->kdSupplier, 8,  20);
+        $kodeBaru = $terakhir + 1  ;
 
         $tahun = date('Y');
         $post = 'SP-'.$tahun.'-'.$kodeBaru;
 
-        if ($post) {
+        if (Supplier::where('kdSupplier', $post)->exists()) {
+            $kodeBarulagi = $kodeBaru + 1 ;
+            $post = 'SP-'.$tahun.'-'.$kodeBarulagi;
             return response()->json([
                 'success' => true,
                 'message' => 'Detail Post!',
@@ -143,10 +150,36 @@ class nomorController extends Controller
             ], 200);
         } else {
             return response()->json([
-                'success' => false,
-                'message' => 'Post Tidak Ditemukan!',
-                'kdSupplier'    => ''
-            ], 404);
+                'success' => true,
+                'message' => 'Detail Post!',
+                'kdSupplier'    => $post
+            ], 200);
+        }
+    }
+    public function kodeKategori()
+    {
+        $no = 0 ;
+        $count = Kategori::latest()->first();
+        $terakhir = substr($count->kodeKtg, 8,  20);
+        $kodeBaru = $terakhir + 1  ;
+
+        $tahun = date('Y');
+        $post = 'KT-'.$tahun.'-'.$kodeBaru;
+
+        if (Kategori::where('kodeKtg', $post)->exists()) {
+            $kodeBarulagi = $kodeBaru + 1 ;
+            $post = 'KT-'.$tahun.'-'.$kodeBarulagi;
+            return response()->json([
+                'success' => true,
+                'message' => 'Detail Post!',
+                'kodeKtg'    => $post
+            ], 200);
+        } else {
+            return response()->json([
+                'success' => true,
+                'message' => 'Detail Post!',
+                'kodeKtg'    => $post
+            ], 200);
         }
     }
 }

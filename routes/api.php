@@ -78,6 +78,7 @@ Route::get('/kodeBarang', 'nomorController@kodeBarang');
 Route::get('/kodeMenu', 'nomorController@kodeMenu');
 Route::get('/kodePembelian', 'nomorController@kodePembelian');
 Route::get('/kodeSupplier', 'nomorController@kodeSupplier');
+Route::get('/kodeKategori', 'nomorController@kodeKategori');
 
 
 //=========Pembelian

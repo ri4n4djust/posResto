@@ -13,7 +13,11 @@ class kategoriController extends Controller
     public function index()
     {
         $data = Kategori::get();
-        return response()->json($data);
+        return response([
+            'success' => true,
+            'message' => 'List Semua Kategori',
+            'data' => $data
+        ], 200);
     }
 
     public function store(Request $request)

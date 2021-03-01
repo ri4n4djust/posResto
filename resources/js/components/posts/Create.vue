@@ -214,7 +214,7 @@
                 kodes: {},
                 validation: [],
                 country: 0,
-                countries: [],
+                countries: {},
                 total: {},
                 kdBarang: '',
                 isNumber: '',
@@ -269,9 +269,9 @@
                 //this.$refs.formTambah.reset()
             },
             getCountries: function(){
-                axios.get('/get_countries')
+                axios.get('/api/kategori')
                     .then(function (response) {
-                        this.countries = response.data;
+                        this.countries = response.data.data;
                     }.bind(this));
             },
             isNumber ($event) {
