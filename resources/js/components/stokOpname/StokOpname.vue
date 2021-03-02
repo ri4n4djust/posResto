@@ -1,8 +1,9 @@
 <template>
 
     <div class="card-body">
-                        <h3>Stok Opname</h3>
-
+                        <h3>Stok Opname
+                        <router-link :to="{ name: 'stokopnamecreate' }" class="btn btn-md btn-success">Stok Opname Baru</router-link>
+                        </h3>
                         <div class="col-md-12">
                         <div class="nav-tabs-custom">
                             <ul class="nav nav-tabs">

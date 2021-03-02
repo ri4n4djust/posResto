@@ -80,7 +80,8 @@ import LaporanPenjualanComponent from './components/laporan/laporanPenjualan.vue
 import LaporanPembelianComponent from './components/laporan/laporanPembelian.vue';
 import StokOpnameComponent from './components/laporan/laporanStokOpname.vue';
 
-import InputStokOpnameComponent from './components/stokOpname/StokOpname.vue';
+import ViewStokOpnameComponent from './components/stokOpname/StokOpname.vue';
+import InputStokOpnameComponent from './components/stokOpname/StokOpnameCreate.vue';
 
 import VueCurrencyFilter from 'vue-currency-filter'
 Vue.use(VueCurrencyFilter,
@@ -217,6 +218,11 @@ const routes = [
     {
         name: 'stokopname',
         path: '/stokopname',
+        component: ViewStokOpnameComponent
+    },
+    {
+        name: 'stokopnamecreate',
+        path: '/stokopnamecreate',
         component: InputStokOpnameComponent
     },
     //=========Home
