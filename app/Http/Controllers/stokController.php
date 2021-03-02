@@ -43,6 +43,10 @@ class stokController extends Controller
         //$post = TransaksiDetail::whereId($id)->first();
         $post = KartuStok::create([
             'kdBarang' => $request->input('kdBarang'),
+            'tglKartu' => $request->input('tglOpname'),
+            'qtyMasuk' => $request->input('qtyMasuk'),
+            'qtyKeluar' => $request->input('qtyKeluar'),
+            
 
         ]);
 
