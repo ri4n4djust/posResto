@@ -24,7 +24,7 @@
                                 <button @click="print" class="btn btn-md btn-success">Print</button>
                                 <!-- The timeline -->
                                     <div id="printMe">
-                                    <table border="1" cellspacing="10" cellpadding="1" style="font-size: 12px;">
+                                    <table border="1" cellspacing="5" cellpadding="1" style="font-size: 12px;">
                                     <thead>
                                     <tr>
                                         <th>Kode</th>

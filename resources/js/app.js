@@ -218,6 +218,12 @@ const routes = [
         name: 'stokopname',
         path: '/stokopname',
         component: InputStokOpnameComponent
+    },
+    //=========Home
+    {
+        name: 'home',
+        path: '/',
+        component: homeComponent
     }
 ];
 

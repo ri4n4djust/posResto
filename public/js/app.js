@@ -13117,15 +13117,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "ActionButtons",
   data: function data() {
@@ -13133,7 +13124,10 @@ __webpack_require__.r(__webpack_exports__);
       posts: [],
       //pem: [],
       showModalDetail: false,
-      data: this.posts
+      data: this.posts,
+      qtyGudang: '',
+      keterangan: '',
+      tglOpname: new Date().toJSON().slice(0, 10).replace(/-/g, '/')
     };
   },
   created: function created() {
@@ -13158,13 +13152,18 @@ __webpack_require__.r(__webpack_exports__);
         _this2.pem = response.data.data; // alert('no nota '+ this.data.noNota);
       });
     },
-    EditAction: function EditAction() {
-      var path = '/barang/edit/' + this.data.id;
-      this.$router.push(path); //alert('edit' + this.data.id)
-      //this.$store.commit(edit, this.data)
-    },
-    ViewAction: function ViewAction() {
-      alert('View' + this.data.id); //this.$store.commit(edit, this.data)
+    PostStokOpname: function PostStokOpname() {
+      var _this3 = this;
+
+      var uri = '/api/posthasilopname/';
+      this.axios.post(uri, {
+        kdBarang: this.data.kdBarang,
+        tglOpname: this.tglOpname
+      }).then(function (response) {
+        _this3.loadDetailStok();
+
+        alert('input Opname Berhasil');
+      });
     }
   },
   props: {
@@ -58592,7 +58591,7 @@ var render = function() {
                 "table",
                 {
                   staticStyle: { "font-size": "12px" },
-                  attrs: { border: "1", cellspacing: "10", cellpadding: "1" }
+                  attrs: { border: "1", cellspacing: "5", cellpadding: "1" }
                 },
                 [
                   _vm._m(1),
@@ -58705,20 +58704,7 @@ var render = function() {
           }
         }
       },
-      [_c("i", { staticClass: "fa fa-eye" })]
-    ),
-    _vm._v(" "),
-    _c(
-      "button",
-      {
-        staticClass: "btn btn-outline-primary",
-        on: {
-          click: function($event) {
-            return _vm.EditAction("edit")
-          }
-        }
-      },
-      [_c("i", { staticClass: "fa fa-edit" })]
+      [_c("span", { staticClass: "glyphicon glyphicon-check" })]
     ),
     _vm._v(" "),
     _vm.showModalDetail
@@ -58755,116 +58741,170 @@ var render = function() {
                       ]),
                       _vm._v(" "),
                       _c("div", { staticClass: "modal-body" }, [
-                        _c("div", { staticClass: "nav-tabs-custom" }, [
-                          _c("ul", { staticClass: "nav nav-tabs" }, [
-                            _c("li", [
-                              _c(
-                                "a",
-                                {
-                                  attrs: {
-                                    href: "#timeline",
-                                    "data-toggle": "tab"
+                        _c(
+                          "form",
+                          {
+                            on: {
+                              submit: function($event) {
+                                $event.preventDefault()
+                                return _vm.PostStokOpname($event)
+                              }
+                            }
+                          },
+                          [
+                            _c("div", { staticClass: "row" }, [
+                              _c("div", { staticClass: "col-xs-3" }, [
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.data.kdBarang,
+                                      expression: "data.kdBarang"
+                                    }
+                                  ],
+                                  attrs: { type: "text" },
+                                  domProps: { value: _vm.data.kdBarang },
+                                  on: {
+                                    input: function($event) {
+                                      if ($event.target.composing) {
+                                        return
+                                      }
+                                      _vm.$set(
+                                        _vm.data,
+                                        "kdBarang",
+                                        $event.target.value
+                                      )
+                                    }
                                   }
-                                },
-                                [_vm._v("Kartu Stok")]
-                              )
+                                }),
+                                _vm._v(" "),
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.tglOpname,
+                                      expression: "tglOpname"
+                                    }
+                                  ],
+                                  attrs: { type: "text" },
+                                  domProps: { value: _vm.tglOpname },
+                                  on: {
+                                    input: function($event) {
+                                      if ($event.target.composing) {
+                                        return
+                                      }
+                                      _vm.tglOpname = $event.target.value
+                                    }
+                                  }
+                                }),
+                                _vm._v(" "),
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.qtyGudang,
+                                      expression: "qtyGudang"
+                                    }
+                                  ],
+                                  staticClass: "form-control",
+                                  attrs: { type: "text", placeholder: "Qty" },
+                                  domProps: { value: _vm.qtyGudang },
+                                  on: {
+                                    input: function($event) {
+                                      if ($event.target.composing) {
+                                        return
+                                      }
+                                      _vm.qtyGudang = $event.target.value
+                                    }
+                                  }
+                                })
+                              ]),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "col-xs-3" }, [
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.keterangan,
+                                      expression: "keterangan"
+                                    }
+                                  ],
+                                  staticClass: "form-control",
+                                  attrs: {
+                                    type: "text",
+                                    placeholder: "Keterangan"
+                                  },
+                                  domProps: { value: _vm.keterangan },
+                                  on: {
+                                    input: function($event) {
+                                      if ($event.target.composing) {
+                                        return
+                                      }
+                                      _vm.keterangan = $event.target.value
+                                    }
+                                  }
+                                })
+                              ]),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "col-xs-3" }, [
+                                _c(
+                                  "button",
+                                  {
+                                    staticClass: "btn btn-md btn-success",
+                                    attrs: { type: "submit" }
+                                  },
+                                  [_vm._v("Add")]
+                                )
+                              ])
+                            ])
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "table",
+                          { staticClass: "table table-hover table-bordered" },
+                          [
+                            _c("thead", [
+                              _c("tr", [
+                                _c("th", [_vm._v("Nama Barang ")]),
+                                _vm._v(" "),
+                                _c("th", [_vm._v("Tgl")]),
+                                _vm._v(" "),
+                                _c("th", [_vm._v("Qty Masuk")]),
+                                _vm._v(" "),
+                                _c("th", [_vm._v("Qty Keluar")]),
+                                _vm._v(" "),
+                                _c("th", [_vm._v("No. Transaksi")]),
+                                _vm._v(" "),
+                                _c("th", [_vm._v("Keterangan")])
+                              ])
                             ]),
                             _vm._v(" "),
-                            _c("li", [
-                              _c(
-                                "a",
-                                {
-                                  attrs: {
-                                    href: "#settings",
-                                    "data-toggle": "tab"
-                                  }
-                                },
-                                [_vm._v("Settings")]
-                              )
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "tab-content" }, [
                             _c(
-                              "div",
-                              {
-                                staticClass: "tab-pane",
-                                attrs: { id: "timeline" }
-                              },
-                              [
-                                _c(
-                                  "table",
-                                  {
-                                    staticClass:
-                                      "table table-hover table-bordered"
-                                  },
-                                  [
-                                    _c("thead", [
-                                      _c("tr", [
-                                        _c("th", [_vm._v("Nama Barang ")]),
-                                        _vm._v(" "),
-                                        _c("th", [_vm._v("Tgl")]),
-                                        _vm._v(" "),
-                                        _c("th", [_vm._v("Qty Masuk")]),
-                                        _vm._v(" "),
-                                        _c("th", [_vm._v("Qty Keluar")]),
-                                        _vm._v(" "),
-                                        _c("th", [_vm._v("No. Transaksi")]),
-                                        _vm._v(" "),
-                                        _c("th", [_vm._v("Keterangan")])
-                                      ])
-                                    ]),
-                                    _vm._v(" "),
-                                    _c(
-                                      "tbody",
-                                      _vm._l(_vm.pem, function(pe) {
-                                        return _c("tr", { key: pe.id }, [
-                                          _c("td", [
-                                            _vm._v(_vm._s(pe.kdBarang) + " ")
-                                          ]),
-                                          _vm._v(" "),
-                                          _c("td", [
-                                            _vm._v(_vm._s(pe.tglKartu))
-                                          ]),
-                                          _vm._v(" "),
-                                          _c("td", [
-                                            _vm._v(_vm._s(pe.qtyMasuk))
-                                          ]),
-                                          _vm._v(" "),
-                                          _c("td", [
-                                            _vm._v(_vm._s(pe.qtyKeluar))
-                                          ]),
-                                          _vm._v(" "),
-                                          _c("td", [
-                                            _vm._v(_vm._s(pe.noTransaksi))
-                                          ]),
-                                          _vm._v(" "),
-                                          _c("td", [
-                                            _vm._v(_vm._s(pe.keteranganKartu))
-                                          ])
-                                        ])
-                                      }),
-                                      0
-                                    )
-                                  ]
-                                )
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "div",
-                              {
-                                staticClass: "tab-pane",
-                                attrs: { id: "settings" }
-                              },
-                              [
-                                _vm._v(
-                                  "\n\n                                                Seting\n                                        "
-                                )
-                              ]
+                              "tbody",
+                              _vm._l(_vm.pem, function(pe) {
+                                return _c("tr", { key: pe.id }, [
+                                  _c("td", [_vm._v(_vm._s(pe.kdBarang) + " ")]),
+                                  _vm._v(" "),
+                                  _c("td", [_vm._v(_vm._s(pe.tglKartu))]),
+                                  _vm._v(" "),
+                                  _c("td", [_vm._v(_vm._s(pe.qtyMasuk))]),
+                                  _vm._v(" "),
+                                  _c("td", [_vm._v(_vm._s(pe.qtyKeluar))]),
+                                  _vm._v(" "),
+                                  _c("td", [_vm._v(_vm._s(pe.noTransaksi))]),
+                                  _vm._v(" "),
+                                  _c("td", [_vm._v(_vm._s(pe.keteranganKartu))])
+                                ])
+                              }),
+                              0
                             )
-                          ])
-                        ])
+                          ]
+                        )
                       ])
                     ])
                   ])
@@ -79230,6 +79270,11 @@ var routes = [{
   name: 'stokopname',
   path: '/stokopname',
   component: _components_stokOpname_StokOpname_vue__WEBPACK_IMPORTED_MODULE_29__["default"]
+}, //=========Home
+{
+  name: 'home',
+  path: '/',
+  component: _components_Home_vue__WEBPACK_IMPORTED_MODULE_25__["default"]
 }];
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_0__["default"]({
   mode: 'history',

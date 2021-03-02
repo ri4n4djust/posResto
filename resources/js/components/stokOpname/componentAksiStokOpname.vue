@@ -1,10 +1,7 @@
 <template>
     <div >
         <button class="btn btn-outline-success" @click="showModalDetail = true">
-            <i class="fa fa-eye"></i>
-        </button>
-        <button class="btn btn-outline-primary" @click="EditAction('edit')" >
-            <i class="fa fa-edit"></i>
+            <span class="glyphicon glyphicon-check"></span>
         </button>
                         
                         <div v-if="showModalDetail">
@@ -20,20 +17,27 @@
                                         <h4 class="modal-title">Detail</h4>
                                     </div>
                                     <div class="modal-body">
-
-
-                                        <div class="nav-tabs-custom">
-                                        <ul class="nav nav-tabs">
-
-                                        <li><a href="#timeline" data-toggle="tab">Kartu Stok</a></li>
-                                        <li><a href="#settings" data-toggle="tab">Settings</a></li>
-                                        </ul>
-                                        <div class="tab-content">
                                         
-                                            <!-- /.tab-pane -->
-                                            <div class="tab-pane" id="timeline">
-                                                <!-- The timeline -->
-                                                   
+                                        
+                                        <form  @submit.prevent="PostStokOpname" >
+                                    
+                                        <div class="row">
+                                           
+                                                <div class="col-xs-3">
+                                                <input type="text" v-model="data.kdBarang" >
+                                                <input type="text" v-model="tglOpname" >
+                                                <input type="text" v-model="qtyGudang" class="form-control" placeholder="Qty">
+                                                </div>
+                                                <div class="col-xs-3">
+                                                <input type="text" v-model="keterangan" class="form-control" placeholder="Keterangan">
+                                                </div>
+                                                <div class="col-xs-3">
+                                                <button type="submit" class="btn btn-md btn-success">Add</button>                        
+                                            </div>
+
+                                        </div>
+                                        </form>
+                                               
                                                         <table class="table table-hover table-bordered">
                                                         <thead>
                                                         <tr>
@@ -57,19 +61,6 @@
                                                         </tr>
                                                         </tbody>
                                                     </table>
-                                            
-                                            </div>
-                                            <!-- /.tab-pane -->
-                                            <div class="tab-pane" id="settings">
-
-                                                    Seting
-                                            </div>
-                                            
-                                            <!-- /.tab-pane -->
-                                            </div>
-                                            <!-- /.tab-content -->
-                                        </div>
-                                        <!-- /.nav-tabs-custom -->
                                        
 
                                         
@@ -97,6 +88,9 @@ export default {
                 //pem: [],
                 showModalDetail: false,
                 data: this.posts,
+                qtyGudang: '',
+                keterangan: '',
+                tglOpname: new Date().toJSON().slice(0,10).replace(/-/g,'/'),
             }
 
         },
@@ -122,17 +116,18 @@ export default {
                    // alert('no nota '+ this.data.noNota);
             });
             },
+            PostStokOpname:function(){
+                let uri = '/api/posthasilopname/';
+                this.axios.post(uri, {
+                    kdBarang: this.data.kdBarang,
+                    tglOpname: this.tglOpname
+                }).then((response) => {
+                    this.loadDetailStok()
+                    alert('input Opname Berhasil')
+
+                });
+            }
             
-            EditAction() {
-                const path = '/barang/edit/' + this.data.id
-                this.$router.push(path)
-                //alert('edit' + this.data.id)
-                //this.$store.commit(edit, this.data)
-            },
-            ViewAction() {
-                alert('View' + this.data.id)
-                //this.$store.commit(edit, this.data)
-            },
             
         },
     props: {

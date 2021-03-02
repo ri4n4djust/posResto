@@ -38,6 +38,29 @@ class stokController extends Controller
         }
     }
 
+    public function inputOpname(Request $request)
+    {
+        //$post = TransaksiDetail::whereId($id)->first();
+        $post = KartuStok::create([
+            'kdBarang' => $request->input('kdBarang'),
+
+        ]);
+
+        if ($post) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Detail Post!',
+                'data'    => $post
+            ], 200);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Post Tidak Ditemukan!',
+                'data'    => ''
+            ], 404);
+        }
+    }
+
 
 
 }
