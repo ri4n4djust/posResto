@@ -237,4 +237,42 @@ class nomorController extends Controller
             }
         }
     }
+
+    public function kodeUsername()
+    {
+        $count = User::all();
+        if($count->isEmpty()){
+            $tahun = date('Y');
+            $post = 'US-'.$tahun.'-'.'1';
+            return response()->json([
+                'success' => true,
+                'message' => 'Detail Post!',
+                'username'    => $post
+            ], 200);
+        }else{
+            $no = 0 ;
+            $count = User::all()->last();
+            $terakhir = substr($count->username, 8,  20);
+            $kodeBaru = $terakhir + 1  ;
+
+            $tahun = date('Y');
+            $post = 'US-'.$tahun.'-'.$kodeBaru;
+
+            if (User::where('username', $post)->exists()) {
+                $kodeBarulagi = $kodeBaru + 1 ;
+                $post = 'US-'.$tahun.'-'.$kodeBarulagi;
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Detail Post!',
+                    'username'    => $post
+                ], 200);
+            } else {
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Detail Post!',
+                    'username'    => $post
+                ], 202);
+            }
+        }
+    }
 }

@@ -71,6 +71,10 @@ import IndexMenuComponent from './components/menu/Index.vue';
 import CreateMenuComponent from './components/menu/Create.vue';
 import EditMenuComponent from './components/menu/Edit.vue';
 
+import IndexUserComponent from './components/user/Index.vue';
+import CreateUserComponent from './components/user/Create.vue';
+import EditUserComponent from './components/user/Edit.vue';
+
 import CreatePembelian from './components/PembelianCreate.vue';
 import liveorder from './components/LiveOrder.vue';
 
@@ -184,13 +188,29 @@ const routes = [
         path: '/menu/edit/:id',
         component: EditMenuComponent
     },
+    //=============User
+    {
+        name: 'user',
+        path: '/user',
+        component: IndexUserComponent
+    },
+    {
+        name: 'createUser',
+        path: '/user/create',
+        component: CreateUserComponent
+    },
+    {
+        name: 'editUser',
+        path: '/user/edit/:id',
+        component: EditUserComponent
+    },
     //=======Pembelian
     {
         name: 'pembelian',
         path: '/pembelian',
         component: CreatePembelian
     },
-    //=======Pembelian
+    //=======Live Order
     {
         name: 'liveorder',
         path: '/liveorder',

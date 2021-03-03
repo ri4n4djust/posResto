@@ -32,6 +32,7 @@
             <li><a href="{{url('/menu')}}"><i class="fa fa-circle-o"></i>Daftar Menu</a></li>
             <li><a href="{{url('/kategori')}}"><i class="fa fa-circle-o"></i>Kategori Barang</a></li>
             <li><a href="{{url('/stokopname')}}"><i class="fa fa-circle-o"></i>Stok Opname</a></li>
+            <li><a href="{{url('/user')}}"><i class="fa fa-circle-o"></i>User</a></li>
           </ul>
         </li>
         <li >

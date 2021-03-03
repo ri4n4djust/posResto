@@ -80,6 +80,7 @@ Route::get('/kodePembelian', 'nomorController@kodePembelian');
 Route::get('/kodeSupplier', 'nomorController@kodeSupplier');
 Route::get('/kodeKategori', 'nomorController@kodeKategori');
 Route::get('/kodeStokOpname', 'nomorController@kodeStokOpname');
+Route::get('/username', 'nomorController@kodeUsername');
 
 
 //=========Pembelian
@@ -99,6 +100,13 @@ Route::get('/menu/{id?}', 'menuController@show');
 Route::get('/detailMenu/{id?}', 'menuController@detail');
 Route::post('/menu/update/{id?}', 'menuController@update');
 Route::delete('/menu/{id?}', 'menuController@destroy');
+
+//========User
+Route::get('/user', 'loginController@index');
+Route::post('/user/store', 'loginController@store');
+Route::get('/user/{id?}', 'loginController@show');
+Route::post('/user/update/{id?}', 'loginController@update');
+Route::delete('/user/{id?}', 'loginController@destroy');
 
 //========komposisi
 Route::get('/komposisi', 'komposisiController@index');
