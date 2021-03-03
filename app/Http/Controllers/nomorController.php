@@ -24,7 +24,7 @@ class nomorController extends Controller
         $count = Penjualan::all();
         if($count->isEmpty()){
             $tahun = date('Y');
-            $post = 'INV-'.$tahun.'-'.'1';
+            $post = 'INV-'.$tahun.'-'.$id.'-'.'1';
             return response()->json([
                 'success' => true,
                 'message' => 'Detail Post!',

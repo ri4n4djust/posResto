@@ -18,7 +18,7 @@ class CreateKomposisisTable extends Migration
             $table->string('idMenu');
             $table->string('idBarang');
             $table->double('qtyBarang');
-            $table->double('satuanBarang');
+            $table->string('satuanBarang');
             $table->double('hargaBarang');
             $table->double('totalBarang');
             $table->timestamps();

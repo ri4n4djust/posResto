@@ -16,6 +16,7 @@ class CreatePenjualansTable extends Migration
         Schema::create('tblPenjualan', function (Blueprint $table) {
             $table->id();
             $table->string('noNota');
+            $table->string('noMeja');
             $table->string('pelangganNota');
             $table->string('tglNota');
             $table->string('totalNota');

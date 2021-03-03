@@ -149,8 +149,7 @@
                 qtyGudang: '',
                 keterangan: '',
                 ntp:'',
-                noNotaPembelian: '',
-                totalPembelian: '',
+                noStokOpname: '',
                 tglStokOpname: new Date().toJSON().slice(0,10).replace(/-/g,'/'),
                 validation: [],
             }
@@ -175,10 +174,10 @@
                 
             });
             },
-            loadNotaPembelian:function(){
-                let uri = `/api/kodePembelian/`;
+            loadNoStokOpname:function(){
+                let uri = `/api/kodeStokOpname/`;
                 this.axios.get(uri).then(response => {
-                this.noNotaPembelian = response.data.kdPembelian;
+                this.noStokOpname = response.data.noStokOpname;
                 
             });
             },
@@ -189,8 +188,8 @@
                 
             });
             },
-            loadTransaksiPembelian:function(){
-                let uri = '/api/dataPembelian/'+ this.noNotaPembelian;
+            loadTransaksiOpname:function(){
+                let uri = '/api/dataStokOpname/'+ this.noNotaPembelian;
                 this.axios.post(uri).then(response => {
                     this.pem = response.data.data;
                    // alert('no nota '+ this.data.noNota);
@@ -199,10 +198,10 @@
             PostDeleteTrx(id)
             {
               if(confirm("Do you really want to delete?")){
-                this.axios.delete(`/api/pembelianDelete/${id}`)
+                this.axios.delete(`/api/opnameDelete/${id}`)
                     .then(response => {
                         alert('Berhasil Di Hapus');
-                        this.loadTotal()
+                        //this.loadTotal()
                         this.loadTransaksiPembelian()
                     }).catch(error => {
                     
@@ -210,7 +209,7 @@
               }
             },
             PostItemPembelian() {
-                let uri = '/api/addItemPembelian/store';
+                let uri = '/api/addItemOpname/store';
                 this.axios.post(uri, 
                 {
                     noStokOpname: this.noStokOpname,
@@ -222,16 +221,16 @@
                     satuanStok: this.satuanStok,
                 })
                     .then((response) => {
-                        this.loadTotal()
-                        this.loadTransaksiPembelian()
+                        //this.loadTotal()
+                        this.loadTransaksiOpname()
                         alert('sukses donkkkkkkkk');
                         //this.loadTransaksiPenjualan()
                         //this.loadTotal()
                     });
                 
             },
-            PostPembelian() {
-                let uri = '/api/addPembelian/store';
+            PostOpname() {
+                let uri = '/api/addOpname/store';
                 this.axios.post(uri, 
                 {
                     noNotaPembelian: this.noNotaPembelian,
@@ -254,11 +253,11 @@
             }
         },
         created() {
-            this.loadNotaPembelian()
+            this.loadNoStokOpname()
             this.loadBarang()
-            this.LoadSupplier()
-            this.loadTransaksiPembelian()
-            this.loadTotal()
+            //this.LoadSupplier()
+            this.loadTransaksiOpname()
+            //this.loadTotal()
             
             
         },

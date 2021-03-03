@@ -21,7 +21,7 @@ class Users extends Migration
             $table->string('role');
             $table->string('email');
             $table->string('password');
-            $table->string('email_verified_at');
+            $table->string('email_verified_at')->nullable();
             $table->timestamps();
         });
     }
