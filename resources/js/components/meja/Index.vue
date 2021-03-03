@@ -16,16 +16,16 @@
                             <div class="icon">
                             <i class="ion ion-bag"></i>
                             </div>
-                                {{post.status}}
-                            <div v-if="post.status === 1 ">
-                            ISI tamu
-                            <router-link :to="{name: 'detailMeja', params: { id: post.id }}" class="btn btn-sm btn-primary">Detail</router-link>
-
-                            </div>
-                            <div v-if="post.status === 0 ">
-                            Kosong
+                            
+                            <div v-if="post.status === '0' ">
+                             Kosong
                              <router-link :to="{name: 'editMeja', params: { id: post.id }}" class="btn btn-sm btn-primary">EDIT</router-link>
                             </div>
+                            <div v-else>
+                                Isi Tamu
+                            <router-link :to="{name: 'detailMeja', params: { id: post.id }}" class="btn btn-sm btn-primary">Detail</router-link>
+                            </div>
+                           
 
                                 
                         </div>

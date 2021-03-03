@@ -21,60 +21,82 @@ class nomorController extends Controller
     //
     public function noNota($id)
     {
-        $no = 0 ;
-        $count = Penjualan::latest()->first();
-        $terakhir = substr($count->noNota, 11,  20);
-        $kodeBaru = $terakhir + 1  ;
-
-        $tahun = date('Y');
-        $post = 'INV-'.$tahun.'-'.$id.'-'.$kodeBaru;
-
-        
-
-        if (Penjualan::where('noNota', $post)->exists()) {
-            $kodeBarulagi = $kodeBaru + 1 ;
-            $post = 'INV-'.$tahun.'-'.$id.'-'.$kodeBarulagi;
+        $count = Penjualan::all();
+        if($count->isEmpty()){
+            $tahun = date('Y');
+            $post = 'INV-'.$tahun.'-'.'1';
             return response()->json([
                 'success' => true,
                 'message' => 'Detail Post!',
                 'noNota'    => $post
             ], 200);
-        } else {
-            return response()->json([
-                'success' => true,
-                'message' => 'Post Tidak Ditemukan!',
-                'noNota'    => $post
-            ], 200);
+        }else{
+            $no = 0 ;
+            $count = Penjualan::all()->last();
+            $terakhir = substr($count->noNota, 11,  20);
+            $kodeBaru = $terakhir + 1  ;
+
+            $tahun = date('Y');
+            $post = 'INV-'.$tahun.'-'.$id.'-'.$kodeBaru;
+
+            
+
+            if (Penjualan::where('noNota', $post)->exists()) {
+                $kodeBarulagi = $kodeBaru + 1 ;
+                $post = 'INV-'.$tahun.'-'.$id.'-'.$kodeBarulagi;
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Detail Post!',
+                    'noNota'    => $post
+                ], 200);
+            } else {
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Post Tidak Ditemukan!',
+                    'noNota'    => $post
+                ], 200);
+            }
         }
     }
     public function kodeBarang()
     {
-        $no = 0 ;
-        $count = Barang::latest()->first();
-        //$kodeBaru = $count->kdBarang  ;
-        $terakhir = substr($count->kdBarang, 8,  20);
-        $kodeBaru = $terakhir + 1  ;
-
-        $tahun = date('Y');
-        $post = 'DB-'.$tahun.'-'.$kodeBaru;
-
-        if (Barang::where('kdBarang', $post)->exists()) {
-            // exists
-            $kodeBarulagi = $kodeBaru + 1 ;
-            $post = 'DB-'.$tahun.'-'.$kodeBarulagi;
+        $count = Barang::all();
+        if($count->isEmpty()){
+            $tahun = date('Y');
+            $post = 'DB-'.$tahun.'-'.'1';
             return response()->json([
                 'success' => true,
                 'message' => 'Detail Post!',
-                'ada' => 'gggada',
                 'kdBarang'    => $post
             ], 200);
-        } else {
-            return response()->json([
-                'success' => true,
-                'ada' => 'tidak ada',
-                'message' => 'Detail Post!',
-                'kdBarang'    => $post
-            ], 200);
+        }else{
+            $no = 0 ;
+            $count = Barang::all()->last();
+            //$kodeBaru = $count->kdBarang  ;
+            $terakhir = substr($count->kdBarang, 8,  20);
+            $kodeBaru = $terakhir + 1  ;
+
+            $tahun = date('Y');
+            $post = 'DB-'.$tahun.'-'.$kodeBaru;
+
+            if (Barang::where('kdBarang', $post)->exists()) {
+                // exists
+                $kodeBarulagi = $kodeBaru + 1 ;
+                $post = 'DB-'.$tahun.'-'.$kodeBarulagi;
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Detail Post!',
+                    'ada' => 'gggada',
+                    'kdBarang'    => $post
+                ], 200);
+            } else {
+                return response()->json([
+                    'success' => true,
+                    'ada' => 'tidak ada',
+                    'message' => 'Detail Post!',
+                    'kdBarang'    => $post
+                ], 200);
+            }
         }
     }
     public function kodeMenu()
@@ -82,11 +104,11 @@ class nomorController extends Controller
         $count = Menu::all();
         if($count->isEmpty()){
             $tahun = date('Y');
-            $post = 'OP-'.$tahun.'-'.'1';
+            $post = 'MN-'.$tahun.'-'.'1';
             return response()->json([
                 'success' => true,
                 'message' => 'Detail Post!',
-                'noStokOpname'    => $post
+                'kdMenu'    => $post
             ], 200);
         }else{
             $no = 0 ;
@@ -117,81 +139,115 @@ class nomorController extends Controller
 
     public function kodePembelian()
     {
-        $no = 0 ;
-        $count = Pembelian::latest()->first();
-        $terakhir = substr($count->noNotaPembelian, 8,  20);
-        $kodeBaru = $terakhir + 1  ;
-
-        $tahun = date('Y');
-        $post = 'PB-'.$tahun.'-'.$kodeBaru;
-
-        if (Pembelian::where('noNotaPembelian', $post)->exists()) {
-            $kodeBarulagi = $kodeBaru + 1 ;
-            $post = 'PB-'.$tahun.'-'.$kodeBarulagi;
+        $count = Pembelian::all();
+        if($count->isEmpty()){
+            $tahun = date('Y');
+            $post = 'PB-'.$tahun.'-'.'1';
             return response()->json([
                 'success' => true,
                 'message' => 'Detail Post!',
                 'kdPembelian'    => $post
             ], 200);
-        } else {
-            return response()->json([
-                'success' => true,
-                'message' => 'Detail Post!',
-                'kdPembelian'    => $post
-            ], 200);
+        }else{
+
+            $no = 0 ;
+            $count = Pembelian::all()->last();
+            $terakhir = substr($count->noNotaPembelian, 8,  20);
+            $kodeBaru = $terakhir + 1  ;
+
+            $tahun = date('Y');
+            $post = 'PB-'.$tahun.'-'.$kodeBaru;
+
+            if (Pembelian::where('noNotaPembelian', $post)->exists()) {
+                $kodeBarulagi = $kodeBaru + 1 ;
+                $post = 'PB-'.$tahun.'-'.$kodeBarulagi;
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Detail Post!',
+                    'kdPembelian'    => $post
+                ], 200);
+            } else {
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Detail Post!',
+                    'kdPembelian'    => $post
+                ], 200);
+            }
         }
     }
 
     public function kodeSupplier()
     {
-        $no = 0 ;
-        $count = Supplier::latest()->first();
-        $terakhir = substr($count->kdSupplier, 8,  20);
-        $kodeBaru = $terakhir + 1  ;
-
-        $tahun = date('Y');
-        $post = 'SP-'.$tahun.'-'.$kodeBaru;
-
-        if (Supplier::where('kdSupplier', $post)->exists()) {
-            $kodeBarulagi = $kodeBaru + 1 ;
-            $post = 'SP-'.$tahun.'-'.$kodeBarulagi;
+        $count = Supplier::all();
+        if($count->isEmpty()){
+            $tahun = date('Y');
+            $post = 'SP-'.$tahun.'-'.'1';
             return response()->json([
                 'success' => true,
                 'message' => 'Detail Post!',
                 'kdSupplier'    => $post
             ], 200);
-        } else {
-            return response()->json([
-                'success' => true,
-                'message' => 'Detail Post!',
-                'kdSupplier'    => $post
-            ], 200);
+        }else{
+            $no = 0 ;
+            $count = Supplier::all()->last();
+            $terakhir = substr($count->kdSupplier, 8,  20);
+            $kodeBaru = $terakhir + 1  ;
+
+            $tahun = date('Y');
+            $post = 'SP-'.$tahun.'-'.$kodeBaru;
+
+            if (Supplier::where('kdSupplier', $post)->exists()) {
+                $kodeBarulagi = $kodeBaru + 1 ;
+                $post = 'SP-'.$tahun.'-'.$kodeBarulagi;
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Detail Post!',
+                    'kdSupplier'    => $post
+                ], 200);
+            } else {
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Detail Post!',
+                    'kdSupplier'    => $post
+                ], 200);
+            }
         }
     }
     public function kodeKategori()
     {
-        $no = 0 ;
-        $count = Kategori::latest()->first();
-        $terakhir = substr($count->kodeKtg, 8,  20);
-        $kodeBaru = $terakhir + 1  ;
-
-        $tahun = date('Y');
-        $post = 'KT-'.$tahun.'-'.$kodeBaru;
-
-        if (Kategori::where('kodeKtg', $post)->exists()) {
-            $kodeBarulagi = $kodeBaru + 1 ;
-            $post = 'KT-'.$tahun.'-'.$kodeBarulagi;
+        $count = Kategori::all();
+        if($count->isEmpty()){
+            $tahun = date('Y');
+            $post = 'KT-'.$tahun.'-'.'1';
             return response()->json([
                 'success' => true,
                 'message' => 'Detail Post!',
                 'kodeKtg'    => $post
             ], 200);
-        } else {
-            return response()->json([
-                'success' => true,
-                'message' => 'Detail Post!',
-                'kodeKtg'    => $post
-            ], 200);
+        }else{
+            $no = 0 ;
+            $count = Kategori::all()->last();
+            $terakhir = substr($count->kodeKtg, 8,  20);
+            $kodeBaru = $terakhir + 1  ;
+
+            $tahun = date('Y');
+            $post = 'KT-'.$tahun.'-'.$kodeBaru;
+
+            if (Kategori::where('kodeKtg', $post)->exists()) {
+                $kodeBarulagi = $kodeBaru + 1 ;
+                $post = 'KT-'.$tahun.'-'.$kodeBarulagi;
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Detail Post!',
+                    'kodeKtg'    => $post
+                ], 200);
+            } else {
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Detail Post!',
+                    'kodeKtg'    => $post
+                ], 200);
+            }
         }
     }
 

@@ -15,6 +15,7 @@ class CreateMenusTable extends Migration
     {
         Schema::create('tblMenu', function (Blueprint $table) {
             $table->id();
+            $table->string('kdMenu');
             $table->string('nmMenu');
             $table->double('hargaMenu');
             $table->char('stokMenu');

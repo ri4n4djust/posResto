@@ -5,7 +5,7 @@
        <!-- /.login-logo -->
   <div class="login-box-body">
     <p class="login-box-msg"><img :src="'/images/logo.png'"></p>
-    <p class="login-box-msg">Sign in to start your session</p>
+    <p class="login-box-msg">Sign in to start your session </p>
 
     <form @submit.prevent="postLogin">
       <div class="form-group has-feedback">

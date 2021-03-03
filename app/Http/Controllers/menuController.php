@@ -21,24 +21,7 @@ class menuController extends Controller
 
     public function store(Request $request)
     {
-        //validate data
-        $validator = Validator::make($request->all(), [
-            'nmMenu'     => 'required'
-        ],
-            [
-                'nmMenu.required' => 'Masukkan Nama Menu',
-            ]
-        );
-
-        if($validator->fails()) {
-
-            return response()->json([
-                'success' => false,
-                'message' => 'Silahkan Isi Bidang Yang Kosong',
-                'data'    => $validator->errors()
-            ],400);
-
-        } else {
+        
             //$file = $request->file('gbrBarang');
 
             //$imageName = time().'.'.$request->name->getClientOriginalExtension();
@@ -63,7 +46,7 @@ class menuController extends Controller
                     'message' => 'Post Gagal Disimpan!',
                 ], 400);
             }
-        }
+        
     }
 
 

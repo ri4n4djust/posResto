@@ -1,6 +1,6 @@
 <template>
     <div class="mt-3">
-                    <div class="card-header">EDIT SUPPLIER</div>
+                    <div class="card-header">EDIT MEJA</div>
 
                     <div class="card-body">
 
@@ -40,7 +40,7 @@
 
                             <div class="form-group">
                                 <button type="submit" class="btn btn-md btn-success">UPDATE</button>
-                                <button @click.prevent="PostDeleteTrx(post.id)" class="btn btn-md btn-danger">HAPUS</button>
+                                <button @click.prevent="PostDelete(post.id)" class="btn btn-md btn-danger">HAPUS</button>
                                 <router-link :to="{ name: 'meja' }" class="btn btn-primary btn-success">KEMBALI</router-link>
                             </div>
 
@@ -86,7 +86,7 @@
             if(confirm("Do you really want to delete?")){
                 this.axios.delete(`/api/meja/${id}`)
                     .then(response => {
-                        this.posts.splice(index, 1);
+                        this.$router.push({name: 'meja'});
                     }).catch(error => {
                     alert('system error!');
                 });

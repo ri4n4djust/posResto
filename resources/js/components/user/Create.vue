@@ -13,9 +13,9 @@
                             <div class="form-group">
                                 <label>Username </label>
                                 <input type="text" class="form-control" v-model="post.username" @keydown.space.prevent >
-                                <div v-if="validation.name">
+                                <div v-if="validation.username">
                                     <div class="alert alert-danger mt-1" role="alert">
-                                        {{ validation.name[0] }}
+                                        {{ validation.username[0] }}
                                     </div>
                                 </div>
                             </div>
@@ -107,7 +107,7 @@
                         this.$router.push({
                             name: 'user'
                         });
-                        this.loadKdMenu()
+                        //this.loadKdMenu()
                     }).catch(error => {
                     this.validation = error.response.data.data;
                 });

@@ -25,7 +25,9 @@ class CreateBarangsTable extends Migration
             $table->char('stkBarang');
             $table->char('qtyMin');
             $table->char('qtyMax');
+            $table->text('stsBarang');
             $table->text('deskripsi');
+
             $table->timestamps();
         });
     }

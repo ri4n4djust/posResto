@@ -7,7 +7,7 @@
                         <form @submit.prevent="PostStore">
 
                             
-                                <input type="text" class="form-control" :value="post.kdMenu" :name="kdMenu" disabled >
+                                <input type="text" class="form-control" v-model="post.kdMenu" disabled >
 
 
                             <div class="form-group">

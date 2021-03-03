@@ -61,7 +61,7 @@
         methods: {
             
             PostStore() {
-                let uri = 'http://localhost:8000/api/meja/store';
+                let uri = '/api/meja/store';
                 this.axios.post(uri, this.post)
                     .then((response) => {
                         this.$router.push({

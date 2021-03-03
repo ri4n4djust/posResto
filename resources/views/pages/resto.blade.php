@@ -10,7 +10,6 @@
 
             <!-- /.box-header -->
 
-
             <div class="box-body">
 
               <div id="app"></div>

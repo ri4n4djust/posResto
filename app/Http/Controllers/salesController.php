@@ -20,7 +20,7 @@ class salesController extends Controller
     public function index()
     {
         $posts = Barang::join('tblKategori', 'tblBarang.ktgBarang', '=', 'tblKategori.kodeKtg')
-                ->where('tblBarang.stsBarang', '1')
+                //->where('tblBarang.stsBarang', '1')
                 ->get(['tblBarang.*', 'tblKategori.namaKtg']);
         //$posts = Barang::latest()->get();
         $count = Barang::count();
