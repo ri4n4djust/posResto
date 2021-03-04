@@ -90,11 +90,7 @@
                 validation: [],
             }
         },
-        beforeCreate: function () {
-            if (!this.$session.exists()) {
-            this.$router.push('/')
-            }
-        },
+        
         created: function(){
             //this.loadUsername()
         },

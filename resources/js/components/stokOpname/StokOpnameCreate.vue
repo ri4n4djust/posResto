@@ -97,18 +97,20 @@
                                 <thead>
                                 <tr>
                                     <th>Nama </th>
-                                    <th>Qty</th>
-                                    <th>Harga</th>
-                                    <th>Total</th>
+                                    <th>Qty Gudang</th>
+                                    <th>Selisih</th>
+                                    <th>Satuan</th>
+                                    <th>Keterangan</th>
                                     <th>AKSI</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <tr v-for="pe in pem" :key="pe.id">
                                     <td>{{ pe.nmBarang }} </td>
-                                    <td>{{ pe.qtyBeli}}</td>
-                                    <td>{{ pe.hrgPokok | currency }}</td>
-                                    <td>{{ pe.totalBeli | currency }}</td>
+                                    <td>{{ pe.qtyGudang}}</td>
+                                    <td>{{ pe.selisihStok }}</td>
+                                    <td>{{ pe.satuanStok }}</td>
+                                    <td>{{ pe.keteranganStok }}</td>
                                     <td class="text-center">
                                         <button @click.prevent="PostDeleteTrx(pe.id)" class="btn btn-sm btn-danger">HAPUS</button>
                                     </td>
@@ -206,7 +208,7 @@
                     .then(response => {
                         alert('Berhasil Di Hapus');
                         //this.loadTotal()
-                        this.loadTransaksiPembelian()
+                        this.loadTransaksiOpname()
                     }).catch(error => {
                     
                 });

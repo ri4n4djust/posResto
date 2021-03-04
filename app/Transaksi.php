@@ -10,6 +10,6 @@ class Transaksi extends Model
     protected $table = 'tblTmp_Transaksi';
 
     protected $fillable = [
-        'noNota', 'tglNota', 'totalNota', 'bayarNota', 'kembalianNota'
+        'noNota', 'pelangganNota', 'tglNota', 'totalNota','taxNota', 'diskonNota', 'bayarNota', 'kembalianNota'
     ];
 }

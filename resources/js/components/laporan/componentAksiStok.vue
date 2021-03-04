@@ -42,6 +42,7 @@
                                                             <th>Qty Masuk</th>
                                                             <th>Qty Keluar</th>
                                                             <th>No. Transaksi</th>
+                                                            <th>Sisa</th>
                                                             <th>Keterangan</th>
                                                         </tr>
                                                         </thead>
@@ -52,6 +53,7 @@
                                                             <td>{{ pe.qtyMasuk}}</td>
                                                             <td>{{ pe.qtyKeluar}}</td>
                                                             <td>{{ pe.noTransaksi}}</td>
+                                                            <td>{{ posts.stkBarang}}</td>
                                                             <td>{{ pe.keteranganKartu }}</td>
 
                                                         </tr>

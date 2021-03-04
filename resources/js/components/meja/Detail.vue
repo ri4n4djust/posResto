@@ -257,29 +257,29 @@
 
                 <form  @submit.prevent="PostTransaksi" >
                 <p class="text-muted text-center">
-                <input type="hidden" class="form-control" v-model="tglNota" >
+                <input type="text" class="form-control" v-model="tglNota" >
                 <input type="text" class="form-control" v-model="pelanggan" placeholder="Customer">
                 </p>
                 <p class="text-muted text-center">
-                <input type="hidden" class="form-control" v-model="noNota" placeholder="No nota">
+                <input type="text" class="form-control" v-model="noNota" placeholder="No nota">
                 </p>
                 <p class="text-muted text-center">
                 <input type="text" class="form-control" v-model="subtotal">
                 </p>
                 <p class="text-muted text-center">
                 <input type="number" class="form-control" v-model="pajak" placeholder="Tax">
-                <input type="hidden" class="form-control" :value="(subtotal * pajak / 100 + subtotal)" :name="totalTransaksipjk" >
+                <input type="text" class="form-control" :value="(subtotal * pajak / 100 + subtotal)" :name="totalTransaksipjk" >
                 </p>
                 <p class="text-muted text-center">
                 <input type="number" class="form-control" v-model="diskon" placeholder="Diskon">
-                <input type="hidden" class="form-control" :value="((subtotal * pajak / 100 + subtotal) * diskon / 100)" :name="diskon1" >
+                <input type="text" class="form-control" :value="((subtotal * pajak / 100 + subtotal) * diskon / 100)" :name="diskon1" >
                 </p>
 
                 <p class="text-muted text-center">
                 <input type="number" class="form-control" v-model="totalBayar" placeholder="Bayar" required>
                 </p>
                 <p class="text-muted text-center">
-                <input type="hidden" class="form-control" :value="((subtotal * pajak / 100 + subtotal) - ((subtotal * pajak / 100 + subtotal) * diskon / 100))  || 0 " :name="totalTransaksiBayar"  >
+                <input type="text" class="form-control" :value="((subtotal * pajak / 100 + subtotal) - ((subtotal * pajak / 100 + subtotal) * diskon / 100))  || 0 " :name="totalTransaksiBayar"  >
                 </p>
                 
                 <h3 class="profile-username ">Total {{ ((subtotal * pajak / 100 + subtotal) - ((subtotal * pajak / 100 + subtotal) * diskon / 100))  || 0 | currency }}</h3>

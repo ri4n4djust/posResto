@@ -101,7 +101,7 @@ class stokController extends Controller
                     'qtyMasuk'     => $request->input('selisihStok'),
                     'qtyKeluar'     => '0',
                     'noTransaksi'     => $request->input('noStokOpname'),
-                    'keteranganKartu'     => 'Stok Opname',
+                    'keteranganKartu'     => 'Stok Opname'.'-'.$request->input('keteranganStok'),
                     'satuanKartu' => $satuanKartu,
                 ]);
     
@@ -112,7 +112,7 @@ class stokController extends Controller
             }else{
                 //$nilai = '0';
                 DB::table('tblBarang')->where('kdBarang', $request->input('kdBarang'))->update([
-                    'stkBarang'     => $stokLama - $request->input('selisihStok')
+                    'stkBarang'     => $stokLama + $request->input('selisihStok')
                 ]);
                 KartuStok::create([
                     'kdBarang'     => $request->input('kdBarang'),
@@ -120,7 +120,7 @@ class stokController extends Controller
                     'qtyMasuk'     => '0',
                     'qtyKeluar'     => $request->input('selisihStok'),
                     'noTransaksi'     => $request->input('noStokOpname'),
-                    'keteranganKartu'     => 'Stok Opname',
+                    'keteranganKartu'     => 'Stok Opname'.'-'.$request->input('keteranganStok'),
                     'satuanKartu' => $satuanKartu,
                 ]);
     
@@ -202,6 +202,43 @@ class stokController extends Controller
                 'message' => 'Post Tidak Ditemukan!',
                 'data'    => ''
             ], 404);
+        }
+    }
+
+    public function destroy1($id)
+    {
+        
+
+        $post = StokOpnameDetail::findOrFail($id);
+
+        $noStokOpname = $post->noStokOpname;
+        $kodebarang = $post->kdBarang;
+        $qtybarang = $post->selisihStok;
+
+        $barang = DB::table('tblBarang')->where('kdBarang', $kodebarang)->first();
+        $stokLama = $barang->stkBarang;
+
+        DB::table('tblBarang')->where('kdBarang', $kodebarang)->update([
+                'stkBarang'     => $stokLama - $qtybarang
+        ]);
+
+        DB::table('tblKartuStok')
+            ->where('kdBarang', $kodebarang)
+            ->where('noTransaksi', $noStokOpname)
+            ->delete();
+
+        $post->delete();
+
+        if ($post) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Post Berhasil Dihapus!',
+            ], 200);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Post Gagal Dihapus!',
+            ], 500);
         }
     }
 

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePenjualanDetailsTable extends Migration
+class TmpPenjualan extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,16 @@ class CreatePenjualanDetailsTable extends Migration
      */
     public function up()
     {
-        Schema::create('tblPenjualanDetail', function (Blueprint $table) {
+        //
+        Schema::create('tblTmp_Transaksi', function (Blueprint $table) {
             $table->id();
             $table->string('noNota');
-            $table->string('noMeja');
-            $table->string('kdBarang');
-            $table->string('hrgJual');
-            $table->string('qty');
-            $table->string('total');
-            $table->string('type');
-            $table->string('nmBarang');
+            $table->string('pelangganNota');
+            $table->string('totalNota');
+            $table->string('taxNota');
+            $table->string('diskonNota');
+            $table->string('bayarNota');
+            $table->string('kembalianNota');
             $table->timestamps();
         });
     }
@@ -34,6 +34,7 @@ class CreatePenjualanDetailsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tblPenjualanDetail');
+        //
+        Schema::dropIfExists('tblTmp_Transaksi');
     }
 }

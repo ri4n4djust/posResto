@@ -129,3 +129,4 @@ Route::post('/detailstok/{id}', 'stokController@DetailStok');
 Route::get('/stokopname', 'stokController@index');
 Route::post('/addItemOpname/store', 'stokController@addItemOpname');
 Route::post('/dataStokOpname/{id}', 'stokController@listTransaksiOpname');
+Route::delete('/opnameDelete/{id?}', 'stokController@destroy1');
