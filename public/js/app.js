@@ -13177,6 +13177,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 
 
@@ -13193,10 +13195,12 @@ __webpack_require__.r(__webpack_exports__);
       users: {},
       pem: {},
       qtyGudang: '',
+      selisihStok: '',
+      //selisih1: Math.abs(this.selisih),
       keterangan: '',
       ntp: '',
       noStokOpname: '',
-      tglStokOpname: new Date().toJSON().slice(0, 10).replace(/-/g, '/'),
+      tglStok: new Date().toJSON().slice(0, 10).replace(/-/g, '/'),
       validation: []
     };
   },
@@ -13238,7 +13242,7 @@ __webpack_require__.r(__webpack_exports__);
     loadTransaksiOpname: function loadTransaksiOpname() {
       var _this4 = this;
 
-      var uri = '/api/dataStokOpname/' + this.noNotaPembelian;
+      var uri = '/api/dataStokOpname/' + this.noStokOpname;
       this.axios.post(uri).then(function (response) {
         _this4.pem = response.data.data; // alert('no nota '+ this.data.noNota);
       });
@@ -13262,10 +13266,10 @@ __webpack_require__.r(__webpack_exports__);
         noStokOpname: this.noStokOpname,
         kdBarang: this.post1.kdBarang,
         qtyGudang: this.qtyGudang,
-        selisihStok: this.selisihStok,
+        selisihStok: this.qtyGudang - this.post1.stkBarang,
         keteranganStok: this.keterangan,
-        tglStokOpname: this.tglStokOpname,
-        satuanStok: this.satuanStok
+        tglStok: this.tglStok,
+        satuanStok: this.post1.satuanBarang
       }).then(function (response) {
         //this.loadTotal()
         _this6.loadTransaksiOpname();
@@ -59396,11 +59400,11 @@ var render = function() {
                   _c("date-picker", {
                     attrs: { "value-type": "format", format: "YYYY/MM/DD" },
                     model: {
-                      value: _vm.tglStokOpname,
+                      value: _vm.tglStok,
                       callback: function($$v) {
-                        _vm.tglStokOpname = $$v
+                        _vm.tglStok = $$v
                       },
-                      expression: "tglStokOpname"
+                      expression: "tglStok"
                     }
                   })
                 ],
@@ -59535,6 +59539,50 @@ var render = function() {
                             {
                               name: "model",
                               rawName: "v-model",
+                              value: _vm.noStokOpname,
+                              expression: "noStokOpname"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          attrs: { type: "text" },
+                          domProps: { value: _vm.noStokOpname },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.noStokOpname = $event.target.value
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.tglStok,
+                              expression: "tglStok"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          attrs: { type: "text" },
+                          domProps: { value: _vm.tglStok },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.tglStok = $event.target.value
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
                               value: _vm.post1.stkBarang,
                               expression: "post1.stkBarang "
                             }
@@ -59608,7 +59656,11 @@ var render = function() {
                             }
                           ],
                           staticClass: "form-control",
-                          attrs: { type: "text", placeholder: "Qty" },
+                          attrs: {
+                            type: "text",
+                            placeholder: "Qty",
+                            pattern: "\\d+"
+                          },
                           domProps: { value: _vm.qtyGudang },
                           on: {
                             input: function($event) {
@@ -59628,12 +59680,12 @@ var render = function() {
                           staticClass: "form-control",
                           attrs: {
                             type: "text",
-                            name: _vm.selisih,
+                            name: _vm.selisihStok,
                             placeholder: "Selisih",
                             disabled: ""
                           },
                           domProps: {
-                            value: _vm.qtyGudang - _vm.post1.stkBarang || 0
+                            value: _vm.qtyGudang - _vm.post1.stkBarang
                           }
                         })
                       ]),
@@ -59651,7 +59703,11 @@ var render = function() {
                             }
                           ],
                           staticClass: "form-control",
-                          attrs: { type: "text", placeholder: "Ket" },
+                          attrs: {
+                            type: "text",
+                            placeholder: "Ket",
+                            required: ""
+                          },
                           domProps: { value: _vm.keterangan },
                           on: {
                             input: function($event) {

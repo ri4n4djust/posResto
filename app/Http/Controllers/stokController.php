@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\KartuStok;
+use App\StokOpnameDetail;
+
+use Illuminate\Support\Facades\DB;
 
 class stokController extends Controller
 {
@@ -65,7 +68,7 @@ class stokController extends Controller
         }
     }
 
-    public function addItemPembelian(Request $request)
+    public function addItemOpname(Request $request)
     {
         $brg = DB::table('tblStokOpnameDetail')
                 ->where('kdBarang', $request->input('kdBarang'))
@@ -74,7 +77,7 @@ class stokController extends Controller
         if ($brg == null ){
 
             $post = StokOpnameDetail::create([
-                'noStokopname'     => $request->input('noStokOpname'),
+                'noStokOpname'     => $request->input('noStokOpname'),
                 'kdBarang'     => $request->input('kdBarang'),
                 'tglStok'     => $request->input('tglStok'),
                 'qtyGudang'     => $request->input('qtyGudang'),
@@ -87,66 +90,84 @@ class stokController extends Controller
             $stokLama = $barang->stkBarang;
             $satuanKartu = $barang->satuanBarang;
 
-            DB::table('tblBarang')->where('kdBarang', $request->input('kdBarang'))->update([
-                'stkBarang'     => $stokLama + $request->input('selisihStok')
-            ]);
-            if($stokLama < $request->input('qtyGudang')){
-                    $nilai = $request->input('selisihStok');
+            if($request->input('qtyGudang') > $stokLama){
+                //$nilai = $request->input('selisihStok');
+                DB::table('tblBarang')->where('kdBarang', $request->input('kdBarang'))->update([
+                    'stkBarang'     => $stokLama + $request->input('selisihStok')
+                ]);
+                KartuStok::create([
+                    'kdBarang'     => $request->input('kdBarang'),
+                    'tglKartu'     => $request->input('tglStok'),
+                    'qtyMasuk'     => $request->input('selisihStok'),
+                    'qtyKeluar'     => '0',
+                    'noTransaksi'     => $request->input('noStokOpname'),
+                    'keteranganKartu'     => 'Stok Opname',
+                    'satuanKartu' => $satuanKartu,
+                ]);
+    
+                    return response()->json([
+                        'success' => true,
+                        'message' => 'Post Berhasil Disimpan!',
+                    ], 200);
             }else{
-                    $nilai = '0';
+                //$nilai = '0';
+                DB::table('tblBarang')->where('kdBarang', $request->input('kdBarang'))->update([
+                    'stkBarang'     => $stokLama - $request->input('selisihStok')
+                ]);
+                KartuStok::create([
+                    'kdBarang'     => $request->input('kdBarang'),
+                    'tglKartu'     => $request->input('tglStok'),
+                    'qtyMasuk'     => '0',
+                    'qtyKeluar'     => $request->input('selisihStok'),
+                    'noTransaksi'     => $request->input('noStokOpname'),
+                    'keteranganKartu'     => 'Stok Opname',
+                    'satuanKartu' => $satuanKartu,
+                ]);
+    
+                    return response()->json([
+                        'success' => true,
+                        'message' => 'Post Berhasil Disimpan!',
+                    ], 200);
             }
-            KartuStok::create([
-                'kdBarang'     => $request->input('kdBarang'),
-                'tglKartu'     => $request->input('tglNotaPembelian'),
-                'qtyMasuk'     => $request->input('qtyBeli'),
-                'qtyKeluar'     => $nilai,
-                'noTransaksi'     => $request->input('noNotaPembelian'),
-                'keteranganKartu'     => 'Pembelian',
-                'satuanKartu' => $satuanKartu,
-            ]);
-
-                return response()->json([
-                    'success' => true,
-                    'message' => 'Post Berhasil Disimpan!',
-                ], 200);
-
+            
+            
+            
         } else {
 
             //=========PembelianDetail
-            $brng = DB::table('tblPembelianDetail')
+            $brng = DB::table('tblStokOpnameDetail')
                 ->where('kdBarang', $request->input('kdBarang'))
-                ->where('noNotaPembelian', $request->input('noNotaPembelian'))
+                ->where('noStokOpname', $request->input('noStokOpname'))
                 ->first();
-            $qtyB = $brng->qtyBeli ;
-            $totalB = $brng->totalBeli ;
+            $qtyR = $brng->qtyGudang ;
+            //$totalB = $brng->totalBeli ;
             
             
-            DB::table('tblPembelianDetail')
+            DB::table('tblStokOpnameDetail')
                 ->where('kdBarang', $request->input('kdBarang'))
-                ->where('noNotaPembelian', $request->input('noNotaPembelian'))
+                ->where('noStokOpname', $request->input('noStokOpname'))
                 ->update([
-                    'qtyBeli' => $qtyB + $request->input('qtyBeli'),
-                    'totalBeli' => $totalB + $request->input('totalBeli'),
+                    'qtyBeli' => $qtyR + $request->input('qtyGudang'),
                     ]);
             
             $barang = DB::table('tblBarang')->where('kdBarang', $request->input('kdBarang'))->first();
             $stokLama = $barang->stkBarang;
         
             DB::table('tblBarang')->where('kdBarang', $request->input('kdBarang'))->update([
-            'stkBarang'     => $stokLama + $request->input('qtyBeli')
+            'stkBarang'     => $stokLama + $request->input('selisihStok')
             ]);
-            //=========EndPembelianDetail
+            //=========StokOpnameDetail
             //=========Update Kartu Stok
             $brngstok = DB::table('tblKartuStok')
                 ->where('kdBarang', $request->input('kdBarang'))
-                ->where('noTransaksi', $request->input('noNotaPembelian'))
+                ->where('noTransaksi', $request->input('noStokOpname'))
                 ->first();
             $qtyS = $brngstok->qtyMasuk ;
             DB::table('tblKartuStok')
                 ->where('kdBarang', $request->input('kdBarang'))
-                ->where('noTransaksi', $request->input('noNotaPembelian'))
+                ->where('noTransaksi', $request->input('noStokOpname'))
                 ->update([
-                    'qtyMasuk' => $qtyS + $request->input('qtyBeli'),
+                    'qtyMasuk' => $qtyS + $request->input('selisihStok'),
                     ]);
             //=========endKartu stok
 
@@ -158,6 +179,29 @@ class stokController extends Controller
                     ], 200);
 
             
+        }
+    }
+
+    public function listTransaksiOpname($id)
+    {
+        //$post = TransaksiDetail::whereId($id)->first();
+        $post = DB::table('tblStokOpnameDetail')
+                    ->join('tblBarang', 'tblBarang.kdBarang', '=', 'tblStokOpnameDetail.kdBarang')
+                    ->select('tblStokOpnameDetail.*', 'tblBarang.nmBarang')
+                    ->where('noStokOpname', $id)->get();
+
+        if ($post) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Detail Post!',
+                'data'    => $post
+            ], 200);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Post Tidak Ditemukan!',
+                'data'    => ''
+            ], 404);
         }
     }
 

@@ -17,7 +17,6 @@ class CreateStokOpnameDetailsTable extends Migration
             $table->id();
             $table->string('noStokOpname');
             $table->string('kdBarang');
-            $table->string('tglStok');
             $table->string('qtyGudang');
             $table->string('selisihStok');
             $table->string('keteranganStok');

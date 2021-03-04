@@ -15,7 +15,7 @@
             <div class="box-body">
 
                 <p class="text-muted text-center">
-                <date-picker v-model="tglStokOpname" value-type="format" format="YYYY/MM/DD"></date-picker>
+                <date-picker v-model="tglStok" value-type="format" format="YYYY/MM/DD"></date-picker>
                 </p>
                 <p class="text-muted text-center">
                 <input type="text" class="form-control" v-model="noStokOpname" placeholder="No nota">
@@ -58,6 +58,8 @@
                         </div>
                         <div class="col-xs-1">
                           <label>Stok</label>
+                          <input type="text" class="form-control" v-model="noStokOpname" >
+                          <input type="text" class="form-control" v-model="tglStok" >
                         <input type="text" v-model="post1.stkBarang " class="form-control" placeholder="stok" disabled>
                         </div>
                         <div class="col-xs-2">
@@ -66,15 +68,15 @@
                         </div>
                         <div class="col-xs-1">
                           <label>Real</label>
-                        <input type="text" v-model="qtyGudang" class="form-control" placeholder="Qty">
+                        <input type="text" v-model="qtyGudang" class="form-control" placeholder="Qty" pattern="\d+">
                         </div>
                         <div class="col-xs-2">
                           <label>Selisih</label>
-                        <input type="text" :value="(qtyGudang - post1.stkBarang  ) || 0" :name="selisih" class="form-control" placeholder="Selisih" disabled>
+                        <input type="text" :value=" qtyGudang - post1.stkBarang  " :name="selisihStok" class="form-control" placeholder="Selisih" disabled>
                         </div>
                         <div class="col-xs-2">
                           <label>Keterangan</label>
-                        <input type="text" v-model="keterangan" class="form-control" placeholder="Ket">
+                        <input type="text" v-model="keterangan" class="form-control" placeholder="Ket" required>
                         </div>
                         <div class="col-xs-2">
                           <label>Aksi</label>
@@ -147,10 +149,12 @@
                 users: {},
                 pem: {},
                 qtyGudang: '',
+                selisihStok: '',
+                //selisih1: Math.abs(this.selisih),
                 keterangan: '',
                 ntp:'',
                 noStokOpname: '',
-                tglStokOpname: new Date().toJSON().slice(0,10).replace(/-/g,'/'),
+                tglStok: new Date().toJSON().slice(0,10).replace(/-/g,'/'),
                 validation: [],
             }
         },
@@ -189,7 +193,7 @@
             });
             },
             loadTransaksiOpname:function(){
-                let uri = '/api/dataStokOpname/'+ this.noNotaPembelian;
+                let uri = '/api/dataStokOpname/'+ this.noStokOpname;
                 this.axios.post(uri).then(response => {
                     this.pem = response.data.data;
                    // alert('no nota '+ this.data.noNota);
@@ -215,10 +219,10 @@
                     noStokOpname: this.noStokOpname,
                     kdBarang: this.post1.kdBarang,
                     qtyGudang: this.qtyGudang,
-                    selisihStok: this.selisihStok,
+                    selisihStok: this.qtyGudang - this.post1.stkBarang,
                     keteranganStok: this.keterangan,
-                    tglStokOpname: this.tglStokOpname,
-                    satuanStok: this.satuanStok,
+                    tglStok: this.tglStok,
+                    satuanStok: this.post1.satuanBarang,
                 })
                     .then((response) => {
                         //this.loadTotal()
