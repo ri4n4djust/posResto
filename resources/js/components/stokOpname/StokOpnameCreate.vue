@@ -58,8 +58,8 @@
                         </div>
                         <div class="col-xs-1">
                           <label>Stok</label>
-                          <input type="text" class="form-control" v-model="noStokOpname" >
-                          <input type="text" class="form-control" v-model="tglStok" >
+                          <input type="hidden" class="form-control" v-model="noStokOpname" >
+                          <input type="hidden" class="form-control" v-model="tglStok" >
                         <input type="text" v-model="post1.stkBarang " class="form-control" placeholder="stok" disabled>
                         </div>
                         <div class="col-xs-2">
@@ -83,7 +83,7 @@
                           <button type="submit" class="btn btn-md btn-success form-control">Add</button>                        
                         </div>
                     </div>
-                    
+                    {{ (qtyGudang - post1.stkBarang) * post1.hrgPokok  }}
                     </form>
                     </div>
                     
@@ -232,15 +232,16 @@
                         alert('sukses donkkkkkkkk');
                         //this.loadTransaksiPenjualan()
                         //this.loadTotal()
-                    });
+                    }).catch(error => {
+                        alert('data Sudah Ada')
+                });
                 
             },
             PostOpname() {
                 let uri = '/api/addOpname/store';
                 this.axios.post(uri, 
                 {
-                    noNotaPembelian: this.noNotaPembelian,
-                    idSupplier: this.post.kdSupplier,
+                    noStokOpname: this.noStokOpname,
                     tglNotaPembelian: this.tglPembelian,
                     totalNotaPembelian: this.subtotal,
                     

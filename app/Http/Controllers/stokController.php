@@ -134,49 +134,12 @@ class stokController extends Controller
             
         } else {
 
-            //=========PembelianDetail
-            $brng = DB::table('tblStokOpnameDetail')
-                ->where('kdBarang', $request->input('kdBarang'))
-                ->where('noStokOpname', $request->input('noStokOpname'))
-                ->first();
-            $qtyR = $brng->qtyGudang ;
-            //$totalB = $brng->totalBeli ;
-            
-            
-            DB::table('tblStokOpnameDetail')
-                ->where('kdBarang', $request->input('kdBarang'))
-                ->where('noStokOpname', $request->input('noStokOpname'))
-                ->update([
-                    'qtyBeli' => $qtyR + $request->input('qtyGudang'),
-                    ]);
-            
-            $barang = DB::table('tblBarang')->where('kdBarang', $request->input('kdBarang'))->first();
-            $stokLama = $barang->stkBarang;
-        
-            DB::table('tblBarang')->where('kdBarang', $request->input('kdBarang'))->update([
-            'stkBarang'     => $stokLama + $request->input('selisihStok')
-            ]);
-            //=========StokOpnameDetail
-            //=========Update Kartu Stok
-            $brngstok = DB::table('tblKartuStok')
-                ->where('kdBarang', $request->input('kdBarang'))
-                ->where('noTransaksi', $request->input('noStokOpname'))
-                ->first();
-            $qtyS = $brngstok->qtyMasuk ;
-            DB::table('tblKartuStok')
-                ->where('kdBarang', $request->input('kdBarang'))
-                ->where('noTransaksi', $request->input('noStokOpname'))
-                ->update([
-                    'qtyMasuk' => $qtyS + $request->input('selisihStok'),
-                    ]);
-            //=========endKartu stok
-
             
 
                     return response()->json([
-                        'success' => true,
-                        'message' => 'Post Berhasil Disimpan!',
-                    ], 200);
+                        'success' => false,
+                        'message' => 'Sudah Ada',
+                    ], 404);
 
             
         }
