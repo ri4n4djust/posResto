@@ -20,6 +20,7 @@ class CreateStokOpnameDetailsTable extends Migration
             $table->string('qtyGudang');
             $table->string('selisihStok');
             $table->string('keteranganStok');
+            $table->string('nilaiStok');
             $table->string('satuanStok');
             $table->timestamps();
         });

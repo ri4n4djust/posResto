@@ -126,7 +126,9 @@ Route::post('/detailpembelian/{id}', 'pembelianController@listDetailPembelian');
 
 //=========Stok
 Route::post('/detailstok/{id}', 'stokController@DetailStok');
-Route::get('/stokopname', 'stokController@index');
+Route::get('/stokopname', 'stokController@allOpname');
 Route::post('/addItemOpname/store', 'stokController@addItemOpname');
 Route::post('/dataStokOpname/{id}', 'stokController@listTransaksiOpname');
 Route::delete('/opnameDelete/{id?}', 'stokController@destroy1');
+Route::post('/totalTrxOpname', 'stokController@totalTrxOpname');
+Route::post('/addOpname/store', 'stokController@addTransaksiOpname');

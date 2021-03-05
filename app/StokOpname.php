@@ -10,7 +10,7 @@ class StokOpname extends Model
     protected $table = 'tblStokOpname';
 
     protected $fillable = [
-        'tglStokOpname', 'noStokOpname', 'totalOpname' 
+        'tglStok', 'noStokOpname', 'totalOpname' 
         
     ];
 }

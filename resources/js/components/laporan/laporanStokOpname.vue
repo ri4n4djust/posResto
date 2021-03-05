@@ -6,7 +6,7 @@
                         <div class="col-md-12">
                         <div class="nav-tabs-custom">
                             <ul class="nav nav-tabs">
-                            <li class="active"><a href="#activity" data-toggle="tab">All Stok</a></li>
+                            <li class="active"><a href="#activity" data-toggle="tab">All Opname</a></li>
                             <li><a href="#timeline" data-toggle="tab">Stok Opname</a></li>
                             </ul>
                             <div class="tab-content">
@@ -75,47 +75,20 @@ Vue.component("data-table", DataTable);
                     name: "ActionButtons",
                     columns: [
                         {
-                            key: "kdBarang",
-                        },
-                        {
-                            key: "nmBarang",
-                            title: "Nama Barang",
-                            sortable: false,
+                            key: "noStokOpname",
+                            title: "No Opname",
+                            sortable: true,
                         },
                         
                         {
-                            key: "stkBarang",
-                            title: "Stok",
+                            key: "tglStok",
+                            title: "Tanggal",
                             sortable: true,
                             searchable: false,
                         },
                         {
-                            key: "satuanBarang",
-                            title: "Satuan",
-                            sortable: false,
-                            searchable: false,
-                        },
-                        {
-                            key: "namaKtg",
-                            title: "Kategori",
-                            sortable: false,
-                            searchable: false,
-                        },
-                        {
-                            key: "qtyMin",
-                            title: "Qty Min",
-                            sortable: false,
-                            searchable: false,
-                        },
-                        {
-                            key: "qtyMax",
-                            title: "Qty Max",
-                            sortable: false,
-                            searchable: false,
-                        },
-                        {
-                            key: "deskripsi",
-                            title: "Keterangan",
+                            key: "totalOpname",
+                            title: "Nilai Opname",
                             sortable: false,
                             searchable: false,
                         },
@@ -151,7 +124,7 @@ Vue.component("data-table", DataTable);
         methods: {
             
             loadData:function(){
-                let uri = '/api/posts';
+                let uri = '/api/stokopname';
                 this.axios.get(uri).then(response => {
                 this.posts = response.data.data;
                 

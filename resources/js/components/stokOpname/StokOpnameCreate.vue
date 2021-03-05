@@ -19,9 +19,12 @@
                 </p>
                 <p class="text-muted text-center">
                 <input type="text" class="form-control" v-model="noStokOpname" placeholder="No nota">
-                </p>                
+                </p>      
                 <p class="text-muted text-center">
-                <a href="#" @click="showModalBayar = true" class="btn btn-primary btn-block"><b>Simpan</b></a>
+                  {{ nilaiStok }}
+                </p>          
+                <p class="text-muted text-center">
+                <a href="#" @click.prevent="PostOpname()" class="btn btn-primary btn-block"><b>Simpan</b></a>
                 </p>
               
             </div>
@@ -48,7 +51,7 @@
                     ></vue-single-select>
 
                  
-                  <form  @submit.prevent="PostItemPembelian" >
+                  <form  @submit.prevent="PostItemOpname" >
                     <div class="row">
                         <div class="col-xs-2">
                           <label>Nama</label>
@@ -152,6 +155,7 @@
                 pem: {},
                 qtyGudang: '',
                 selisihStok: '',
+                nilaiStok: '',
                 //selisih1: Math.abs(this.selisih),
                 keterangan: '',
                 ntp:'',
@@ -171,12 +175,12 @@
 
         methods: {
             loadTotal:function(){
-                let uri = '/api/totalTrxPembelian';
+                let uri = '/api/totalTrxOpname';
                 this.axios.post(uri, {
-                    ntp: this.noNotaPembelian,
+                    ntp: this.noStokOpname,
                 }).then(response => {
                   //alert('mount' + this.noNotaPembelian)
-                this.subtotal = response.data.subTotalBeli;
+                this.nilaiStok = response.data.nilaiStok;
                 
             });
             },
@@ -214,7 +218,7 @@
                 });
               }
             },
-            PostItemPembelian() {
+            PostItemOpname() {
                 let uri = '/api/addItemOpname/store';
                 this.axios.post(uri, 
                 {
@@ -225,15 +229,17 @@
                     keteranganStok: this.keterangan,
                     tglStok: this.tglStok,
                     satuanStok: this.post1.satuanBarang,
+                    nilaiStok: (this.qtyGudang - this.post1.stkBarang) * this.post1.hrgPokok,
                 })
                     .then((response) => {
                         //this.loadTotal()
                         this.loadTransaksiOpname()
                         alert('sukses donkkkkkkkk');
                         //this.loadTransaksiPenjualan()
-                        //this.loadTotal()
+                        this.loadTotal()
                     }).catch(error => {
                         alert('data Sudah Ada')
+                        this.loadTransaksiOpname()
                 });
                 
             },
@@ -242,8 +248,8 @@
                 this.axios.post(uri, 
                 {
                     noStokOpname: this.noStokOpname,
-                    tglNotaPembelian: this.tglPembelian,
-                    totalNotaPembelian: this.subtotal,
+                    tglStok: this.tglStok,
+                    nilaiStok: this.nilaiStok,
                     
                 })
                     .then((response) => {
@@ -264,7 +270,7 @@
             this.loadBarang()
             //this.LoadSupplier()
             this.loadTransaksiOpname()
-            //this.loadTotal()
+            this.loadTotal()
             
             
         },

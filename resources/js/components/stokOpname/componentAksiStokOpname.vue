@@ -17,27 +17,7 @@
                                         <h4 class="modal-title">Detail</h4>
                                     </div>
                                     <div class="modal-body">
-                                        
-                                        
-                                        <form  @submit.prevent="PostStokOpname" >
-                                    
-                                        <div class="row">
-                                           
-                                                <div class="col-xs-3">
-                                                <input type="text" v-model="data.kdBarang" >
-                                                <input type="text" v-model="tglOpname" >
-                                                <input type="text" v-model="qtyGudang" class="form-control" placeholder="Qty">
-                                                </div>
-                                                <div class="col-xs-3">
-                                                <input type="text" v-model="keterangan" class="form-control" placeholder="Keterangan">
-                                                </div>
-                                                <div class="col-xs-3">
-                                                <button type="submit" class="btn btn-md btn-success">Add</button>                        
-                                            </div>
-
-                                        </div>
-                                        </form>
-                                               
+                                                                                       
                                                         <table class="table table-hover table-bordered">
                                                         <thead>
                                                         <tr>

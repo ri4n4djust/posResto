@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\KartuStok;
 use App\StokOpnameDetail;
+use App\StokOpname;
 
 use Illuminate\Support\Facades\DB;
 
@@ -41,31 +42,14 @@ class stokController extends Controller
         }
     }
 
-    public function inputOpname(Request $request)
+    public function allOpname()
     {
-        //$post = TransaksiDetail::whereId($id)->first();
-        $post = KartuStok::create([
-            'kdBarang' => $request->input('kdBarang'),
-            'tglKartu' => $request->input('tglOpname'),
-            'qtyMasuk' => $request->input('qtyMasuk'),
-            'qtyKeluar' => $request->input('qtyKeluar'),
-            
-
-        ]);
-
-        if ($post) {
-            return response()->json([
-                'success' => true,
-                'message' => 'Detail Post!',
-                'data'    => $post
-            ], 200);
-        } else {
-            return response()->json([
-                'success' => false,
-                'message' => 'Post Tidak Ditemukan!',
-                'data'    => ''
-            ], 404);
-        }
+        $posts = StokOpname::latest()->get();
+        return response([
+            'success' => true,
+            'message' => 'List Semua Supplier',
+            'data' => $posts
+        ], 200);
     }
 
     public function addItemOpname(Request $request)
@@ -84,6 +68,7 @@ class stokController extends Controller
                 'selisihStok'     => $request->input('selisihStok'),
                 'keteranganStok'     => $request->input('keteranganStok'),
                 'satuanStok'     => $request->input('satuanStok'),
+                'nilaiStok'   => $request->input('nilaiStok'),
             ]);
             
             $barang = DB::table('tblBarang')->where('kdBarang', $request->input('kdBarang'))->first();
@@ -166,6 +151,55 @@ class stokController extends Controller
                 'data'    => ''
             ], 404);
         }
+    }
+
+    public function totalTrxOpname(Request $request)
+    {
+        $totalNota = DB::table('tblStokOpnameDetail')
+            ->where('noStokOpname', '=', $request->input('ntp'))
+            ->sum('nilaiStok');
+
+        if ($totalNota) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Detail Post!',
+                'nilaiStok'    => $totalNota
+            ], 200);
+        } else {
+            return response()->json([
+                'success' => true,
+                'message' => 'Post Tidak Ditemukan!',
+                'nilaiStok'    => ''
+            ], 200);
+        }
+    }
+
+    public function addTransaksiOpname(Request $request)
+    {
+        $post = StokOpname::create([
+            'noStokOpname'     => $request->input('noStokOpname'),
+            'tglStok'     => $request->input('tglStok'),
+            'totalOpname'     => $request->input('nilaiStok'),
+        ]);
+
+        DB::table('tblKartuStok')
+                ->where('noTransaksi', $request->input('noStokOpname'))
+                ->update([
+                    'tglKartu' => $request->input('tglStok'),
+                    ]);
+
+            if ($post) {
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Post Berhasil Disimpan!',
+                ], 200);
+            } else {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Post Gagal Disimpan!',
+                ], 400);
+            }
+        
     }
 
     public function destroy1($id)

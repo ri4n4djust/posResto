@@ -110,7 +110,7 @@ export default {
     methods: {
 
             loadData:function(){
-                let uri = '/api/posts';
+                let uri = '/api/stokopname';
                 this.axios.get(uri).then(response => {
                 this.posts = response.data.data;
                 
