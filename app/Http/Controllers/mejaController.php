@@ -139,7 +139,6 @@ class mejaController extends Controller
             $post = Meja::whereId($request->input('id'))->update([
                 'noMeja'     => $request->input('noMeja'),
                 'paxMeja'   => $request->input('paxMeja'),
-                'status'   => $request->input('status'),
             ]);
 
 
@@ -157,6 +156,44 @@ class mejaController extends Controller
 
         }
 
+    }
+
+    public function cekin($id)
+    {
+            $post = Meja::whereId($id)->update([
+                'status'   => '1',
+            ]);
+
+            if ($post) {
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Post Berhasil Cek in!',
+                ], 200);
+            } else {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Post Gagal Diupdate!',
+                ], 404);
+            }
+    }
+
+    public function cancelcekin($id)
+    {
+            $post = Meja::whereId($id)->update([
+                'status'   => '0',
+            ]);
+
+            if ($post) {
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Post Berhasil Cancel Cek in!',
+                ], 200);
+            } else {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Post Gagal Diupdate!',
+                ], 404);
+            }
     }
 
     public function addItem(Request $request)
@@ -384,6 +421,7 @@ class mejaController extends Controller
             'bayarNota'     => $request->input('bayarNota'),
             'kembalianNota'     => $request->input('kembalianNota'),
             'pelangganNota'     => $request->input('pelanggan'),
+            'userNota'     => $request->input('userNota'),
         ]);
 
         

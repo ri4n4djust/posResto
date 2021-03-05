@@ -96,7 +96,7 @@
                 <!-- /.box -->
                 
 
-                <table class="table table-hover table-bordered">
+                            <table class="table table-hover table-bordered">
                                 <thead>
                                 <tr>
                                     <th>Nama </th>

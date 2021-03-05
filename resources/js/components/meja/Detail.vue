@@ -289,21 +289,37 @@
                 </p>
               </form>
 
-              <div id="printMe">
+              <div id="printMe" hidden>
+                <!-- info row -->
+               <address>
+                    <strong>Ala Desa.</strong><br>
+                    Sangeh<br>
+
+                    Phone: (804) 123-5432<br>
+                    Email: info@almasaeedstudio.com
+                  </address>
+              <div class="row invoice-info">
+                <div class="col-sm-4 invoice-col">
                 
-                <h3>
-                  <p class="text-muted text-center">Nota</p>
-                </h3>
-                <p class="text-muted text-center">
-                 Tgl : {{tglNota}}
-                </p>
-                <p class="text-muted text-center">
-                Customer : {{pelanggan}}
-                </p>
-                <p class="text-muted text-center">
-                 No Invoice : {{noNota}}
-                </p>
-                <table class="table table-hover table-bordered">
+                  <address>
+                    <strong>Customer :</strong> {{pelanggan}}<br>
+                    <b> Tgl : </b>{{tglNota}}<br>
+                    <b> Meja No : </b>{{post.noMeja}}<br>
+                  </address>
+                </div>
+                <!-- /.col -->
+                <div class="col-sm-4 invoice-col">
+                  <b>No Invoice : </b>{{noNota}}<br>
+                  <b>Kasir : </b>{{$session.get('user')}}
+                  
+                </div>
+                <!-- /.col -->
+              </div>
+              <!-- /.row -->
+                
+                <div class="row">
+                <div class="col-xs-12 table-responsive">
+                  <table class="table table-striped">
                                 <thead>
                                 <tr>
                                     <th>Nama </th>
@@ -351,6 +367,9 @@
                                     </tr>
                                 </tfoot>
                             </table>
+                </div>
+                </div>
+
               </div>
 
 
@@ -459,9 +478,10 @@
             loadTotal:function(){
                 let uri = `/api/totalTrx/${this.$route.params.id}`;
                 this.axios.post(uri).then(response => {
-                this.subtotal = response.data.subTotal;
-                
-            });
+                  this.subtotal = response.data.subTotal;
+                }).catch(error => {
+                    console.log(error.response)
+                });
             },
             loadNota:function(){
                 let uri = `/api/noNota/${this.$route.params.id}`;
@@ -562,6 +582,7 @@
                     diskonNota: ((this.subtotal * this.pajak / 100 + this.subtotal) * this.diskon / 100),
                     totalNota: ((this.subtotal * this.pajak / 100 + this.subtotal) - ((this.subtotal * this.pajak / 100 + this.subtotal) * this.diskon / 100)),
                     bayarNota: this.totalBayar,
+                    userNota: this.$session.get('userId'),
                     kembalianNota: this.totalBayar - ((this.subtotal * this.pajak / 100 + this.subtotal) - ((this.subtotal * this.pajak / 100 + this.subtotal) * this.diskon / 100)),
                     
                 })

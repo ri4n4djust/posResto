@@ -194,6 +194,11 @@ Vue.component("data-table", DataTable);
                             sortable: false,
                         },
                         {
+                            key: "noMeja",
+                            title: "No Meja",
+                            sortable: false,
+                        },
+                        {
                             key: "pelangganNota",
                             title: "Pelanggan",
                             sortable: false,

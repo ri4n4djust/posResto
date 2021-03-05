@@ -58,6 +58,8 @@ Route::post('/meja/duduk', 'mejaController@duduk');
 Route::get('/meja/{id?}', 'mejaController@show');
 Route::get('/detail/{id?}', 'mejaController@detail');
 Route::post('/meja/update/{id?}', 'mejaController@update');
+Route::post('/meja/cekin/{id?}', 'mejaController@cekin');
+Route::post('/meja/cancelcekin/{id?}', 'mejaController@cancelcekin');
 Route::delete('/meja/{id?}', 'mejaController@destroy');
 
 //===========transaksi
@@ -126,6 +128,7 @@ Route::post('/detailpembelian/{id}', 'pembelianController@listDetailPembelian');
 
 //=========Stok
 Route::post('/detailstok/{id}', 'stokController@DetailStok');
+Route::post('/detailstokopname/{id}', 'stokController@DetailStokOpname');
 Route::get('/stokopname', 'stokController@allOpname');
 Route::post('/addItemOpname/store', 'stokController@addItemOpname');
 Route::post('/dataStokOpname/{id}', 'stokController@listTransaksiOpname');

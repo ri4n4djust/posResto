@@ -75,7 +75,7 @@
                             <div class="form-group">
                                 <label>Stok</label>
                                 <input type="text" class="form-control" v-model="post.stkBarang"
-                                       placeholder="Stok Barang">
+                                       placeholder="Stok Barang" disabled>
                                 <div v-if="validation.stkBarang">
                                     <div class="alert alert-danger mt-1" role="alert">
                                         {{ validation.stkBarang[0] }}

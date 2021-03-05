@@ -13,7 +13,9 @@ class penjualanController extends Controller
     //
     public function index()
     {
-        $posts = Penjualan::latest()->get();
+        $posts = Penjualan::join('tblMeja', 'tblPenjualan.noMeja', 'tblMeja.id')
+                ->join('users', 'tblPenjualan.userNota', 'users.id')
+                ->get();
         return response([
             'success' => true,
             'message' => 'List Semua SPenjualan',

@@ -19,26 +19,27 @@
                                     </div>
                                     <div class="modal-body">
 
-                                        <p class="text-muted text-left">
-                                            <label>Tgl : </label>
-                                        {{data.tglNota}}
-                                        </p>
-                                        <p class="text-muted text-left">
-                                            <label>No Nota : </label>
-                                        {{data.noNota}}
-                                        </p>
-                                        <p class="text-muted text-left">
-                                            <label>Pelanggan : </label>
-                                        {{data.pelangganNota}}
-                                        </p>
-                                        <p class="text-muted text-left">
-                                            <label>Pajak : </label>
-                                        {{data.taxNota | currency}}
-                                        </p>
-                                        <p class="text-muted text-left">
-                                            <label>Diskon : </label>
-                                        {{data.diskonNota | currency}}
-                                        </p>
+                                        <div class="row invoice-info">
+                                            <div class="col-sm-4 invoice-col">
+                                            
+                                            <address>
+                                                <strong>Customer :</strong> {{data.pelangganNota}}<br>
+                                                <b> Tgl : </b>{{data.tglNota}}<br>
+                                                <b> Meja No : </b>{{data.noMeja}}<br>
+                                            </address>
+                                            </div>
+                                            <!-- /.col -->
+                                            <div class="col-sm-4 invoice-col">
+                                            <b>No Invoice : </b>{{data.noNota}}<br>
+                                            <b>Kasir : </b>{{data.name}}
+                                            
+                                            </div>
+                                            <!-- /.col -->
+                                            <div class="col-sm-4 invoice-col">
+                                                <b>Pajak : </b>{{data.taxNota | currency}}<br>
+                                                <b>Diskon : </b>{{data.diskonNota | currency}}
+                                            </div>
+                                        </div>
                                         <h3 class="profile-username text-left">
                                             <label>Total : </label>
                                             {{ data.totalNota  || 0 | currency }}</h3>

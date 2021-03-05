@@ -7,30 +7,43 @@
 
                         <div v-for="post in posts" :key="post.id" class="col-lg-3 col-xs-6" >
                         <!-- small box -->
-                        <div class="small-box bg-aqua">
-                            <div class="inner">
-                            <h3>{{ post.noMeja }}</h3>
-
-                            <p>{{ post.pax }}</p>
-                            </div>
-                            <div class="icon">
-                            <i class="ion ion-bag"></i>
-                            </div>
-                            
                             <div v-if="post.status === '0' ">
-                             Kosong
-                             <router-link :to="{name: 'editMeja', params: { id: post.id }}" class="btn btn-sm btn-primary">EDIT</router-link>
+                                <div class="small-box bg-green">
+                                    <div class="inner">
+                                    <h3>Meja No :<br>{{ post.noMeja }}</h3>
+
+                                    <p>{{ post.pax }}</p>
+                                    </div>
+                                    <div class="icon">
+                                    <i class="ion ion-bag"></i>
+                                    </div>
+                                    
+                                    <router-link :to="{name: 'editMeja', params: { id: post.id }}" class="btn btn-sm btn-primary">EDIT</router-link>
+                                    <button @click.prevent="PostCekIn(post.id)" class="btn btn-md btn-success">CEK IN</button>
+                                   
+                                        
+                                </div>
                             </div>
                             <div v-else>
-                                Isi Tamu
-                            <router-link :to="{name: 'detailMeja', params: { id: post.id }}" class="btn btn-sm btn-primary">Detail</router-link>
+                                <div class="small-box bg-red">
+                                    <div class="inner">
+                                    <h3>Meja No :<br>{{ post.noMeja }}</h3>
+
+                                    <p>{{ post.pax }}</p>
+                                    </div>
+                                    <div class="icon">
+                                    <i class="ion ion-bag"></i>
+                                    </div>
+                                    
+                                   
+                                    <router-link :to="{name: 'detailMeja', params: { id: post.id }}" class="btn btn-sm btn-primary">Detail</router-link>
+                                    <button @click.prevent="CancelCekIn(post.id)" class="btn btn-md btn-danger">Cancel</button>
+                              
+
+                                        
+                                </div>
                             </div>
-                           
-
-                                
                         </div>
-                        </div>
-
     
     
     
@@ -69,6 +82,28 @@
         },
         props: ['value'],
         methods: {
+            PostCekIn(id) {
+                let uri = '/api/meja/cekin/'+ id;
+                this.axios.post(uri, {
+                    status: '1'
+                })
+                    .then((response) => {
+                        alert('sukses cek in')
+                        this.loadData();
+                    }).catch(error => {
+                });
+            },
+            CancelCekIn(id) {
+                let uri = '/api/meja/cancelcekin/'+ id;
+                this.axios.post(uri, {
+                    status: '0'
+                })
+                    .then((response) => {
+                        alert('Cancel cek in')
+                        this.loadData();
+                    }).catch(error => {
+                });
+            },
             PostDelete(id, index)
             {
                 this.axios.delete(`/api/meja/${id}`)

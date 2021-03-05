@@ -26,16 +26,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label>Cek In</label>
-                                <input type="text" class="form-control" v-model="post.status"
-                                       placeholder="Accupanci">
-                                <div v-if="validation.status">
-                                    <div class="alert alert-danger mt-1" role="alert">
-                                        {{ validation.status[0] }}
-                                    </div>
-                                </div>
-                            </div>
                             
 
                             <div class="form-group">

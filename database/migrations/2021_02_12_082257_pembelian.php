@@ -20,6 +20,7 @@ class Pembelian extends Migration
             $table->string('noNotaPembelian');
             $table->string('tglNotaPembelian');
             $table->string('totalNotaPembelian');
+            $table->string('userPembelian');
             $table->timestamps();
         });
     }

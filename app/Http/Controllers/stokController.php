@@ -42,6 +42,26 @@ class stokController extends Controller
         }
     }
 
+    public function DetailStokOpname($id)
+    {
+        //$post = TransaksiDetail::whereId($id)->first();
+        $post = StokOpnameDetail::where('noStokOpname', $id)->get();
+
+        if ($post) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Detail Post!',
+                'data'    => $post
+            ], 200);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Post Tidak Ditemukan!',
+                'data'    => ''
+            ], 404);
+        }
+    }
+
     public function allOpname()
     {
         $posts = StokOpname::latest()->get();

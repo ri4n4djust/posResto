@@ -4,7 +4,7 @@
         
        <!-- /.login-logo -->
   <div class="login-box-body">
-    <p class="login-box-msg"><img :src="'/images/logo.png'"></p>
+    <p class="login-box-msg"><img :src="image_src"></p>
     <p class="login-box-msg">Sign in to start your session </p>
 
     <form @submit.prevent="postLogin">
@@ -42,6 +42,7 @@
                 username: '',
                 password: '',
                 post: {},
+                image_src: '/image/logo.png',
 
             }
         },
@@ -61,6 +62,7 @@
                   if (response.data.success === true ) {
                     this.$session.start()
                     this.$session.set('user', response.data.data.name)
+                    this.$session.set('userId', response.data.data.id)
                     //Vue.http.headers.common['Authorization'] = 'Bearer ' + response.body.token
                     alert('suskes Login')
                     window.location.href = "/barang"

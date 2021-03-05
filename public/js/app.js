@@ -8475,7 +8475,8 @@ __webpack_require__.r(__webpack_exports__);
     return {
       username: '',
       password: '',
-      post: {}
+      post: {},
+      image_src: '/image/logo.png'
     };
   },
   watch: {
@@ -8494,7 +8495,9 @@ __webpack_require__.r(__webpack_exports__);
         if (response.data.success === true) {
           _this.$session.start();
 
-          _this.$session.set('user', response.data.data.name); //Vue.http.headers.common['Authorization'] = 'Bearer ' + response.body.token
+          _this.$session.set('user', response.data.data.name);
+
+          _this.$session.set('userId', response.data.data.id); //Vue.http.headers.common['Authorization'] = 'Bearer ' + response.body.token
 
 
           alert('suskes Login');
@@ -8833,7 +8836,7 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       post: {},
-      posts: {},
+      posts: [],
       post1: {},
       users: {},
       pem: {},
@@ -8944,7 +8947,8 @@ __webpack_require__.r(__webpack_exports__);
         noNotaPembelian: this.noNotaPembelian,
         idSupplier: this.post.kdSupplier,
         tglNotaPembelian: this.tglPembelian,
-        totalNotaPembelian: this.subtotal
+        totalNotaPembelian: this.subtotal,
+        userPembelian: this.$session.get('userId')
       }).then(function (response) {
         alert('Transaksi Selesai');
 
@@ -9341,6 +9345,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "ActionButtons",
   data: function data() {
@@ -9579,45 +9584,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "ActionButtons",
   data: function data() {
@@ -9645,7 +9611,7 @@ __webpack_require__.r(__webpack_exports__);
     loadDetailStok: function loadDetailStok() {
       var _this2 = this;
 
-      var uri = '/api/detailstok/' + this.data.kdBarang;
+      var uri = '/api/detailstokopname/' + this.data.noStokOpname;
       this.axios.post(uri).then(function (response) {
         _this2.pem = response.data.data; // alert('no nota '+ this.data.noNota);
       });
@@ -10137,6 +10103,10 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component("data-table", _andresouzaab
         columns: [{
           key: "noNota",
           title: "No Nota",
+          sortable: false
+        }, {
+          key: "noMeja",
+          title: "No Meja",
           sortable: false
         }, {
           key: "pelangganNota",
@@ -10860,6 +10830,25 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -10951,6 +10940,8 @@ __webpack_require__.r(__webpack_exports__);
       var uri = "/api/totalTrx/".concat(this.$route.params.id);
       this.axios.post(uri).then(function (response) {
         _this3.subtotal = response.data.subTotal;
+      })["catch"](function (error) {
+        console.log(error.response);
       });
     },
     loadNota: function loadNota() {
@@ -11060,6 +11051,7 @@ __webpack_require__.r(__webpack_exports__);
         diskonNota: (this.subtotal * this.pajak / 100 + this.subtotal) * this.diskon / 100,
         totalNota: this.subtotal * this.pajak / 100 + this.subtotal - (this.subtotal * this.pajak / 100 + this.subtotal) * this.diskon / 100,
         bayarNota: this.totalBayar,
+        userNota: this.$session.get('userId'),
         kembalianNota: this.totalBayar - (this.subtotal * this.pajak / 100 + this.subtotal - (this.subtotal * this.pajak / 100 + this.subtotal) * this.diskon / 100)
       }).then(function (response) {
         _this11.print(); //alert('Transaksi Selesai');
@@ -11088,16 +11080,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -11243,6 +11225,19 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -11273,28 +11268,52 @@ __webpack_require__.r(__webpack_exports__);
   },
   props: ['value'],
   methods: {
-    PostDelete: function PostDelete(id, index) {
+    PostCekIn: function PostCekIn(id) {
       var _this2 = this;
 
+      var uri = '/api/meja/cekin/' + id;
+      this.axios.post(uri, {
+        status: '1'
+      }).then(function (response) {
+        alert('sukses cek in');
+
+        _this2.loadData();
+      })["catch"](function (error) {});
+    },
+    CancelCekIn: function CancelCekIn(id) {
+      var _this3 = this;
+
+      var uri = '/api/meja/cancelcekin/' + id;
+      this.axios.post(uri, {
+        status: '0'
+      }).then(function (response) {
+        alert('Cancel cek in');
+
+        _this3.loadData();
+      })["catch"](function (error) {});
+    },
+    PostDelete: function PostDelete(id, index) {
+      var _this4 = this;
+
       this.axios["delete"]("/api/meja/".concat(id)).then(function (response) {
-        _this2.posts.splice(index, 1);
+        _this4.posts.splice(index, 1);
       })["catch"](function (error) {
         alert('system error!');
       });
     },
     loadData: function loadData() {
-      var _this3 = this;
+      var _this5 = this;
 
       var uri = '/api/meja';
       this.axios.get(uri).then(function (response) {
-        _this3.posts = response.data.data;
+        _this5.posts = response.data.data;
       });
     },
     intervalFetchData: function intervalFetchData() {
-      var _this4 = this;
+      var _this6 = this;
 
       setInterval(function () {
-        _this4.loadData();
+        _this6.loadData();
       }, 3000);
     }
   },
@@ -12427,7 +12446,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component("data-table", _andresouzaab
     return {
       posts: [],
       ActionButtons: null,
-      actionTriggered: {} //showModal: false,
+      actionTriggered: null //showModal: false,
 
     };
   },
@@ -12808,6 +12827,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_html_to_paper__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue-html-to-paper */ "./node_modules/vue-html-to-paper/dist/index.js");
 /* harmony import */ var vue_html_to_paper__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(vue_html_to_paper__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _componentAksiStokOpname_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./componentAksiStokOpname.vue */ "./resources/js/components/stokOpname/componentAksiStokOpname.vue");
+//
+//
 //
 //
 //
@@ -18602,7 +18623,7 @@ exports = module.exports = __webpack_require__(/*! ../css-loader/lib/css-base.js
 
 
 // module
-exports.push([module.i, ".mx-icon-left:before,.mx-icon-right:before,.mx-icon-double-left:before,.mx-icon-double-right:before,.mx-icon-double-left:after,.mx-icon-double-right:after{content:\"\";position:relative;top:-1px;display:inline-block;width:10px;height:10px;vertical-align:middle;border-style:solid;border-color:currentColor;border-width:2px 0 0 2px;border-radius:1px;-webkit-box-sizing:border-box;box-sizing:border-box;-webkit-transform-origin:center;transform-origin:center;-webkit-transform:rotate(-45deg) scale(0.7);transform:rotate(-45deg) scale(0.7)}.mx-icon-double-left:after{left:-4px}.mx-icon-double-right:before{left:4px}.mx-icon-right:before,.mx-icon-double-right:before,.mx-icon-double-right:after{-webkit-transform:rotate(135deg) scale(0.7);transform:rotate(135deg) scale(0.7)}.mx-btn{-webkit-box-sizing:border-box;box-sizing:border-box;line-height:1;font-size:14px;font-weight:500;padding:7px 15px;margin:0;cursor:pointer;background-color:transparent;outline:none;border:1px solid rgba(0,0,0,.1);border-radius:4px;color:#73879c;white-space:nowrap}.mx-btn:hover{border-color:#1284e7;color:#1284e7}.mx-btn-text{border:0;padding:0 4px;text-align:left;line-height:inherit}.mx-scrollbar{height:100%}.mx-scrollbar:hover .mx-scrollbar-track{opacity:1}.mx-scrollbar-wrap{height:100%;overflow-x:hidden;overflow-y:auto}.mx-scrollbar-track{position:absolute;top:2px;right:2px;bottom:2px;width:6px;z-index:1;border-radius:4px;opacity:0;-webkit-transition:opacity .24s ease-out;transition:opacity .24s ease-out}.mx-scrollbar-track .mx-scrollbar-thumb{position:absolute;width:100%;height:0;cursor:pointer;border-radius:inherit;background-color:rgba(144,147,153,.3);-webkit-transition:background-color .3s;transition:background-color .3s}.mx-zoom-in-down-enter-active,.mx-zoom-in-down-leave-active{opacity:1;-webkit-transform:scaleY(1);transform:scaleY(1);-webkit-transition:opacity .3s cubic-bezier(0.23, 1, 0.32, 1),-webkit-transform .3s cubic-bezier(0.23, 1, 0.32, 1);transition:opacity .3s cubic-bezier(0.23, 1, 0.32, 1),-webkit-transform .3s cubic-bezier(0.23, 1, 0.32, 1);transition:transform .3s cubic-bezier(0.23, 1, 0.32, 1),opacity .3s cubic-bezier(0.23, 1, 0.32, 1);transition:transform .3s cubic-bezier(0.23, 1, 0.32, 1),opacity .3s cubic-bezier(0.23, 1, 0.32, 1),-webkit-transform .3s cubic-bezier(0.23, 1, 0.32, 1);-webkit-transform-origin:center top;transform-origin:center top}.mx-zoom-in-down-enter,.mx-zoom-in-down-leave-to{opacity:0;-webkit-transform:scaleY(0);transform:scaleY(0)}.mx-datepicker{position:relative;display:inline-block;width:210px}.mx-datepicker svg{width:1em;height:1em;vertical-align:-0.15em;fill:currentColor;overflow:hidden}.mx-datepicker-range{width:320px}.mx-datepicker-inline{width:auto}.mx-input-wrapper{position:relative}.mx-input-wrapper .mx-icon-clear{display:none}.mx-input-wrapper:hover .mx-icon-clear{display:block}.mx-input-wrapper:hover .mx-icon-clear+.mx-icon-calendar{display:none}.mx-input{display:inline-block;-webkit-box-sizing:border-box;box-sizing:border-box;width:100%;height:34px;padding:6px 30px;padding-left:10px;font-size:14px;line-height:1.4;color:#555;background-color:#fff;border:1px solid #ccc;border-radius:4px;-webkit-box-shadow:inset 0 1px 1px rgba(0,0,0,.075);box-shadow:inset 0 1px 1px rgba(0,0,0,.075)}.mx-input:hover,.mx-input:focus{border-color:#409aff}.mx-input:disabled,.mx-input.disabled{color:#ccc;background-color:#f3f3f3;border-color:#ccc;cursor:not-allowed}.mx-input:focus{outline:none}.mx-input::-ms-clear{display:none}.mx-icon-calendar,.mx-icon-clear{position:absolute;top:50%;right:8px;-webkit-transform:translateY(-50%);transform:translateY(-50%);font-size:16px;line-height:1;color:rgba(0,0,0,.5);vertical-align:middle}.mx-icon-clear{cursor:pointer}.mx-icon-clear:hover{color:rgba(0,0,0,.8)}.mx-datepicker-main{font:14px/1.5 \"Helvetica Neue\",Helvetica,Arial,\"Microsoft Yahei\",sans-serif;color:#73879c;background-color:#fff;border:1px solid #e8e8e8}.mx-datepicker-popup{position:absolute;margin-top:1px;margin-bottom:1px;-webkit-box-shadow:0 6px 12px rgba(0,0,0,.175);box-shadow:0 6px 12px rgba(0,0,0,.175);z-index:2001}.mx-datepicker-sidebar{float:left;-webkit-box-sizing:border-box;box-sizing:border-box;width:100px;padding:6px;overflow:auto}.mx-datepicker-sidebar+.mx-datepicker-content{margin-left:100px;border-left:1px solid #e8e8e8}.mx-datepicker-body{position:relative;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.mx-btn-shortcut{display:block;padding:0 6px;line-height:24px}.mx-range-wrapper{display:-webkit-box;display:-ms-flexbox;display:flex}@media(max-width: 750px){.mx-range-wrapper{-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-direction:column;flex-direction:column}}.mx-datepicker-header{padding:6px 8px;border-bottom:1px solid #e8e8e8}.mx-datepicker-footer{padding:6px 8px;text-align:right;border-top:1px solid #e8e8e8}.mx-calendar{-webkit-box-sizing:border-box;box-sizing:border-box;width:248px;padding:6px 12px}.mx-calendar+.mx-calendar{border-left:1px solid #e8e8e8}.mx-calendar-header,.mx-time-header{-webkit-box-sizing:border-box;box-sizing:border-box;height:34px;line-height:34px;text-align:center;overflow:hidden}.mx-btn-icon-left,.mx-btn-icon-double-left{float:left}.mx-btn-icon-right,.mx-btn-icon-double-right{float:right}.mx-calendar-header-label{font-size:14px}.mx-calendar-decade-separator{margin:0 2px}.mx-calendar-decade-separator:after{content:\"~\"}.mx-calendar-content{position:relative;height:224px;-webkit-box-sizing:border-box;box-sizing:border-box}.mx-calendar-content .cell{cursor:pointer}.mx-calendar-content .cell:hover{color:#73879c;background-color:#f3f9fe}.mx-calendar-content .cell.active{color:#fff;background-color:#1284e7}.mx-calendar-content .cell.in-range,.mx-calendar-content .cell.hover-in-range{color:#73879c;background-color:#dbedfb}.mx-calendar-content .cell.disabled{cursor:not-allowed;color:#ccc;background-color:#f3f3f3}.mx-calendar-week-mode .mx-date-row{cursor:pointer}.mx-calendar-week-mode .mx-date-row:hover{background-color:#f3f9fe}.mx-calendar-week-mode .mx-date-row.mx-active-week{background-color:#dbedfb}.mx-calendar-week-mode .mx-date-row .cell:hover{color:inherit;background-color:transparent}.mx-calendar-week-mode .mx-date-row .cell.active{color:inherit;background-color:transparent}.mx-week-number{opacity:.5}.mx-table{table-layout:fixed;border-collapse:separate;border-spacing:0;width:100%;height:100%;-webkit-box-sizing:border-box;box-sizing:border-box;text-align:center;vertical-align:middle}.mx-table th{padding:0;font-weight:500}.mx-table td{padding:0}.mx-table-date td,.mx-table-date th{height:32px;font-size:12px}.mx-table-date .today{color:#2a90e9}.mx-table-date .cell.not-current-month{color:#ccc;background:none}.mx-time{-webkit-box-flex:1;-ms-flex:1;flex:1;width:224px;background:#fff}.mx-time+.mx-time{border-left:1px solid #e8e8e8}.mx-calendar-time{position:absolute;top:0;left:0;width:100%;height:100%}.mx-time-header{border-bottom:1px solid #e8e8e8}.mx-time-content{height:224px;-webkit-box-sizing:border-box;box-sizing:border-box;overflow:hidden}.mx-time-columns{display:-webkit-box;display:-ms-flexbox;display:flex;width:100%;height:100%;overflow:hidden}.mx-time-column{-webkit-box-flex:1;-ms-flex:1;flex:1;position:relative;border-left:1px solid #e8e8e8;text-align:center}.mx-time-column:first-child{border-left:0}.mx-time-column .mx-time-list{margin:0;padding:0;list-style:none}.mx-time-column .mx-time-list::after{content:\"\";display:block;height:192px}.mx-time-column .mx-time-item{cursor:pointer;font-size:12px;height:32px;line-height:32px}.mx-time-column .mx-time-item:hover{color:#73879c;background-color:#f3f9fe}.mx-time-column .mx-time-item.active{color:#1284e7;background-color:transparent;font-weight:700}.mx-time-column .mx-time-item.disabled{cursor:not-allowed;color:#ccc;background-color:#f3f3f3}.mx-time-option{cursor:pointer;padding:8px 10px;font-size:14px;line-height:20px}.mx-time-option:hover{color:#73879c;background-color:#f3f9fe}.mx-time-option.active{color:#1284e7;background-color:transparent;font-weight:700}.mx-time-option.disabled{cursor:not-allowed;color:#ccc;background-color:#f3f3f3}\n", ""]);
+exports.push([module.i, ".mx-icon-left:before,.mx-icon-right:before,.mx-icon-double-left:before,.mx-icon-double-right:before,.mx-icon-double-left:after,.mx-icon-double-right:after{content:\"\";position:relative;top:-1px;display:inline-block;width:10px;height:10px;vertical-align:middle;border-style:solid;border-color:currentColor;border-width:2px 0 0 2px;border-radius:1px;-webkit-box-sizing:border-box;box-sizing:border-box;-webkit-transform-origin:center;transform-origin:center;-webkit-transform:rotate(-45deg) scale(0.7);transform:rotate(-45deg) scale(0.7)}.mx-icon-double-left:after{left:-4px}.mx-icon-double-right:before{left:4px}.mx-icon-right:before,.mx-icon-double-right:before,.mx-icon-double-right:after{-webkit-transform:rotate(135deg) scale(0.7);transform:rotate(135deg) scale(0.7)}.mx-btn{-webkit-box-sizing:border-box;box-sizing:border-box;line-height:1;font-size:14px;font-weight:500;padding:7px 15px;margin:0;cursor:pointer;background-color:transparent;outline:none;border:1px solid rgba(0,0,0,.1);border-radius:4px;color:#73879c;white-space:nowrap}.mx-btn:hover{border-color:#1284e7;color:#1284e7}.mx-btn-text{border:0;padding:0 4px;text-align:left;line-height:inherit}.mx-scrollbar{height:100%}.mx-scrollbar:hover .mx-scrollbar-track{opacity:1}.mx-scrollbar-wrap{height:100%;overflow-x:hidden;overflow-y:auto}.mx-scrollbar-track{position:absolute;top:2px;right:2px;bottom:2px;width:6px;z-index:1;border-radius:4px;opacity:0;-webkit-transition:opacity .24s ease-out;transition:opacity .24s ease-out}.mx-scrollbar-track .mx-scrollbar-thumb{position:absolute;width:100%;height:0;cursor:pointer;border-radius:inherit;background-color:rgba(144,147,153,.3);-webkit-transition:background-color .3s;transition:background-color .3s}.mx-zoom-in-down-enter-active,.mx-zoom-in-down-leave-active{opacity:1;-webkit-transform:scaleY(1);transform:scaleY(1);-webkit-transition:opacity .3s cubic-bezier(0.23, 1, 0.32, 1),-webkit-transform .3s cubic-bezier(0.23, 1, 0.32, 1);transition:opacity .3s cubic-bezier(0.23, 1, 0.32, 1),-webkit-transform .3s cubic-bezier(0.23, 1, 0.32, 1);transition:transform .3s cubic-bezier(0.23, 1, 0.32, 1),opacity .3s cubic-bezier(0.23, 1, 0.32, 1);transition:transform .3s cubic-bezier(0.23, 1, 0.32, 1),opacity .3s cubic-bezier(0.23, 1, 0.32, 1),-webkit-transform .3s cubic-bezier(0.23, 1, 0.32, 1);-webkit-transform-origin:center top;transform-origin:center top}.mx-zoom-in-down-enter,.mx-zoom-in-down-leave-to{opacity:0;-webkit-transform:scaleY(0);transform:scaleY(0)}.mx-datepicker{position:relative;display:inline-block;width:210px}.mx-datepicker svg{width:1em;height:1em;vertical-align:-0.15em;fill:currentColor;overflow:hidden}.mx-datepicker-range{width:320px}.mx-datepicker-inline{width:auto}.mx-input-wrapper{position:relative}.mx-input-wrapper .mx-icon-clear{display:none}.mx-input-wrapper:hover .mx-icon-clear{display:block}.mx-input-wrapper:hover .mx-icon-clear+.mx-icon-calendar{display:none}.mx-input{display:inline-block;-webkit-box-sizing:border-box;box-sizing:border-box;width:100%;height:34px;padding:6px 30px;padding-left:10px;font-size:14px;line-height:1.4;color:#555;background-color:#fff;border:1px solid #ccc;border-radius:4px;-webkit-box-shadow:inset 0 1px 1px rgba(0,0,0,.075);box-shadow:inset 0 1px 1px rgba(0,0,0,.075)}.mx-input:hover,.mx-input:focus{border-color:#409aff}.mx-input:disabled,.mx-input.disabled{color:#ccc;background-color:#f3f3f3;border-color:#ccc;cursor:not-allowed}.mx-input:focus{outline:none}.mx-input::-ms-clear{display:none}.mx-icon-calendar,.mx-icon-clear{position:absolute;top:50%;right:8px;-webkit-transform:translateY(-50%);transform:translateY(-50%);font-size:16px;line-height:1;color:rgba(0,0,0,.5);vertical-align:middle}.mx-icon-clear{cursor:pointer}.mx-icon-clear:hover{color:rgba(0,0,0,.8)}.mx-datepicker-main{font:14px/1.5 \"Helvetica Neue\",Helvetica,Arial,\"Microsoft Yahei\",sans-serif;color:#73879c;background-color:#fff;border:1px solid #e8e8e8}.mx-datepicker-popup{position:absolute;margin-top:1px;margin-bottom:1px;-webkit-box-shadow:0 6px 12px rgba(0,0,0,.175);box-shadow:0 6px 12px rgba(0,0,0,.175);z-index:2001}.mx-datepicker-sidebar{float:left;-webkit-box-sizing:border-box;box-sizing:border-box;width:100px;padding:6px;overflow:auto}.mx-datepicker-sidebar+.mx-datepicker-content{margin-left:100px;border-left:1px solid #e8e8e8}.mx-datepicker-body{position:relative;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.mx-btn-shortcut{display:block;padding:0 6px;line-height:24px}.mx-range-wrapper{display:-webkit-box;display:-ms-flexbox;display:flex}@media(max-width: 750px){.mx-range-wrapper{-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-direction:column;flex-direction:column}}.mx-datepicker-header{padding:6px 8px;border-bottom:1px solid #e8e8e8}.mx-datepicker-footer{padding:6px 8px;text-align:right;border-top:1px solid #e8e8e8}.mx-calendar{-webkit-box-sizing:border-box;box-sizing:border-box;width:248px;padding:6px 12px}.mx-calendar+.mx-calendar{border-left:1px solid #e8e8e8}.mx-calendar-header,.mx-time-header{-webkit-box-sizing:border-box;box-sizing:border-box;height:34px;line-height:34px;text-align:center;overflow:hidden}.mx-btn-icon-left,.mx-btn-icon-double-left{float:left}.mx-btn-icon-right,.mx-btn-icon-double-right{float:right}.mx-calendar-header-label{font-size:14px}.mx-calendar-decade-separator{margin:0 2px}.mx-calendar-decade-separator:after{content:\"~\"}.mx-calendar-content{position:relative;height:224px;-webkit-box-sizing:border-box;box-sizing:border-box}.mx-calendar-content .cell{cursor:pointer}.mx-calendar-content .cell:hover{color:#73879c;background-color:#f3f9fe}.mx-calendar-content .cell.active{color:#fff;background-color:#1284e7}.mx-calendar-content .cell.in-range,.mx-calendar-content .cell.hover-in-range{color:#73879c;background-color:#dbedfb}.mx-calendar-content .cell.disabled{cursor:not-allowed;color:#ccc;background-color:#f3f3f3}.mx-calendar-week-mode .mx-date-row{cursor:pointer}.mx-calendar-week-mode .mx-date-row:hover{background-color:#f3f9fe}.mx-calendar-week-mode .mx-date-row.mx-active-week{background-color:#dbedfb}.mx-calendar-week-mode .mx-date-row .cell:hover{color:inherit;background-color:transparent}.mx-calendar-week-mode .mx-date-row .cell.active{color:inherit;background-color:transparent}.mx-week-number{opacity:.5}.mx-table{table-layout:fixed;border-collapse:separate;border-spacing:0;width:100%;height:100%;-webkit-box-sizing:border-box;box-sizing:border-box;text-align:center;vertical-align:middle}.mx-table th{padding:0;font-weight:500}.mx-table td{padding:0}.mx-table-date td,.mx-table-date th{height:32px;font-size:12px}.mx-table-date .today{color:#2a90e9}.mx-table-date .cell.not-current-month{color:#ccc;background:none}.mx-time{-webkit-box-flex:1;-ms-flex:1;flex:1;width:224px;background:#fff}.mx-time+.mx-time{border-left:1px solid #e8e8e8}.mx-calendar-time{position:absolute;top:0;left:0;width:100%;height:100%}.mx-time-header{border-bottom:1px solid #e8e8e8}.mx-time-content{height:224px;-webkit-box-sizing:border-box;box-sizing:border-box;overflow:hidden}.mx-time-columns{display:-webkit-box;display:-ms-flexbox;display:flex;width:100%;height:100%;overflow:hidden}.mx-time-column{-webkit-box-flex:1;-ms-flex:1;flex:1;position:relative;border-left:1px solid #e8e8e8;text-align:center}.mx-time-column:first-child{border-left:0}.mx-time-column .mx-time-list{margin:0;padding:0;list-style:none}.mx-time-column .mx-time-list::after{content:\"\";display:block;height:192px}.mx-time-column .mx-time-item{cursor:pointer;font-size:12px;height:32px;line-height:32px}.mx-time-column .mx-time-item:hover{color:#73879c;background-color:#f3f9fe}.mx-time-column .mx-time-item.active{color:#1284e7;background-color:transparent;font-weight:700}.mx-time-column .mx-time-item.disabled{cursor:not-allowed;color:#ccc;background-color:#f3f3f3}.mx-time-option{cursor:pointer;padding:8px 10px;font-size:14px;line-height:20px}.mx-time-option:hover{color:#73879c;background-color:#f3f9fe}.mx-time-option.active{color:#1284e7;background-color:transparent;font-weight:700}.mx-time-option.disabled{cursor:not-allowed;color:#ccc;background-color:#f3f3f3}\r\n", ""]);
 
 // exports
 
@@ -18640,7 +18661,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.data-table {\n\tdisplay: grid;\n\twidth: 100%;\n\theight: 100%;\n}\n", ""]);
+exports.push([module.i, "\n.data-table {\r\n\tdisplay: grid;\r\n\twidth: 100%;\r\n\theight: 100%;\n}\r\n", ""]);
 
 // exports
 
@@ -18659,7 +18680,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.data-table {\n\tdisplay: grid;\n\twidth: 100%;\n\theight: 100%;\n}\n", ""]);
+exports.push([module.i, "\n.data-table {\r\n\tdisplay: grid;\r\n\twidth: 100%;\r\n\theight: 100%;\n}\r\n", ""]);
 
 // exports
 
@@ -18678,7 +18699,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.data-table {\n\tdisplay: grid;\n\twidth: 100%;\n\theight: 100%;\n}\n", ""]);
+exports.push([module.i, "\n.data-table {\r\n\tdisplay: grid;\r\n\twidth: 100%;\r\n\theight: 100%;\n}\r\n", ""]);
 
 // exports
 
@@ -18697,7 +18718,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.data-table {\n\tdisplay: grid;\n\twidth: 100%;\n\theight: 100%;\n}\n", ""]);
+exports.push([module.i, "\n.data-table {\r\n\tdisplay: grid;\r\n\twidth: 100%;\r\n\theight: 100%;\n}\r\n", ""]);
 
 // exports
 
@@ -52083,7 +52104,7 @@ var render = function() {
   return _c("div", { staticClass: "mt-3" }, [
     _c("div", { staticClass: "login-box-body" }, [
       _c("p", { staticClass: "login-box-msg" }, [
-        _c("img", { attrs: { src: "/images/logo.png" } })
+        _c("img", { attrs: { src: _vm.image_src } })
       ]),
       _vm._v(" "),
       _c("p", { staticClass: "login-box-msg" }, [
@@ -52657,7 +52678,7 @@ var render = function() {
                               [
                                 _c("vue-single-select", {
                                   attrs: {
-                                    options: _vm.posts,
+                                    options: [_vm.posts],
                                     required: true,
                                     optionLabel: "nmSupplier"
                                   },
@@ -53436,49 +53457,48 @@ var render = function() {
                       ]),
                       _vm._v(" "),
                       _c("div", { staticClass: "modal-body" }, [
-                        _c("p", { staticClass: "text-muted text-left" }, [
-                          _c("label", [_vm._v("Tgl : ")]),
-                          _vm._v(
-                            "\n                                    " +
-                              _vm._s(_vm.data.tglNota) +
-                              "\n                                    "
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c("p", { staticClass: "text-muted text-left" }, [
-                          _c("label", [_vm._v("No Nota : ")]),
-                          _vm._v(
-                            "\n                                    " +
-                              _vm._s(_vm.data.noNota) +
-                              "\n                                    "
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c("p", { staticClass: "text-muted text-left" }, [
-                          _c("label", [_vm._v("Pelanggan : ")]),
-                          _vm._v(
-                            "\n                                    " +
-                              _vm._s(_vm.data.pelangganNota) +
-                              "\n                                    "
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c("p", { staticClass: "text-muted text-left" }, [
-                          _c("label", [_vm._v("Pajak : ")]),
-                          _vm._v(
-                            "\n                                    " +
-                              _vm._s(_vm._f("currency")(_vm.data.taxNota)) +
-                              "\n                                    "
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c("p", { staticClass: "text-muted text-left" }, [
-                          _c("label", [_vm._v("Diskon : ")]),
-                          _vm._v(
-                            "\n                                    " +
+                        _c("div", { staticClass: "row invoice-info" }, [
+                          _c("div", { staticClass: "col-sm-4 invoice-col" }, [
+                            _c("address", [
+                              _c("strong", [_vm._v("Customer :")]),
+                              _vm._v(" " + _vm._s(_vm.data.pelangganNota)),
+                              _c("br"),
+                              _vm._v(" "),
+                              _c("b", [_vm._v(" Tgl : ")]),
+                              _vm._v(_vm._s(_vm.data.tglNota)),
+                              _c("br"),
+                              _vm._v(" "),
+                              _c("b", [_vm._v(" Meja No : ")]),
+                              _vm._v(_vm._s(_vm.data.noMeja)),
+                              _c("br")
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-sm-4 invoice-col" }, [
+                            _c("b", [_vm._v("No Invoice : ")]),
+                            _vm._v(_vm._s(_vm.data.noNota)),
+                            _c("br"),
+                            _vm._v(" "),
+                            _c("b", [_vm._v("Kasir : ")]),
+                            _vm._v(
+                              _vm._s(_vm.data.name) +
+                                "\n                                        \n                                        "
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-sm-4 invoice-col" }, [
+                            _c("b", [_vm._v("Pajak : ")]),
+                            _vm._v(
+                              _vm._s(_vm._f("currency")(_vm.data.taxNota))
+                            ),
+                            _c("br"),
+                            _vm._v(" "),
+                            _c("b", [_vm._v("Diskon : ")]),
+                            _vm._v(
                               _vm._s(_vm._f("currency")(_vm.data.diskonNota)) +
-                              "\n                                    "
-                          )
+                                "\n                                        "
+                            )
+                          ])
                         ]),
                         _vm._v(" "),
                         _c(
@@ -53759,19 +53779,6 @@ var render = function() {
       [_c("i", { staticClass: "fa fa-eye" })]
     ),
     _vm._v(" "),
-    _c(
-      "button",
-      {
-        staticClass: "btn btn-outline-primary",
-        on: {
-          click: function($event) {
-            return _vm.EditAction("edit")
-          }
-        }
-      },
-      [_c("i", { staticClass: "fa fa-edit" })]
-    ),
-    _vm._v(" "),
     _vm.showModalDetail
       ? _c(
           "div",
@@ -53806,122 +53813,43 @@ var render = function() {
                       ]),
                       _vm._v(" "),
                       _c("div", { staticClass: "modal-body" }, [
-                        _c("div", { staticClass: "nav-tabs-custom" }, [
-                          _c("ul", { staticClass: "nav nav-tabs" }, [
-                            _c("li", [
-                              _c(
-                                "a",
-                                {
-                                  attrs: {
-                                    href: "#timeline",
-                                    "data-toggle": "tab"
-                                  }
-                                },
-                                [_vm._v("Kartu Stok")]
-                              )
+                        _c(
+                          "table",
+                          { staticClass: "table table-hover table-bordered" },
+                          [
+                            _c("thead", [
+                              _c("tr", [
+                                _c("th", [_vm._v("Nama ")]),
+                                _vm._v(" "),
+                                _c("th", [_vm._v("Qty Gudang")]),
+                                _vm._v(" "),
+                                _c("th", [_vm._v("Selisih")]),
+                                _vm._v(" "),
+                                _c("th", [_vm._v("Satuan")]),
+                                _vm._v(" "),
+                                _c("th", [_vm._v("Keterangan")])
+                              ])
                             ]),
                             _vm._v(" "),
-                            _c("li", [
-                              _c(
-                                "a",
-                                {
-                                  attrs: {
-                                    href: "#settings",
-                                    "data-toggle": "tab"
-                                  }
-                                },
-                                [_vm._v("Settings")]
-                              )
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "tab-content" }, [
                             _c(
-                              "div",
-                              {
-                                staticClass: "tab-pane",
-                                attrs: { id: "timeline" }
-                              },
-                              [
-                                _c(
-                                  "table",
-                                  {
-                                    staticClass:
-                                      "table table-hover table-bordered"
-                                  },
-                                  [
-                                    _c("thead", [
-                                      _c("tr", [
-                                        _c("th", [_vm._v("Nama Barang ")]),
-                                        _vm._v(" "),
-                                        _c("th", [_vm._v("Tgl")]),
-                                        _vm._v(" "),
-                                        _c("th", [_vm._v("Qty Masuk")]),
-                                        _vm._v(" "),
-                                        _c("th", [_vm._v("Qty Keluar")]),
-                                        _vm._v(" "),
-                                        _c("th", [_vm._v("No. Transaksi")]),
-                                        _vm._v(" "),
-                                        _c("th", [_vm._v("Sisa")]),
-                                        _vm._v(" "),
-                                        _c("th", [_vm._v("Keterangan")])
-                                      ])
-                                    ]),
-                                    _vm._v(" "),
-                                    _c(
-                                      "tbody",
-                                      _vm._l(_vm.pem, function(pe) {
-                                        return _c("tr", { key: pe.id }, [
-                                          _c("td", [
-                                            _vm._v(_vm._s(pe.kdBarang) + " ")
-                                          ]),
-                                          _vm._v(" "),
-                                          _c("td", [
-                                            _vm._v(_vm._s(pe.tglKartu))
-                                          ]),
-                                          _vm._v(" "),
-                                          _c("td", [
-                                            _vm._v(_vm._s(pe.qtyMasuk))
-                                          ]),
-                                          _vm._v(" "),
-                                          _c("td", [
-                                            _vm._v(_vm._s(pe.qtyKeluar))
-                                          ]),
-                                          _vm._v(" "),
-                                          _c("td", [
-                                            _vm._v(_vm._s(pe.noTransaksi))
-                                          ]),
-                                          _vm._v(" "),
-                                          _c("td", [
-                                            _vm._v(_vm._s(_vm.posts.stkBarang))
-                                          ]),
-                                          _vm._v(" "),
-                                          _c("td", [
-                                            _vm._v(_vm._s(pe.keteranganKartu))
-                                          ])
-                                        ])
-                                      }),
-                                      0
-                                    )
-                                  ]
-                                )
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "div",
-                              {
-                                staticClass: "tab-pane",
-                                attrs: { id: "settings" }
-                              },
-                              [
-                                _vm._v(
-                                  "\n\n                                                Seting\n                                        "
-                                )
-                              ]
+                              "tbody",
+                              _vm._l(_vm.pem, function(pe) {
+                                return _c("tr", { key: pe.id }, [
+                                  _c("td", [_vm._v(_vm._s(pe.kdBarang) + " ")]),
+                                  _vm._v(" "),
+                                  _c("td", [_vm._v(_vm._s(pe.qtyGudang))]),
+                                  _vm._v(" "),
+                                  _c("td", [_vm._v(_vm._s(pe.selisihStok))]),
+                                  _vm._v(" "),
+                                  _c("td", [_vm._v(_vm._s(pe.satuanStok))]),
+                                  _vm._v(" "),
+                                  _c("td", [_vm._v(_vm._s(pe.keteranganStok))])
+                                ])
+                              }),
+                              0
                             )
-                          ])
-                        ])
+                          ]
+                        )
                       ])
                     ])
                   ])
@@ -56073,193 +56001,234 @@ var render = function() {
                           ]
                         ),
                         _vm._v(" "),
-                        _c("div", { attrs: { id: "printMe" } }, [
-                          _c("h3", [
-                            _c("p", { staticClass: "text-muted text-center" }, [
-                              _vm._v("Nota")
+                        _c("div", { attrs: { id: "printMe", hidden: "" } }, [
+                          _c("address", [
+                            _c("strong", [_vm._v("Ala Desa.")]),
+                            _c("br"),
+                            _vm._v("\n                    Sangeh"),
+                            _c("br"),
+                            _vm._v(
+                              "\n\n                    Phone: (804) 123-5432"
+                            ),
+                            _c("br"),
+                            _vm._v(
+                              "\n                    Email: info@almasaeedstudio.com\n                  "
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "row invoice-info" }, [
+                            _c("div", { staticClass: "col-sm-4 invoice-col" }, [
+                              _c("address", [
+                                _c("strong", [_vm._v("Customer :")]),
+                                _vm._v(" " + _vm._s(_vm.pelanggan)),
+                                _c("br"),
+                                _vm._v(" "),
+                                _c("b", [_vm._v(" Tgl : ")]),
+                                _vm._v(_vm._s(_vm.tglNota)),
+                                _c("br"),
+                                _vm._v(" "),
+                                _c("b", [_vm._v(" Meja No : ")]),
+                                _vm._v(_vm._s(_vm.post.noMeja)),
+                                _c("br")
+                              ])
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-sm-4 invoice-col" }, [
+                              _c("b", [_vm._v("No Invoice : ")]),
+                              _vm._v(_vm._s(_vm.noNota)),
+                              _c("br"),
+                              _vm._v(" "),
+                              _c("b", [_vm._v("Kasir : ")]),
+                              _vm._v(
+                                _vm._s(_vm.$session.get("user")) +
+                                  "\n                  \n                "
+                              )
                             ])
                           ]),
                           _vm._v(" "),
-                          _c("p", { staticClass: "text-muted text-center" }, [
-                            _vm._v(
-                              "\n                 Tgl : " +
-                                _vm._s(_vm.tglNota) +
-                                "\n                "
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("p", { staticClass: "text-muted text-center" }, [
-                            _vm._v(
-                              "\n                Customer : " +
-                                _vm._s(_vm.pelanggan) +
-                                "\n                "
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("p", { staticClass: "text-muted text-center" }, [
-                            _vm._v(
-                              "\n                 No Invoice : " +
-                                _vm._s(_vm.noNota) +
-                                "\n                "
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c(
-                            "table",
-                            { staticClass: "table table-hover table-bordered" },
-                            [
-                              _c("thead", [
-                                _c("tr", [
-                                  _c("th", [_vm._v("Nama ")]),
-                                  _vm._v(" "),
-                                  _c("th", [_vm._v("Qty")]),
-                                  _vm._v(" "),
-                                  _c("th", [_vm._v("Harga")]),
-                                  _vm._v(" "),
-                                  _c("th", [_vm._v("Total")])
-                                ])
-                              ]),
-                              _vm._v(" "),
-                              _c(
-                                "tbody",
-                                _vm._l(_vm.trxs, function(trx) {
-                                  return _c("tr", { key: trx.id }, [
-                                    _c("td", [
-                                      _vm._v(_vm._s(trx.nmBarangTmp) + " ")
+                          _c("div", { staticClass: "row" }, [
+                            _c(
+                              "div",
+                              { staticClass: "col-xs-12 table-responsive" },
+                              [
+                                _c(
+                                  "table",
+                                  { staticClass: "table table-striped" },
+                                  [
+                                    _c("thead", [
+                                      _c("tr", [
+                                        _c("th", [_vm._v("Nama ")]),
+                                        _vm._v(" "),
+                                        _c("th", [_vm._v("Qty")]),
+                                        _vm._v(" "),
+                                        _c("th", [_vm._v("Harga")]),
+                                        _vm._v(" "),
+                                        _c("th", [_vm._v("Total")])
+                                      ])
                                     ]),
                                     _vm._v(" "),
-                                    _c("td", [_vm._v(_vm._s(trx.qtyTmp))]),
+                                    _c(
+                                      "tbody",
+                                      _vm._l(_vm.trxs, function(trx) {
+                                        return _c("tr", { key: trx.id }, [
+                                          _c("td", [
+                                            _vm._v(
+                                              _vm._s(trx.nmBarangTmp) + " "
+                                            )
+                                          ]),
+                                          _vm._v(" "),
+                                          _c("td", [
+                                            _vm._v(_vm._s(trx.qtyTmp))
+                                          ]),
+                                          _vm._v(" "),
+                                          _c("td", [
+                                            _vm._v(
+                                              _vm._s(
+                                                _vm._f("currency")(
+                                                  trx.hrgJualTmp
+                                                )
+                                              )
+                                            )
+                                          ]),
+                                          _vm._v(" "),
+                                          _c("td", [
+                                            _vm._v(
+                                              _vm._s(
+                                                _vm._f("currency")(trx.totalTmp)
+                                              )
+                                            )
+                                          ])
+                                        ])
+                                      }),
+                                      0
+                                    ),
                                     _vm._v(" "),
-                                    _c("td", [
-                                      _vm._v(
-                                        _vm._s(
-                                          _vm._f("currency")(trx.hrgJualTmp)
-                                        )
-                                      )
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("td", [
-                                      _vm._v(
-                                        _vm._s(_vm._f("currency")(trx.totalTmp))
-                                      )
+                                    _c("tfoot", [
+                                      _c("tr", [
+                                        _c("th", { attrs: { colspan: "3" } }, [
+                                          _vm._v("subTotal :")
+                                        ]),
+                                        _vm._v(" "),
+                                        _c("th", [
+                                          _vm._v(
+                                            _vm._s(
+                                              _vm._f("currency")(_vm.subtotal)
+                                            )
+                                          )
+                                        ])
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("tr", [
+                                        _c("th", { attrs: { colspan: "3" } }, [
+                                          _vm._v("Tax & Service :")
+                                        ]),
+                                        _vm._v(" "),
+                                        _c("th", [
+                                          _vm._v(
+                                            _vm._s(
+                                              _vm._f("currency")(
+                                                (_vm.subtotal * _vm.pajak) / 100
+                                              )
+                                            )
+                                          )
+                                        ])
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("tr", [
+                                        _c("th", { attrs: { colspan: "3" } }, [
+                                          _vm._v("Discount")
+                                        ]),
+                                        _vm._v(" "),
+                                        _c("th", [
+                                          _vm._v(
+                                            _vm._s(
+                                              _vm._f("currency")(
+                                                (((_vm.subtotal * _vm.pajak) /
+                                                  100 +
+                                                  _vm.subtotal) *
+                                                  _vm.diskon) /
+                                                  100
+                                              )
+                                            )
+                                          )
+                                        ])
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("tr", [
+                                        _c("th", { attrs: { colspan: "3" } }, [
+                                          _vm._v("subTotal :")
+                                        ]),
+                                        _vm._v(" "),
+                                        _c("th", [
+                                          _vm._v(
+                                            _vm._s(
+                                              _vm._f("currency")(
+                                                (_vm.subtotal * _vm.pajak) /
+                                                  100 +
+                                                  _vm.subtotal -
+                                                  (((_vm.subtotal * _vm.pajak) /
+                                                    100 +
+                                                    _vm.subtotal) *
+                                                    _vm.diskon) /
+                                                    100 || 0
+                                              )
+                                            )
+                                          )
+                                        ])
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("tr", [
+                                        _c("th", { attrs: { colspan: "3" } }, [
+                                          _vm._v("Payment :")
+                                        ]),
+                                        _vm._v(" "),
+                                        _c("th", [
+                                          _vm._v(
+                                            _vm._s(
+                                              _vm._f("currency")(_vm.totalBayar)
+                                            )
+                                          )
+                                        ])
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("tr", [
+                                        _c("th", { attrs: { colspan: "3" } }, [
+                                          _vm._v("Kembalian :")
+                                        ]),
+                                        _vm._v(" "),
+                                        _c("th", [
+                                          _vm._v(
+                                            _vm._s(
+                                              _vm._f("currency")(
+                                                _vm.totalBayar -
+                                                  ((_vm.subtotal * _vm.pajak) /
+                                                    100 +
+                                                    _vm.subtotal -
+                                                    (((_vm.subtotal *
+                                                      _vm.pajak) /
+                                                      100 +
+                                                      _vm.subtotal) *
+                                                      _vm.diskon) /
+                                                      100) || 0
+                                              )
+                                            )
+                                          )
+                                        ])
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("tr", [
+                                        _c("th", { attrs: { colspan: "5" } }, [
+                                          _vm._v(
+                                            "Terima Kasih Telah Berbelanja"
+                                          )
+                                        ])
+                                      ])
                                     ])
-                                  ])
-                                }),
-                                0
-                              ),
-                              _vm._v(" "),
-                              _c("tfoot", [
-                                _c("tr", [
-                                  _c("th", { attrs: { colspan: "3" } }, [
-                                    _vm._v("subTotal :")
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("th", [
-                                    _vm._v(
-                                      _vm._s(_vm._f("currency")(_vm.subtotal))
-                                    )
-                                  ])
-                                ]),
-                                _vm._v(" "),
-                                _c("tr", [
-                                  _c("th", { attrs: { colspan: "3" } }, [
-                                    _vm._v("Tax & Service :")
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("th", [
-                                    _vm._v(
-                                      _vm._s(
-                                        _vm._f("currency")(
-                                          (_vm.subtotal * _vm.pajak) / 100
-                                        )
-                                      )
-                                    )
-                                  ])
-                                ]),
-                                _vm._v(" "),
-                                _c("tr", [
-                                  _c("th", { attrs: { colspan: "3" } }, [
-                                    _vm._v("Discount")
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("th", [
-                                    _vm._v(
-                                      _vm._s(
-                                        _vm._f("currency")(
-                                          (((_vm.subtotal * _vm.pajak) / 100 +
-                                            _vm.subtotal) *
-                                            _vm.diskon) /
-                                            100
-                                        )
-                                      )
-                                    )
-                                  ])
-                                ]),
-                                _vm._v(" "),
-                                _c("tr", [
-                                  _c("th", { attrs: { colspan: "3" } }, [
-                                    _vm._v("subTotal :")
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("th", [
-                                    _vm._v(
-                                      _vm._s(
-                                        _vm._f("currency")(
-                                          (_vm.subtotal * _vm.pajak) / 100 +
-                                            _vm.subtotal -
-                                            (((_vm.subtotal * _vm.pajak) / 100 +
-                                              _vm.subtotal) *
-                                              _vm.diskon) /
-                                              100 || 0
-                                        )
-                                      )
-                                    )
-                                  ])
-                                ]),
-                                _vm._v(" "),
-                                _c("tr", [
-                                  _c("th", { attrs: { colspan: "3" } }, [
-                                    _vm._v("Payment :")
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("th", [
-                                    _vm._v(
-                                      _vm._s(_vm._f("currency")(_vm.totalBayar))
-                                    )
-                                  ])
-                                ]),
-                                _vm._v(" "),
-                                _c("tr", [
-                                  _c("th", { attrs: { colspan: "3" } }, [
-                                    _vm._v("Kembalian :")
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("th", [
-                                    _vm._v(
-                                      _vm._s(
-                                        _vm._f("currency")(
-                                          _vm.totalBayar -
-                                            ((_vm.subtotal * _vm.pajak) / 100 +
-                                              _vm.subtotal -
-                                              (((_vm.subtotal * _vm.pajak) /
-                                                100 +
-                                                _vm.subtotal) *
-                                                _vm.diskon) /
-                                                100) || 0
-                                        )
-                                      )
-                                    )
-                                  ])
-                                ]),
-                                _vm._v(" "),
-                                _c("tr", [
-                                  _c("th", { attrs: { colspan: "5" } }, [
-                                    _vm._v("Terima Kasih Telah Berbelanja")
-                                  ])
-                                ])
-                              ])
-                            ]
-                          )
+                                  ]
+                                )
+                              ]
+                            )
+                          ])
                         ])
                       ])
                     ])
@@ -56451,51 +56420,6 @@ var render = function() {
               : _vm._e()
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "form-group" }, [
-            _c("label", [_vm._v("Cek In")]),
-            _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.post.status,
-                  expression: "post.status"
-                }
-              ],
-              staticClass: "form-control",
-              attrs: { type: "text", placeholder: "Accupanci" },
-              domProps: { value: _vm.post.status },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.$set(_vm.post, "status", $event.target.value)
-                }
-              }
-            }),
-            _vm._v(" "),
-            _vm.validation.status
-              ? _c("div", [
-                  _c(
-                    "div",
-                    {
-                      staticClass: "alert alert-danger mt-1",
-                      attrs: { role: "alert" }
-                    },
-                    [
-                      _vm._v(
-                        "\n                                    " +
-                          _vm._s(_vm.validation.status[0]) +
-                          "\n                                "
-                      )
-                    ]
-                  )
-                ])
-              : _vm._e()
-          ]),
-          _vm._v(" "),
           _c(
             "div",
             { staticClass: "form-group" },
@@ -56582,22 +56506,24 @@ var render = function() {
       _vm._v(" "),
       _vm._l(_vm.posts, function(post) {
         return _c("div", { key: post.id, staticClass: "col-lg-3 col-xs-6" }, [
-          _c("div", { staticClass: "small-box bg-aqua" }, [
-            _c("div", { staticClass: "inner" }, [
-              _c("h3", [_vm._v(_vm._s(post.noMeja))]),
-              _vm._v(" "),
-              _c("p", [_vm._v(_vm._s(post.pax))])
-            ]),
-            _vm._v(" "),
-            _vm._m(0, true),
-            _vm._v(" "),
-            post.status === "0"
-              ? _c(
+          post.status === "0"
+            ? _c("div", [
+                _c(
                   "div",
+                  { staticClass: "small-box bg-green" },
                   [
-                    _vm._v(
-                      "\n                         Kosong\n                         "
-                    ),
+                    _c("div", { staticClass: "inner" }, [
+                      _c("h3", [
+                        _vm._v("Meja No :"),
+                        _c("br"),
+                        _vm._v(_vm._s(post.noMeja))
+                      ]),
+                      _vm._v(" "),
+                      _c("p", [_vm._v(_vm._s(post.pax))])
+                    ]),
+                    _vm._v(" "),
+                    _vm._m(0, true),
+                    _vm._v(" "),
                     _c(
                       "router-link",
                       {
@@ -56607,16 +56533,42 @@ var render = function() {
                         }
                       },
                       [_vm._v("EDIT")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-md btn-success",
+                        on: {
+                          click: function($event) {
+                            $event.preventDefault()
+                            return _vm.PostCekIn(post.id)
+                          }
+                        }
+                      },
+                      [_vm._v("CEK IN")]
                     )
                   ],
                   1
                 )
-              : _c(
+              ])
+            : _c("div", [
+                _c(
                   "div",
+                  { staticClass: "small-box bg-red" },
                   [
-                    _vm._v(
-                      "\n                            Isi Tamu\n                        "
-                    ),
+                    _c("div", { staticClass: "inner" }, [
+                      _c("h3", [
+                        _vm._v("Meja No :"),
+                        _c("br"),
+                        _vm._v(_vm._s(post.noMeja))
+                      ]),
+                      _vm._v(" "),
+                      _c("p", [_vm._v(_vm._s(post.pax))])
+                    ]),
+                    _vm._v(" "),
+                    _vm._m(1, true),
+                    _vm._v(" "),
                     _c(
                       "router-link",
                       {
@@ -56626,11 +56578,25 @@ var render = function() {
                         }
                       },
                       [_vm._v("Detail")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-md btn-danger",
+                        on: {
+                          click: function($event) {
+                            $event.preventDefault()
+                            return _vm.CancelCekIn(post.id)
+                          }
+                        }
+                      },
+                      [_vm._v("Cancel")]
                     )
                   ],
                   1
                 )
-          ])
+              ])
         ])
       })
     ],
@@ -56638,6 +56604,14 @@ var render = function() {
   )
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "icon" }, [
+      _c("i", { staticClass: "ion ion-bag" })
+    ])
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -58623,7 +58597,11 @@ var render = function() {
                     }
                   ],
                   staticClass: "form-control",
-                  attrs: { type: "text", placeholder: "Stok Barang" },
+                  attrs: {
+                    type: "text",
+                    placeholder: "Stok Barang",
+                    disabled: ""
+                  },
                   domProps: { value: _vm.post.stkBarang },
                   on: {
                     input: function($event) {
@@ -58954,9 +58932,9 @@ var render = function() {
           _c("div", { staticClass: "box-header with-border" }, [
             _c("h5", { staticClass: "box-title" }, [
               _vm._v(
-                "\n                  Login As " +
+                "\r\n                  Login As " +
                   _vm._s(this.$session.get("user")) +
-                  "\n                  "
+                  "\r\n                  "
               ),
               _c(
                 "button",
@@ -59249,40 +59227,35 @@ var render = function() {
             ),
             _vm._v(" "),
             _c("div", { attrs: { id: "printMe" } }, [
-              _c(
-                "table",
-                {
-                  staticStyle: { "font-size": "12px" },
-                  attrs: { border: "1", cellspacing: "5", cellpadding: "1" }
-                },
-                [
-                  _vm._m(1),
-                  _vm._v(" "),
-                  _c(
-                    "tbody",
-                    _vm._l(_vm.posts, function(post1) {
-                      return _c("tr", { key: post1.id }, [
-                        _c("td", [_vm._v(_vm._s(post1.kdBarang))]),
-                        _vm._v(" "),
-                        _c("td", [_vm._v(_vm._s(post1.nmBarang))]),
-                        _vm._v(" "),
-                        _c("td", [_vm._v(_vm._s(post1.namaKtg))]),
-                        _vm._v(" "),
-                        _c("td", [_vm._v(_vm._s(post1.satuanBarang))]),
-                        _vm._v(" "),
-                        _c("td", [_vm._v(_vm._s(post1.stkBarang))]),
-                        _vm._v(" "),
-                        _c("td"),
-                        _vm._v(" "),
-                        _c("td"),
-                        _vm._v(" "),
-                        _c("td")
-                      ])
-                    }),
-                    0
-                  )
-                ]
-              )
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-xs-12 table-responsive" }, [
+                  _c("table", { staticClass: "table table-striped" }, [
+                    _vm._m(1),
+                    _vm._v(" "),
+                    _c(
+                      "tbody",
+                      _vm._l(_vm.posts, function(post1) {
+                        return _c("tr", { key: post1.id }, [
+                          _c("td", [_vm._v(_vm._s(post1.kdBarang))]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(post1.nmBarang))]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(post1.namaKtg))]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(post1.satuanBarang))]),
+                          _vm._v(" "),
+                          _c("td"),
+                          _vm._v(" "),
+                          _c("td"),
+                          _vm._v(" "),
+                          _c("td")
+                        ])
+                      }),
+                      0
+                    )
+                  ])
+                ])
+              ])
             ])
           ])
         ])
@@ -59323,9 +59296,7 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", [_vm._v("Satuan")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Stok")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Qty Di Gudang")]),
+        _c("th", [_vm._v("Qty Gdg")]),
         _vm._v(" "),
         _c("th", [_vm._v("Selisih")]),
         _vm._v(" "),
@@ -83478,8 +83449,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Users/max/Documents/Web/posResto/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /Users/max/Documents/Web/posResto/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\WinMax\Documents\GitHub\posResto\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\WinMax\Documents\GitHub\posResto\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

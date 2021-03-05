@@ -24,16 +24,17 @@
                             <div class="tab-pane" id="timeline">
                                 <button @click="print" class="btn btn-md btn-success">Print</button>
                                 <!-- The timeline -->
-                                    <div id="printMe">
-                                    <table border="1" cellspacing="5" cellpadding="1" style="font-size: 12px;">
+                            <div id="printMe">
+                                <div class="row">
+                                    <div class="col-xs-12 table-responsive">
+                                    <table class="table table-striped">
                                     <thead>
                                     <tr>
                                         <th>Kode</th>
                                         <th>Nama</th>
                                         <th>Kategori</th>
                                         <th>Satuan</th>
-                                        <th>Stok</th>
-                                        <th>Qty Di Gudang</th>
+                                        <th>Qty Gdg</th>
                                         <th>Selisih</th>
                                         <th>Keterangan</th>
                                     </tr>
@@ -44,7 +45,6 @@
                                         <td>{{ post1.nmBarang }}</td>
                                         <td>{{ post1.namaKtg }}</td>
                                         <td>{{ post1.satuanBarang }}</td>
-                                        <td>{{ post1.stkBarang }}</td>
                                         <td></td>
                                         <td></td>
                                         <td></td>
@@ -53,6 +53,8 @@
                                     
                                 </table>
                                 </div>
+                            </div>
+                            </div>
                         </div>
                             <!-- /.tab-pane -->
 

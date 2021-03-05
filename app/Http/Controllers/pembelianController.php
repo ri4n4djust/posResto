@@ -14,7 +14,8 @@ class pembelianController extends Controller
     //
     public function index()
     {
-        $posts = Pembelian::join('tblSupplier', 'tblPembelian.idSupplier', '=', 'tblSupplier.kdSupplier')->get();
+        $posts = Pembelian::join('tblSupplier', 'tblPembelian.idSupplier', '=', 'tblSupplier.kdSupplier')
+                            ->get();
         return response([
             'success' => true,
             'message' => 'List Semua SPenjualan',
@@ -207,6 +208,7 @@ class pembelianController extends Controller
             'idSupplier'     => $request->input('idSupplier'),
             'tglNotaPembelian'     => $request->input('tglNotaPembelian'),
             'totalNotaPembelian'     => $request->input('totalNotaPembelian'),
+            'userPembelian'     => $request->input('userPembelian'),
         ]);
 
         DB::table('tblKartuStok')

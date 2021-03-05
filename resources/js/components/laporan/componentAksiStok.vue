@@ -3,9 +3,6 @@
         <button class="btn btn-outline-success" @click="showModalDetail = true">
             <i class="fa fa-eye"></i>
         </button>
-        <button class="btn btn-outline-primary" @click="EditAction('edit')" >
-            <i class="fa fa-edit"></i>
-        </button>
                         
                         <div v-if="showModalDetail">
                             <transition name="modal">
@@ -21,62 +18,26 @@
                                     </div>
                                     <div class="modal-body">
 
-
-                                        <div class="nav-tabs-custom">
-                                        <ul class="nav nav-tabs">
-
-                                        <li><a href="#timeline" data-toggle="tab">Kartu Stok</a></li>
-                                        <li><a href="#settings" data-toggle="tab">Settings</a></li>
-                                        </ul>
-                                        <div class="tab-content">
-                                        
-                                            <!-- /.tab-pane -->
-                                            <div class="tab-pane" id="timeline">
-                                                <!-- The timeline -->
-                                                   
-                                                        <table class="table table-hover table-bordered">
-                                                        <thead>
-                                                        <tr>
-                                                            <th>Nama Barang </th>
-                                                            <th>Tgl</th>
-                                                            <th>Qty Masuk</th>
-                                                            <th>Qty Keluar</th>
-                                                            <th>No. Transaksi</th>
-                                                            <th>Sisa</th>
-                                                            <th>Keterangan</th>
-                                                        </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                        <tr v-for="pe in pem" :key="pe.id">
-                                                            <td>{{ pe.kdBarang }} </td>
-                                                            <td>{{ pe.tglKartu }}</td>
-                                                            <td>{{ pe.qtyMasuk}}</td>
-                                                            <td>{{ pe.qtyKeluar}}</td>
-                                                            <td>{{ pe.noTransaksi}}</td>
-                                                            <td>{{ posts.stkBarang}}</td>
-                                                            <td>{{ pe.keteranganKartu }}</td>
-
-                                                        </tr>
-                                                        </tbody>
-                                                    </table>
-                                            
-                                            </div>
-                                            <!-- /.tab-pane -->
-                                            <div class="tab-pane" id="settings">
-
-                                                    Seting
-                                            </div>
-                                            
-                                            <!-- /.tab-pane -->
-                                            </div>
-                                            <!-- /.tab-content -->
-                                        </div>
-                                        <!-- /.nav-tabs-custom -->
-                                       
-
-                                        
-
-
+                                        <table class="table table-hover table-bordered">
+                                            <thead>
+                                            <tr>
+                                                <th>Nama </th>
+                                                <th>Qty Gudang</th>
+                                                <th>Selisih</th>
+                                                <th>Satuan</th>
+                                                <th>Keterangan</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr v-for="pe in pem" :key="pe.id">
+                                                <td>{{ pe.kdBarang }} </td>
+                                                <td>{{ pe.qtyGudang}}</td>
+                                                <td>{{ pe.selisihStok }}</td>
+                                                <td>{{ pe.satuanStok }}</td>
+                                                <td>{{ pe.keteranganStok }}</td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
                                         
 
                                     </div>
@@ -118,7 +79,7 @@ export default {
             },
             
             loadDetailStok:function(){
-                let uri = '/api/detailstok/'+ this.data.kdBarang;
+                let uri = '/api/detailstokopname/'+ this.data.noStokOpname;
                 this.axios.post(uri).then(response => {
                     this.pem = response.data.data;
                    // alert('no nota '+ this.data.noNota);

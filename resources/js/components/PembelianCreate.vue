@@ -149,7 +149,7 @@
                 <p class="text-muted text-center">
                   <vue-single-select
                             v-model="post"
-                            :options="posts"
+                            :options="[posts]"
                             :required="true"
                             optionLabel="nmSupplier" 
                 ></vue-single-select>
@@ -203,7 +203,7 @@
         data() {
             return {
                 post: {},
-                posts: {},
+                posts: [],
                 post1: {},
                 users: {},
                 pem: {},
@@ -310,6 +310,7 @@
                     idSupplier: this.post.kdSupplier,
                     tglNotaPembelian: this.tglPembelian,
                     totalNotaPembelian: this.subtotal,
+                    userPembelian: this.$session.get('userId'),
                     
                 })
                     .then((response) => {
