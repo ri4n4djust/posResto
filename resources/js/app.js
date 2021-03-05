@@ -32,6 +32,9 @@ Vue.use(VueAxios, axios);
 import VueSession from 'vue-session';
 Vue.use(VueSession);
 
+import vmodal from 'vue-js-modal';
+    Vue.use(vmodal);
+
 
 import VueHtmlToPaper from 'vue-html-to-paper';
 const options = {

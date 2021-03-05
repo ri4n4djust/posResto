@@ -168,7 +168,9 @@ Vue.component("data-table", DataTable);
                 this.axios.get(uri).then(response => {
                 this.posts = response.data.data;
                 
-            });
+                }).catch(error => {
+                        console.log(error.response)
+                    });
             },
             
             intervalFetchData: function () {

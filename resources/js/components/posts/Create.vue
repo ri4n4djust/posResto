@@ -175,7 +175,6 @@
                                     <td>{{ post1.satuanBarang }}</td>
                                     <td>{{ post1.deskripsi }}</td>
                                     <td class="text-center">
-                                        <router-link :to="{name: 'detail', params: { id: post1.id }}" class="btn btn-sm btn-primary">Detail</router-link>
                                         <router-link :to="{name: 'edit', params: { id: post1.id }}" class="btn btn-sm btn-primary">EDIT</router-link>
                                     </td>
                                 </tr>

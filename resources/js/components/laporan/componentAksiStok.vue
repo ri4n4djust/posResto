@@ -59,7 +59,7 @@ export default {
                 posts: [],
                 //pem: [],
                 showModalDetail: false,
-                data: this.posts,
+                //np: this.posts,
             }
 
         },
