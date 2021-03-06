@@ -20,8 +20,4 @@ Route::get('{any}', function () {
     return view('pages.resto'); 
 })->where('any', '.*'); 
 
-Route::get('/get_countries', 'kategoriController@index');
-Route::get('/get_states', 'CountryStateController@getStates');
-
-Route::get('search', 'salesController@search');
 

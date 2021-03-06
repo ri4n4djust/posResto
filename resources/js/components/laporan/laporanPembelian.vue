@@ -66,7 +66,7 @@
                                 </table>
 
                                 <div id="printMe" hidden>
-                                <table class="table table-hover table-bordered">
+                                <table width="90%" border="1" style="border:1px solid black; border-collapse: collapse;">
                                     <thead>
                                     <tr>
                                         <th>No Nota</th>
@@ -142,10 +142,6 @@ const options = {
     'titlebar=yes',
     'scrollbars=yes'
   ],
-  styles: [
-    'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css',
-    'https://unpkg.com/kidlat-css/css/kidlat.css'
-  ]
 }
 
 Vue.use(VueHtmlToPaper, options);

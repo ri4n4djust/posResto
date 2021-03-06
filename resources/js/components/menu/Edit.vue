@@ -42,7 +42,7 @@
                                 </div>
                             </div>
                             
-                            <input type="text" class="form-control" v-model="tot">
+                            <input type="hidden" class="form-control" v-model="tot">
                             <div class="form-group">
                                 <router-link :to="{ name: 'menu' }" class="btn btn-primary btn-success">KEMBALI</router-link>
                                 <button type="submit" class="btn btn-md btn-success">UPDATE</button>

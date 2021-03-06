@@ -51,7 +51,8 @@ class pembelianController extends Controller
     {
         //$post = TransaksiDetail::whereId($id)->first();
         $post = DB::table('tblPembelianDetail')
-                    ->where('noNotaPembelian', $id)->get();
+                    ->join('tblBarang', 'tblPembelianDetail.kdBarang', 'tblBarang.kdBarang')
+                    ->where('tblPembelianDetail.noNotaPembelian', $id)->get();
 
         if ($post) {
             return response()->json([

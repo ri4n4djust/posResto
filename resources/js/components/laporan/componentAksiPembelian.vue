@@ -50,7 +50,7 @@
                                                         </thead>
                                                         <tbody>
                                                         <tr v-for="pe in pem" :key="pe.id">
-                                                            <td>{{ pe.kdBarang }} </td>
+                                                            <td>{{ pe.nmBarang }} </td>
                                                             <td>{{ pe.qtyBeli}}</td>
                                                             <td>{{ pe.hrgPokok | currency }}</td>
                                                             <td>{{ pe.qtyBeli * pe.hrgPokok | currency }}</td>

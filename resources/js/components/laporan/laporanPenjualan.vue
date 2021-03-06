@@ -54,7 +54,7 @@
                                         <td>{{ post1.noNota }}</td>
                                         <td>{{ post1.pelangganNota }}</td>
                                         <td>{{ post1.tglNota }}</td>
-                                        <td>{{ post1.taxlNota | currency }}</td>
+                                        <td>{{ post1.taxNota | currency }}</td>
                                         <td>{{ post1.diskonNota | currency }}</td>
                                         <td>{{ post1.totalNota | currency}}</td>
                                     </tr>
@@ -71,8 +71,8 @@
                                     </tfoot>
                                 </table>
 
-                                <div id="printMe" hidden>
-                                <table class="table table-hover table-bordered">
+                                <div id="printMe" hidden >
+                                <table width="90%" border="1" style="border:1px solid black; border-collapse: collapse;">
                                     <thead>
                                     <tr>
                                         <th>No Nota</th>
@@ -83,7 +83,7 @@
                                         <th>Total</th>
                                     </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody >
                                     <tr v-for="post1 in posts1" :key="post1.id">
                                         <td>{{ post1.noNota }}</td>
                                         <td>{{ post1.pelangganNota }}</td>
@@ -154,10 +154,6 @@ const options = {
     'titlebar=yes',
     'scrollbars=yes'
   ],
-  styles: [
-    'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css',
-    'https://unpkg.com/kidlat-css/css/kidlat.css'
-  ]
 }
 
 Vue.use(VueHtmlToPaper, options);

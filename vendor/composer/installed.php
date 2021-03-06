@@ -1,12 +1,12 @@
 <?php return array (
   'root' => 
   array (
-    'pretty_version' => 'dev-master',
-    'version' => 'dev-master',
+    'pretty_version' => 'dev-main',
+    'version' => 'dev-main',
     'aliases' => 
     array (
     ),
-    'reference' => '7d237afdf87dbf996404e2cb4ddc1277ad66a647',
+    'reference' => '953daea6f993c674fb432e4bf34c4578966bf286',
     'name' => 'laravel/laravel',
   ),
   'versions' => 
@@ -426,12 +426,12 @@
     ),
     'laravel/laravel' => 
     array (
-      'pretty_version' => 'dev-master',
-      'version' => 'dev-master',
+      'pretty_version' => 'dev-main',
+      'version' => 'dev-main',
       'aliases' => 
       array (
       ),
-      'reference' => '7d237afdf87dbf996404e2cb4ddc1277ad66a647',
+      'reference' => '953daea6f993c674fb432e4bf34c4578966bf286',
     ),
     'laravel/tinker' => 
     array (
@@ -477,6 +477,15 @@
       array (
       ),
       'reference' => '353f66d7555d8a90781f6f5e7091932f9a4250aa',
+    ),
+    'midtrans/midtrans-php' => 
+    array (
+      'pretty_version' => '2.3.2',
+      'version' => '2.3.2.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '94cdca1eba636b75ec3bdcf338e303068f14025c',
     ),
     'mockery/mockery' => 
     array (
