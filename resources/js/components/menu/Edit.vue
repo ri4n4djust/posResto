@@ -34,7 +34,7 @@
                             <div class="form-group">
                                 <label>Stok</label>
                                 <input type="text" class="form-control" v-model="post.stokMenu"
-                                       placeholder="Stok">
+                                       placeholder="Stok" disabled>
                                 <div v-if="validation.stokMenu">
                                     <div class="alert alert-danger mt-1" role="alert">
                                         {{ validation.stokMenu[0] }}
@@ -42,7 +42,7 @@
                                 </div>
                             </div>
                             
-
+                            <input type="text" class="form-control" v-model="tot">
                             <div class="form-group">
                                 <router-link :to="{ name: 'menu' }" class="btn btn-primary btn-success">KEMBALI</router-link>
                                 <button type="submit" class="btn btn-md btn-success">UPDATE</button>
@@ -230,8 +230,13 @@ components: { VueSingleSelect },
         methods: {
             PostUpdate() {
                 let uri = `/api/menu/update/${this.$route.params.id}`;
-                this.axios.post(uri, this.post)
-                    .then((response) => {
+                this.axios.post(uri, {
+                      id: this.post.id,
+                      nmMenu: this.post.nmMenu,
+                      hargaMenu: this.post.hargaMenu,
+                      stokMenu: this.post.stokMenu,
+                      hppMenu: this.tot,
+                }).then((response) => {
                         this.$router.push({name: 'menu'});
                     }).catch(error => {
                     this.validation = error.response.data.data;

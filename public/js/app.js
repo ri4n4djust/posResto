@@ -8825,6 +8825,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -8861,7 +8871,57 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   //props: ['value'],
-  props: ['value'],
+  props: {
+    value: {
+      require: true
+    },
+    options: {
+      type: Array,
+      required: false,
+      "default": function _default() {
+        return [];
+      }
+    },
+    optionLabel: {
+      type: String,
+      required: false,
+      "default": function _default() {
+        return null;
+      }
+    },
+    optionKey: {
+      type: String,
+      required: false,
+      "default": function _default() {
+        return null;
+      }
+    },
+    placeholder: {
+      type: String,
+      required: false,
+      "default": function _default() {
+        return "Cari Barang";
+      }
+    },
+    getOptionDescription: {
+      type: Function,
+      "default": function _default(option) {
+        if (this.optionKey && this.optionLabel) {
+          return option[this.optionKey] + " - " + option[this.optionLabel];
+        }
+
+        if (this.optionLabel) {
+          return option[this.optionLabel];
+        }
+
+        if (this.optionKey) {
+          return option[this.optionKey];
+        }
+
+        return option;
+      }
+    }
+  },
   methods: {
     loadTotal: function loadTotal() {
       var _this = this;
@@ -8872,6 +8932,8 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (response) {
         //alert('mount' + this.noNotaPembelian)
         _this.subtotal = response.data.subTotalBeli;
+      })["catch"](function (error) {
+        console.log(error.response);
       });
     },
     loadNotaPembelian: function loadNotaPembelian() {
@@ -8904,6 +8966,8 @@ __webpack_require__.r(__webpack_exports__);
       var uri = '/api/dataPembelian/' + this.noNotaPembelian;
       this.axios.post(uri).then(function (response) {
         _this5.pem = response.data.data; // alert('no nota '+ this.data.noNota);
+      })["catch"](function (error) {
+        console.log(error.response);
       });
     },
     PostDeleteTrx: function PostDeleteTrx(id) {
@@ -11692,7 +11756,13 @@ __webpack_require__.r(__webpack_exports__);
       var _this2 = this;
 
       var uri = "/api/menu/update/".concat(this.$route.params.id);
-      this.axios.post(uri, this.post).then(function (response) {
+      this.axios.post(uri, {
+        id: this.post.id,
+        nmMenu: this.post.nmMenu,
+        hargaMenu: this.post.hargaMenu,
+        stokMenu: this.post.stokMenu,
+        hppMenu: this.tot
+      }).then(function (response) {
         _this2.$router.push({
           name: 'menu'
         });
@@ -11759,6 +11829,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
 //
 //
 //
@@ -52461,7 +52533,8 @@ var render = function() {
                   attrs: {
                     options: _vm.users,
                     required: true,
-                    optionLabel: "nmBarang"
+                    optionLabel: "nmBarang",
+                    optionKey: "kdBarang"
                   },
                   model: {
                     value: _vm.post1,
@@ -52484,7 +52557,9 @@ var render = function() {
                   },
                   [
                     _c("div", { staticClass: "row" }, [
-                      _c("div", { staticClass: "col-xs-3" }, [
+                      _c("div", { staticClass: "col-xs-2" }, [
+                        _c("label", [_vm._v("Nama")]),
+                        _vm._v(" "),
                         _c(
                           "select",
                           {
@@ -52524,7 +52599,43 @@ var render = function() {
                         )
                       ]),
                       _vm._v(" "),
-                      _c("div", { staticClass: "col-xs-3" }, [
+                      _c("div", { staticClass: "col-xs-2" }, [
+                        _c("label", [_vm._v("Satuan")]),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.post1.satuanBarang,
+                              expression: "post1.satuanBarang"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          attrs: {
+                            type: "text",
+                            placeholder: "Satuan",
+                            disabled: ""
+                          },
+                          domProps: { value: _vm.post1.satuanBarang },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.post1,
+                                "satuanBarang",
+                                $event.target.value
+                              )
+                            }
+                          }
+                        })
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-xs-2" }, [
+                        _c("label", [_vm._v("Harga")]),
+                        _vm._v(" "),
                         _c("input", {
                           directives: [
                             {
@@ -52552,7 +52663,9 @@ var render = function() {
                         })
                       ]),
                       _vm._v(" "),
-                      _c("div", { staticClass: "col-xs-3" }, [
+                      _c("div", { staticClass: "col-xs-2" }, [
+                        _c("label", [_vm._v("Qty")]),
+                        _vm._v(" "),
                         _c("input", {
                           directives: [
                             {
@@ -52576,7 +52689,9 @@ var render = function() {
                         })
                       ]),
                       _vm._v(" "),
-                      _c("div", { staticClass: "col-xs-3" }, [
+                      _c("div", { staticClass: "col-xs-2" }, [
+                        _c("label", [_vm._v("Total")]),
+                        _vm._v(" "),
                         _c("input", {
                           staticClass: "form-control",
                           attrs: {
@@ -52691,7 +52806,7 @@ var render = function() {
                               [
                                 _c("vue-single-select", {
                                   attrs: {
-                                    options: [_vm.posts],
+                                    options: _vm.posts,
                                     required: true,
                                     optionLabel: "nmSupplier"
                                   },
@@ -52898,10 +53013,15 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-xs-3" }, [
+    return _c("div", { staticClass: "col-xs-2" }, [
+      _c("label", [_vm._v("Aksi")]),
+      _vm._v(" "),
       _c(
         "button",
-        { staticClass: "btn btn-md btn-success", attrs: { type: "submit" } },
+        {
+          staticClass: "btn btn-md btn-success form-control",
+          attrs: { type: "submit" }
+        },
         [_vm._v("Add")]
       )
     ])
@@ -56998,7 +57118,11 @@ var render = function() {
                         }
                       ],
                       staticClass: "form-control",
-                      attrs: { type: "text", placeholder: "Stok" },
+                      attrs: {
+                        type: "text",
+                        placeholder: "Stok",
+                        disabled: ""
+                      },
                       domProps: { value: _vm.post.stokMenu },
                       on: {
                         input: function($event) {
@@ -57029,6 +57153,28 @@ var render = function() {
                         ])
                       : _vm._e()
                   ]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.tot,
+                        expression: "tot"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: { type: "text" },
+                    domProps: { value: _vm.tot },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.tot = $event.target.value
+                      }
+                    }
+                  }),
                   _vm._v(" "),
                   _c(
                     "div",
@@ -57530,6 +57676,8 @@ var render = function() {
             _vm._v(" "),
             _c("td", [_vm._v(_vm._s(_vm._f("currency")(post.hargaMenu)))]),
             _vm._v(" "),
+            _c("td", [_vm._v(_vm._s(_vm._f("currency")(post.hppMenu)))]),
+            _vm._v(" "),
             _c("td", [_vm._v(_vm._s(post.stokMenu))]),
             _vm._v(" "),
             _c(
@@ -57581,7 +57729,9 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", [_vm._v("Nama Menu")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Harga")]),
+        _c("th", [_vm._v("Harga Jual")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Hpp Menu")]),
         _vm._v(" "),
         _c("th", [_vm._v("Stok")]),
         _vm._v(" "),

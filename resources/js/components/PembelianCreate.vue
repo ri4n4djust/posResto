@@ -63,27 +63,37 @@
                             :options="users"
                             :required="true"
                             optionLabel="nmBarang" 
+                            optionKey="kdBarang"
                     ></vue-single-select>
 
                  
                   <form  @submit.prevent="PostItemPembelian" >
                     <div class="row">
-                        <div class="col-xs-3">
+                        <div class="col-xs-2">
+                          <label>Nama</label>
                         <select v-model='post1' class="form-control">
                         <option v-for='post1 in users' v-bind:value='post1' :key="post1.id">{{post1.nmBarang}}</option>
                         </select>
                         </div>
-                        <div class="col-xs-3">
+                        <div class="col-xs-2">
+                          <label>Satuan</label>
+                        <input type="text" v-model="post1.satuanBarang" class="form-control" placeholder="Satuan" disabled>
+                        </div>
+                        <div class="col-xs-2">
+                          <label>Harga</label>
                         <input type="text" v-model="post1.hrgPokok" class="form-control" placeholder="Harga">
                         </div>
-                        <div class="col-xs-3">
+                        <div class="col-xs-2">
+                          <label>Qty</label>
                         <input type="text" v-model="qtyBeli" class="form-control" placeholder="Qty">
                         </div>
-                        <div class="col-xs-3">
+                        <div class="col-xs-2">
+                          <label>Total</label>
                         <input type="text" :value="(post1.hrgPokok * qtyBeli) || 0" :name="subTotal" class="form-control" placeholder="Total">
                         </div>
-                        <div class="col-xs-3">
-                          <button type="submit" class="btn btn-md btn-success">Add</button>                        
+                        <div class="col-xs-2">
+                          <label>Aksi</label>
+                          <button type="submit" class="btn btn-md btn-success form-control">Add</button>                        
                         </div>
                     </div>
                     
@@ -149,7 +159,7 @@
                 <p class="text-muted text-center">
                   <vue-single-select
                             v-model="post"
-                            :options="[posts]"
+                            :options="posts"
                             :required="true"
                             optionLabel="nmSupplier" 
                 ></vue-single-select>
@@ -229,7 +239,47 @@
           }
         },
         //props: ['value'],
-        props: ['value'],
+        props: {
+          value: { require: true },
+          options: {
+            type: Array,
+            required: false,
+            default: () => []
+          },
+          optionLabel: {
+            type: String,
+            required: false,
+            default: () => null
+          },
+          optionKey: {
+            type: String,
+            required: false,
+            default: () => null
+          },
+          placeholder: {
+            type: String,
+            required: false,
+            default: () => "Cari Barang"
+          },
+          getOptionDescription: {
+            type: Function,
+            default(option) {
+              if (this.optionKey && this.optionLabel) {
+                return option[this.optionKey] + " - " + option[this.optionLabel];
+              }
+              if (this.optionLabel) {
+                return option[this.optionLabel];
+              }
+              if (this.optionKey) {
+                return option[this.optionKey];
+              }
+                  return option;
+            }
+          },
+          
+          
+
+        },
 
         methods: {
             loadTotal:function(){
@@ -239,8 +289,9 @@
                 }).then(response => {
                   //alert('mount' + this.noNotaPembelian)
                 this.subtotal = response.data.subTotalBeli;
-                
-            });
+                }).catch(error => {
+                    console.log(error.response)
+                });
             },
             loadNotaPembelian:function(){
                 let uri = `/api/kodePembelian/`;
@@ -267,7 +318,9 @@
                 this.axios.post(uri).then(response => {
                     this.pem = response.data.data;
                    // alert('no nota '+ this.data.noNota);
-            });
+                }).catch(error => {
+                    console.log(error.response)
+                });
             },
             PostDeleteTrx(id)
             {

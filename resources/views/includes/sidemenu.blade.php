@@ -21,7 +21,7 @@
 
         <li class="treeview">
         <a href="#">
-            <i class="fa fa-table"></i> <span>Master</span>
+            <i class="fa fa-table"></i> <span>Master Barang</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
@@ -32,22 +32,24 @@
             <li><a href="{{url('/menu')}}"><i class="fa fa-circle-o"></i>Daftar Menu</a></li>
             <li><a href="{{url('/kategori')}}"><i class="fa fa-circle-o"></i>Kategori Barang</a></li>
             <li><a href="{{url('/stokopname')}}"><i class="fa fa-circle-o"></i>Stok Opname</a></li>
+          </ul>
+        </li>
+        <li class="treeview">
+        <a href="#">
+            <i class="fa fa-table"></i> <span>Master Administrasi</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="{{url('/supplier')}}"><i class="fa fa-circle-o"></i>Supplier</a></li>
+            <li><a href="{{url('/pelanggan')}}"><i class="fa fa-circle-o"></i>Customer</a></li>
             <li><a href="{{url('/user')}}"><i class="fa fa-circle-o"></i>User</a></li>
           </ul>
         </li>
         <li >
           <a href="{{url('/pembelian')}}">
             <i class="fa fa-calendar"></i> <span>Pembelian</span>
-          </a>
-        </li>
-        <li>
-          <a href="{{url('/supplier')}}">
-            <i class="fa fa-calendar"></i> <span>Supplier</span>
-          </a>
-        </li>
-        <li>
-          <a href="{{url('/pelanggan')}}">
-            <i class="fa fa-calendar"></i> <span>Customer</span>
           </a>
         </li>
         <li>

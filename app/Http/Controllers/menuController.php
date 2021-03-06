@@ -112,7 +112,8 @@ class menuController extends Controller
             $post = Menu::whereId($request->input('id'))->update([
                 'nmMenu'     => $request->input('nmMenu'),
                 'hargaMenu'   => $request->input('hargaMenu'),
-                'stokMenu'   => $request->input('stokMenu')
+                'stokMenu'   => $request->input('stokMenu'),
+                'hppMenu'   => $request->input('hppMenu')
             ]);
 
 

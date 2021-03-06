@@ -9,7 +9,8 @@
                                 <tr>
                                     <th>Kode</th>
                                     <th>Nama Menu</th>
-                                    <th>Harga</th>
+                                    <th>Harga Jual</th>
+                                    <th>Hpp Menu</th>
                                     <th>Stok</th>
                                     <th>AKSI</th>
                                 </tr>
@@ -19,6 +20,7 @@
                                     <td>{{ post.kdMenu }}</td>
                                     <td>{{ post.nmMenu }}</td>
                                     <td>{{ post.hargaMenu | currency }}</td>
+                                    <td>{{ post.hppMenu | currency }}</td>
                                     <td>{{ post.stokMenu }}</td>
                                     <td class="text-center">
                                         <router-link :to="{name: 'editMenu', params: { id: post.kdMenu }}" class="btn btn-sm btn-primary">EDIT</router-link>
