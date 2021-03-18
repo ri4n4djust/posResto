@@ -1,15 +1,94 @@
 <template>
     <div class="mt-3">
+
+      <div id="printMe" ref="printMu">
+                <!-- info row -->
+               <address>
+                    <strong>Ala Desa.</strong><br>
+                    Sangeh<br>
+
+                    Phone: (804) 123-5432<br>
+                    Email: info@almasaeedstudio.com
+                  </address>
+              <div class="row invoice-info">
+                <div class="col-sm-4 invoice-col">
+                
+                  <address>
+                    <strong>Customer :</strong> {{pelanggan}}<br>
+                    <b> Tgl : </b>{{tglNota}}<br>
+                    <b> Meja No : </b>{{post.noMeja}}<br>
+                  </address>
+                </div>
+                <!-- /.col -->
+                <div class="col-sm-4 invoice-col">
+                  <b>No Invoice : </b>{{noNota}}<br>
+                  <b>Kasir : </b>{{$session.get('user')}}
+                  
+                </div>
+                <!-- /.col -->
+              </div>
+              <!-- /.row -->
+                
+                <div class="row">
+                <div class="col-xs-12 table-responsive">
+                  <table class="table table-striped">
+                                <thead>
+                                <tr>
+                                    <th>Nama </th>
+                                    <th>Qty</th>
+                                    <th>Harga</th>
+                                    <th>Total</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr v-for="trx in trxs" :key="trx.id">
+                                    <td>{{ trx.nmBarangTmp }} </td>
+                                    <td>{{ trx.qtyTmp}}</td>
+                                    <td>{{ trx.hrgJualTmp | currency }}</td>
+                                    <td>{{ trx.totalTmp | currency }}</td>
+                                </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th colspan="3">subTotal :</th>
+                                        <th>{{subtotal | currency}}</th>
+                                    </tr>
+                                    <tr>
+                                        <th colspan="3">Tax & Service :</th>
+                                        <th>{{ (subtotal * pajak / 100 ) | currency}}</th>
+                                    </tr>
+                                    <tr>
+                                        <th colspan="3">Discount</th>
+                                        <th>{{ ((subtotal * pajak / 100 + subtotal) * diskon / 100) | currency}}</th>
+                                    </tr>
+                                    <tr>
+                                        <th colspan="3">subTotal :</th>
+                                        <th>{{ ((subtotal * pajak / 100 + subtotal) - ((subtotal * pajak / 100 + subtotal) * diskon / 100))  || 0 | currency }}</th>
+                                    </tr>
+                                    <tr>
+                                        <th colspan="3">Payment :</th>
+                                        <th>{{totalBayar | currency}}</th>
+                                    </tr>
+                                    <tr>
+                                        <th colspan="3">Kembalian :</th>
+                                        <th>{{ totalBayar - ((subtotal * pajak / 100 + subtotal) - ((subtotal * pajak / 100 + subtotal) * diskon / 100))  || 0 | currency }}</th>
+                                    </tr>
+                                    <tr>
+                                        <th colspan="5">Terima Kasih Telah Berbelanja</th>
+
+                                    </tr>
+                                </tfoot>
+                            </table>
+                </div>
+                </div>
+
+              </div>
+
+
     <section class="content">
 
       <div class="row">
         <div class="col-md-3">
-
-          <div id="printableArea">
-      <h1>Print me</h1>
-</div>
-
-<input type="button" @onclick="printDiv('printableArea')" value="print a div!" />
 
           <!-- Profile Image -->
           <div class="box box-primary">
@@ -341,88 +420,7 @@
                 </p>
               </form>
 
-              <div id="printMe" ref="printMu">
-                <!-- info row -->
-               <address>
-                    <strong>Ala Desa.</strong><br>
-                    Sangeh<br>
-
-                    Phone: (804) 123-5432<br>
-                    Email: info@almasaeedstudio.com
-                  </address>
-              <div class="row invoice-info">
-                <div class="col-sm-4 invoice-col">
-                
-                  <address>
-                    <strong>Customer :</strong> {{pelanggan}}<br>
-                    <b> Tgl : </b>{{tglNota}}<br>
-                    <b> Meja No : </b>{{post.noMeja}}<br>
-                  </address>
-                </div>
-                <!-- /.col -->
-                <div class="col-sm-4 invoice-col">
-                  <b>No Invoice : </b>{{noNota}}<br>
-                  <b>Kasir : </b>{{$session.get('user')}}
-                  
-                </div>
-                <!-- /.col -->
-              </div>
-              <!-- /.row -->
-                
-                <div class="row">
-                <div class="col-xs-12 table-responsive">
-                  <table class="table table-striped">
-                                <thead>
-                                <tr>
-                                    <th>Nama </th>
-                                    <th>Qty</th>
-                                    <th>Harga</th>
-                                    <th>Total</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr v-for="trx in trxs" :key="trx.id">
-                                    <td>{{ trx.nmBarangTmp }} </td>
-                                    <td>{{ trx.qtyTmp}}</td>
-                                    <td>{{ trx.hrgJualTmp | currency }}</td>
-                                    <td>{{ trx.totalTmp | currency }}</td>
-                                </tr>
-                                </tbody>
-                                <tfoot>
-                                    <tr>
-                                        <th colspan="3">subTotal :</th>
-                                        <th>{{subtotal | currency}}</th>
-                                    </tr>
-                                    <tr>
-                                        <th colspan="3">Tax & Service :</th>
-                                        <th>{{ (subtotal * pajak / 100 ) | currency}}</th>
-                                    </tr>
-                                    <tr>
-                                        <th colspan="3">Discount</th>
-                                        <th>{{ ((subtotal * pajak / 100 + subtotal) * diskon / 100) | currency}}</th>
-                                    </tr>
-                                    <tr>
-                                        <th colspan="3">subTotal :</th>
-                                        <th>{{ ((subtotal * pajak / 100 + subtotal) - ((subtotal * pajak / 100 + subtotal) * diskon / 100))  || 0 | currency }}</th>
-                                    </tr>
-                                    <tr>
-                                        <th colspan="3">Payment :</th>
-                                        <th>{{totalBayar | currency}}</th>
-                                    </tr>
-                                    <tr>
-                                        <th colspan="3">Kembalian :</th>
-                                        <th>{{ totalBayar - ((subtotal * pajak / 100 + subtotal) - ((subtotal * pajak / 100 + subtotal) * diskon / 100))  || 0 | currency }}</th>
-                                    </tr>
-                                    <tr>
-                                        <th colspan="5">Terima Kasih Telah Berbelanja</th>
-
-                                    </tr>
-                                </tfoot>
-                            </table>
-                </div>
-                </div>
-
-              </div>
+              
 
 
               </div>
@@ -443,14 +441,14 @@
 
 <style type="text/css">
 
-@media print {
-    .print-only { display: block; }
-}
+    #printMe { display: none; }
 
-@media screen {
-    .print-only { display: none;}             
-}
-</style>
+    @media print
+    {
+      body * { visibility: hidden; }
+        #printMe * { visibility: visible; }
+    }
+    </style>
 
 <script>
   import DatePicker from 'vue2-datepicker';

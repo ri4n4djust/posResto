@@ -44,6 +44,9 @@ class mejaController extends Controller
         Meja::whereId($request->input('noMejaLama'))->update([
             'status'   => '0',
         ]);
+        Meja::whereId($request->input('noMejaBaru'))->update([
+            'status'   => '1',
+        ]);
             $post = TransaksiDetail::where('noMejaTmp', $request->input('noMejaLama'))->update([
                 'noMejaTmp'     => $request->input('noMejaBaru'),
                 //'paxMeja'   => $request->input('paxMeja'),

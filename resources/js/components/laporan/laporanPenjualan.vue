@@ -134,6 +134,16 @@
 
 </template>
 
+<style type="text/css">
+
+    #printMe { display: none; }
+
+    @media print
+    {
+        #non-printable { display: none; }
+        #printMe { display: block; }
+    }
+    </style>
 
 <script>
 import Vue from 'vue';
