@@ -63,6 +63,7 @@
                 <!-- Post -->
                 <a href="#"  @click="showModal = true" class="btn btn-md btn-success"><b>Add Item</b></a>
                 <a href="#"  @click="showModalMenu = true" class="btn btn-md btn-success"><b>Add Menu</b></a>
+                <a href="#"  @click="showModalMove = true" class="btn btn-md btn-success"><b>Pindah Meja</b></a>
                 <router-link :to="{ name: 'meja' }" class="btn btn-primary btn-success">KEMBALI</router-link>
                 isi tab aktiifiti
                 <!-- /.post -->
@@ -115,6 +116,51 @@
 
 
 <!-- modal start -->
+  <div v-if="showModalMove">
+    <transition name="modal">
+      <div class="modal-mask">
+        <div class="modal-wrapper">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" @click="showModalMove=false">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Pindah Ke Meja</h4>
+              </div>
+              <div class="modal-body">
+
+                
+                <select v-model='move1' class="form-control">
+                  <option v-for='move1 in mejaKosong' v-bind:value='move1' :key="move1.id">Meja No.{{move1.noMeja}}</option>
+                </select>
+
+                <div v-if="move1">
+                  <form  @submit.prevent="PostMove" >
+                    <div class="form-group">
+                      <input type="text" v-model="post.id">
+                      <input type="text" class="form-control" v-model="move1.id">
+                    </div>
+                    <div class="form-group">
+                    <button type="submit" class="btn btn-md btn-success">Pindah</button>
+                    </div>
+                  </form>
+                </div>
+                <div v-else>
+                  no posts
+                </div>
+                
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </transition>
+  </div>
+  <!------End Modal Move ----->
+
+
   <div v-if="showModal">
     <transition name="modal">
       <div class="modal-mask">
@@ -400,12 +446,15 @@
         data() {
             return {
                 post: {},
+                move1: null,
                 post1: null,
                 post2: null,
                 users: {},
                 menus: {},
                 trxs: {},
+                mejaKosong: {},
                 validation: [],
+                showModalMove: false,
                 showModal: false,
                 showModalMenu: false,
                 showModalBayar: false,
@@ -444,6 +493,7 @@
             this.axios.get(uri).then((response) => {
                 this.post = response.data.data;
             });
+            this.loadMejaKosong()
             this.loadTotal()
             this.loadNota()
             this.loadData()
@@ -508,6 +558,26 @@
                 let uri = `/api/transaksi/${this.$route.params.id}`;
                 this.axios.post(uri).then(response => {
                 this.trxs = response.data.data;
+                
+                
+            });
+            },
+            PostMove() {
+                let uri = '/api/meja/pindah';
+                this.axios.post(uri, {
+                  noMejaLama: this.post.id,
+                  noMejaBaru: this.move1.id,
+                })
+                    .then((response) => {
+                        this.$router.push({name: 'meja'});
+                    }).catch(error => {
+                    this.validation = error.response.data.data;
+                });
+            },
+            loadMejaKosong:function(){
+                let uri = '/api/mejakosong/';
+                this.axios.get(uri).then(response => {
+                this.mejaKosong = response.data.data;
                 
                 
             });

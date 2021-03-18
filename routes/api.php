@@ -53,6 +53,8 @@ Route::delete('/kategori/{id?}', 'kategoriController@destroy');
 
 //========meja
 Route::get('/meja', 'mejaController@index');
+Route::get('/mejakosong', 'mejaController@mejakosong');
+Route::post('/meja/pindah', 'mejaController@pindah');
 Route::post('/meja/store', 'mejaController@store');
 Route::post('/meja/duduk', 'mejaController@duduk');
 Route::get('/meja/{id?}', 'mejaController@show');

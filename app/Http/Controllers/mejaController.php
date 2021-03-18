@@ -28,6 +28,41 @@ class mejaController extends Controller
         ], 200);
     }
 
+    public function mejakosong()
+    {
+        $posts = Meja::where('status', '0')->get();
+        return response([
+            'success' => true,
+            'message' => 'List Semua Supplier',
+            'data' => $posts
+        ], 200);
+    }
+
+    public function pindah(Request $request)
+    {
+
+        Meja::whereId($request->input('noMejaLama'))->update([
+            'status'   => '0',
+        ]);
+            $post = TransaksiDetail::where('noMejaTmp', $request->input('noMejaLama'))->update([
+                'noMejaTmp'     => $request->input('noMejaBaru'),
+                //'paxMeja'   => $request->input('paxMeja'),
+            ]);
+
+            if ($post) {
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Post Berhasil Disimpan!',
+                ], 200);
+            } else {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Post Gagal Disimpan!',
+                ], 400);
+            }
+        
+    }
+
     public function store(Request $request)
     {
         //validate data
@@ -73,8 +108,6 @@ class mejaController extends Controller
             }
         }
     }
-
-    
 
 
     public function show($id)

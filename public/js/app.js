@@ -10911,6 +10911,52 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -10922,12 +10968,15 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       post: {},
+      move1: null,
       post1: null,
       post2: null,
       users: {},
       menus: {},
       trxs: {},
+      mejaKosong: {},
       validation: [],
+      showModalMove: false,
       showModal: false,
       showModalMenu: false,
       showModalBayar: false,
@@ -10967,6 +11016,7 @@ __webpack_require__.r(__webpack_exports__);
     this.axios.get(uri).then(function (response) {
       _this.post = response.data.data;
     });
+    this.loadMejaKosong();
     this.loadTotal();
     this.loadNota();
     this.loadData();
@@ -11038,19 +11088,42 @@ __webpack_require__.r(__webpack_exports__);
         _this7.trxs = response.data.data;
       });
     },
-    PostDeleteTrx: function PostDeleteTrx(id) {
+    PostMove: function PostMove() {
       var _this8 = this;
+
+      var uri = '/api/meja/pindah';
+      this.axios.post(uri, {
+        noMejaLama: this.post.id,
+        noMejaBaru: this.move1.id
+      }).then(function (response) {
+        _this8.$router.push({
+          name: 'meja'
+        });
+      })["catch"](function (error) {
+        _this8.validation = error.response.data.data;
+      });
+    },
+    loadMejaKosong: function loadMejaKosong() {
+      var _this9 = this;
+
+      var uri = '/api/mejakosong/';
+      this.axios.get(uri).then(function (response) {
+        _this9.mejaKosong = response.data.data;
+      });
+    },
+    PostDeleteTrx: function PostDeleteTrx(id) {
+      var _this10 = this;
 
       this.axios["delete"]("/api/orderDelete/".concat(id)).then(function (response) {
         alert('Berhasil Di Hapus');
 
-        _this8.loadDataTransaksi();
+        _this10.loadDataTransaksi();
 
-        _this8.loadTotal();
+        _this10.loadTotal();
       })["catch"](function (error) {});
     },
     PostItem: function PostItem() {
-      var _this9 = this;
+      var _this11 = this;
 
       var uri = '/api/addItem/store';
       this.axios.post(uri, {
@@ -11068,15 +11141,15 @@ __webpack_require__.r(__webpack_exports__);
         //alert('sukses donkkkkkkkk');
         alert('sukses ditambahkan');
 
-        _this9.loadDataTransaksi();
+        _this11.loadDataTransaksi();
 
-        _this9.loadTotal();
+        _this11.loadTotal();
 
-        _this9.showModal = false;
+        _this11.showModal = false;
       });
     },
     PostMenu: function PostMenu() {
-      var _this10 = this;
+      var _this12 = this;
 
       var uri = '/api/addMenu/store';
       this.axios.post(uri, {
@@ -11093,15 +11166,15 @@ __webpack_require__.r(__webpack_exports__);
         //alert('sukses donkkkkkkkk');
         alert('sukses ditambahkan');
 
-        _this10.loadDataTransaksi();
+        _this12.loadDataTransaksi();
 
-        _this10.loadTotal();
+        _this12.loadTotal();
 
-        _this10.showModalMenu = false;
+        _this12.showModalMenu = false;
       });
     },
     PostTransaksi: function PostTransaksi() {
-      var _this11 = this;
+      var _this13 = this;
 
       var uri = '/api/addTransaksi/store';
       this.axios.post(uri, {
@@ -11116,10 +11189,10 @@ __webpack_require__.r(__webpack_exports__);
         userNota: this.$session.get('userId'),
         kembalianNota: this.totalBayar - (this.subtotal * this.pajak / 100 + this.subtotal - (this.subtotal * this.pajak / 100 + this.subtotal) * this.diskon / 100)
       }).then(function (response) {
-        _this11.print(); //alert('Transaksi Selesai');
+        _this13.print(); //alert('Transaksi Selesai');
 
 
-        _this11.$router.push({
+        _this13.$router.push({
           name: 'meja'
         });
       });
@@ -55013,6 +55086,20 @@ var render = function() {
                   ),
                   _vm._v(" "),
                   _c(
+                    "a",
+                    {
+                      staticClass: "btn btn-md btn-success",
+                      attrs: { href: "#" },
+                      on: {
+                        click: function($event) {
+                          _vm.showModalMove = true
+                        }
+                      }
+                    },
+                    [_c("b", [_vm._v("Pindah Meja")])]
+                  ),
+                  _vm._v(" "),
+                  _c(
                     "router-link",
                     {
                       staticClass: "btn btn-primary btn-success",
@@ -55083,6 +55170,173 @@ var render = function() {
         ])
       ])
     ]),
+    _vm._v(" "),
+    _vm.showModalMove
+      ? _c(
+          "div",
+          [
+            _c("transition", { attrs: { name: "modal" } }, [
+              _c("div", { staticClass: "modal-mask" }, [
+                _c("div", { staticClass: "modal-wrapper" }, [
+                  _c("div", { staticClass: "modal-dialog" }, [
+                    _c("div", { staticClass: "modal-content" }, [
+                      _c("div", { staticClass: "modal-header" }, [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "close",
+                            attrs: { type: "button" },
+                            on: {
+                              click: function($event) {
+                                _vm.showModalMove = false
+                              }
+                            }
+                          },
+                          [
+                            _c("span", { attrs: { "aria-hidden": "true" } }, [
+                              _vm._v("×")
+                            ])
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c("h4", { staticClass: "modal-title" }, [
+                          _vm._v("Pindah Ke Meja")
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "modal-body" }, [
+                        _c(
+                          "select",
+                          {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.move1,
+                                expression: "move1"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            on: {
+                              change: function($event) {
+                                var $$selectedVal = Array.prototype.filter
+                                  .call($event.target.options, function(o) {
+                                    return o.selected
+                                  })
+                                  .map(function(o) {
+                                    var val = "_value" in o ? o._value : o.value
+                                    return val
+                                  })
+                                _vm.move1 = $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              }
+                            }
+                          },
+                          _vm._l(_vm.mejaKosong, function(move1) {
+                            return _c(
+                              "option",
+                              { key: move1.id, domProps: { value: move1 } },
+                              [_vm._v("Meja No." + _vm._s(move1.noMeja))]
+                            )
+                          }),
+                          0
+                        ),
+                        _vm._v(" "),
+                        _vm.move1
+                          ? _c("div", [
+                              _c(
+                                "form",
+                                {
+                                  on: {
+                                    submit: function($event) {
+                                      $event.preventDefault()
+                                      return _vm.PostMove($event)
+                                    }
+                                  }
+                                },
+                                [
+                                  _c("div", { staticClass: "form-group" }, [
+                                    _c("input", {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value: _vm.post.id,
+                                          expression: "post.id"
+                                        }
+                                      ],
+                                      attrs: { type: "text" },
+                                      domProps: { value: _vm.post.id },
+                                      on: {
+                                        input: function($event) {
+                                          if ($event.target.composing) {
+                                            return
+                                          }
+                                          _vm.$set(
+                                            _vm.post,
+                                            "id",
+                                            $event.target.value
+                                          )
+                                        }
+                                      }
+                                    }),
+                                    _vm._v(" "),
+                                    _c("input", {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value: _vm.move1.id,
+                                          expression: "move1.id"
+                                        }
+                                      ],
+                                      staticClass: "form-control",
+                                      attrs: { type: "text" },
+                                      domProps: { value: _vm.move1.id },
+                                      on: {
+                                        input: function($event) {
+                                          if ($event.target.composing) {
+                                            return
+                                          }
+                                          _vm.$set(
+                                            _vm.move1,
+                                            "id",
+                                            $event.target.value
+                                          )
+                                        }
+                                      }
+                                    })
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "form-group" }, [
+                                    _c(
+                                      "button",
+                                      {
+                                        staticClass: "btn btn-md btn-success",
+                                        attrs: { type: "submit" }
+                                      },
+                                      [_vm._v("Pindah")]
+                                    )
+                                  ])
+                                ]
+                              )
+                            ])
+                          : _c("div", [
+                              _vm._v(
+                                "\n                  no posts\n                "
+                              )
+                            ])
+                      ])
+                    ])
+                  ])
+                ])
+              ])
+            ])
+          ],
+          1
+        )
+      : _vm._e(),
     _vm._v(" "),
     _vm.showModal
       ? _c(
