@@ -27,7 +27,6 @@ class salesController extends Controller
         return response([
             'success' => true,
             'message' => 'List Semua Posts',
-            'kdBarang' => $count + 1,
             'data' => $posts
         ], 200);
     }
