@@ -5,6 +5,12 @@
       <div class="row">
         <div class="col-md-3">
 
+          <div id="printableArea">
+      <h1>Print me</h1>
+</div>
+
+<input type="button" @onclick="printDiv('printableArea')" value="print a div!" />
+
           <!-- Profile Image -->
           <div class="box box-primary">
             <div class="box-body box-profile">
@@ -331,11 +337,11 @@
                 <h3 class="profile-username ">Total {{ ((subtotal * pajak / 100 + subtotal) - ((subtotal * pajak / 100 + subtotal) * diskon / 100))  || 0 | currency }}</h3>
                 <h3 class="profile-username ">Kembali : {{ totalBayar - ((subtotal * pajak / 100 + subtotal) - ((subtotal * pajak / 100 + subtotal) * diskon / 100))  || 0 | currency }}</h3>
                 <p class="text-muted text-center">
-                <button type="submit"  class="btn btn-md btn-success">Bayar</button>                
+                <button type="submit"  class="btn btn-md btn-success" >Bayar</button>                
                 </p>
               </form>
 
-              <div id="printMe" hidden>
+              <div id="printMe" ref="printMu">
                 <!-- info row -->
                <address>
                     <strong>Ala Desa.</strong><br>
@@ -434,6 +440,17 @@
     
 
 </template>
+
+<style type="text/css">
+
+@media print {
+    .print-only { display: block; }
+}
+
+@media screen {
+    .print-only { display: none;}             
+}
+</style>
 
 <script>
   import DatePicker from 'vue2-datepicker';
@@ -657,16 +674,14 @@
                     
                 })
                     .then((response) => {
-                        this.print()
+                        //this.print (ref)
+                        window.print()
+                        //this.print(this.$refs['printMu'])
                         //alert('Transaksi Selesai');
                         this.$router.push({name: 'meja'});
                     });
                 
             },
-            print () {
-            // Pass the element id here
-            this.$htmlToPaper('printMe');
-            }
         },
         
     }

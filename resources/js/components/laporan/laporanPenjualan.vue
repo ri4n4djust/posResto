@@ -71,7 +71,7 @@
                                     </tfoot>
                                 </table>
 
-                                <div id="printMe" hidden >
+                                <div id="printMe" ref="printMu" >
                                 <table width="90%" border="1" style="border:1px solid black; border-collapse: collapse;">
                                     <thead>
                                     <tr>
@@ -107,8 +107,7 @@
                                 </table>
                                 </div>
                                 <!-- OUTPUT -->
-                                <button @click="print" class="btn btn-md btn-success">Print</button>
-
+                                <button type="button" class="btn btn-primary" @click="print('printMu')">Print</button>
 
                             </div>
                             <!-- /.tab-pane -->
@@ -147,6 +146,8 @@ import VueSingleSelect from "vue-single-select";
 
 import VueHtmlToPaper from 'vue-html-to-paper';
 
+import Print from 'vue-print-plugin';
+
 const options = {
   name: '_blank',
   specs: [
@@ -156,7 +157,7 @@ const options = {
   ],
 }
 
-Vue.use(VueHtmlToPaper, options);
+Vue.use(VueHtmlToPaper, options, Print);
 
 import ActionButtons from './componentAksi.vue';
 Vue.component("data-table", DataTable);
@@ -264,6 +265,10 @@ Vue.component("data-table", DataTable);
             });
         },
         methods: {
+
+            print (ref) {
+                this.$print(this.$refs[ref])
+            },
             
             PostDelete(id, index)
             {
@@ -292,10 +297,10 @@ Vue.component("data-table", DataTable);
                     });
                 
             },
-            print () {
+            //print () {
             // Pass the element id here
-            this.$htmlToPaper('printMe');
-            }
+            //this.$htmlToPaper('printMe');
+            //}
            
         },
         
