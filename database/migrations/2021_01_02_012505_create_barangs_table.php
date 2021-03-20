@@ -23,11 +23,11 @@ class CreateBarangsTable extends Migration
             $table->char('satuanBarang');
             $table->char('merek');
             $table->char('stkBarang');
+            $table->char('stkSatuan')->nullable();
             $table->char('qtyMin');
             $table->char('qtyMax');
             $table->text('stsBarang');
             $table->text('deskripsi');
-
             $table->timestamps();
         });
     }

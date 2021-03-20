@@ -3,7 +3,7 @@
       <div class="card-header">TAMBAH BARANG</div>
         <div class="card-body">
         
-        <form  @submit.prevent="PostStore" ref="anyName" id="anyName">
+        <form  @submit.prevent="PostStore" id="anyName">
         <!-- left column -->
             <div class="col-md-6">
           <!-- general form elements -->
@@ -26,7 +26,7 @@
                             <div class="form-group">
                                 <label>Harga Pokok</label>
                                 <input type="text" class="form-control" v-model="post.hrgPokok"
-                                       placeholder="Harga Pokok" @keypress="isNumber()">
+                                       placeholder="Harga Pokok" @keypress="onlyNumber">
                                 <div v-if="validation.hrgPokok">
                                     <div class="alert alert-danger mt-1" role="alert">
                                         {{ validation.hrgPokok[0] }}
@@ -37,7 +37,7 @@
                             <div class="form-group">
                                 <label>Harga Jual</label>
                                 <input type="text" class="form-control" v-model="post.hrgJual"
-                                       placeholder="Harga Jual">
+                                       placeholder="Harga Jual" @keypress="onlyNumber">
                                 <div v-if="validation.hrgJual">
                                     <div class="alert alert-danger mt-1" role="alert">
                                         {{ validation.hrgJual[0] }}
@@ -53,9 +53,9 @@
                             </div>
 
                             <div class="form-group">
-                            <label>Select Kategori: {{ stsBarang }}</label>
+                            <label>Select Kategori:</label>
                             <select class='form-control' v-model='post.stsBarang' required>
-                                <option  value='1' >Barang Jadi</option>
+                                <option  value='1'>Barang Jadi</option>
                                 <option value='2' >Barang Mentah</option>
                             </select>
                             </div>
@@ -78,10 +78,22 @@
                             <div class="form-group">
                                 <label>Stok</label>
                                 <input type="text" class="form-control" v-model="post.stkBarang"
-                                       placeholder="Stok Barang">
+                                       placeholder="Stok Barang" @keypress="onlyNumber">
                                 <div v-if="validation.stkBarang">
                                     <div class="alert alert-danger mt-1" role="alert">
                                         {{ validation.stkBarang[0] }}
+                                    </div>
+                                </div>
+                                
+                            </div>
+
+                            <div class="form-group">
+                                <label>Stok Pcs</label>
+                                <input type="text" class="form-control" v-model="post.stkInventori"
+                                       placeholder="Stok Pcs" @keypress="onlyNumber">
+                                <div v-if="validation.stkInventori">
+                                    <div class="alert alert-danger mt-1" role="alert">
+                                        {{ validation.stkInventori[0] }}
                                     </div>
                                 </div>
                             </div>
@@ -99,7 +111,7 @@
                             <div class="form-group">
                                 <label>QTY Min</label>
                                 <input type="text" class="form-control" v-model="post.qtyMin">
-                                <div v-if="validation.qtyMin">
+                                <div v-if="validation.qtyMin" @keypress="onlyNumber">
                                     <div class="alert alert-danger mt-1" role="alert">
                                         {{ validation.qtyMin[0] }}
                                     </div>
@@ -108,7 +120,7 @@
                             <div class="form-group">
                                 <label>QTY Max</label>
                                 <input type="text" class="form-control" v-model="post.qtyMax">
-                                <div v-if="validation.qtyMax">
+                                <div v-if="validation.qtyMax" @keypress="onlyNumber">
                                     <div class="alert alert-danger mt-1" role="alert">
                                         {{ validation.qtyMax[0] }}
                                     </div>
@@ -145,58 +157,6 @@
     
    </div>
 
-
-   <table class="table table-hover table-bordered">
-                                <thead>
-                                <tr>
-                                    <th>Kode</th>
-                                    <th>Nama</th>
-                                    <th>Harga Pokok</th>
-                                    <th>Harga Jual</th>
-                                    
-                                    <th>Stok Barang</th>
-                                    <th>ggg</th>
-                                    <th>Kategori</th>
-                                    <th>Satuan</th>
-                                    <th>Deskripsi</th>
-                                    <th>AKSI</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr v-for="post1 in users" :key="post1.id">
-                                    <td>{{ post1.kdBarang }}</td>
-                                    <td>{{ post1.nmBarang }}</td>
-                                    <td>{{ post1.hrgPokok | currency }}</td>
-                                    <td>{{ post1.hrgJual | currency }}</td>
-                                    
-                                    <td>{{ post1.stkBarang }}</td>
-                                    <td>{{ post1.hrgPokok * post1.stkBarang | currency }}</td>
-                                    <td>{{ post1.namaKtg }}</td>
-                                    <td>{{ post1.satuanBarang }}</td>
-                                    <td>{{ post1.deskripsi }}</td>
-                                    <td class="text-center">
-                                        <router-link :to="{name: 'edit', params: { id: post1.id }}" class="btn btn-sm btn-primary">EDIT</router-link>
-                                    </td>
-                                </tr>
-                                </tbody>
-                                <tfoot>
-                                <tr>
-                                    <th>Kode</th>
-                                    <th>Nama</th>
-                                    <th></th>
-                                    <th>Harga Jual</th>
-                                    
-                                    <th>Stok Barang</th>
-                                    <th>ggg</th>
-                                    <th>Kategori</th>
-                                    <th>Satuan</th>
-                                    <th>Deskripsi</th>
-                                    <th>AKSI</th>
-                                </tr>
-                                </tfoot>
-                            </table>
-
-
 </div>
       
   
@@ -209,22 +169,19 @@
         data() {
             return {
                 post: {},
-                users: {},
                 kodes: {},
                 validation: [],
                 country: 0,
                 countries: {},
                 total: {},
                 kdBarang: '',
-                isNumber: '',
-                stsBarang: '1',
             }
             
         },
         created: function(){
             this.loadKdBarang()
             this.getCountries()
-            this.loadData()
+            //this.loadData()
             
         },
         beforeCreate: function () {
@@ -242,8 +199,8 @@
                         const path = '/barang/create'
                         this.$router.push(path)
                         this.loadKdBarang()
-                        this.loadData()
-                        //this.resetForm()
+                        //this.loadData()
+                        document.getElementById("anyName").reset();
                         alert('sukses Tambah Barang')
                         
                     }).catch(error => {
@@ -263,7 +220,8 @@
             
             resetForm() {
                 // this.$refs.formTambah.reset()
-                document.getElementById('myInput').value = ''
+                //document.getElementById('nmBarang').value = ''
+                document.getElementById("anyName").reset();
                 alert('reset donkkkkkkkk');
                 //this.$refs.formTambah.reset()
             },
@@ -273,21 +231,12 @@
                         this.countries = response.data.data;
                     }.bind(this));
             },
-            isNumber ($event) {
-            //console.log($event.keyCode); //keyCodes value
-            let keyCode = ($event.keyCode ? $event.keyCode : $event.which);
-            if ((keyCode < 48 || keyCode > 57) && keyCode !== 46) { // 46 is dot
-                $event.preventDefault();
-            }
-            },
-            loadData:function(){
-                let uri = '/api/posts';
-                this.axios.get(uri).then(response => {
-                this.users = response.data.data;
-                this.tes = response.data.kdBarang;
-        
-                
-            });
+            onlyNumber ($event) {
+                //console.log($event.keyCode); //keyCodes value
+                let keyCode = ($event.keyCode ? $event.keyCode : $event.which);
+                if ((keyCode < 48 || keyCode > 57) && keyCode !== 46) { // 46 is dot
+                    $event.preventDefault();
+                }   
             },
             loadKdBarang:function(){
                 let uri = `/api/kodeBarang/`;

@@ -11,6 +11,7 @@ use Auth;
 
 
 use App\Barang;
+use App\Inventori;
 //use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -102,7 +103,11 @@ class salesController extends Controller
                 'qtyMax' => $request->input('qtyMax'),
                 'stsBarang' => $request->input('stsBarang'),
             ]);
+                Inventori::create([
+                    'kdBarang' => $request->input('kdBarang'),
+                    'stkInventori' => $request->input('stkInventori'),
 
+                ]);
 
             if ($post) {
                 return response()->json([
