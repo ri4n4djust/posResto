@@ -445,8 +445,17 @@
 
     @media print
     {
-      body * { visibility: hidden; }
-        #printMe * { visibility: visible; }
+      body * {
+        visibility: hidden;
+      }
+      #printMe, #printMe * {
+        visibility: visible;
+      }
+      #printMe {
+        position: absolute;
+        left: 0;
+        top: 0;
+      }
     }
     </style>
 

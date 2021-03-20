@@ -29,6 +29,7 @@
         "@vue/compiler-sfc": "^3.0.4",
         "bootstrap-vue": "^2.21.1",
         "git": "^0.1.5",
+        "jsprintmanager": "^3.0.7",
         "laravel-vue-datatable": "^0.6.0",
         "moment": "^2.29.1",
         "vue-axios": "^3.2.0",
