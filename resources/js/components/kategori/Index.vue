@@ -4,6 +4,7 @@
                         <h3>
                         <router-link :to="{ name: 'createKategori' }" class="btn btn-md btn-success">TAMBAH KATEGORI</router-link>
                         </h3>
+                        <button @click.prevent="onClickPrint()" class="btn btn-sm btn-danger">Print</button>
                             <table class="table table-hover table-bordered">
                                 <thead>
                                 <tr>
@@ -19,6 +20,7 @@
                                     <td class="text-center">
                                         <router-link :to="{name: 'editKategori', params: { id: post.id }}" class="btn btn-sm btn-primary">EDIT</router-link>
                                         <button @click.prevent="PostDelete(post.id, index)" class="btn btn-sm btn-danger">HAPUS</button>
+                                        
                                     </td>
                                 </tr>
                                 </tbody>
@@ -30,6 +32,9 @@
 </template>
 
 <script>
+import Recta from 'recta';
+var printer = new Recta('12345678', '1811')
+
     export default {
         data() {
             return {
@@ -48,6 +53,21 @@
             });
         },
         methods: {
+            onClickPrint () {
+                printer.open().then(function () {
+                printer.align('center')
+                    .text('Hello World !!')
+                    .bold(true)
+                    .text('This is bold text')
+                    .bold(false)
+                    .underline(true)
+                    .text('This is underline text')
+                    .underline(false)
+                    .barcode('CODE39', '123456789')
+                    .cut()
+                    .print()
+                })
+            },
             PostDelete(id, index)
             {
                 if(confirm("Do you really want to delete?")){
