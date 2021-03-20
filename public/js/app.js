@@ -8835,6 +8835,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 
@@ -8923,6 +8924,15 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   methods: {
+    onlyNumber: function onlyNumber($event) {
+      //console.log($event.keyCode); //keyCodes value
+      var keyCode = $event.keyCode ? $event.keyCode : $event.which;
+
+      if ((keyCode < 48 || keyCode > 57) && keyCode !== 46) {
+        // 46 is dot
+        $event.preventDefault();
+      }
+    },
     loadTotal: function loadTotal() {
       var _this = this;
 
@@ -8992,6 +9002,7 @@ __webpack_require__.r(__webpack_exports__);
         kdBarang: this.post1.kdBarang,
         hrgBeli: this.post1.hrgPokok,
         qtyBeli: this.qtyBeli,
+        qtySatuan: this.qtySatuan,
         totalBeli: this.post1.hrgPokok * this.qtyBeli,
         tglNotaPembelian: this.tglPembelian
       }).then(function (response) {
@@ -8999,7 +9010,8 @@ __webpack_require__.r(__webpack_exports__);
 
         _this7.loadTransaksiPembelian();
 
-        alert('sukses donkkkkkkkk'); //this.loadTransaksiPenjualan()
+        alert('sukses donkkkkkkkk');
+        document.getElementById("anyName").reset(); //this.loadTransaksiPenjualan()
         //this.loadTotal()
       });
     },
@@ -12185,65 +12197,21 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       post: {},
-      users: {},
       kodes: {},
       validation: [],
       country: 0,
       countries: {},
       total: {},
-      kdBarang: '',
-      isNumber: '',
-      stsBarang: '1'
+      kdBarang: ''
     };
   },
   created: function created() {
     this.loadKdBarang();
-    this.getCountries();
-    this.loadData();
+    this.getCountries(); //this.loadData()
   },
   beforeCreate: function beforeCreate() {
     if (!this.$session.exists()) {
@@ -12260,11 +12228,10 @@ __webpack_require__.r(__webpack_exports__);
 
         _this.$router.push(path);
 
-        _this.loadKdBarang();
-
-        _this.loadData(); //this.resetForm()
+        _this.loadKdBarang(); //this.loadData()
 
 
+        document.getElementById("anyName").reset();
         alert('sukses Tambah Barang');
       })["catch"](function (error) {
         _this.validation = error.response.data.data; //this.post.kdBarang;
@@ -12281,7 +12248,8 @@ __webpack_require__.r(__webpack_exports__);
     },
     resetForm: function resetForm() {
       // this.$refs.formTambah.reset()
-      document.getElementById('myInput').value = '';
+      //document.getElementById('nmBarang').value = ''
+      document.getElementById("anyName").reset();
       alert('reset donkkkkkkkk'); //this.$refs.formTambah.reset()
     },
     getCountries: function getCountries() {
@@ -12289,7 +12257,7 @@ __webpack_require__.r(__webpack_exports__);
         this.countries = response.data.data;
       }.bind(this));
     },
-    isNumber: function isNumber($event) {
+    onlyNumber: function onlyNumber($event) {
       //console.log($event.keyCode); //keyCodes value
       var keyCode = $event.keyCode ? $event.keyCode : $event.which;
 
@@ -12298,21 +12266,12 @@ __webpack_require__.r(__webpack_exports__);
         $event.preventDefault();
       }
     },
-    loadData: function loadData() {
-      var _this3 = this;
-
-      var uri = '/api/posts';
-      this.axios.get(uri).then(function (response) {
-        _this3.users = response.data.data;
-        _this3.tes = response.data.kdBarang;
-      });
-    },
     loadKdBarang: function loadKdBarang() {
-      var _this4 = this;
+      var _this3 = this;
 
       var uri = "/api/kodeBarang/";
       this.axios.get(uri).then(function (response) {
-        _this4.post.kdBarang = response.data.kdBarang;
+        _this3.post.kdBarang = response.data.kdBarang;
       });
     }
   }
@@ -52730,193 +52689,173 @@ var render = function() {
           _c("div", { staticClass: "box box-danger" }, [
             _vm._m(1),
             _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "box-body" },
-              [
-                _c("vue-single-select", {
-                  attrs: {
-                    options: _vm.users,
-                    required: true,
-                    optionLabel: "nmBarang",
-                    optionKey: "kdBarang"
-                  },
-                  model: {
-                    value: _vm.post1,
-                    callback: function($$v) {
-                      _vm.post1 = $$v
-                    },
-                    expression: "post1"
-                  }
-                }),
-                _vm._v(" "),
-                _c(
-                  "form",
-                  {
-                    on: {
-                      submit: function($event) {
-                        $event.preventDefault()
-                        return _vm.PostItemPembelian($event)
-                      }
+            _c("div", { staticClass: "box-body" }, [
+              _c(
+                "form",
+                {
+                  attrs: { id: "anyName" },
+                  on: {
+                    submit: function($event) {
+                      $event.preventDefault()
+                      return _vm.PostItemPembelian($event)
                     }
-                  },
-                  [
-                    _c("div", { staticClass: "row" }, [
-                      _c("div", { staticClass: "col-xs-2" }, [
-                        _c("label", [_vm._v("Nama")]),
-                        _vm._v(" "),
-                        _c(
-                          "select",
+                  }
+                },
+                [
+                  _c("vue-single-select", {
+                    attrs: {
+                      options: _vm.users,
+                      required: true,
+                      optionLabel: "nmBarang",
+                      optionKey: "kdBarang"
+                    },
+                    model: {
+                      value: _vm.post1,
+                      callback: function($$v) {
+                        _vm.post1 = $$v
+                      },
+                      expression: "post1"
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "row" }, [
+                    _c("div", { staticClass: "col-xs-2" }, [
+                      _c("label", [_vm._v("Satuan")]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
                           {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.post1,
-                                expression: "post1"
-                              }
-                            ],
-                            staticClass: "form-control",
-                            on: {
-                              change: function($event) {
-                                var $$selectedVal = Array.prototype.filter
-                                  .call($event.target.options, function(o) {
-                                    return o.selected
-                                  })
-                                  .map(function(o) {
-                                    var val = "_value" in o ? o._value : o.value
-                                    return val
-                                  })
-                                _vm.post1 = $event.target.multiple
-                                  ? $$selectedVal
-                                  : $$selectedVal[0]
-                              }
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.post1.satuanBarang,
+                            expression: "post1.satuanBarang"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: {
+                          type: "text",
+                          placeholder: "Satuan",
+                          disabled: ""
+                        },
+                        domProps: { value: _vm.post1.satuanBarang },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
                             }
-                          },
-                          _vm._l(_vm.users, function(post1) {
-                            return _c(
-                              "option",
-                              { key: post1.id, domProps: { value: post1 } },
-                              [_vm._v(_vm._s(post1.nmBarang))]
+                            _vm.$set(
+                              _vm.post1,
+                              "satuanBarang",
+                              $event.target.value
                             )
-                          }),
-                          0
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col-xs-2" }, [
-                        _c("label", [_vm._v("Satuan")]),
-                        _vm._v(" "),
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.post1.satuanBarang,
-                              expression: "post1.satuanBarang"
-                            }
-                          ],
-                          staticClass: "form-control",
-                          attrs: {
-                            type: "text",
-                            placeholder: "Satuan",
-                            disabled: ""
-                          },
-                          domProps: { value: _vm.post1.satuanBarang },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.$set(
-                                _vm.post1,
-                                "satuanBarang",
-                                $event.target.value
-                              )
-                            }
                           }
-                        })
-                      ]),
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-xs-2" }, [
+                      _c("label", [_vm._v("Harga")]),
                       _vm._v(" "),
-                      _c("div", { staticClass: "col-xs-2" }, [
-                        _c("label", [_vm._v("Harga")]),
-                        _vm._v(" "),
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.post1.hrgPokok,
-                              expression: "post1.hrgPokok"
-                            }
-                          ],
-                          staticClass: "form-control",
-                          attrs: { type: "text", placeholder: "Harga" },
-                          domProps: { value: _vm.post1.hrgPokok },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.$set(
-                                _vm.post1,
-                                "hrgPokok",
-                                $event.target.value
-                              )
-                            }
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.post1.hrgPokok,
+                            expression: "post1.hrgPokok"
                           }
-                        })
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col-xs-2" }, [
-                        _c("label", [_vm._v("Qty")]),
-                        _vm._v(" "),
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.qtyBeli,
-                              expression: "qtyBeli"
+                        ],
+                        staticClass: "form-control",
+                        attrs: { type: "text", placeholder: "Harga" },
+                        domProps: { value: _vm.post1.hrgPokok },
+                        on: {
+                          keypress: _vm.onlyNumber,
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
                             }
-                          ],
-                          staticClass: "form-control",
-                          attrs: { type: "text", placeholder: "Qty" },
-                          domProps: { value: _vm.qtyBeli },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.qtyBeli = $event.target.value
+                            _vm.$set(_vm.post1, "hrgPokok", $event.target.value)
+                          }
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-xs-2" }, [
+                      _c("label", [_vm._v("Qty")]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.qtyBeli,
+                            expression: "qtyBeli"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: { type: "text", placeholder: "Qty" },
+                        domProps: { value: _vm.qtyBeli },
+                        on: {
+                          keypress: _vm.onlyNumber,
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
                             }
+                            _vm.qtyBeli = $event.target.value
                           }
-                        })
-                      ]),
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-xs-2" }, [
+                      _c("label", [_vm._v("Total")]),
                       _vm._v(" "),
-                      _c("div", { staticClass: "col-xs-2" }, [
-                        _c("label", [_vm._v("Total")]),
-                        _vm._v(" "),
-                        _c("input", {
-                          staticClass: "form-control",
-                          attrs: {
-                            type: "text",
-                            name: _vm.subTotal,
-                            placeholder: "Total"
-                          },
-                          domProps: {
-                            value: _vm.post1.hrgPokok * _vm.qtyBeli || 0
+                      _c("input", {
+                        staticClass: "form-control",
+                        attrs: {
+                          type: "text",
+                          name: _vm.subTotal,
+                          placeholder: "Total"
+                        },
+                        domProps: {
+                          value: _vm.post1.hrgPokok * _vm.qtyBeli || 0
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-xs-2" }, [
+                      _c("label", [_vm._v("Qty Satuan")]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.qtySatuan,
+                            expression: "qtySatuan"
                           }
-                        })
-                      ]),
-                      _vm._v(" "),
-                      _vm._m(2)
-                    ])
-                  ]
-                )
-              ],
-              1
-            )
+                        ],
+                        staticClass: "form-control",
+                        attrs: { type: "text", placeholder: "Qty Satuan" },
+                        domProps: { value: _vm.qtySatuan },
+                        on: {
+                          keypress: _vm.onlyNumber,
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.qtySatuan = $event.target.value
+                          }
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _vm._m(2)
+                  ])
+                ],
+                1
+              )
+            ])
           ]),
           _vm._v(" "),
           _c("table", { staticClass: "table table-hover table-bordered" }, [
@@ -53064,7 +53003,7 @@ var render = function() {
                                     }
                                   ],
                                   staticClass: "form-control",
-                                  attrs: { type: "text" },
+                                  attrs: { type: "hidden" },
                                   domProps: { value: _vm.tglPembelian },
                                   on: {
                                     input: function($event) {
@@ -53090,7 +53029,10 @@ var render = function() {
                                   }
                                 ],
                                 staticClass: "form-control",
-                                attrs: { type: "text", placeholder: "No nota" },
+                                attrs: {
+                                  type: "hidden",
+                                  placeholder: "No nota"
+                                },
                                 domProps: { value: _vm.noNotaPembelian },
                                 on: {
                                   input: function($event) {
@@ -53145,6 +53087,7 @@ var render = function() {
                                 },
                                 domProps: { value: _vm.totalBayar },
                                 on: {
+                                  keypress: _vm.onlyNumber,
                                   input: function($event) {
                                     if ($event.target.composing) {
                                       return
@@ -58134,7 +58077,6 @@ var render = function() {
       _c(
         "form",
         {
-          ref: "anyName",
           attrs: { id: "anyName" },
           on: {
             submit: function($event) {
@@ -58215,9 +58157,7 @@ var render = function() {
                   attrs: { type: "text", placeholder: "Harga Pokok" },
                   domProps: { value: _vm.post.hrgPokok },
                   on: {
-                    keypress: function($event) {
-                      return _vm.isNumber()
-                    },
+                    keypress: _vm.onlyNumber,
                     input: function($event) {
                       if ($event.target.composing) {
                         return
@@ -58263,6 +58203,7 @@ var render = function() {
                   attrs: { type: "text", placeholder: "Harga Jual" },
                   domProps: { value: _vm.post.hrgJual },
                   on: {
+                    keypress: _vm.onlyNumber,
                     input: function($event) {
                       if ($event.target.composing) {
                         return
@@ -58340,9 +58281,7 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "form-group" }, [
-                _c("label", [
-                  _vm._v("Select Kategori: " + _vm._s(_vm.stsBarang))
-                ]),
+                _c("label", [_vm._v("Select Kategori:")]),
                 _vm._v(" "),
                 _c(
                   "select",
@@ -58434,6 +58373,7 @@ var render = function() {
                   attrs: { type: "text", placeholder: "Stok Barang" },
                   domProps: { value: _vm.post.stkBarang },
                   on: {
+                    keypress: _vm.onlyNumber,
                     input: function($event) {
                       if ($event.target.composing) {
                         return
@@ -58455,6 +58395,52 @@ var render = function() {
                           _vm._v(
                             "\n                                        " +
                               _vm._s(_vm.validation.stkBarang[0]) +
+                              "\n                                    "
+                          )
+                        ]
+                      )
+                    ])
+                  : _vm._e()
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "form-group" }, [
+                _c("label", [_vm._v("Stok Pcs")]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.post.stkInventori,
+                      expression: "post.stkInventori"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: { type: "text", placeholder: "Stok Pcs" },
+                  domProps: { value: _vm.post.stkInventori },
+                  on: {
+                    keypress: _vm.onlyNumber,
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.post, "stkInventori", $event.target.value)
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _vm.validation.stkInventori
+                  ? _c("div", [
+                      _c(
+                        "div",
+                        {
+                          staticClass: "alert alert-danger mt-1",
+                          attrs: { role: "alert" }
+                        },
+                        [
+                          _vm._v(
+                            "\n                                        " +
+                              _vm._s(_vm.validation.stkInventori[0]) +
                               "\n                                    "
                           )
                         ]
@@ -58534,7 +58520,7 @@ var render = function() {
                 }),
                 _vm._v(" "),
                 _vm.validation.qtyMin
-                  ? _c("div", [
+                  ? _c("div", { on: { keypress: _vm.onlyNumber } }, [
                       _c(
                         "div",
                         {
@@ -58579,7 +58565,7 @@ var render = function() {
                 }),
                 _vm._v(" "),
                 _vm.validation.qtyMax
-                  ? _c("div", [
+                  ? _c("div", { on: { keypress: _vm.onlyNumber } }, [
                       _c(
                         "div",
                         {
@@ -58691,119 +58677,10 @@ var render = function() {
           ])
         ]
       )
-    ]),
-    _vm._v(" "),
-    _c("table", { staticClass: "table table-hover table-bordered" }, [
-      _vm._m(0),
-      _vm._v(" "),
-      _c(
-        "tbody",
-        _vm._l(_vm.users, function(post1) {
-          return _c("tr", { key: post1.id }, [
-            _c("td", [_vm._v(_vm._s(post1.kdBarang))]),
-            _vm._v(" "),
-            _c("td", [_vm._v(_vm._s(post1.nmBarang))]),
-            _vm._v(" "),
-            _c("td", [_vm._v(_vm._s(_vm._f("currency")(post1.hrgPokok)))]),
-            _vm._v(" "),
-            _c("td", [_vm._v(_vm._s(_vm._f("currency")(post1.hrgJual)))]),
-            _vm._v(" "),
-            _c("td", [_vm._v(_vm._s(post1.stkBarang))]),
-            _vm._v(" "),
-            _c("td", [
-              _vm._v(
-                _vm._s(_vm._f("currency")(post1.hrgPokok * post1.stkBarang))
-              )
-            ]),
-            _vm._v(" "),
-            _c("td", [_vm._v(_vm._s(post1.namaKtg))]),
-            _vm._v(" "),
-            _c("td", [_vm._v(_vm._s(post1.satuanBarang))]),
-            _vm._v(" "),
-            _c("td", [_vm._v(_vm._s(post1.deskripsi))]),
-            _vm._v(" "),
-            _c(
-              "td",
-              { staticClass: "text-center" },
-              [
-                _c(
-                  "router-link",
-                  {
-                    staticClass: "btn btn-sm btn-primary",
-                    attrs: { to: { name: "edit", params: { id: post1.id } } }
-                  },
-                  [_vm._v("EDIT")]
-                )
-              ],
-              1
-            )
-          ])
-        }),
-        0
-      ),
-      _vm._v(" "),
-      _vm._m(1)
     ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("thead", [
-      _c("tr", [
-        _c("th", [_vm._v("Kode")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Nama")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Harga Pokok")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Harga Jual")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Stok Barang")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("ggg")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Kategori")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Satuan")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Deskripsi")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("AKSI")])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("tfoot", [
-      _c("tr", [
-        _c("th", [_vm._v("Kode")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Nama")]),
-        _vm._v(" "),
-        _c("th"),
-        _vm._v(" "),
-        _c("th", [_vm._v("Harga Jual")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Stok Barang")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("ggg")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Kategori")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Satuan")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Deskripsi")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("AKSI")])
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 

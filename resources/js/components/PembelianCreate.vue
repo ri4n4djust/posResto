@@ -58,7 +58,11 @@
                     </div>
                     <div class="box-body">
 
-                      <vue-single-select
+                      
+
+                 
+                  <form  @submit.prevent="PostItemPembelian" id="anyName" >
+                    <vue-single-select
                             v-model="post1"
                             :options="users"
                             :required="true"
@@ -66,31 +70,28 @@
                             optionKey="kdBarang"
                     ></vue-single-select>
 
-                 
-                  <form  @submit.prevent="PostItemPembelian" >
                     <div class="row">
-                        <div class="col-xs-2">
-                          <label>Nama</label>
-                        <select v-model='post1' class="form-control">
-                        <option v-for='post1 in users' v-bind:value='post1' :key="post1.id">{{post1.nmBarang}}</option>
-                        </select>
-                        </div>
                         <div class="col-xs-2">
                           <label>Satuan</label>
                         <input type="text" v-model="post1.satuanBarang" class="form-control" placeholder="Satuan" disabled>
                         </div>
                         <div class="col-xs-2">
                           <label>Harga</label>
-                        <input type="text" v-model="post1.hrgPokok" class="form-control" placeholder="Harga">
+                        <input type="text" v-model="post1.hrgPokok" class="form-control" placeholder="Harga" @keypress="onlyNumber">
                         </div>
                         <div class="col-xs-2">
                           <label>Qty</label>
-                        <input type="text" v-model="qtyBeli" class="form-control" placeholder="Qty">
+                        <input type="text" v-model="qtyBeli" class="form-control" placeholder="Qty" @keypress="onlyNumber">
                         </div>
                         <div class="col-xs-2">
                           <label>Total</label>
                         <input type="text" :value="(post1.hrgPokok * qtyBeli) || 0" :name="subTotal" class="form-control" placeholder="Total">
                         </div>
+                        <div class="col-xs-2">
+                          <label>Qty Satuan</label>
+                        <input type="text" v-model="qtySatuan" class="form-control" placeholder="Qty Satuan" @keypress="onlyNumber">
+                        </div>
+
                         <div class="col-xs-2">
                           <label>Aksi</label>
                           <button type="submit" class="btn btn-md btn-success form-control">Add</button>                        
@@ -165,17 +166,17 @@
                 ></vue-single-select>
 
                 <input type="hidden" class="form-control" v-model="post.id" placeholder="Supplier" required>
-                <input type="text" class="form-control" v-model="tglPembelian"  >
+                <input type="hidden" class="form-control" v-model="tglPembelian"  >
                 </p>
                 <p class="text-muted text-center">
-                <input type="text" class="form-control" v-model="noNotaPembelian" placeholder="No nota">
+                <input type="hidden" class="form-control" v-model="noNotaPembelian" placeholder="No nota">
                 </p>
                 <p class="text-muted text-center">
-                <input type="text" class="form-control" v-model="subtotal">
+                <input type="text" class="form-control" v-model="subtotal" >
                 </p>
                
                 <p class="text-muted text-center">
-                <input type="number" class="form-control" v-model="totalBayar" placeholder="Bayar" required>
+                <input type="number" class="form-control" v-model="totalBayar" placeholder="Bayar" @keypress="onlyNumber" required>
                 </p>
                       
                 <h3 class="profile-username ">Total {{ subtotal || 0 | currency }}</h3>
@@ -282,6 +283,13 @@
         },
 
         methods: {
+          onlyNumber ($event) {
+                //console.log($event.keyCode); //keyCodes value
+                let keyCode = ($event.keyCode ? $event.keyCode : $event.which);
+                if ((keyCode < 48 || keyCode > 57) && keyCode !== 46) { // 46 is dot
+                    $event.preventDefault();
+                }   
+            },
             loadTotal:function(){
                 let uri = '/api/totalTrxPembelian';
                 this.axios.post(uri, {
@@ -301,10 +309,10 @@
             });
             },
             LoadSupplier() {
-            let uri = '/api/supplier';
-            this.axios.get(uri).then(response => {
-                this.posts = response.data.data;
-            });
+              let uri = '/api/supplier';
+              this.axios.get(uri).then(response => {
+                  this.posts = response.data.data;
+              });
             },
             loadBarang:function(){
                 let uri = '/api/posts';
@@ -343,6 +351,7 @@
                     kdBarang: this.post1.kdBarang,
                     hrgBeli: this.post1.hrgPokok,
                     qtyBeli: this.qtyBeli,
+                    qtySatuan: this.qtySatuan,
                     totalBeli: this.post1.hrgPokok * this.qtyBeli,
                     tglNotaPembelian: this.tglPembelian,
                 })
@@ -350,6 +359,7 @@
                         this.loadTotal()
                         this.loadTransaksiPembelian()
                         alert('sukses donkkkkkkkk');
+                        document.getElementById("anyName").reset();
                         //this.loadTransaksiPenjualan()
                         //this.loadTotal()
                     });

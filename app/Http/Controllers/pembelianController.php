@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\PembelianDetail;
 use App\Pembelian;
 use App\KartuStok;
+use App\Inventori;
 
 use Illuminate\Support\Facades\DB;
 
@@ -83,6 +84,7 @@ class pembelianController extends Controller
                 'hrgPokok'     => $request->input('hrgBeli'),
                 'qtyBeli'     => $request->input('qtyBeli'),
                 'totalBeli'     => $request->input('totalBeli'),
+                'qtySatuan'     => $request->input('qtySatuan'),
             ]);
             
             $barang = DB::table('tblBarang')->where('kdBarang', $request->input('kdBarang'))->first();
@@ -92,6 +94,16 @@ class pembelianController extends Controller
             DB::table('tblBarang')->where('kdBarang', $request->input('kdBarang'))->update([
                 'stkBarang'     => $stokLama + $request->input('qtyBeli')
             ]);
+
+            //=======Update Tabel Inventori
+            $inven = DB::table('tblInventori')->where('kdBarang', $request->input('kdBarang'))->first();
+            $stokLamaInv = $inven->stkInventori;
+            DB::table('tblInventori')->where('kdBarang', $request->input('kdBarang'))->update([
+                'stkInventori'     => $stokLamaInv + $request->input('qtySatuan')
+            ]);
+            //===============================
+
+                        
             KartuStok::create([
                 'kdBarang'     => $request->input('kdBarang'),
                 'tglKartu'     => $request->input('tglNotaPembelian'),
@@ -125,13 +137,21 @@ class pembelianController extends Controller
                     'qtyBeli' => $qtyB + $request->input('qtyBeli'),
                     'totalBeli' => $totalB + $request->input('totalBeli'),
                     ]);
-            
+            //=======Update stok tabel barang
             $barang = DB::table('tblBarang')->where('kdBarang', $request->input('kdBarang'))->first();
             $stokLama = $barang->stkBarang;
-        
             DB::table('tblBarang')->where('kdBarang', $request->input('kdBarang'))->update([
             'stkBarang'     => $stokLama + $request->input('qtyBeli')
             ]);
+            //======================
+            //=======Update Tabel Inventori
+            $inven = DB::table('tblInventori')->where('kdBarang', $request->input('kdBarang'))->first();
+            $stokLamaInv = $inven->stkInventori;
+            DB::table('tblInventori')->where('kdBarang', $request->input('kdBarang'))->update([
+            'stkInventori'     => $stokLamaInv + $request->input('qtySatuan')
+            ]);
+            //===============================
+
             //=========EndPembelianDetail
             //=========Update Kartu Stok
             $brngstok = DB::table('tblKartuStok')
@@ -241,12 +261,18 @@ class pembelianController extends Controller
         $noNotaPembelian = $post->noNotaPembelian;
         $kodebarang = $post->kdBarang;
         $qtybarang = $post->qtyBeli;
+        $qtySatuan = $post->qtySatuan;
 
         $barang = DB::table('tblBarang')->where('kdBarang', $kodebarang)->first();
         $stokLama = $barang->stkBarang;
-
         DB::table('tblBarang')->where('kdBarang', $kodebarang)->update([
                 'stkBarang'     => $stokLama - $qtybarang
+        ]);
+
+        $inven = DB::table('tblInventori')->where('kdBarang', $kodebarang)->first();
+        $stokLamaInv = $barang->stkBarang;
+        DB::table('tblInventori')->where('kdBarang', $kodebarang)->update([
+                'stkInventori'     => $stokLama - $qtySatuan
         ]);
 
         DB::table('tblKartuStok')
