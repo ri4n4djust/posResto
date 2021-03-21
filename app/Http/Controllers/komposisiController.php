@@ -26,6 +26,18 @@ class komposisiController extends Controller
         ], 200);
     }
 
+    public function allInventori()
+    {
+        $posts = DB::table('tblInventori')
+               ->join('tblBarang', 'tblInventori.kdBarang', 'tblBarang.kdBarang')
+               ->get();
+        //$posts = Komposisi::latest()->get();
+        return response([
+            'success' => true,
+            'data' => $posts
+        ], 200);
+    }
+
     public function store(Request $request)
     {
             $post = Komposisi::create([

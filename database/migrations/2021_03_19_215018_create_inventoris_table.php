@@ -17,7 +17,9 @@ class CreateInventorisTable extends Migration
             $table->id();
             $table->char('kdBarang');
             $table->char('stkInventori')->nullable();
+            $table->char('hrgSatuan')->nullable();
             $table->char('satuanInventori')->nullable();
+            $table->char('stkSatuan')->nullable();
             $table->timestamps();
         });
     }

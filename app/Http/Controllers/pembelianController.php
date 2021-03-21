@@ -99,7 +99,9 @@ class pembelianController extends Controller
             $inven = DB::table('tblInventori')->where('kdBarang', $request->input('kdBarang'))->first();
             $stokLamaInv = $inven->stkInventori;
             DB::table('tblInventori')->where('kdBarang', $request->input('kdBarang'))->update([
-                'stkInventori'     => $stokLamaInv + $request->input('qtySatuan')
+                'stkInventori'     => $stokLamaInv + $request->input('qtySatuan'),
+                'hrgSatuan' => $request->input('hrgSatuan'),
+                'stkSatuan' => $request->input('stkSatuan'),
             ]);
             //===============================
 
@@ -270,9 +272,9 @@ class pembelianController extends Controller
         ]);
 
         $inven = DB::table('tblInventori')->where('kdBarang', $kodebarang)->first();
-        $stokLamaInv = $barang->stkBarang;
+        $stokLamaInv = $inven->stkInventori;
         DB::table('tblInventori')->where('kdBarang', $kodebarang)->update([
-                'stkInventori'     => $stokLama - $qtySatuan
+                'stkInventori'     => $stokLamaInv - $qtySatuan
         ]);
 
         DB::table('tblKartuStok')

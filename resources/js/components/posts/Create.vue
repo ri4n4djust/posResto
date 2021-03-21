@@ -89,11 +89,11 @@
 
                             <div class="form-group">
                                 <label>Stok Pcs</label>
-                                <input type="text" class="form-control" v-model="post.stkInventori"
+                                <input type="text" class="form-control" v-model="post.stkInve"
                                        placeholder="Stok Pcs" @keypress="onlyNumber">
-                                <div v-if="validation.stkInventori">
+                                <div v-if="validation.stkInve">
                                     <div class="alert alert-danger mt-1" role="alert">
-                                        {{ validation.stkInventori[0] }}
+                                        {{ validation.stkInve[0] }}
                                     </div>
                                 </div>
                             </div>

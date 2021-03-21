@@ -146,14 +146,21 @@
                     <div class="form-group">
                         <input type="hidden" class="form-control" v-model="post1.kdBarang">
                         <input type="hidden" class="form-control" v-model="post1.satuanBarang">
-                        <input type="text" class="form-control" v-model="post1.hrgJual" placeholder="Harga">
+                        <input type="text" class="form-control" v-model="post1.hrgSatuan" placeholder="Harga">
+                        <input type="text" class="form-control" v-model="post1.stkSatuan" placeholder="Harga">
                     </div>
                     <div class="form-group">
                         <input type="text" class="form-control" name="qtyBarang" v-model="qtyBarang" placeholder="Qty">
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" :value="post1.hrgJual * qtyBarang" :name="totalBarang">
+                      <label>Total Harga</label>
+                        <input type="text" class="form-control" :value="post1.hrgSatuan * qtyBarang" :name="totalBarang">
                     </div>
+                    <div class="form-group">
+                      <label>Total Stok</label>
+                        <input type="text" class="form-control" :value="post1.stkSatuan * qtyBarang" :name="totalStok">
+                    </div>
+
                     <button type="submit"  class="btn btn-md btn-success">Add</button>
                   </form>
                 </div>
@@ -243,7 +250,7 @@ components: { VueSingleSelect },
                 });
             },
             loadData:function(){
-                let uri = '/api/semuabarang';
+                let uri = '/api/itemKomposisi';
                 this.axios.get(uri).then(response => {
                 this.users = response.data.data;
                 

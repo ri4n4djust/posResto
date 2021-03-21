@@ -366,9 +366,6 @@ class mejaController extends Controller
                         //=========endKartu stok
 
                 }
-                
-                
-            
             
                 return response()->json([
                     'success' => true,

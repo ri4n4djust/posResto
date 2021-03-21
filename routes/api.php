@@ -43,14 +43,6 @@ Route::get('/supplier/{id?}', 'supplierController@show');
 Route::post('/supplier/update/{id?}', 'supplierController@update');
 Route::delete('/supplier/{id?}', 'supplierController@destroy');
 
-//========Kategori
-Route::get('/kategori', 'kategoriController@index');
-Route::post('/kategori/store', 'kategoriController@store');
-Route::get('/kategori/{id?}', 'kategoriController@show');
-Route::post('/kategori/update/{id?}', 'kategoriController@update');
-Route::delete('/kategori/{id?}', 'kategoriController@destroy');
-
-
 //========meja
 Route::get('/meja', 'mejaController@index');
 Route::get('/mejakosong', 'mejaController@mejakosong');
@@ -114,6 +106,7 @@ Route::delete('/user/{id?}', 'loginController@destroy');
 
 //========komposisi
 Route::get('/komposisi', 'komposisiController@index');
+Route::get('/itemKomposisi', 'komposisiController@allInventori');
 Route::post('/komposisi/detail/{id}', 'komposisiController@detail');
 Route::post('/komposisi/store', 'komposisiController@store');
 Route::delete('/komposisi/{id?}', 'komposisiController@destroy');

@@ -9,7 +9,7 @@ class Inventori extends Model
     //
     protected $table = 'tblInventori';
     protected $fillable = [
-        'kdBarang', 'sktInventori', 'satuanInventori'
+        'kdBarang', 'stkInventori', 'satuanInventori', 'hrgSatuan', 'stkSatuan'
         
     ];
 

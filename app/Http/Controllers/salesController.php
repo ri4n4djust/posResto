@@ -103,11 +103,14 @@ class salesController extends Controller
                 'qtyMax' => $request->input('qtyMax'),
                 'stsBarang' => $request->input('stsBarang'),
             ]);
-                Inventori::create([
+            
+            Inventori::create([
                     'kdBarang' => $request->input('kdBarang'),
-                    'stkInventori' => $request->input('stkInventori'),
+                    'stkInventori' => $request->input('stkInve'),
+                    'hrgSatuan' => $request->input('hrgPokok'),
+                    'stkSatuan' => '1',
 
-                ]);
+            ]);
 
             if ($post) {
                 return response()->json([
@@ -201,6 +204,10 @@ class salesController extends Controller
     public function destroy($id)
     {
         $post = Barang::findOrFail($id);
+        $kodebarang = $post->kdBarang;
+
+        $inven = Inventori::where('kdBarang', $kodebarang)->delete();
+
         $post->delete();
 
         if ($post) {

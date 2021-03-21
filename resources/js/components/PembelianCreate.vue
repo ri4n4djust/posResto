@@ -89,7 +89,7 @@
                         </div>
                         <div class="col-xs-2">
                           <label>Qty Satuan</label>
-                        <input type="text" v-model="qtySatuan" class="form-control" placeholder="Qty Satuan" @keypress="onlyNumber">
+                        <input type="text" v-model="qtySa" class="form-control" placeholder="Qty Satuan" @keypress="onlyNumber">
                         </div>
 
                         <div class="col-xs-2">
@@ -219,6 +219,7 @@
                 users: {},
                 pem: {},
                 qtyBeli: '',
+                qtySa: '',
                 hrgBeli: '',
                 subTotal: '',
                 totalBayar: '',
@@ -351,8 +352,10 @@
                     kdBarang: this.post1.kdBarang,
                     hrgBeli: this.post1.hrgPokok,
                     qtyBeli: this.qtyBeli,
-                    qtySatuan: this.qtySatuan,
+                    qtySatuan: this.qtySa,
                     totalBeli: this.post1.hrgPokok * this.qtyBeli,
+                    hrgSatuan: Math.ceil((this.post1.hrgPokok * this.qtyBeli) / this.qtySa),
+                    stkSatuan: Math.ceil(this.qtyBeli / this.qtySa),
                     tglNotaPembelian: this.tglPembelian,
                 })
                     .then((response) => {
