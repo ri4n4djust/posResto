@@ -11240,8 +11240,6 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     PostTransaksi: function PostTransaksi() {
-      var _this13 = this;
-
       var uri = '/api/addTransaksi/store';
       this.axios.post(uri, {
         noNota: this.noNota,
@@ -11255,16 +11253,15 @@ __webpack_require__.r(__webpack_exports__);
         userNota: this.$session.get('userId'),
         kembalianNota: this.totalBayar - (this.subtotal * this.pajak / 100 + this.subtotal - (this.subtotal * this.pajak / 100 + this.subtotal) * this.diskon / 100)
       });
-      window.print(printMe).then(function (response) {
+      window.print(printMe);
+      this.showModalBayar = false;
+      this.$router.push({
+        name: 'meja'
+      }).then(function (response) {
         //this.$print(printMe);
         //this.cekStatusMeja()
-        _this13.showModalBayar = false; //this.print(this.$refs['printMu'])
-
+        //this.print(this.$refs['printMu'])
         alert('Transaksi Selesai');
-
-        _this13.$router.push({
-          name: 'meja'
-        });
       });
     }
   }

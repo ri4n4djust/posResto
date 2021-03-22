@@ -681,14 +681,16 @@
                     
                 })
                 window.print(printMe)
+                this.showModalBayar = false
+                this.$router.push({name: 'meja'})
                     .then((response) => {
                         //this.$print(printMe);
                         
                         //this.cekStatusMeja()
-                        this.showModalBayar = false
+                        
                         //this.print(this.$refs['printMu'])
                         alert('Transaksi Selesai');
-                        this.$router.push({name: 'meja'});
+                        
                     });
                 
             },
