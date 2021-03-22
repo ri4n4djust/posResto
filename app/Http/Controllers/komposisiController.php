@@ -30,6 +30,7 @@ class komposisiController extends Controller
     {
         $posts = DB::table('tblInventori')
                ->join('tblBarang', 'tblInventori.kdBarang', 'tblBarang.kdBarang')
+               ->select('tblInventori.*', 'tblBarang.kdBarang', 'tblBarang.nmBarang', 'tblBarang.satuanBarang')
                ->get();
         //$posts = Komposisi::latest()->get();
         return response([
@@ -46,8 +47,9 @@ class komposisiController extends Controller
                 'hargaBarang'     => $request->input('hargaBarang'),
                 'qtyBarang'     => $request->input('qtyBarang'),
                 'satuanBarang'     => $request->input('satuanBarang'),
-                'totalBarang'     => $request->input('hargaBarang') * $request->input('qtyBarang') ,
-            ]);
+                'totalBarang'     => $request->input('totalBarang'),
+                'totalSatuan'     => $request->input('totalSatuan') ,
+                ]);
 
 
             if ($post) {

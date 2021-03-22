@@ -21,6 +21,7 @@ class CreateKomposisisTable extends Migration
             $table->string('satuanBarang');
             $table->double('hargaBarang');
             $table->double('totalBarang');
+            $table->char('totalSatuan');
             $table->timestamps();
         });
     }

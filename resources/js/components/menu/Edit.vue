@@ -42,7 +42,7 @@
                                 </div>
                             </div>
                             
-                            <input type="hidden" class="form-control" v-model="tot">
+                            <input type="text" class="form-control" v-model="tot">
                             <div class="form-group">
                                 <router-link :to="{ name: 'menu' }" class="btn btn-primary btn-success">KEMBALI</router-link>
                                 <button type="submit" class="btn btn-md btn-success">UPDATE</button>
@@ -204,6 +204,7 @@ components: { VueSingleSelect },
                 totalBarang: '',
                 qtyBarang: '',
                 tot: '',
+                totalStok: '',
             }
         },
         beforeCreate: function () {
@@ -281,10 +282,11 @@ components: { VueSingleSelect },
                 {
                     idMenu: this.post.kdMenu,
                     idBarang: this.post1.kdBarang,
-                    hargaBarang: this.post1.hrgJual,
+                    hargaBarang: Math.ceil(this.post1.hrgSatuan),
                     satuanBarang: this.post1.satuanBarang,
-                    qtyBarang: this.qtyBarang,
-                    toalBarang: this.qtyBarang * this.post1.hrgJual,
+                    qtyBarang: this.post1.stkSatuan * this.qtyBarang,
+                    totalBarang: Math.ceil(this.post1.hrgSatuan * this.qtyBarang),
+                    totalSatuan: this.qtyBarang,
                 })
                     .then((response) => {
                         alert('sukses ditambahkan');

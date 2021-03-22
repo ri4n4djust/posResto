@@ -9,6 +9,7 @@ use App\Transaksi;
 use App\Barang;
 use App\Penjualan;
 use App\KartuStok;
+use App\KartuStokInventori;
 
 use Illuminate\Support\Facades\DB;
 
@@ -254,10 +255,17 @@ class mejaController extends Controller
             $barang = DB::table('tblBarang')->where('kdBarang', $request->input('idBarang'))->first();
             $stokLama = $barang->stkBarang;
             $satuanBarang = $barang->satuanBarang;
-
             DB::table('tblBarang')->where('kdBarang', $request->input('idBarang'))->update([
                 'stkBarang'     => $stokLama - $request->input('qtyBarang')
             ]);
+
+            $barangInv = DB::table('tblInventori')->where('kdBarang', $request->input('idBarang'))->first();
+            $stokLamaInv = $barangInv->stkInventori;
+            //$satuanBarang = $barang->satuanBarang;
+            DB::table('tblInventori')->where('kdBarang', $request->input('idBarang'))->update([
+                'stkInventori'     => $stokLamaInv - $request->input('qtyBarang')
+            ]);
+
             KartuStok::create([
                 'kdBarang'     => $request->input('idBarang'),
                 'tglKartu'     => $request->input('tglNota'),
@@ -266,6 +274,15 @@ class mejaController extends Controller
                 'noTransaksi'     => $request->input('noNota'),
                 'keteranganKartu'     => 'Penjualan',
                 'satuanKartu' => $satuanBarang,
+            ]);
+            KartuStokInventori::create([
+                'kdBarang'     => $request->input('idBarang'),
+                'tglInv'     => $request->input('tglNota'),
+                'qtyMasukInv'     => '0',
+                'qtyKeluarInv'     => $request->input('qtyBarang'),
+                'noTransaksiInv'     => $request->input('noNota'),
+                'keteranganKartuInv'     => 'Penjualan',
+                'satuanKartuInv' => $satuanBarang,
             ]);
 
                 return response()->json([
@@ -291,10 +308,14 @@ class mejaController extends Controller
                 
                 $barang = DB::table('tblBarang')->where('kdBarang', $request->input('idBarang'))->first();
                 $stokLama = $barang->stkBarang;
-            
                 DB::table('tblBarang')->where('kdBarang', $request->input('idBarang'))->update([
                 'stkBarang'     => $stokLama - $request->input('qtyBarang')
+                ]);
 
+                $barangInv = DB::table('tblInventori')->where('kdBarang', $request->input('idBarang'))->first();
+                $stokLamaInv = $barangInv->stkInventori;
+                DB::table('tblInventori')->where('kdBarang', $request->input('idBarang'))->update([
+                'stkInventori'     => $stokLamaInv - $request->input('qtyBarang')
                 ]);
                 //=========Update Kartu Stok
                     $brngstok = DB::table('tblKartuStok')
@@ -308,6 +329,18 @@ class mejaController extends Controller
                     ->update([
                         'qtyKeluar' => $qtyS + $request->input('qtyBarang'),
                         ]);
+                //===================
+                        $brngstokInv = DB::table('tblKartuStokInventori')
+                        ->where('kdBarang', $request->input('idBarang'))
+                        ->where('noTransaksiInv', $request->input('noNota'))
+                        ->first();
+                    $qtySInv = $brngstokInv->qtyKeluarInv ;
+                    DB::table('tblKartuStokInventori')
+                        ->where('kdBarang', $request->input('idBarang'))
+                        ->where('noTransaksiInv', $request->input('noNota'))
+                        ->update([
+                            'qtyKeluarInv' => $qtySInv + $request->input('qtyBarang'),
+                            ]);
                 //=========endKartu stok
 
                 return response()->json([
@@ -344,15 +377,21 @@ class mejaController extends Controller
                             ->get();
                 foreach ($kompo as $k){
                         $ko = $k->idBarang;
-                        $qtyCost = $k->qtyBarang * $request->input('qtyBarang'); 
+                        $qtyCost = $k->qtyBarang * $request->input('qtyBarang');
+                        $qtyCostSatuan = $k->totalSatuan * $request->input('qtyBarang'); 
 
                         $barang = DB::table('tblBarang')->where('kdBarang', $ko)->first();
                         $stokLama = $barang->stkBarang;
                         $satuanBarang = $barang->satuanBarang;
-
                         DB::table('tblBarang')->where('kdBarang', $ko)
                         ->update(array('stkBarang' => $stokLama - $qtyCost ));
 
+
+                        $barangInv = DB::table('tblInventori')->where('kdBarang', $ko)->first();
+                        $stokLamaInv = $barangInv->stkInventori;
+                        DB::table('tblInventori')->where('kdBarang', $ko)
+                        ->update(array('stkInventori' => $stokLamaInv - $qtyCostSatuan ));
+                        
                         //=========Update Kartu Stok
                         KartuStok::insert([
                             'kdBarang'     => $k->idBarang,
@@ -362,6 +401,15 @@ class mejaController extends Controller
                             'noTransaksi'     => $request->input('noNota'),
                             'keteranganKartu'     => 'Penjualan Menu',
                             'satuanKartu' => $satuanBarang,
+                        ]);
+                        KartuStokInventori::insert([
+                            'kdBarang'     => $k->idBarang,
+                            'tglInv'     => $request->input('tglNota'),
+                            'qtyMasukInv'     => '0',
+                            'qtyKeluarInv'     => $qtyCostSatuan,
+                            'noTransaksiInv'     => $request->input('noNota'),
+                            'keteranganKartuInv'     => 'Penjualan Menu',
+                            'satuanKartuInv' => $satuanBarang,
                         ]);
                         //=========endKartu stok
 
@@ -395,30 +443,22 @@ class mejaController extends Controller
                         ->get();
                 foreach ($kompo as $k){
                     $ko = $k->idBarang;
-                    $qtyCost = $k->qtyBarang * $request->input('qtyBarang'); 
+                    $qtyCost = $k->qtyBarang * $request->input('qtyBarang');
+                    $qtyCostSatuan = $k->totalSatuan * $request->input('qtyBarang'); 
 
                     $barang = DB::table('tblBarang')->where('kdBarang', $ko)->first();
                     $stokLama = $barang->stkBarang;
                     $satuanBarang = $barang->satuanBarang;
-
                     DB::table('tblBarang')->where('kdBarang', $ko)
                     ->update(array('stkBarang' => $stokLama - $qtyCost ));
 
-                   //=========Update Kartu Stok
-                     //$brngstok = DB::table('tblKartuStok')
-                     //   ->where('kdBarang', $k0)
-                     //   ->where('noTransaksi', $request->input('noNota'))
-                     //   ->first();
+                    $barangInv = DB::table('tblInventori')->where('kdBarang', $ko)->first();
+                    $stokLamaInv = $barangInv->stkInventori;
+                    //$satuanBarang = $barang->satuanBarang;
+                    DB::table('tblInventori')->where('kdBarang', $ko)
+                    ->update(array('stkInventori' => $stokLamaInv - $qtyCostSatuan ));
 
-                    //$qtyS = $brngstok->qtyKeluar ;
 
-                    /* DB::table('tblKartuStok')
-                        ->where('kdBarang', $ko)
-                        ->where('noTransaksi', $request->input('noNota'))
-                        ->update(array([
-                            'qtyKeluar' => $qtyS + $qtyCost,
-                            ]));
-                    */
                     KartuStok::insert([
                         'kdBarang'     => $k->idBarang,
                         'tglKartu'     => $request->input('tglNota'),
@@ -427,6 +467,15 @@ class mejaController extends Controller
                         'noTransaksi'     => $request->input('noNota'),
                         'keteranganKartu'     => 'Penjualan Menu',
                         'satuanKartu' => $satuanBarang,
+                    ]);
+                    KartuStokInventori::insert([
+                        'kdBarang'     => $k->idBarang,
+                        'tglInv'     => $request->input('tglNota'),
+                        'qtyMasukInv'     => '0',
+                        'qtyKeluarInv'     => $qtyCostSatuan,
+                        'noTransaksiInv'     => $request->input('noNota'),
+                        'keteranganKartuInv'     => 'Penjualan Menu',
+                        'satuanKartuInv' => $satuanBarang,
                     ]);
                     //=========endKartu stok
                 
@@ -571,9 +620,23 @@ class mejaController extends Controller
                 'stkBarang'     => $stokLama + $qtybarang
         ]);
 
+        $barangInv = DB::table('tblInventori')->where('kdBarang', $kodebarang)->first();
+        $stokLamaInv = $barangInv->stkInventori;
+        DB::table('tblInventori')->where('kdBarang', $kodebarang)->update([
+                'stkInventori'     => $stokLamaInv + $qtybarang
+        ]);
+
+
         DB::table('tblKartuStok')
             ->where('kdBarang', $kodebarang)
             ->where('noTransaksi', $noNotaTmp)
+            ->where('keteranganKartu', 'Penjualan')
+            ->delete();
+            
+        DB::table('tblKartuStokInventori')
+            ->where('kdBarang', $kodebarang)
+            ->where('noTransaksiInv', $noNotaTmp)
+            ->where('keteranganKartuInv', 'Penjualan')
             ->delete();
 
             $post->delete();
@@ -589,19 +652,32 @@ class mejaController extends Controller
                             ->get();
                 foreach ($kompo as $k){
                         $ko = $k->idBarang;
-                        $qtyCost = $k->qtyBarang * $qtybarang; 
+                        $qtyCost = $k->qtyBarang * $qtybarang;
+                        $qtyCostSatuan = $k->totalSatuan * $qtybarang;
+
 
                         $barang = DB::table('tblBarang')->where('kdBarang', $ko)->first();
                         $stokLama = $barang->stkBarang;
                         $satuanBarang = $barang->satuanBarang;
-
                         DB::table('tblBarang')->where('kdBarang', $ko)
                         ->update(array('stkBarang' => $stokLama + $qtyCost ));
+
+                        $barangInv = DB::table('tblInventori')->where('kdBarang', $ko)->first();
+                        $stokLamaInv = $barangInv->stkInventori;
+                        //$satuanBarang = $barang->satuanBarang;
+                        DB::table('tblInventori')->where('kdBarang', $ko)
+                        ->update(array('stkInventori' => $stokLamaInv + $qtyCostSatuan ));
 
                         //=========Update Kartu Stok
                         DB::table('tblKartuStok')
                             ->where('kdBarang', $ko)
                             ->where('noTransaksi', $noNotaTmp)
+                            ->where('keteranganKartu', 'Penjualan Menu')
+                            ->delete();
+                        DB::table('tblKartuStokInventori')
+                            ->where('kdBarang', $ko)
+                            ->where('noTransaksiInv', $noNotaTmp)
+                            ->where('keteranganKartuInv', 'Penjualan Menu')
                             ->delete();
                         //=========endKartu stok
 

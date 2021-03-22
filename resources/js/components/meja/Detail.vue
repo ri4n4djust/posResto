@@ -439,9 +439,18 @@
 
     @media print
     {
-        #non-printable { display: none; }
-        #printMe { display: block; }
-    }
+  body * {
+    visibility: hidden;
+  }
+  #printMe, #printMe * {
+    visibility: visible;
+  }
+  #printMe {
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+}
     </style>
 
 
@@ -458,6 +467,7 @@
         data() {
             return {
                 post: {},
+                statusMeja:{},
                 move1: null,
                 post1: null,
                 post2: null,
@@ -527,6 +537,7 @@
             cekStok() {
                 this.brg = this.post1 - this.qtyBarang;
             },
+
 
             PostUpdate() {
                 let uri = `/api/posts/update/${this.$route.params.id}`;
@@ -648,6 +659,7 @@
                         alert('sukses ditambahkan');
                         this.loadDataTransaksi()
                         this.loadTotal()
+                        //this.cekStatusMeja()
                         this.showModalMenu = false
                     });
                 
@@ -668,12 +680,15 @@
                     kembalianNota: this.totalBayar - ((this.subtotal * this.pajak / 100 + this.subtotal) - ((this.subtotal * this.pajak / 100 + this.subtotal) * this.diskon / 100)),
                     
                 })
+                window.print(printMe)
                     .then((response) => {
-                        this.$print(printMe);
-                        //window.print()
+                        //this.$print(printMe);
+                        
+                        //this.cekStatusMeja()
+                        this.showModalBayar = false
                         //this.print(this.$refs['printMu'])
-                        //alert('Transaksi Selesai');
-                        //this.$router.push({name: 'meja'});
+                        alert('Transaksi Selesai');
+                        this.$router.push({name: 'meja'});
                     });
                 
             },

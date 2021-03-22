@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\PembelianDetail;
 use App\Pembelian;
 use App\KartuStok;
+use App\KartuStokInventori;
 use App\Inventori;
 
 use Illuminate\Support\Facades\DB;
@@ -92,7 +93,8 @@ class pembelianController extends Controller
             $satuanKartu = $barang->satuanBarang;
 
             DB::table('tblBarang')->where('kdBarang', $request->input('kdBarang'))->update([
-                'stkBarang'     => $stokLama + $request->input('qtyBeli')
+                'stkBarang'     => $stokLama + $request->input('qtyBeli'),
+                'hrgPokok'     => $request->input('hrgBeli'),
             ]);
 
             //=======Update Tabel Inventori
@@ -114,6 +116,15 @@ class pembelianController extends Controller
                 'noTransaksi'     => $request->input('noNotaPembelian'),
                 'keteranganKartu'     => 'Pembelian',
                 'satuanKartu' => $satuanKartu,
+            ]);
+            KartuStokInventori::create([
+                'kdBarang'     => $request->input('kdBarang'),
+                'tglInv'     => $request->input('tglNotaPembelian'),
+                'qtyMasukInv'     => $request->input('qtySatuan'),
+                'qtyKeluarInv'     => '0',
+                'noTransaksiInv'     => $request->input('noNotaPembelian'),
+                'keteranganKartuInv'     => 'Pembelian',
+                'satuanKartuInv' => $satuanKartu,
             ]);
 
                 return response()->json([
@@ -280,6 +291,11 @@ class pembelianController extends Controller
         DB::table('tblKartuStok')
             ->where('kdBarang', $kodebarang)
             ->where('noTransaksi', $noNotaPembelian)
+            ->delete();
+        
+        DB::table('tblKartuStokInventori')
+            ->where('kdBarang', $kodebarang)
+            ->where('noTransaksiInv', $noNotaPembelian)
             ->delete();
 
         $post->delete();
