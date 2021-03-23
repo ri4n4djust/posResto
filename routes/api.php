@@ -130,3 +130,6 @@ Route::post('/dataStokOpname/{id}', 'stokController@listTransaksiOpname');
 Route::delete('/opnameDelete/{id?}', 'stokController@destroy1');
 Route::post('/totalTrxOpname', 'stokController@totalTrxOpname');
 Route::post('/addOpname/store', 'stokController@addTransaksiOpname');
+
+//=========Inventori
+Route::get('/inventori', 'stokController@indexInventori');

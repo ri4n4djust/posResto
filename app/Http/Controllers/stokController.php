@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\KartuStok;
+use App\KartuStokInventori;
+use App\Inventori;
 use App\StokOpnameDetail;
 use App\StokOpname;
 
@@ -18,6 +20,18 @@ class stokController extends Controller
         return response([
             'success' => true,
             'message' => 'List Semua Supplier',
+            'data' => $posts
+        ], 200);
+    }
+
+    public function indexInventori()
+    {
+        $posts = Inventori::join('tblBarang', 'tblInventori.kdBarang', '=', 'tblBarang.kdBarang')
+        ->select('tblInventori.*', 'tblBarang.kdBarang', 'tblBarang.nmBarang', 'tblBarang.satuanBarang')
+                ->get();
+        return response([
+            'success' => true,
+            'message' => 'List Semua Inventori',
             'data' => $posts
         ], 200);
     }

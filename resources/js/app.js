@@ -94,6 +94,9 @@ import StokOpnameComponent from './components/laporan/laporanStokOpname.vue';
 import ViewStokOpnameComponent from './components/stokOpname/StokOpname.vue';
 import InputStokOpnameComponent from './components/stokOpname/StokOpnameCreate.vue';
 
+import InventoriComponent from './components/stokInventori/StokInventori.vue';
+import InputInventoriComponent from './components/stokInventori/StokInventoriCreate.vue';
+
 import VueCurrencyFilter from 'vue-currency-filter'
 Vue.use(VueCurrencyFilter,
     {
@@ -251,6 +254,16 @@ const routes = [
         name: 'stokopnamecreate',
         path: '/stokopnamecreate',
         component: InputStokOpnameComponent
+    },
+    {
+        name: 'stokinventori',
+        path: '/stokinventori',
+        component: InventoriComponent
+    },
+    {
+        name: 'stokinventoricreate',
+        path: '/stokinventoricreate',
+        component: InputInventoriComponent
     },
     //=========Home
     {
