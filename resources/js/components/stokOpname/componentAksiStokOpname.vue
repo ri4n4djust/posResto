@@ -65,9 +65,9 @@ export default {
     data() {
             return {
                 posts: [],
-                //pem: [],
+                pem: [],
                 showModalDetail: false,
-                data: this.posts,
+                //data: this.posts,
                 qtyGudang: '',
                 keterangan: '',
                 tglOpname: new Date().toJSON().slice(0,10).replace(/-/g,'/'),
@@ -114,6 +114,7 @@ export default {
         data: {
             type: Object,
             required: true,
+           
         },
     },
 };
