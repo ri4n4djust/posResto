@@ -183,10 +183,6 @@
                             optionLabel="nmBarang" 
                 ></vue-single-select>
                 
-                <select v-model='post1' class="form-control">
-                  <option v-for='post1 in users' v-bind:value='post1' :key="post1.id">{{post1.nmBarang}}</option>
-                </select>
-
                 <div v-if="post1">
                   <form  @submit.prevent="PostItem" >
                     <div class="form-group">
@@ -210,13 +206,12 @@
                       <input type="text" class="form-control" :value="(post1.hrgJual * qtyBarang) || 0" :name="total"  placeholder="total">
                     </div>
                     <div class="form-group">
-                      <h3 class="profile-username text-center">Sisa sTok {{ post1.stkBarang - qtyBarang  }}</h3>
                     <button type="submit" data-dismiss="showModal" class="btn btn-md btn-success">Add</button>
                     </div>
                   </form>
                 </div>
                 <div v-else>
-                  no posts
+                  No Selected
                 </div>
                 
 
@@ -248,10 +243,6 @@
                             optionLabel="nmMenu" 
                 ></vue-single-select>
 
-                <select v-model='post2' class="form-control">
-                  <option v-for='post2 in menus' v-bind:value='post2' :key="post2.id">{{post2.nmMenu}}</option>
-                </select>
-
                 <div v-if="post2">
                   <form  @submit.prevent="PostMenu" >
                     <div class="form-group">
@@ -276,7 +267,7 @@
                   </form>
                 </div>
                 <div v-else>
-                  no posts
+                  No Selected
                 </div>
 
 
@@ -300,40 +291,69 @@
                 <h4 class="modal-title">Add Payment</h4>
               </div>
               <div class="modal-body">
-                
-
                 <form  @submit.prevent="PostTransaksi" >
-                <p class="text-muted text-center">
-                <input type="hidden" class="form-control" v-model="tglNota" >
-                <input type="text" class="form-control" v-model="pelanggan" placeholder="Customer">
-                </p>
-                <p class="text-muted text-center">
-                <input type="text" class="form-control" v-model="noNota" placeholder="No nota">
-                </p>
-                <p class="text-muted text-center">
-                <input type="text" class="form-control" v-model="subtotal">
-                </p>
-                <p class="text-muted text-center">
-                <input type="number" class="form-control" v-model="pajak" placeholder="Tax">
-                <input type="hidden" class="form-control" :value="(subtotal * pajak / 100 + subtotal)" :name="totalTransaksipjk" >
-                </p>
-                <p class="text-muted text-center">
-                <input type="number" class="form-control" v-model="diskon" placeholder="Diskon">
-                <input type="hidden" class="form-control" :value="((subtotal * pajak / 100 + subtotal) * diskon / 100)" :name="diskon1" >
-                </p>
+                  <input type="hidden" class="form-control" v-model="tglNota" >
+                <input type="hidden" class="form-control" v-model="pelanggan" placeholder="Customer">
+                <input type="hidden" class="form-control" v-model="noNota" placeholder="No nota">
+                <input type="hidden" class="form-control" v-model="subtotal">
 
-                <p class="text-muted text-center">
-                <input type="number" class="form-control" v-model="totalBayar" placeholder="Bayar" required>
-                </p>
                 <p class="text-muted text-center">
                 <input type="hidden" class="form-control" :value="((subtotal * pajak / 100 + subtotal) - ((subtotal * pajak / 100 + subtotal) * diskon / 100))  || 0 " :name="totalTransaksiBayar"  >
-                </p>
-                
                 <h3 class="profile-username ">Total {{ ((subtotal * pajak / 100 + subtotal) - ((subtotal * pajak / 100 + subtotal) * diskon / 100))  || 0 | currency }}</h3>
-                <h3 class="profile-username ">Kembali : {{ totalBayar - ((subtotal * pajak / 100 + subtotal) - ((subtotal * pajak / 100 + subtotal) * diskon / 100))  || 0 | currency }}</h3>
-                <p class="text-muted text-center">
-                <button type="submit"  class="btn btn-md btn-success" >Bayar</button>                
-                </p>
+
+
+                <div class="row input-group">
+                <div class="col-xs-4">
+                  <span class="input-group-addon">Tax in %</span>
+                  <input type="number" class="form-control " v-model="pajak" placeholder="Tax">
+                  <input type="hidden" class="form-control" :value="(subtotal * pajak / 100 + subtotal)" :name="totalTransaksipjk" >
+                </div>
+                <div class="col-xs-4">
+                  <span class="input-group-addon">Disc in %</span>
+                  <input type="number" class="form-control" v-model="diskon" placeholder="Diskon">
+                  <input type="hidden" class="form-control" :value="((subtotal * pajak / 100 + subtotal) * diskon / 100)" :name="diskon1" >
+                </div>
+              </div>
+              <br>
+             
+
+                      <div class="nav-tabs-custom">
+                            <ul class="nav nav-tabs">
+                            <li class="active"><a href="#cash" data-toggle="tab">Cash</a></li>
+                            <li><a href="#debit" data-toggle="tab">Card</a></li>
+                            <li><a href="#emoney" data-toggle="tab">Emoney</a></li>
+                            </ul>
+                            <div class="tab-content">
+
+                              <div class="active tab-pane" id="cash">
+                                 <div class="input-group">
+                                  <span class="input-group-addon">Rp.</span>
+                                  <input type="number" class="form-control" v-model="totalBayar" placeholder="Bayar" required>
+                                  </div>
+                                  
+                                  <h3 class="profile-username ">Kembali : {{ totalBayar - ((subtotal * pajak / 100 + subtotal) - ((subtotal * pajak / 100 + subtotal) * diskon / 100))  || 0 | currency }}</h3>
+                                  <p class="text-muted text-center">
+                                  <button type="submit"  class="btn btn-md btn-success" >Bayar</button>                
+                                  </p>
+                              </div>
+
+                              <div class="tab-pane" id="debit">
+                                Timeline
+                              </div>
+
+                              <div class="tab-pane" id="emoney">
+                                Emoney
+                              </div>
+
+                            </div>
+                      </div>
+                
+
+                
+
+                
+
+               
               </form>
 
               <div id="printMe">
@@ -680,16 +700,16 @@
                     kembalianNota: this.totalBayar - ((this.subtotal * this.pajak / 100 + this.subtotal) - ((this.subtotal * this.pajak / 100 + this.subtotal) * this.diskon / 100)),
                     
                 })
-                window.print(printMe)
-                this.showModalBayar = false
-                this.$router.push({name: 'meja'})
+                //window.print(printMe)
+                //this.showModalBayar = false
+                //this.$router.push({name: 'meja'})
                     .then((response) => {
                         //this.$print(printMe);
-                        
+                        window.print(printMe)
                         //this.cekStatusMeja()
                         
                         //this.print(this.$refs['printMu'])
-                        alert('Transaksi Selesai');
+                        //alert('Transaksi Selesai');
                         
                     });
                 

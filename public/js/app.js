@@ -11019,6 +11019,26 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -11252,16 +11272,14 @@ __webpack_require__.r(__webpack_exports__);
         bayarNota: this.totalBayar,
         userNota: this.$session.get('userId'),
         kembalianNota: this.totalBayar - (this.subtotal * this.pajak / 100 + this.subtotal - (this.subtotal * this.pajak / 100 + this.subtotal) * this.diskon / 100)
-      });
-      window.print(printMe);
-      this.showModalBayar = false;
-      this.$router.push({
-        name: 'meja'
-      }).then(function (response) {
+      }) //window.print(printMe)
+      //this.showModalBayar = false
+      //this.$router.push({name: 'meja'})
+      .then(function (response) {
         //this.$print(printMe);
-        //this.cekStatusMeja()
+        window.print(printMe); //this.cekStatusMeja()
         //this.print(this.$refs['printMu'])
-        alert('Transaksi Selesai');
+        //alert('Transaksi Selesai');
       });
     }
   }
@@ -56191,45 +56209,6 @@ var render = function() {
                             }
                           }),
                           _vm._v(" "),
-                          _c(
-                            "select",
-                            {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: _vm.post1,
-                                  expression: "post1"
-                                }
-                              ],
-                              staticClass: "form-control",
-                              on: {
-                                change: function($event) {
-                                  var $$selectedVal = Array.prototype.filter
-                                    .call($event.target.options, function(o) {
-                                      return o.selected
-                                    })
-                                    .map(function(o) {
-                                      var val =
-                                        "_value" in o ? o._value : o.value
-                                      return val
-                                    })
-                                  _vm.post1 = $event.target.multiple
-                                    ? $$selectedVal
-                                    : $$selectedVal[0]
-                                }
-                              }
-                            },
-                            _vm._l(_vm.users, function(post1) {
-                              return _c(
-                                "option",
-                                { key: post1.id, domProps: { value: post1 } },
-                                [_vm._v(_vm._s(post1.nmBarang))]
-                              )
-                            }),
-                            0
-                          ),
-                          _vm._v(" "),
                           _vm.post1
                             ? _c("div", [
                                 _c(
@@ -56513,23 +56492,6 @@ var render = function() {
                                     _vm._v(" "),
                                     _c("div", { staticClass: "form-group" }, [
                                       _c(
-                                        "h3",
-                                        {
-                                          staticClass:
-                                            "profile-username text-center"
-                                        },
-                                        [
-                                          _vm._v(
-                                            "Sisa sTok " +
-                                              _vm._s(
-                                                _vm.post1.stkBarang -
-                                                  _vm.qtyBarang
-                                              )
-                                          )
-                                        ]
-                                      ),
-                                      _vm._v(" "),
-                                      _c(
                                         "button",
                                         {
                                           staticClass: "btn btn-md btn-success",
@@ -56546,7 +56508,7 @@ var render = function() {
                               ])
                             : _c("div", [
                                 _vm._v(
-                                  "\n                  no posts\n                "
+                                  "\n                  No Selected\n                "
                                 )
                               ])
                         ],
@@ -56613,45 +56575,6 @@ var render = function() {
                               expression: "post2"
                             }
                           }),
-                          _vm._v(" "),
-                          _c(
-                            "select",
-                            {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: _vm.post2,
-                                  expression: "post2"
-                                }
-                              ],
-                              staticClass: "form-control",
-                              on: {
-                                change: function($event) {
-                                  var $$selectedVal = Array.prototype.filter
-                                    .call($event.target.options, function(o) {
-                                      return o.selected
-                                    })
-                                    .map(function(o) {
-                                      var val =
-                                        "_value" in o ? o._value : o.value
-                                      return val
-                                    })
-                                  _vm.post2 = $event.target.multiple
-                                    ? $$selectedVal
-                                    : $$selectedVal[0]
-                                }
-                              }
-                            },
-                            _vm._l(_vm.menus, function(post2) {
-                              return _c(
-                                "option",
-                                { key: post2.id, domProps: { value: post2 } },
-                                [_vm._v(_vm._s(post2.nmMenu))]
-                              )
-                            }),
-                            0
-                          ),
                           _vm._v(" "),
                           _vm.post2
                             ? _c("div", [
@@ -56882,7 +56805,7 @@ var render = function() {
                               ])
                             : _c("div", [
                                 _vm._v(
-                                  "\n                  no posts\n                "
+                                  "\n                  No Selected\n                "
                                 )
                               ])
                         ],
@@ -56943,206 +56866,96 @@ var render = function() {
                             }
                           },
                           [
-                            _c("p", { staticClass: "text-muted text-center" }, [
-                              _c("input", {
-                                directives: [
-                                  {
-                                    name: "model",
-                                    rawName: "v-model",
-                                    value: _vm.tglNota,
-                                    expression: "tglNota"
-                                  }
-                                ],
-                                staticClass: "form-control",
-                                attrs: { type: "hidden" },
-                                domProps: { value: _vm.tglNota },
-                                on: {
-                                  input: function($event) {
-                                    if ($event.target.composing) {
-                                      return
-                                    }
-                                    _vm.tglNota = $event.target.value
-                                  }
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.tglNota,
+                                  expression: "tglNota"
                                 }
-                              }),
-                              _vm._v(" "),
-                              _c("input", {
-                                directives: [
-                                  {
-                                    name: "model",
-                                    rawName: "v-model",
-                                    value: _vm.pelanggan,
-                                    expression: "pelanggan"
+                              ],
+                              staticClass: "form-control",
+                              attrs: { type: "hidden" },
+                              domProps: { value: _vm.tglNota },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
                                   }
-                                ],
-                                staticClass: "form-control",
-                                attrs: {
-                                  type: "text",
-                                  placeholder: "Customer"
-                                },
-                                domProps: { value: _vm.pelanggan },
-                                on: {
-                                  input: function($event) {
-                                    if ($event.target.composing) {
-                                      return
-                                    }
-                                    _vm.pelanggan = $event.target.value
-                                  }
+                                  _vm.tglNota = $event.target.value
                                 }
-                              })
-                            ]),
+                              }
+                            }),
                             _vm._v(" "),
-                            _c("p", { staticClass: "text-muted text-center" }, [
-                              _c("input", {
-                                directives: [
-                                  {
-                                    name: "model",
-                                    rawName: "v-model",
-                                    value: _vm.noNota,
-                                    expression: "noNota"
-                                  }
-                                ],
-                                staticClass: "form-control",
-                                attrs: { type: "text", placeholder: "No nota" },
-                                domProps: { value: _vm.noNota },
-                                on: {
-                                  input: function($event) {
-                                    if ($event.target.composing) {
-                                      return
-                                    }
-                                    _vm.noNota = $event.target.value
-                                  }
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.pelanggan,
+                                  expression: "pelanggan"
                                 }
-                              })
-                            ]),
+                              ],
+                              staticClass: "form-control",
+                              attrs: {
+                                type: "hidden",
+                                placeholder: "Customer"
+                              },
+                              domProps: { value: _vm.pelanggan },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.pelanggan = $event.target.value
+                                }
+                              }
+                            }),
                             _vm._v(" "),
-                            _c("p", { staticClass: "text-muted text-center" }, [
-                              _c("input", {
-                                directives: [
-                                  {
-                                    name: "model",
-                                    rawName: "v-model",
-                                    value: _vm.subtotal,
-                                    expression: "subtotal"
-                                  }
-                                ],
-                                staticClass: "form-control",
-                                attrs: { type: "text" },
-                                domProps: { value: _vm.subtotal },
-                                on: {
-                                  input: function($event) {
-                                    if ($event.target.composing) {
-                                      return
-                                    }
-                                    _vm.subtotal = $event.target.value
-                                  }
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.noNota,
+                                  expression: "noNota"
                                 }
-                              })
-                            ]),
+                              ],
+                              staticClass: "form-control",
+                              attrs: { type: "hidden", placeholder: "No nota" },
+                              domProps: { value: _vm.noNota },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.noNota = $event.target.value
+                                }
+                              }
+                            }),
                             _vm._v(" "),
-                            _c("p", { staticClass: "text-muted text-center" }, [
-                              _c("input", {
-                                directives: [
-                                  {
-                                    name: "model",
-                                    rawName: "v-model",
-                                    value: _vm.pajak,
-                                    expression: "pajak"
-                                  }
-                                ],
-                                staticClass: "form-control",
-                                attrs: { type: "number", placeholder: "Tax" },
-                                domProps: { value: _vm.pajak },
-                                on: {
-                                  input: function($event) {
-                                    if ($event.target.composing) {
-                                      return
-                                    }
-                                    _vm.pajak = $event.target.value
-                                  }
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.subtotal,
+                                  expression: "subtotal"
                                 }
-                              }),
-                              _vm._v(" "),
-                              _c("input", {
-                                staticClass: "form-control",
-                                attrs: {
-                                  type: "hidden",
-                                  name: _vm.totalTransaksipjk
-                                },
-                                domProps: {
-                                  value:
-                                    (_vm.subtotal * _vm.pajak) / 100 +
-                                    _vm.subtotal
-                                }
-                              })
-                            ]),
-                            _vm._v(" "),
-                            _c("p", { staticClass: "text-muted text-center" }, [
-                              _c("input", {
-                                directives: [
-                                  {
-                                    name: "model",
-                                    rawName: "v-model",
-                                    value: _vm.diskon,
-                                    expression: "diskon"
+                              ],
+                              staticClass: "form-control",
+                              attrs: { type: "hidden" },
+                              domProps: { value: _vm.subtotal },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
                                   }
-                                ],
-                                staticClass: "form-control",
-                                attrs: {
-                                  type: "number",
-                                  placeholder: "Diskon"
-                                },
-                                domProps: { value: _vm.diskon },
-                                on: {
-                                  input: function($event) {
-                                    if ($event.target.composing) {
-                                      return
-                                    }
-                                    _vm.diskon = $event.target.value
-                                  }
+                                  _vm.subtotal = $event.target.value
                                 }
-                              }),
-                              _vm._v(" "),
-                              _c("input", {
-                                staticClass: "form-control",
-                                attrs: { type: "hidden", name: _vm.diskon1 },
-                                domProps: {
-                                  value:
-                                    (((_vm.subtotal * _vm.pajak) / 100 +
-                                      _vm.subtotal) *
-                                      _vm.diskon) /
-                                    100
-                                }
-                              })
-                            ]),
-                            _vm._v(" "),
-                            _c("p", { staticClass: "text-muted text-center" }, [
-                              _c("input", {
-                                directives: [
-                                  {
-                                    name: "model",
-                                    rawName: "v-model",
-                                    value: _vm.totalBayar,
-                                    expression: "totalBayar"
-                                  }
-                                ],
-                                staticClass: "form-control",
-                                attrs: {
-                                  type: "number",
-                                  placeholder: "Bayar",
-                                  required: ""
-                                },
-                                domProps: { value: _vm.totalBayar },
-                                on: {
-                                  input: function($event) {
-                                    if ($event.target.composing) {
-                                      return
-                                    }
-                                    _vm.totalBayar = $event.target.value
-                                  }
-                                }
-                              })
-                            ]),
+                              }
+                            }),
                             _vm._v(" "),
                             _c("p", { staticClass: "text-muted text-center" }, [
                               _c("input", {
@@ -57162,7 +56975,6 @@ var render = function() {
                                 }
                               })
                             ]),
-                            _vm._v(" "),
                             _c("h3", { staticClass: "profile-username " }, [
                               _vm._v(
                                 "Total " +
@@ -57179,32 +56991,250 @@ var render = function() {
                               )
                             ]),
                             _vm._v(" "),
-                            _c("h3", { staticClass: "profile-username " }, [
-                              _vm._v(
-                                "Kembali : " +
-                                  _vm._s(
-                                    _vm._f("currency")(
-                                      _vm.totalBayar -
-                                        ((_vm.subtotal * _vm.pajak) / 100 +
-                                          _vm.subtotal -
-                                          (((_vm.subtotal * _vm.pajak) / 100 +
-                                            _vm.subtotal) *
-                                            _vm.diskon) /
-                                            100) || 0
-                                    )
-                                  )
-                              )
+                            _c("div", { staticClass: "row input-group" }, [
+                              _c("div", { staticClass: "col-xs-4" }, [
+                                _c(
+                                  "span",
+                                  { staticClass: "input-group-addon" },
+                                  [_vm._v("Tax in %")]
+                                ),
+                                _vm._v(" "),
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.pajak,
+                                      expression: "pajak"
+                                    }
+                                  ],
+                                  staticClass: "form-control ",
+                                  attrs: { type: "number", placeholder: "Tax" },
+                                  domProps: { value: _vm.pajak },
+                                  on: {
+                                    input: function($event) {
+                                      if ($event.target.composing) {
+                                        return
+                                      }
+                                      _vm.pajak = $event.target.value
+                                    }
+                                  }
+                                }),
+                                _vm._v(" "),
+                                _c("input", {
+                                  staticClass: "form-control",
+                                  attrs: {
+                                    type: "hidden",
+                                    name: _vm.totalTransaksipjk
+                                  },
+                                  domProps: {
+                                    value:
+                                      (_vm.subtotal * _vm.pajak) / 100 +
+                                      _vm.subtotal
+                                  }
+                                })
+                              ]),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "col-xs-4" }, [
+                                _c(
+                                  "span",
+                                  { staticClass: "input-group-addon" },
+                                  [_vm._v("Disc in %")]
+                                ),
+                                _vm._v(" "),
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.diskon,
+                                      expression: "diskon"
+                                    }
+                                  ],
+                                  staticClass: "form-control",
+                                  attrs: {
+                                    type: "number",
+                                    placeholder: "Diskon"
+                                  },
+                                  domProps: { value: _vm.diskon },
+                                  on: {
+                                    input: function($event) {
+                                      if ($event.target.composing) {
+                                        return
+                                      }
+                                      _vm.diskon = $event.target.value
+                                    }
+                                  }
+                                }),
+                                _vm._v(" "),
+                                _c("input", {
+                                  staticClass: "form-control",
+                                  attrs: { type: "hidden", name: _vm.diskon1 },
+                                  domProps: {
+                                    value:
+                                      (((_vm.subtotal * _vm.pajak) / 100 +
+                                        _vm.subtotal) *
+                                        _vm.diskon) /
+                                      100
+                                  }
+                                })
+                              ])
                             ]),
                             _vm._v(" "),
-                            _c("p", { staticClass: "text-muted text-center" }, [
-                              _c(
-                                "button",
-                                {
-                                  staticClass: "btn btn-md btn-success",
-                                  attrs: { type: "submit" }
-                                },
-                                [_vm._v("Bayar")]
-                              )
+                            _c("br"),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "nav-tabs-custom" }, [
+                              _c("ul", { staticClass: "nav nav-tabs" }, [
+                                _c("li", { staticClass: "active" }, [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        href: "#cash",
+                                        "data-toggle": "tab"
+                                      }
+                                    },
+                                    [_vm._v("Cash")]
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("li", [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        href: "#debit",
+                                        "data-toggle": "tab"
+                                      }
+                                    },
+                                    [_vm._v("Card")]
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("li", [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: {
+                                        href: "#emoney",
+                                        "data-toggle": "tab"
+                                      }
+                                    },
+                                    [_vm._v("Emoney")]
+                                  )
+                                ])
+                              ]),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "tab-content" }, [
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass: "active tab-pane",
+                                    attrs: { id: "cash" }
+                                  },
+                                  [
+                                    _c("div", { staticClass: "input-group" }, [
+                                      _c(
+                                        "span",
+                                        { staticClass: "input-group-addon" },
+                                        [_vm._v("Rp.")]
+                                      ),
+                                      _vm._v(" "),
+                                      _c("input", {
+                                        directives: [
+                                          {
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value: _vm.totalBayar,
+                                            expression: "totalBayar"
+                                          }
+                                        ],
+                                        staticClass: "form-control",
+                                        attrs: {
+                                          type: "number",
+                                          placeholder: "Bayar",
+                                          required: ""
+                                        },
+                                        domProps: { value: _vm.totalBayar },
+                                        on: {
+                                          input: function($event) {
+                                            if ($event.target.composing) {
+                                              return
+                                            }
+                                            _vm.totalBayar = $event.target.value
+                                          }
+                                        }
+                                      })
+                                    ]),
+                                    _vm._v(" "),
+                                    _c(
+                                      "h3",
+                                      { staticClass: "profile-username " },
+                                      [
+                                        _vm._v(
+                                          "Kembali : " +
+                                            _vm._s(
+                                              _vm._f("currency")(
+                                                _vm.totalBayar -
+                                                  ((_vm.subtotal * _vm.pajak) /
+                                                    100 +
+                                                    _vm.subtotal -
+                                                    (((_vm.subtotal *
+                                                      _vm.pajak) /
+                                                      100 +
+                                                      _vm.subtotal) *
+                                                      _vm.diskon) /
+                                                      100) || 0
+                                              )
+                                            )
+                                        )
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "p",
+                                      { staticClass: "text-muted text-center" },
+                                      [
+                                        _c(
+                                          "button",
+                                          {
+                                            staticClass:
+                                              "btn btn-md btn-success",
+                                            attrs: { type: "submit" }
+                                          },
+                                          [_vm._v("Bayar")]
+                                        )
+                                      ]
+                                    )
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass: "tab-pane",
+                                    attrs: { id: "debit" }
+                                  },
+                                  [
+                                    _vm._v(
+                                      "\n                                Timeline\n                              "
+                                    )
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass: "tab-pane",
+                                    attrs: { id: "emoney" }
+                                  },
+                                  [
+                                    _vm._v(
+                                      "\n                                Emoney\n                              "
+                                    )
+                                  ]
+                                )
+                              ])
                             ])
                           ]
                         ),
