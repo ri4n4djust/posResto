@@ -35,10 +35,6 @@ Vue.use(VueSession);
 import vmodal from 'vue-js-modal';
     Vue.use(vmodal);
 
-import Print from 'vue-print-plugin';
-import './plugins/print';
-Vue.use(Print);
-
 
 import VueHtmlToPaper from 'vue-html-to-paper';
 const options = {

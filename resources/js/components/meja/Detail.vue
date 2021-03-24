@@ -31,12 +31,25 @@
                 <date-picker v-model="tglNota" value-type="format" format="YYYY/MM/DD"></date-picker>
                 </p>
                 <p class="text-muted text-center">
-                <input type="text" class="form-control" v-model="pelanggan" placeholder="Customer">
-                </p>
+                  <div class="input-group">
+                    <span class="input-group-addon">Pelanggan</span>
+                    <input type="text" class="form-control" v-model="pelanggan" placeholder="Customer">
+                  </div>
+               
                 <p class="text-muted text-center">
-                <input type="text" class="form-control" v-model="noNota" placeholder="No nota">
-                </p>
-                
+                  <div class="input-group">
+                    <span class="input-group-addon">No Invoice</span>
+                    <input type="text" class="form-control" v-model="noNota" placeholder="No nota">
+                  </div>
+               
+                <p class="text-muted text-center">
+                  <div class="input-group">
+                    <span class="input-group-addon">Nama Waiter</span>
+                  <select v-model='waiter' class="form-control" required>
+                    <option v-for='waiter in waiters' v-bind:value='waiter' :key="waiter.id">{{waiter.name}}</option>
+                  </select>
+                  </div>
+
                 <input type="hidden" class="form-control" :value="subtotal" :name="totalTransaksi" >
                 <h3 class="profile-username text-center">Total {{ subtotal  || 0 | currency }}</h3>
                 
@@ -296,6 +309,7 @@
                 <input type="hidden" class="form-control" v-model="pelanggan" placeholder="Customer">
                 <input type="hidden" class="form-control" v-model="noNota" placeholder="No nota">
                 <input type="hidden" class="form-control" v-model="subtotal">
+                <input type="hidden" class="form-control" v-model="waiter.id">
 
                 <p class="text-muted text-center">
                 <input type="hidden" class="form-control" :value="((subtotal * pajak / 100 + subtotal) - ((subtotal * pajak / 100 + subtotal) * diskon / 100))  || 0 " :name="totalTransaksiBayar"  >
@@ -504,10 +518,12 @@
         data() {
             return {
                 post: {},
+                waiters: {},
                 statusMeja:{},
                 move1: null,
                 post1: null,
                 post2: null,
+                waiter: {},
                 users: {},
                 menus: {},
                 trxs: {},
@@ -560,6 +576,7 @@
             this.loadData()
             this.loadDataMenu()
             this.loadDataTransaksi()
+            this.loadWaiter()
             
             
         },
@@ -642,6 +659,12 @@
                 this.mejaKosong = response.data.data;
                 
                 
+            });
+            },
+            loadWaiter:function(){
+                let uri = '/api/user/';
+                this.axios.get(uri).then(response => {
+                this.waiters = response.data.data;
             });
             },
             PostDeleteTrx(id)
