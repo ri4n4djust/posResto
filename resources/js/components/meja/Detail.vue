@@ -326,9 +326,9 @@
                             <div class="tab-content">
 
                               <div class="active tab-pane" id="cash">
-                                 <div class="input-group">
-                                  <span class="input-group-addon">Rp.</span>
-                                  <input type="number" class="form-control" v-model="totalBayar" placeholder="Bayar" required>
+                                  <div class="input-group">
+                                    <span class="input-group-addon">Rp.</span>
+                                    <input type="number" class="form-control" v-model="totalBayar" placeholder="Bayar" required>
                                   </div>
                                   
                                   <h3 class="profile-username ">Kembali : {{ totalBayar - ((subtotal * pajak / 100 + subtotal) - ((subtotal * pajak / 100 + subtotal) * diskon / 100))  || 0 | currency }}</h3>
@@ -338,7 +338,24 @@
                               </div>
 
                               <div class="tab-pane" id="debit">
-                                Timeline
+                                  <div class="input-group">
+                                    <span class="input-group-addon">Card Carge %</span>
+                                    <input type="number" class="form-control" v-model="taxDebit" placeholder="0" >
+                                  </div>
+                                  <br>
+                                  <div class="input-group">
+                                    <span class="input-group-addon">Card No.</span>
+                                    <input type="number" class="form-control" v-model="noDebit" placeholder="No Kartu" >
+                                  </div>
+                                  <br>
+                                  <div class="input-group">
+                                    <span class="input-group-addon">Rp.</span>
+                                    <input type="number" class="form-control" v-model="totalBayar" placeholder="Bayar" required>
+                                  </div>
+                                  <br>
+                                  <p class="text-muted text-center">
+                                  <button type="submit"  class="btn btn-md btn-success" >Bayar</button>                
+                                  </p>
                               </div>
 
                               <div class="tab-pane" id="emoney">
@@ -520,6 +537,8 @@
                 totalTransaksiBayar: '',
                 type: '',
                 brg: '',
+                taxDebit: '',
+                noDebit: '',
                 //optionLabel: users.nmBarang,
                 tglNota: new Date().toJSON().slice(0,10).replace(/-/g,'/'),
                 

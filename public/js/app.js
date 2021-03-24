@@ -11039,6 +11039,23 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -11085,6 +11102,8 @@ __webpack_require__.r(__webpack_exports__);
       totalTransaksiBayar: '',
       type: '',
       brg: '',
+      taxDebit: '',
+      noDebit: '',
       //optionLabel: users.nmBarang,
       tglNota: new Date().toJSON().slice(0, 10).replace(/-/g, '/')
     };
@@ -11674,11 +11693,6 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_single_select__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-single-select */ "./node_modules/vue-single-select/dist/index.js");
-//
-//
-//
-//
-//
 //
 //
 //
@@ -14134,9 +14148,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
-//
-//
 //
 //
 //
@@ -57216,8 +57227,126 @@ var render = function() {
                                     attrs: { id: "debit" }
                                   },
                                   [
-                                    _vm._v(
-                                      "\n                                Timeline\n                              "
+                                    _c("div", { staticClass: "input-group" }, [
+                                      _c(
+                                        "span",
+                                        { staticClass: "input-group-addon" },
+                                        [_vm._v("Card Carge %")]
+                                      ),
+                                      _vm._v(" "),
+                                      _c("input", {
+                                        directives: [
+                                          {
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value: _vm.taxDebit,
+                                            expression: "taxDebit"
+                                          }
+                                        ],
+                                        staticClass: "form-control",
+                                        attrs: {
+                                          type: "number",
+                                          placeholder: "0"
+                                        },
+                                        domProps: { value: _vm.taxDebit },
+                                        on: {
+                                          input: function($event) {
+                                            if ($event.target.composing) {
+                                              return
+                                            }
+                                            _vm.taxDebit = $event.target.value
+                                          }
+                                        }
+                                      })
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("br"),
+                                    _vm._v(" "),
+                                    _c("div", { staticClass: "input-group" }, [
+                                      _c(
+                                        "span",
+                                        { staticClass: "input-group-addon" },
+                                        [_vm._v("Card No.")]
+                                      ),
+                                      _vm._v(" "),
+                                      _c("input", {
+                                        directives: [
+                                          {
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value: _vm.noDebit,
+                                            expression: "noDebit"
+                                          }
+                                        ],
+                                        staticClass: "form-control",
+                                        attrs: {
+                                          type: "number",
+                                          placeholder: "No Kartu"
+                                        },
+                                        domProps: { value: _vm.noDebit },
+                                        on: {
+                                          input: function($event) {
+                                            if ($event.target.composing) {
+                                              return
+                                            }
+                                            _vm.noDebit = $event.target.value
+                                          }
+                                        }
+                                      })
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("br"),
+                                    _vm._v(" "),
+                                    _c("div", { staticClass: "input-group" }, [
+                                      _c(
+                                        "span",
+                                        { staticClass: "input-group-addon" },
+                                        [_vm._v("Rp.")]
+                                      ),
+                                      _vm._v(" "),
+                                      _c("input", {
+                                        directives: [
+                                          {
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value: _vm.totalBayar,
+                                            expression: "totalBayar"
+                                          }
+                                        ],
+                                        staticClass: "form-control",
+                                        attrs: {
+                                          type: "number",
+                                          placeholder: "Bayar",
+                                          required: ""
+                                        },
+                                        domProps: { value: _vm.totalBayar },
+                                        on: {
+                                          input: function($event) {
+                                            if ($event.target.composing) {
+                                              return
+                                            }
+                                            _vm.totalBayar = $event.target.value
+                                          }
+                                        }
+                                      })
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("br"),
+                                    _vm._v(" "),
+                                    _c(
+                                      "p",
+                                      { staticClass: "text-muted text-center" },
+                                      [
+                                        _c(
+                                          "button",
+                                          {
+                                            staticClass:
+                                              "btn btn-md btn-success",
+                                            attrs: { type: "submit" }
+                                          },
+                                          [_vm._v("Bayar")]
+                                        )
+                                      ]
                                     )
                                   ]
                                 ),
@@ -58584,10 +58713,7 @@ var render = function() {
                                           }
                                         ],
                                         staticClass: "form-control",
-                                        attrs: {
-                                          type: "text",
-                                          placeholder: "Harga"
-                                        },
+                                        attrs: { type: "hidden" },
                                         domProps: {
                                           value: _vm.post1.hrgSatuan
                                         },
@@ -58615,10 +58741,7 @@ var render = function() {
                                           }
                                         ],
                                         staticClass: "form-control",
-                                        attrs: {
-                                          type: "text",
-                                          placeholder: "Harga"
-                                        },
+                                        attrs: { type: "hidden" },
                                         domProps: {
                                           value: _vm.post1.stkSatuan
                                         },
@@ -58666,28 +58789,22 @@ var render = function() {
                                     ]),
                                     _vm._v(" "),
                                     _c("div", { staticClass: "form-group" }, [
-                                      _c("label", [_vm._v("Total Harga")]),
-                                      _vm._v(" "),
                                       _c("input", {
                                         staticClass: "form-control",
                                         attrs: {
-                                          type: "text",
+                                          type: "hidden",
                                           name: _vm.totalBarang
                                         },
                                         domProps: {
                                           value:
                                             _vm.post1.hrgSatuan * _vm.qtyBarang
                                         }
-                                      })
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("div", { staticClass: "form-group" }, [
-                                      _c("label", [_vm._v("Total Stok")]),
+                                      }),
                                       _vm._v(" "),
                                       _c("input", {
                                         staticClass: "form-control",
                                         attrs: {
-                                          type: "text",
+                                          type: "hidden",
                                           name: _vm.totalStok
                                         },
                                         domProps: {
