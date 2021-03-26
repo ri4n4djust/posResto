@@ -19,6 +19,7 @@ class CreateMejasTable extends Migration
             $table->string('paxMeja');
             $table->char('status');
             $table->char('time')->nullable();
+            $table->char('waiterMeja')->nullable();
             $table->timestamps();
         });
     }

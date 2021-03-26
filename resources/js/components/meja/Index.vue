@@ -18,9 +18,9 @@
                                     <i class="ion ion-bag"></i>
                                     </div>
                                     
-                                    <router-link :to="{name: 'editMeja', params: { id: post.id }}" class="btn btn-sm btn-primary">EDIT</router-link>
+                                    <router-link :to="{name: 'editMeja', params: { id: post.id }}" class="btn btn-md btn-primary">EDIT</router-link>
                                     <button @click.prevent="PostCekIn(post.id)" class="btn btn-md btn-success">CEK IN</button>
-                                   
+                                    <a href="#"  @click="showModalCekin.show(post.id)" class="btn btn-md btn-success"><b>Cek In</b></a>
                                         
                                 </div>
                             </div>
@@ -36,7 +36,7 @@
                                     </div>
                                     
                                    
-                                    <router-link :to="{name: 'detailMeja', params: { id: post.id }}" class="btn btn-sm btn-primary">Detail</router-link>
+                                    <router-link :to="{name: 'detailMeja', params: { id: post.id }}" class="btn btn-md btn-primary">Detail</router-link>
                                     <button @click.prevent="CancelCekIn(post.id)" class="btn btn-md btn-danger">Cancel</button>
                               
 
@@ -45,6 +45,49 @@
                             </div>
                         </div>
     
+<!-- modal start -->
+  <div v-if="showModalCekin">
+    <transition name="modal">
+      <div class="modal-mask">
+        <div class="modal-wrapper">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" @click="showModalCekin=false">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Waiter</h4>
+              </div>
+              <div class="modal-body">
+
+                
+                <select v-model='waiter' class="form-control">
+                  <option v-for='waiter in waiters' v-bind:value='waiter' :key="waiter.id">{{waiter.name}}</option>
+                </select>
+                <div v-if="waiter">
+                  <form  @submit.prevent="PostWaiter" >
+                    <div class="form-group">
+                      <input type="text" class="form-control" v-model="waiter.id">
+                      <input type="text" class="form-control" v-model="post.id"> {{post.noMeja}}
+                    </div>
+                    <div class="form-group">
+                    <button type="submit" class="btn btn-md btn-success">Cek In</button>
+                    </div>
+                  </form>
+                </div>
+                <div v-else>
+                  no posts
+                </div>
+                
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </transition>
+  </div>
+  <!------End Modal Move ----->
     
     
     </div>
@@ -59,7 +102,10 @@
             return {
                 posts: [],
                 post:{},
+                waiter:{},
+                waiters:{},
                 showModal: false,
+                showModalCekin: false,
                 status: '1',
                 paxMeja: '',
             }
@@ -74,6 +120,7 @@
             this.axios.get(uri).then(response => {
                 this.posts = response.data.data;
             });
+            this.loadWaiter();
         },
         watch: {
           post: function() {
@@ -81,7 +128,15 @@
           }
         },
         props: ['value'],
+
         methods: {
+            loadWaiter:function(){
+                let uri = '/api/user/';
+                this.axios.get(uri).then(response => {
+                this.waiters = response.data.data;
+            });
+            },
+
             PostCekIn(id) {
                 let uri = '/api/meja/cekin/'+ id;
                 this.axios.post(uri, {
