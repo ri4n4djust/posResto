@@ -11550,6 +11550,7 @@ __webpack_require__.r(__webpack_exports__);
       waiters: {},
       showModal: false,
       showModalCekin: false,
+      selectedItem: undefined,
       status: '1',
       paxMeja: ''
     };
@@ -11575,6 +11576,14 @@ __webpack_require__.r(__webpack_exports__);
   },
   props: ['value'],
   methods: {
+    selectItem: function selectItem(post) {
+      this.selectedItem = post;
+      this.showModalCekin = true;
+    },
+    deselect: function deselect() {
+      this.selectedItem = undefined;
+      this.showModalCekin = false;
+    },
     loadWaiter: function loadWaiter() {
       var _this2 = this;
 
@@ -58061,15 +58070,28 @@ var render = function() {
                       "a",
                       {
                         staticClass: "btn btn-md btn-success",
-                        attrs: { href: "#" },
+                        attrs: { href: "#", id: "show-modal" },
                         on: {
                           click: function($event) {
-                            return _vm.showModalCekin.show(post.id)
+                            return _vm.selectItem(post)
                           }
                         }
                       },
                       [_c("b", [_vm._v("Cek In")])]
-                    )
+                    ),
+                    _vm._v(" "),
+                    _c("modal", {
+                      directives: [
+                        {
+                          name: "show",
+                          rawName: "v-show",
+                          value: _vm.showModal,
+                          expression: "showModal"
+                        }
+                      ],
+                      attrs: { item: _vm.selectedItem },
+                      on: { close: _vm.deselect }
+                    })
                   ],
                   1
                 )

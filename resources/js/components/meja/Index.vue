@@ -20,8 +20,8 @@
                                     
                                     <router-link :to="{name: 'editMeja', params: { id: post.id }}" class="btn btn-md btn-primary">EDIT</router-link>
                                     <button @click.prevent="PostCekIn(post.id)" class="btn btn-md btn-success">CEK IN</button>
-                                    <a href="#"  @click="showModalCekin.show(post.id)" class="btn btn-md btn-success"><b>Cek In</b></a>
-                                        
+                                    <a href="#"  id="show-modal" @click="selectItem(post)" class="btn btn-md btn-success"><b>Cek In</b></a>
+                                    <modal v-show="showModal" :item="selectedItem" @close="deselect"></modal>
                                 </div>
                             </div>
                             <div v-else>
@@ -106,6 +106,7 @@
                 waiters:{},
                 showModal: false,
                 showModalCekin: false,
+                selectedItem: undefined,
                 status: '1',
                 paxMeja: '',
             }
@@ -130,6 +131,14 @@
         props: ['value'],
 
         methods: {
+          selectItem(post) {
+            this.selectedItem = post
+            this.showModalCekin = true
+          },
+          deselect() {
+            this.selectedItem = undefined
+            this.showModalCekin = false
+          },
             loadWaiter:function(){
                 let uri = '/api/user/';
                 this.axios.get(uri).then(response => {
