@@ -21,7 +21,7 @@ class mejaController extends Controller
 
     public function index()
     {
-        $posts = Meja::latest()->get();
+        $posts = Meja::get();
         return response([
             'success' => true,
             'message' => 'List Semua Supplier',
@@ -116,7 +116,10 @@ class mejaController extends Controller
 
     public function show($id)
     {
-        $post = Meja::whereId($id)->first();
+        $post = Meja::join('users', 'tblMeja.waiterMeja', 'users.id')
+        ->where('tblMeja.id', $id)
+        ->select('tblMeja.*', 'users.name')
+        ->first();
 
         if ($post) {
             return response()->json([
@@ -505,6 +508,7 @@ class mejaController extends Controller
             'kembalianNota'     => $request->input('kembalianNota'),
             'pelangganNota'     => $request->input('pelanggan'),
             'userNota'     => $request->input('userNota'),
+            'waiterNota'     => $request->input('waiterNota'),
         ]);
 
         

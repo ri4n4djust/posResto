@@ -91,6 +91,7 @@ import ViewStokOpnameComponent from './components/stokOpname/StokOpname.vue';
 import InputStokOpnameComponent from './components/stokOpname/StokOpnameCreate.vue';
 
 import InventoriComponent from './components/stokInventori/StokInventori.vue';
+import DetailInventoriComponent from './components/stokInventori/DetailInventori.vue';
 import InputInventoriComponent from './components/stokInventori/StokInventoriCreate.vue';
 
 import VueCurrencyFilter from 'vue-currency-filter'
@@ -255,6 +256,11 @@ const routes = [
         name: 'stokinventori',
         path: '/stokinventori',
         component: InventoriComponent
+    },
+    {
+        name: 'detailInventori',
+        path: '/detailInventori/:id',
+        component: DetailInventoriComponent
     },
     {
         name: 'stokinventoricreate',

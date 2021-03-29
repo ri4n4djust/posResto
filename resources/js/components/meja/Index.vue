@@ -19,8 +19,7 @@
                                     </div>
                                     
                                     <router-link :to="{name: 'editMeja', params: { id: post.id }}" class="btn btn-md btn-primary">EDIT</router-link>
-                                    <button @click.prevent="PostCekIn(post.id)" class="btn btn-md btn-success">CEK IN</button>
-                                    <button @click="showModalCekin = post.id" class="btn btn-md btn-success">cek</button>
+                                    <button @click="showModalCekin = post.id" class="btn btn-md btn-success">CEK IN</button>
                                 </div>
                             </div>
                             <div v-else>
@@ -60,14 +59,15 @@
               <div class="modal-body">
 
                 
-                <select v-model='waiter' class="form-control">
-                  <option v-for='waiter in waiters' v-bind:value='waiter' :key="waiter.id">{{waiter.name}}</option>
-                </select>
+                
                 <div v-if="waiter">
                   <form  @submit.prevent="PostCekIn" >
+                    <select v-model='waiter' class="form-control" required>
+                      <option v-for='waiter in waiters' v-bind:value='waiter' :key="waiter.id">{{waiter.name}}</option>
+                    </select>
                     <div class="form-group">
-                      <input type="text" class="form-control" v-model="waiter.id">
-                      <input type="text" name="noTable" :value="showModalCekin">
+                      <input type="hidden" class="form-control" v-model="waiter.id">
+                      <input type="hidden" name="noTable" :value="showModalCekin">
                     </div>
                     <div class="form-group">
                     <button type="submit" class="btn btn-md btn-success">Cek In</button>

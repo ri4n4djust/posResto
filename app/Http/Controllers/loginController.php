@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\User;
+use App\Meja;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -16,6 +17,18 @@ use Illuminate\Support\Facades\Validator;
 class loginController extends Controller
 {
     //
+    public function indexWaiter()
+    {
+        $post = Meja::join('users', 'tblMeja.waiterMeja', 'users.id')
+        ->select('tblMeja.*', 'users.name')
+        ->get();
+        return response([
+            'success' => true,
+            'message' => 'List Semua User',
+            'data' => $post
+        ], 200);
+    }
+    
     public function index()
     {
         $posts = User::latest()->get();

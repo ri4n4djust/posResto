@@ -1,7 +1,7 @@
 <template>
     <div >
-        <button class="btn btn-outline-success" @click="showModalDetail = true">
-            <span class="glyphicon glyphicon-check"></span>
+        <button class="btn btn-outline-primary" @click="DetailAction('detailInventori')" >
+            <i class="fa fa-edit"></i>
         </button>
                         
                         <div v-if="showModalDetail">
@@ -67,7 +67,7 @@ export default {
                 posts: [],
                 //pem: [],
                 showModalDetail: false,
-                data: this.posts,
+                //data: this.posts,
                 qtyGudang: '',
                 keterangan: '',
                 tglOpname: new Date().toJSON().slice(0,10).replace(/-/g,'/'),
@@ -77,7 +77,8 @@ export default {
     created() {
             this.loadData()
             //this.something()
-            this.loadDetailStok()
+            //this.loadDetailStok()
+            //this.DetailAction()
         },
     methods: {
 
@@ -88,14 +89,14 @@ export default {
                 
             });
             },
-            
-            loadDetailStok:function(){
-                let uri = '/api/detailstok/'+ this.data.kdBarang;
-                this.axios.post(uri).then(response => {
-                    this.pem = response.data.data;
-                   // alert('no nota '+ this.data.noNota);
-            });
+
+            DetailAction() {
+                const path = '/detailInventori/' + this.data.id;
+                this.$router.push(path)
+                //alert('edit' + this.data.id)
+                //this.$store.commit(edit, this.data)
             },
+            
             PostStokOpname:function(){
                 let uri = '/api/posthasilopname/';
                 this.axios.post(uri, {

@@ -12,7 +12,7 @@
 
               <h3 class="profile-username text-center">Meja No. {{post.noMeja}}</h3>
 
-              <p class="text-muted text-center">Max Pax {{post.paxMeja}}</p>
+              <p class="text-muted text-center">Max Pax {{post.paxMeja}}</p>{{waiters.name}}
             </div>
             <!-- /.box-body -->
           </div>
@@ -44,10 +44,11 @@
                
                 <p class="text-muted text-center">
                   <div class="input-group">
-                    <span class="input-group-addon">Nama Waiter</span>
-                  <select v-model='waiter' class="form-control" required>
-                    <option v-for='waiter in waiters' v-bind:value='waiter' :key="waiter.id">{{waiter.name}}</option>
+                    <span class="input-group-addon">Nm Waiter</span>
+                  <select  class="form-control" v-model='post.waiterMeja' >
+                    <option v-for='waiter in waiters' :value='waiter.id' :key="waiter.id">{{waiter.name}}</option>
                   </select>
+                  <input type="text" class="form-control" v-model="post.waiterMeja" placeholder="No nota">
                   </div>
 
                 <input type="hidden" class="form-control" :value="subtotal" :name="totalTransaksi" >
@@ -309,7 +310,7 @@
                 <input type="hidden" class="form-control" v-model="pelanggan" placeholder="Customer">
                 <input type="hidden" class="form-control" v-model="noNota" placeholder="No nota">
                 <input type="hidden" class="form-control" v-model="subtotal">
-                <input type="hidden" class="form-control" v-model="waiter.id">
+                <input type="hidden" class="form-control" v-model="post.waiterMeja">
 
                 <p class="text-muted text-center">
                 <input type="hidden" class="form-control" :value="((subtotal * pajak / 100 + subtotal) - ((subtotal * pajak / 100 + subtotal) * diskon / 100))  || 0 " :name="totalTransaksiBayar"  >
@@ -409,6 +410,11 @@
                 <div class="col-sm-4 invoice-col">
                   <b>No Invoice : </b>{{noNota}}<br>
                   <b>Kasir : </b>{{$session.get('user')}}
+                  
+                </div>
+
+                <div class="col-sm-4 invoice-col">
+                  <b>Waiter : </b>{{waiter.name}}<br>
                   
                 </div>
                 <!-- /.col -->
@@ -555,6 +561,7 @@
                 brg: '',
                 taxDebit: '',
                 noDebit: '',
+                //waitername : this.waiters.name,
                 //optionLabel: users.nmBarang,
                 tglNota: new Date().toJSON().slice(0,10).replace(/-/g,'/'),
                 
@@ -661,11 +668,11 @@
                 
             });
             },
-            loadWaiter:function(){
-                let uri = '/api/user/';
-                this.axios.get(uri).then(response => {
-                this.waiters = response.data.data;
-            });
+            loadWaiter: function(){
+                axios.get('/api/user')
+                    .then(function (response) {
+                        this.waiters = response.data.data;
+                    }.bind(this));
             },
             PostDeleteTrx(id)
             {
@@ -739,6 +746,7 @@
                     totalNota: ((this.subtotal * this.pajak / 100 + this.subtotal) - ((this.subtotal * this.pajak / 100 + this.subtotal) * this.diskon / 100)),
                     bayarNota: this.totalBayar,
                     userNota: this.$session.get('userId'),
+                    waiterNota: this.post.waiterMeja,
                     kembalianNota: this.totalBayar - ((this.subtotal * this.pajak / 100 + this.subtotal) - ((this.subtotal * this.pajak / 100 + this.subtotal) * this.diskon / 100)),
                     
                 })
