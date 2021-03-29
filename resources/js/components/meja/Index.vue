@@ -20,8 +20,7 @@
                                     
                                     <router-link :to="{name: 'editMeja', params: { id: post.id }}" class="btn btn-md btn-primary">EDIT</router-link>
                                     <button @click.prevent="PostCekIn(post.id)" class="btn btn-md btn-success">CEK IN</button>
-                                    <a href="#"  id="show-modal" @click="selectItem(post)" class="btn btn-md btn-success"><b>Cek In</b></a>
-                                    <modal v-show="showModal" :item="selectedItem" @close="deselect"></modal>
+                                    <button @click="showModalCekin = post.id" class="btn btn-md btn-success">cek</button>
                                 </div>
                             </div>
                             <div v-else>
@@ -65,10 +64,10 @@
                   <option v-for='waiter in waiters' v-bind:value='waiter' :key="waiter.id">{{waiter.name}}</option>
                 </select>
                 <div v-if="waiter">
-                  <form  @submit.prevent="PostWaiter" >
+                  <form  @submit.prevent="PostCekIn" >
                     <div class="form-group">
                       <input type="text" class="form-control" v-model="waiter.id">
-                      <input type="text" class="form-control" v-model="post.id"> {{post.noMeja}}
+                      <input type="text" name="noTable" :value="showModalCekin">
                     </div>
                     <div class="form-group">
                     <button type="submit" class="btn btn-md btn-success">Cek In</button>
@@ -131,14 +130,6 @@
         props: ['value'],
 
         methods: {
-          selectItem(post) {
-            this.selectedItem = post
-            this.showModalCekin = true
-          },
-          deselect() {
-            this.selectedItem = undefined
-            this.showModalCekin = false
-          },
             loadWaiter:function(){
                 let uri = '/api/user/';
                 this.axios.get(uri).then(response => {
@@ -146,12 +137,15 @@
             });
             },
 
-            PostCekIn(id) {
-                let uri = '/api/meja/cekin/'+ id;
+            PostCekIn() {
+                let uri = '/api/meja/cekin/';
                 this.axios.post(uri, {
-                    status: '1'
+                    idMeja: this.showModalCekin,
+                    idWaiter: this.waiter.id,
+                    status: '1',
                 })
                     .then((response) => {
+                        this.showModalCekin = false;
                         alert('sukses cek in')
                         this.loadData();
                     }).catch(error => {

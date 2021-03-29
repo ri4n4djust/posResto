@@ -11540,7 +11540,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -11576,14 +11575,6 @@ __webpack_require__.r(__webpack_exports__);
   },
   props: ['value'],
   methods: {
-    selectItem: function selectItem(post) {
-      this.selectedItem = post;
-      this.showModalCekin = true;
-    },
-    deselect: function deselect() {
-      this.selectedItem = undefined;
-      this.showModalCekin = false;
-    },
     loadWaiter: function loadWaiter() {
       var _this2 = this;
 
@@ -11592,13 +11583,16 @@ __webpack_require__.r(__webpack_exports__);
         _this2.waiters = response.data.data;
       });
     },
-    PostCekIn: function PostCekIn(id) {
+    PostCekIn: function PostCekIn() {
       var _this3 = this;
 
-      var uri = '/api/meja/cekin/' + id;
+      var uri = '/api/meja/cekin/';
       this.axios.post(uri, {
+        idMeja: this.showModalCekin,
+        idWaiter: this.waiter.id,
         status: '1'
       }).then(function (response) {
+        _this3.showModalCekin = false;
         alert('sukses cek in');
 
         _this3.loadData();
@@ -58067,31 +58061,17 @@ var render = function() {
                     ),
                     _vm._v(" "),
                     _c(
-                      "a",
+                      "button",
                       {
                         staticClass: "btn btn-md btn-success",
-                        attrs: { href: "#", id: "show-modal" },
                         on: {
                           click: function($event) {
-                            return _vm.selectItem(post)
+                            _vm.showModalCekin = post.id
                           }
                         }
                       },
-                      [_c("b", [_vm._v("Cek In")])]
-                    ),
-                    _vm._v(" "),
-                    _c("modal", {
-                      directives: [
-                        {
-                          name: "show",
-                          rawName: "v-show",
-                          value: _vm.showModal,
-                          expression: "showModal"
-                        }
-                      ],
-                      attrs: { item: _vm.selectedItem },
-                      on: { close: _vm.deselect }
-                    })
+                      [_vm._v("cek")]
+                    )
                   ],
                   1
                 )
@@ -58225,7 +58205,7 @@ var render = function() {
                                     on: {
                                       submit: function($event) {
                                         $event.preventDefault()
-                                        return _vm.PostWaiter($event)
+                                        return _vm.PostCekIn($event)
                                       }
                                     }
                                   },
@@ -58258,35 +58238,12 @@ var render = function() {
                                       }),
                                       _vm._v(" "),
                                       _c("input", {
-                                        directives: [
-                                          {
-                                            name: "model",
-                                            rawName: "v-model",
-                                            value: _vm.post.id,
-                                            expression: "post.id"
-                                          }
-                                        ],
-                                        staticClass: "form-control",
-                                        attrs: { type: "text" },
-                                        domProps: { value: _vm.post.id },
-                                        on: {
-                                          input: function($event) {
-                                            if ($event.target.composing) {
-                                              return
-                                            }
-                                            _vm.$set(
-                                              _vm.post,
-                                              "id",
-                                              $event.target.value
-                                            )
-                                          }
-                                        }
-                                      }),
-                                      _vm._v(
-                                        " " +
-                                          _vm._s(_vm.post.noMeja) +
-                                          "\n                    "
-                                      )
+                                        attrs: {
+                                          type: "text",
+                                          name: "noTable"
+                                        },
+                                        domProps: { value: _vm.showModalCekin }
+                                      })
                                     ]),
                                     _vm._v(" "),
                                     _c("div", { staticClass: "form-group" }, [

@@ -195,10 +195,11 @@ class mejaController extends Controller
 
     }
 
-    public function cekin($id)
+    public function cekin(Request $request)
     {
-            $post = Meja::whereId($id)->update([
+            $post = Meja::whereId($request->input('idMeja'))->update([
                 'status'   => '1',
+                'waiterMeja' => $request->input('idWaiter'),
             ]);
 
             if ($post) {

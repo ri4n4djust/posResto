@@ -10,6 +10,6 @@ class Meja extends Model
     protected $table = 'tblMeja';
 
     protected $fillable = [
-        'noMeja', 'paxMeja', 'time', 'status'
+        'noMeja', 'paxMeja', 'time', 'status', 'waiterMeja'
     ];
 }
