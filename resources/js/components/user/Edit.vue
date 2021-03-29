@@ -1,9 +1,6 @@
 <template>
     <div class="mt-3">
         <section class="content">
-      <div class="row">
-        <div class="col-md-3">
-
           <!-- Profile Image -->
           <div class="box box-primary">
             <div class="box-body box-profile">
@@ -13,9 +10,9 @@
                             <div class="form-group">
                                 <label>Username </label>
                                 <input type="text" class="form-control" v-model="post.username" @keydown.space.prevent >
-                                <div v-if="validation.name">
+                                <div v-if="validation.username">
                                     <div class="alert alert-danger mt-1" role="alert">
-                                        {{ validation.name[0] }}
+                                        {{ validation.username[0] }}
                                     </div>
                                 </div>
                             </div>
@@ -77,10 +74,6 @@
           <!-- /.box -->
 
           
-        </div>
-        <!-- /.col -->
-       
-      </div>
       <!-- /.row -->
 
     </section>

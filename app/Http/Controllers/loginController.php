@@ -130,7 +130,7 @@ class loginController extends Controller
 
     public function show($id)
     {
-        $post = User::where('username', '=', $id)->first();
+        $post = User::whereId($id)->first();
 
         if ($post) {
             return response()->json([

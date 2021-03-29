@@ -12,7 +12,7 @@
 
               <h3 class="profile-username text-center">Meja No. {{post.noMeja}}</h3>
 
-              <p class="text-muted text-center">Max Pax {{post.paxMeja}}</p>{{waiters.name}}
+              <p class="text-muted text-center">Max Pax {{post.paxMeja}}</p>{{waitername}}
             </div>
             <!-- /.box-body -->
           </div>
@@ -561,7 +561,7 @@
                 brg: '',
                 taxDebit: '',
                 noDebit: '',
-                //waitername : this.waiters.name,
+                //waitername : this.waiter.name,
                 //optionLabel: users.nmBarang,
                 tglNota: new Date().toJSON().slice(0,10).replace(/-/g,'/'),
                 
@@ -669,7 +669,7 @@
             });
             },
             loadWaiter: function(){
-                axios.get('/api/user')
+                axios.get('/api/user/')
                     .then(function (response) {
                         this.waiters = response.data.data;
                     }.bind(this));

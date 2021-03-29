@@ -21,7 +21,7 @@
                                     <td>{{ post.email  }}</td>
                                     <td>{{ post.role }}</td>
                                     <td class="text-center">
-                                        <router-link :to="{name: 'editMenu', params: { id: post.username }}" class="btn btn-sm btn-primary">EDIT</router-link>
+                                        <router-link :to="{name: 'editUser', params: { id: post.id }}" class="btn btn-sm btn-primary">EDIT</router-link>
                                         <button @click.prevent="PostDelete(post.id, index)" class="btn btn-sm btn-danger">HAPUS</button>
                                     </td>
                                 </tr>

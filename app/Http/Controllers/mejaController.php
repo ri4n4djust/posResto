@@ -138,7 +138,10 @@ class mejaController extends Controller
 
     public function detail($id)
     {
-        $post = Meja::whereId($id)->first();
+        $post = Meja::join('users', 'tblMeja.waiterMeja', 'users.id')
+        ->where('tblMeja.id', $id)
+        ->select('tblMeja.*', 'users.name')
+        ->first();
 
         if ($post) {
             return response()->json([
