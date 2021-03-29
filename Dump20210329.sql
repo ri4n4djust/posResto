@@ -79,7 +79,7 @@ CREATE TABLE `migrations` (
   `migration` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `batch` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=169 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=170 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -88,7 +88,7 @@ CREATE TABLE `migrations` (
 
 LOCK TABLES `migrations` WRITE;
 /*!40000 ALTER TABLE `migrations` DISABLE KEYS */;
-INSERT INTO `migrations` VALUES (1,'2014_10_12_000000_create_users_table',1),(6,'2021_01_02_073223_create_penjualans_table',1),(11,'2021_01_06_045741_create_transaksis_table',2),(69,'2021_01_04_044741_create_countries_states_table',3),(74,'2021_02_08_161531_create_penjualan_details_table',3),(150,'2014_10_12_100000_create_password_resets_table',4),(151,'2019_08_19_000000_create_failed_jobs_table',4),(152,'2021_01_02_012505_create_barangs_table',4),(153,'2021_01_02_025846_create_suppliers_table',4),(154,'2021_01_02_233418_create_kategoris_table',4),(155,'2021_01_03_000733_satuan',4),(156,'2021_01_04_111024_create_mejas_table',4),(157,'2021_02_02_142436_create_menus_table',4),(158,'2021_02_03_045330_create_komposisis_table',4),(159,'2021_02_05_061214_create_transaksis_table',4),(160,'2021_02_08_162955_create_penjualans_table',4),(161,'2021_02_12_082257_pembelian',4),(162,'2021_02_12_113120_pembelian_detail',4),(163,'2021_02_21_073842_kartustok',4),(164,'2021_02_27_174740_users',4),(165,'2021_03_02_091025_stokopname',4),(166,'2021_03_02_174311_create_stok_opname_details_table',4),(168,'2021_03_19_215018_create_inventoris_table',5);
+INSERT INTO `migrations` VALUES (1,'2014_10_12_000000_create_users_table',1),(6,'2021_01_02_073223_create_penjualans_table',1),(11,'2021_01_06_045741_create_transaksis_table',2),(69,'2021_01_04_044741_create_countries_states_table',3),(74,'2021_02_08_161531_create_penjualan_details_table',3),(150,'2014_10_12_100000_create_password_resets_table',4),(151,'2019_08_19_000000_create_failed_jobs_table',4),(152,'2021_01_02_012505_create_barangs_table',4),(153,'2021_01_02_025846_create_suppliers_table',4),(154,'2021_01_02_233418_create_kategoris_table',4),(155,'2021_01_03_000733_satuan',4),(156,'2021_01_04_111024_create_mejas_table',4),(157,'2021_02_02_142436_create_menus_table',4),(158,'2021_02_03_045330_create_komposisis_table',4),(159,'2021_02_05_061214_create_transaksis_table',4),(160,'2021_02_08_162955_create_penjualans_table',4),(161,'2021_02_12_082257_pembelian',4),(162,'2021_02_12_113120_pembelian_detail',4),(163,'2021_02_21_073842_kartustok',4),(164,'2021_02_27_174740_users',4),(165,'2021_03_02_091025_stokopname',4),(166,'2021_03_02_174311_create_stok_opname_details_table',4),(168,'2021_03_19_215018_create_inventoris_table',5),(169,'2021_03_22_114649_create_kartu_stok_inventoris_table',6);
 /*!40000 ALTER TABLE `migrations` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -167,7 +167,7 @@ CREATE TABLE `tblBarang` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -176,7 +176,7 @@ CREATE TABLE `tblBarang` (
 
 LOCK TABLES `tblBarang` WRITE;
 /*!40000 ALTER TABLE `tblBarang` DISABLE KEYS */;
-INSERT INTO `tblBarang` VALUES (1,'DB-2021-1','Paha Ayam',6800,8000,'KT-2021-1','Gram','Ayam','9000',NULL,'500','5000','2','Ayam Paha Mentah','2021-03-19 23:05:52','2021-03-19 23:05:52'),(2,'DB-2021-2','Dada Ayam',6800,9000,'KT-2021-1','Gram','Ayam','2000',NULL,'500','5000','2','Dada Ayam','2021-03-19 23:08:42','2021-03-19 23:08:42'),(3,'DB-2021-3','Sayap Ayam',5000,7000,'KT-2021-1','Gram','Ayam','1500',NULL,'300','2000','2','Sayap Ayam','2021-03-19 23:15:14','2021-03-19 23:15:14'),(4,'DB-2021-4','Kepala Ayam',200,500,'KT-2021-1','Gram','Ayam','2000',NULL,'200','2000','2','Ayam Metah','2021-03-19 23:19:43','2021-03-19 23:19:43'),(5,'DB-2021-5','Kerang Hijau',200,500,'KT-2021-1','Gram','Kerang','3023',NULL,'200','5000','2','Kerang Hijau','2021-03-19 23:22:47','2021-03-19 23:22:47'),(6,'DB-2021-6','Mujair',200,500,'KT-2021-1','Gram','Ikan','2000',NULL,'200','3000','2','Mujair','2021-03-19 23:38:11','2021-03-19 23:38:11'),(7,'DB-2021-7','Ikan Lele',200,600,'KT-2021-1','Gram','Lele','2040',NULL,'200','5000','2','Lele Dumbo','2021-03-19 23:45:03','2021-03-19 23:45:03'),(8,'DB-2021-8','Iga',200,500,'KT-2021-1','Gram','Iga Sapi','4000',NULL,'200','5000','2','Iga Sapi','2021-03-19 23:53:21','2021-03-19 23:53:21'),(23,'DB-2021-9','Cola 600ml',2000,4000,'KT-2021-2','Botol','Coca','20',NULL,'2','100','1','Coca Cola','2021-03-21 23:25:03','2021-03-21 23:25:03'),(24,'DB-2021-10','Akua 600ml',2000,5000,'KT-2021-2','Botol','Akua','35',NULL,'2','50','1','Akua','2021-03-21 23:30:50','2021-03-21 23:30:50');
+INSERT INTO `tblBarang` VALUES (1,'DB-2021-1','Paha Ayam',6800,8000,'KT-2021-1','Gram','Ayam','7998',NULL,'500','5000','2','Ayam Paha Mentah','2021-03-19 23:05:52','2021-03-19 23:05:52'),(2,'DB-2021-2','Dada Ayam',34,9000,'KT-2021-1','Gram','Ayam','3000',NULL,'500','5000','2','Dada Ayam','2021-03-19 23:08:42','2021-03-19 23:08:42'),(3,'DB-2021-3','Sayap Ayam',5000,7000,'KT-2021-1','Gram','Ayam','1500',NULL,'300','2000','2','Sayap Ayam','2021-03-19 23:15:14','2021-03-19 23:15:14'),(4,'DB-2021-4','Kepala Ayam',25,500,'KT-2021-1','Gram','Ayam','3000',NULL,'200','2000','2','Ayam Metah','2021-03-19 23:19:43','2021-03-19 23:19:43'),(5,'DB-2021-5','Kerang Hijau',50,500,'KT-2021-1','Gram','Kerang','3355',NULL,'200','5000','2','Kerang Hijau','2021-03-19 23:22:47','2021-03-19 23:22:47'),(6,'DB-2021-6','Mujair',200,500,'KT-2021-1','Gram','Ikan','2000',NULL,'200','3000','2','Mujair','2021-03-19 23:38:11','2021-03-19 23:38:11'),(7,'DB-2021-7','Ikan Lele',200,600,'KT-2021-1','Gram','Lele','2040',NULL,'200','5000','2','Lele Dumbo','2021-03-19 23:45:03','2021-03-19 23:45:03'),(8,'DB-2021-8','Iga',200,500,'KT-2021-1','Gram','Iga Sapi','4000',NULL,'200','5000','2','Iga Sapi','2021-03-19 23:53:21','2021-03-19 23:53:21'),(23,'DB-2021-9','Cola 600ml',2000,4000,'KT-2021-2','Botol','Coca','26',NULL,'2','100','1','Coca Cola','2021-03-21 23:25:03','2021-03-21 23:25:03'),(24,'DB-2021-10','Akua 600ml',2000,5000,'KT-2021-2','Botol','Akua','29',NULL,'2','50','1','Akua','2021-03-21 23:30:50','2021-03-21 23:30:50'),(25,'DB-2021-11','Udang',50,80,'KT-2021-1','Gram','Udang','1000',NULL,'100','6000','2','Udang Merah','2021-03-23 12:41:45','2021-03-23 12:41:45'),(26,'DB-2021-12','Kentang Mentah',20,40,'KT-2021-1','Gram','Kentang','0',NULL,'10','10000','2','Kentang','2021-03-24 00:03:53','2021-03-24 00:03:53');
 /*!40000 ALTER TABLE `tblBarang` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -197,7 +197,7 @@ CREATE TABLE `tblInventori` (
   `hrgSatuan` char(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `stkSatuan` char(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -206,7 +206,7 @@ CREATE TABLE `tblInventori` (
 
 LOCK TABLES `tblInventori` WRITE;
 /*!40000 ALTER TABLE `tblInventori` DISABLE KEYS */;
-INSERT INTO `tblInventori` VALUES (1,'DB-2021-1','25',NULL,'2021-03-19 23:05:52','2021-03-19 23:05:52','5667','167'),(2,'DB-2021-2','2995',NULL,'2021-03-19 23:08:42','2021-03-19 23:08:42','6800',NULL),(3,'DB-2021-3',NULL,NULL,'2021-03-19 23:15:14','2021-03-19 23:15:14',NULL,NULL),(4,'DB-2021-4',NULL,NULL,'2021-03-19 23:19:43','2021-03-19 23:19:43',NULL,NULL),(5,'DB-2021-5','15',NULL,'2021-03-19 23:22:47','2021-03-19 23:22:47',NULL,NULL),(6,'DB-2021-6',NULL,NULL,'2021-03-19 23:38:11','2021-03-19 23:38:11',NULL,NULL),(7,'DB-2021-7',NULL,NULL,'2021-03-19 23:45:03','2021-03-19 23:45:03',NULL,NULL),(8,'DB-2021-8',NULL,NULL,'2021-03-19 23:53:21','2021-03-19 23:53:21',NULL,NULL),(13,'DB-2021-9','20',NULL,'2021-03-21 23:25:03','2021-03-21 23:25:03','0',NULL),(14,'DB-2021-10','20',NULL,'2021-03-21 23:30:50','2021-03-21 23:30:50','2000','1');
+INSERT INTO `tblInventori` VALUES (1,'DB-2021-1','19',NULL,'2021-03-19 23:05:52','2021-03-19 23:05:52','5667','167'),(2,'DB-2021-2','3001',NULL,'2021-03-19 23:08:42','2021-03-19 23:08:42','5667','167'),(3,'DB-2021-3',NULL,NULL,'2021-03-19 23:15:14','2021-03-19 23:15:14',NULL,NULL),(4,'DB-2021-4','9',NULL,'2021-03-19 23:19:43','2021-03-19 23:19:43','2778','112'),(5,'DB-2021-5','17',NULL,'2021-03-19 23:22:47','2021-03-19 23:22:47','8334','167'),(6,'DB-2021-6',NULL,NULL,'2021-03-19 23:38:11','2021-03-19 23:38:11',NULL,NULL),(7,'DB-2021-7',NULL,NULL,'2021-03-19 23:45:03','2021-03-19 23:45:03',NULL,NULL),(8,'DB-2021-8',NULL,NULL,'2021-03-19 23:53:21','2021-03-19 23:53:21',NULL,NULL),(13,'DB-2021-9','26',NULL,'2021-03-21 23:25:03','2021-03-21 23:25:03','2000','1'),(14,'DB-2021-10','14',NULL,'2021-03-21 23:30:50','2021-03-21 23:30:50','2000','1'),(15,'DB-2021-11','7',NULL,'2021-03-23 12:41:45','2021-03-23 12:41:45','50','1'),(16,'DB-2021-12','0',NULL,'2021-03-24 00:03:53','2021-03-24 00:03:53','20','1');
 /*!40000 ALTER TABLE `tblInventori` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -229,7 +229,7 @@ CREATE TABLE `tblKartuStok` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -238,8 +238,40 @@ CREATE TABLE `tblKartuStok` (
 
 LOCK TABLES `tblKartuStok` WRITE;
 /*!40000 ALTER TABLE `tblKartuStok` DISABLE KEYS */;
-INSERT INTO `tblKartuStok` VALUES (24,'DB-2021-1','2021/03/21','2000','0','PB-2021-3','Pembelian','Gram','2021-03-21 03:11:30','2021-03-21 03:11:30'),(26,'DB-2021-10','2021/03/21','10','0','PB-2021-3','Pembelian','Botol','2021-03-21 23:32:19','2021-03-21 23:32:19'),(30,'DB-2021-1','2021/03/21','3000','0','PB-2021-4','Pembelian','Gram','2021-03-21 23:40:26','2021-03-21 23:40:26'),(31,'DB-2021-1','2021/03/21','1000','0','PB-2021-5','Pembelian','Gram','2021-03-21 23:44:51','2021-03-21 23:44:51'),(33,'DB-2021-1','2021/03/21','1000','0','PB-2021-6','Pembelian','Gram','2021-03-21 23:47:19','2021-03-21 23:47:19'),(35,'DB-2021-10','2021/03/21','10','0','PB-2021-6','Pembelian','Botol','2021-03-21 23:48:41','2021-03-21 23:48:41');
+INSERT INTO `tblKartuStok` VALUES (24,'DB-2021-1','2021/03/21','2000','0','PB-2021-3','Pembelian','Gram','2021-03-21 03:11:30','2021-03-21 03:11:30'),(26,'DB-2021-10','2021/03/21','10','0','PB-2021-3','Pembelian','Botol','2021-03-21 23:32:19','2021-03-21 23:32:19'),(30,'DB-2021-1','2021/03/21','3000','0','PB-2021-4','Pembelian','Gram','2021-03-21 23:40:26','2021-03-21 23:40:26'),(31,'DB-2021-1','2021/03/21','1000','0','PB-2021-5','Pembelian','Gram','2021-03-21 23:44:51','2021-03-21 23:44:51'),(33,'DB-2021-1','2021/03/21','1000','0','PB-2021-6','Pembelian','Gram','2021-03-21 23:47:19','2021-03-21 23:47:19'),(35,'DB-2021-10','2021/03/21','10','0','PB-2021-6','Pembelian','Botol','2021-03-21 23:48:41','2021-03-21 23:48:41'),(36,'DB-2021-2','2021/03/23','1000','0','PB-2021-7','Pembelian','Gram','2021-03-23 00:26:42','2021-03-23 00:26:42'),(37,'DB-2021-4','2021/03/23','1000','0','PB-2021-7','Pembelian','Gram','2021-03-23 00:27:06','2021-03-23 00:27:06'),(38,'DB-2021-9','2021/03/23','20','0','PB-2021-8','Pembelian','Botol','2021-03-23 00:31:05','2021-03-23 00:31:05'),(39,'DB-2021-5','2021/03/23','1000','0','PB-2021-9','Pembelian','Gram','2021-03-23 00:32:41','2021-03-23 00:32:41'),(40,'DB-2021-10','2021/03/23','0','2','INV-2021-4-1','Penjualan','Botol','2021-03-23 00:35:02','2021-03-23 00:35:02'),(41,'DB-2021-1','2021/03/23','0','334','INV-2021-4-1','Penjualan Menu','Gram',NULL,NULL),(42,'DB-2021-9','2021/03/23','0','2','INV-2021-4-1','Penjualan Menu','Botol',NULL,NULL),(43,'DB-2021-9','2021/03/23','0','4','INV-2021-3-2','Penjualan','Botol','2021-03-23 23:07:18','2021-03-23 23:07:18'),(44,'DB-2021-5','2021/03/23','0','668','INV-2021-3-2','Penjualan Menu','Gram',NULL,NULL),(45,'DB-2021-9','2021/03/23','0','4','INV-2021-3-2','Penjualan Menu','Botol',NULL,NULL),(46,'DB-2021-10','2021/03/23','0','4','INV-2021-2-3','Penjualan','Botol','2021-03-23 23:52:02','2021-03-23 23:52:02'),(47,'DB-2021-1','2021/03/23','0','668','INV-2021-2-3','Penjualan Menu','Gram',NULL,NULL),(48,'DB-2021-9','2021/03/23','0','4','INV-2021-2-3','Penjualan Menu','Botol',NULL,NULL);
 /*!40000 ALTER TABLE `tblKartuStok` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `tblKartuStokInventori`
+--
+
+DROP TABLE IF EXISTS `tblKartuStokInventori`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `tblKartuStokInventori` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `kdBarang` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tglInv` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `qtyMasukInv` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `qtyKeluarInv` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `noTransaksiInv` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `keteranganKartuInv` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `satuanKartuInv` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tblKartuStokInventori`
+--
+
+LOCK TABLES `tblKartuStokInventori` WRITE;
+/*!40000 ALTER TABLE `tblKartuStokInventori` DISABLE KEYS */;
+INSERT INTO `tblKartuStokInventori` VALUES (1,'DB-2021-2','2021/03/23','6','0','PB-2021-7','Pembelian','Gram','2021-03-23 00:26:42','2021-03-23 00:26:42'),(2,'DB-2021-4','2021/03/23','9','0','PB-2021-7','Pembelian','Gram','2021-03-23 00:27:06','2021-03-23 00:27:06'),(3,'DB-2021-9','2021/03/23','20','0','PB-2021-8','Pembelian','Botol','2021-03-23 00:31:05','2021-03-23 00:31:05'),(4,'DB-2021-5','2021/03/23','6','0','PB-2021-9','Pembelian','Gram','2021-03-23 00:32:41','2021-03-23 00:32:41'),(5,'DB-2021-10','2021/03/23','0','2','INV-2021-4-1','Penjualan','Botol','2021-03-23 00:35:02','2021-03-23 00:35:02'),(6,'DB-2021-1','2021/03/23','0','2','INV-2021-4-1','Penjualan Menu','Gram',NULL,NULL),(7,'DB-2021-9','2021/03/23','0','2','INV-2021-4-1','Penjualan Menu','Botol',NULL,NULL),(8,'DB-2021-9','2021/03/23','0','4','INV-2021-3-2','Penjualan','Botol','2021-03-23 23:07:18','2021-03-23 23:07:18'),(9,'DB-2021-5','2021/03/23','0','4','INV-2021-3-2','Penjualan Menu','Gram',NULL,NULL),(10,'DB-2021-9','2021/03/23','0','4','INV-2021-3-2','Penjualan Menu','Botol',NULL,NULL),(11,'DB-2021-10','2021/03/23','0','4','INV-2021-2-3','Penjualan','Botol','2021-03-23 23:52:02','2021-03-23 23:52:02'),(12,'DB-2021-1','2021/03/23','0','4','INV-2021-2-3','Penjualan Menu','Gram',NULL,NULL),(13,'DB-2021-9','2021/03/23','0','4','INV-2021-2-3','Penjualan Menu','Botol',NULL,NULL);
+/*!40000 ALTER TABLE `tblKartuStokInventori` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -286,8 +318,9 @@ CREATE TABLE `tblKomposisi` (
   `totalBarang` double NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
+  `totalSatuan` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -296,6 +329,7 @@ CREATE TABLE `tblKomposisi` (
 
 LOCK TABLES `tblKomposisi` WRITE;
 /*!40000 ALTER TABLE `tblKomposisi` DISABLE KEYS */;
+INSERT INTO `tblKomposisi` VALUES (1,'MN-2021-1','DB-2021-1',167,'Gram',5667,5667,'2021-03-23 00:29:54','2021-03-23 00:29:54','1'),(2,'MN-2021-1','DB-2021-9',1,'Botol',2000,2000,'2021-03-23 00:31:52','2021-03-23 00:31:52','1'),(3,'MN-2021-2','DB-2021-5',167,'Gram',8334,8334,'2021-03-23 00:33:16','2021-03-23 00:33:16','1'),(4,'MN-2021-2','DB-2021-9',1,'Botol',2000,2000,'2021-03-23 00:33:28','2021-03-23 00:33:28','1');
 /*!40000 ALTER TABLE `tblKomposisi` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -314,8 +348,9 @@ CREATE TABLE `tblMeja` (
   `time` char(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
+  `waiterMeja` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -324,6 +359,7 @@ CREATE TABLE `tblMeja` (
 
 LOCK TABLES `tblMeja` WRITE;
 /*!40000 ALTER TABLE `tblMeja` DISABLE KEYS */;
+INSERT INTO `tblMeja` VALUES (1,'1','4','0',NULL,'2021-03-23 00:34:30','2021-03-29 00:21:37','1'),(2,'2','4','0',NULL,'2021-03-23 00:34:36','2021-03-23 23:51:49',NULL),(3,'3','4','0',NULL,'2021-03-23 00:34:41','2021-03-29 00:21:57','1'),(4,'4','4','0',NULL,'2021-03-23 00:34:47','2021-03-23 23:08:07',NULL);
 /*!40000 ALTER TABLE `tblMeja` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -344,7 +380,7 @@ CREATE TABLE `tblMenu` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -353,7 +389,7 @@ CREATE TABLE `tblMenu` (
 
 LOCK TABLES `tblMenu` WRITE;
 /*!40000 ALTER TABLE `tblMenu` DISABLE KEYS */;
-INSERT INTO `tblMenu` VALUES (1,'MN-2021-1','Ayam Bakar',25000,'1',NULL,'2021-03-21 02:58:57','2021-03-21 02:58:57');
+INSERT INTO `tblMenu` VALUES (1,'MN-2021-1','Ayam Bakar',25000,'1','7667','2021-03-21 02:58:57','2021-03-23 00:31:55'),(2,'MN-2021-2','Kerang Bakar',35000,'1','10334','2021-03-23 00:27:44','2021-03-23 00:33:35'),(3,'MN-2021-3','Kentang Goreng',15000,'1',NULL,'2021-03-24 00:01:44','2021-03-24 00:01:44');
 /*!40000 ALTER TABLE `tblMenu` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -374,7 +410,7 @@ CREATE TABLE `tblPembelian` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -383,7 +419,7 @@ CREATE TABLE `tblPembelian` (
 
 LOCK TABLES `tblPembelian` WRITE;
 /*!40000 ALTER TABLE `tblPembelian` DISABLE KEYS */;
-INSERT INTO `tblPembelian` VALUES (1,'SP-2021-2','PB-2021-1','2021/03/20','12000','1','2021-03-20 00:14:56','2021-03-20 00:14:56'),(2,'SP-2021-2','PB-2021-2','2021/03/20','88000','1','2021-03-20 00:17:49','2021-03-20 00:17:49'),(3,'SP-2021-2','PB-2021-3','2021/03/21','88000','1','2021-03-21 23:32:34','2021-03-21 23:32:34'),(4,'SP-2021-2','PB-2021-4','2021/03/21','102000','1','2021-03-21 23:44:32','2021-03-21 23:44:32'),(5,'SP-2021-2','PB-2021-5','2021/03/21','34000','1','2021-03-21 23:46:20','2021-03-21 23:46:20'),(6,'SP-2021-1','PB-2021-6','2021/03/21','54000','1','2021-03-21 23:49:14','2021-03-21 23:49:14');
+INSERT INTO `tblPembelian` VALUES (1,'SP-2021-2','PB-2021-1','2021/03/20','12000','1','2021-03-20 00:14:56','2021-03-20 00:14:56'),(2,'SP-2021-2','PB-2021-2','2021/03/20','88000','1','2021-03-20 00:17:49','2021-03-20 00:17:49'),(3,'SP-2021-2','PB-2021-3','2021/03/21','88000','1','2021-03-21 23:32:34','2021-03-21 23:32:34'),(4,'SP-2021-2','PB-2021-4','2021/03/21','102000','1','2021-03-21 23:44:32','2021-03-21 23:44:32'),(5,'SP-2021-2','PB-2021-5','2021/03/21','34000','1','2021-03-21 23:46:20','2021-03-21 23:46:20'),(6,'SP-2021-1','PB-2021-6','2021/03/21','54000','1','2021-03-21 23:49:14','2021-03-21 23:49:14'),(7,'SP-2021-2','PB-2021-7','2021/03/23','59000','1','2021-03-23 00:27:19','2021-03-23 00:27:19'),(8,'SP-2021-1','PB-2021-8','2021/03/23','40000','1','2021-03-23 00:31:16','2021-03-23 00:31:16'),(9,'SP-2021-2','PB-2021-9','2021/03/23','50000','1','2021-03-23 00:32:53','2021-03-23 00:32:53');
 /*!40000 ALTER TABLE `tblPembelian` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -405,7 +441,7 @@ CREATE TABLE `tblPembelianDetail` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `qtySatuan` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -414,7 +450,7 @@ CREATE TABLE `tblPembelianDetail` (
 
 LOCK TABLES `tblPembelianDetail` WRITE;
 /*!40000 ALTER TABLE `tblPembelianDetail` DISABLE KEYS */;
-INSERT INTO `tblPembelianDetail` VALUES (7,'PB-2021-1','DB-2021-5','200','20','4000','2021-03-20 00:13:13','2021-03-20 00:13:13',NULL),(9,'PB-2021-1','DB-2021-7','200','40','8000','2021-03-20 00:14:08','2021-03-20 00:14:08',NULL),(12,'PB-2021-2','DB-2021-5','20','1000','20000','2021-03-20 00:17:08','2021-03-20 00:17:08',NULL),(13,'PB-2021-2','DB-2021-1','68','1000','68000','2021-03-20 00:17:32','2021-03-20 00:17:32',NULL),(28,'PB-2021-3','DB-2021-1','34','2000','68000','2021-03-21 03:11:30','2021-03-21 03:11:30','7'),(30,'PB-2021-3','DB-2021-10','2000','10','20000','2021-03-21 23:32:19','2021-03-21 23:32:19','10'),(34,'PB-2021-4','DB-2021-1','34','3000','102000','2021-03-21 23:40:26','2021-03-21 23:40:26','7'),(35,'PB-2021-5','DB-2021-1','34','1000','34000','2021-03-21 23:44:51','2021-03-21 23:44:51','7'),(37,'PB-2021-6','DB-2021-1','34','1000','34000','2021-03-21 23:47:19','2021-03-21 23:47:19','6'),(39,'PB-2021-6','DB-2021-10','2000','10','20000','2021-03-21 23:48:41','2021-03-21 23:48:41','10');
+INSERT INTO `tblPembelianDetail` VALUES (7,'PB-2021-1','DB-2021-5','200','20','4000','2021-03-20 00:13:13','2021-03-20 00:13:13',NULL),(9,'PB-2021-1','DB-2021-7','200','40','8000','2021-03-20 00:14:08','2021-03-20 00:14:08',NULL),(12,'PB-2021-2','DB-2021-5','20','1000','20000','2021-03-20 00:17:08','2021-03-20 00:17:08',NULL),(13,'PB-2021-2','DB-2021-1','68','1000','68000','2021-03-20 00:17:32','2021-03-20 00:17:32',NULL),(28,'PB-2021-3','DB-2021-1','34','2000','68000','2021-03-21 03:11:30','2021-03-21 03:11:30','7'),(30,'PB-2021-3','DB-2021-10','2000','10','20000','2021-03-21 23:32:19','2021-03-21 23:32:19','10'),(34,'PB-2021-4','DB-2021-1','34','3000','102000','2021-03-21 23:40:26','2021-03-21 23:40:26','7'),(35,'PB-2021-5','DB-2021-1','34','1000','34000','2021-03-21 23:44:51','2021-03-21 23:44:51','7'),(37,'PB-2021-6','DB-2021-1','34','1000','34000','2021-03-21 23:47:19','2021-03-21 23:47:19','6'),(39,'PB-2021-6','DB-2021-10','2000','10','20000','2021-03-21 23:48:41','2021-03-21 23:48:41','10'),(40,'PB-2021-7','DB-2021-2','34','1000','34000','2021-03-23 00:26:42','2021-03-23 00:26:42','6'),(41,'PB-2021-7','DB-2021-4','25','1000','25000','2021-03-23 00:27:06','2021-03-23 00:27:06','9'),(42,'PB-2021-8','DB-2021-9','2000','20','40000','2021-03-23 00:31:05','2021-03-23 00:31:05','20'),(43,'PB-2021-9','DB-2021-5','50','1000','50000','2021-03-23 00:32:41','2021-03-23 00:32:41','6');
 /*!40000 ALTER TABLE `tblPembelianDetail` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -439,8 +475,9 @@ CREATE TABLE `tblPenjualan` (
   `userNota` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
+  `waiterNota` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -449,6 +486,7 @@ CREATE TABLE `tblPenjualan` (
 
 LOCK TABLES `tblPenjualan` WRITE;
 /*!40000 ALTER TABLE `tblPenjualan` DISABLE KEYS */;
+INSERT INTO `tblPenjualan` VALUES (1,'INV-2021-4-1','4','Cash','2021/03/23','60000','0','0','60000','0','1','2021-03-23 00:35:28','2021-03-23 00:35:28',NULL),(2,'INV-2021-4-2','4','Cash','2021/03/23','156000','0','0','160000','4000','1','2021-03-23 23:08:25','2021-03-23 23:08:25',NULL),(3,'INV-2021-2-3','2','Cash','2021/03/23','125400','12000','6600','120000','-5400','1','2021-03-23 23:56:14','2021-03-23 23:56:14',NULL);
 /*!40000 ALTER TABLE `tblPenjualan` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -472,7 +510,7 @@ CREATE TABLE `tblpenjualandetail` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=86 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=92 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -481,7 +519,7 @@ CREATE TABLE `tblpenjualandetail` (
 
 LOCK TABLES `tblpenjualandetail` WRITE;
 /*!40000 ALTER TABLE `tblpenjualandetail` DISABLE KEYS */;
-INSERT INTO `tblpenjualandetail` VALUES (1,'INV-2021-1-1','1','DB-2021-1','5000','2','10000','KT-2021-1','Nasi Goreng',NULL,NULL),(2,'INV-2021-1-1','1','MN-2021-1','15000','2','30000','MN-2021-1','Nasi Goreng',NULL,NULL),(3,'INV-2021-3-2','3','DB-2021-1','5000','2','10000','KT-2021-1','Nasi Goreng',NULL,NULL),(4,'INV-2021-3-2','3','DB-2021-3','50','2','100','KT-2021-1','Nasi Putih',NULL,NULL),(5,'INV-2021-3-2','3','DB-2021-5','2000','2','4000','KT-2021-1','Telur Ayam',NULL,NULL),(6,'INV-2021-3-2','3','MN-2021-1','15000','2','30000','MN-2021-1','Nasi Goreng',NULL,NULL),(7,'INV-2021-3-3','3','DB-2021-1','5000','2','10000','KT-2021-1','Nasi Goreng',NULL,NULL),(8,'INV-2021-3-3','3','MN-2021-1','15000','2','30000','MN-2021-1','Nasi Goreng',NULL,NULL),(9,'INV-2021-3-3','3','DB-2021-2','4000','2','8000','KT-2021-1','Aqua 600ml',NULL,NULL),(10,'INV-2021-3-4','3','DB-2021-1','5000','2','10000','KT-2021-1','Nasi Goreng',NULL,NULL),(11,'INV-2021-3-4','3','DB-2021-2','4000','2','8000','KT-2021-1','Aqua 600ml',NULL,NULL),(12,'INV-2021-3-5','3','DB-2021-1','5000','2','10000','KT-2021-1','Nasi Goreng',NULL,NULL),(13,'INV-2021-3-5','3','DB-2021-2','4000','2','8000','KT-2021-1','Aqua 600ml',NULL,NULL),(14,'INV-2021-3-6','3','DB-2021-1','5000','2','10000','KT-2021-1','Nasi Goreng',NULL,NULL),(15,'INV-2021-3-6','3','DB-2021-5','2000','2','4000','KT-2021-1','Telur Ayam',NULL,NULL),(16,'INV-2021-3-7','3','DB-2021-2','4000','2','8000','KT-2021-1','Aqua 600ml',NULL,NULL),(17,'INV-2021-3-7','3','MN-2021-1','15000','2','30000','MN-2021-1','Nasi Goreng',NULL,NULL),(18,'INV-2021-3-7','3','DB-2021-5','2000','2','4000','KT-2021-1','Telur Ayam',NULL,NULL),(19,'INV-2021-3-8','3','DB-2021-5','2000','2','4000','KT-2021-1','Telur Ayam',NULL,NULL),(20,'INV-2021-3-8','3','MN-2021-1','15000','2','30000','MN-2021-1','Nasi Goreng',NULL,NULL),(21,'INV-2021-2-9','2','DB-2021-5','2000','2','4000','KT-2021-1','Telur Ayam',NULL,NULL),(22,'INV-2021-2-9','2','DB-2021-2','4000','2','8000','KT-2021-1','Aqua 600ml',NULL,NULL),(23,'INV-2021-3-10','3','DB-2021-5','2000','2','4000','KT-2021-1','Telur Ayam',NULL,NULL),(24,'INV-2021-3-10','3','DB-2021-2','4000','2','8000','KT-2021-1','Aqua 600ml',NULL,NULL),(25,'INV-2021-3-11','3','DB-2021-1','5000','2','10000','KT-2021-1','Nasi Goreng',NULL,NULL),(26,'INV-2021-3-11','3','MN-2021-2','5000','1','5000','MN-2021-2','JAJO uli',NULL,NULL),(27,'INV-2021-3-12','3','DB-2021-1','5000','4','20000','KT-2021-1','Nasi Goreng',NULL,NULL),(28,'INV-2021-3-12','3','MN-2021-2','5000','4','20000','MN-2021-2','JAJO uli',NULL,NULL),(29,'INV-2021-3-12','3','DB-2021-2','4000','4','16000','KT-2021-1','Aqua 600ml',NULL,NULL),(30,'INV-2021-2-13','2','DB-2021-3','50','8','400','KT-2021-1','Nasi Putih',NULL,NULL),(31,'INV-2021-2-13','2','DB-2021-5','2000','8','16000','KT-2021-1','Telur Ayam',NULL,NULL),(32,'INV-2021-5-14','5','DB-2021-1','5000','2','10000','KT-2021-1','Nasi Goreng',NULL,NULL),(33,'INV-2021-5-14','5','MN-2021-2','5000','2','10000','MN-2021-2','JAJO uli',NULL,NULL),(34,'INV-2021-5-14','5','DB-2021-2','4000','2','8000','KT-2021-1','Aqua 600ml',NULL,NULL),(35,'INV-2021-2-15','2','DB-2021-1','5000','3','15000','KT-2021-1','Nasi Goreng',NULL,NULL),(36,'INV-2021-2-15','2','MN-2021-1','15000','3','45000','MN-2021-1','Nasi Goreng',NULL,NULL),(37,'INV-2021-2-15','2','DB-2021-5','2000','3','6000','KT-2021-1','Telur Ayam',NULL,NULL),(38,'INV-2021-4-16','4','DB-2021-3','50','50','2500','KT-2021-1','Nasi Putih',NULL,NULL),(39,'INV-2021-4-16','4','DB-2021-5','2000','5','10000','KT-2021-1','Telur Ayam',NULL,NULL),(40,'INV-2021-4-16','4','MN-2021-1','15000','5','75000','MN-2021-1','Nasi Goreng',NULL,NULL),(41,'INV-2021-5-17','5','DB-2021-1','5000','100','500000','KT-2021-1','Nasi Goreng',NULL,NULL),(42,'INV-2021-5-18','5','DB-2021-6','5000','4','20000','KT-2021-2','Coca Cola 300Ml',NULL,NULL),(43,'INV-2021-5-18','5','DB-2021-5','2000','4','8000','KT-2021-1','Telur Ayam',NULL,NULL),(44,'INV-2021-2-19','2','MN-2021-2','20000','2','40000','MN-2021-2','JAJO uli',NULL,NULL),(45,'INV-2021-5-20','5','DB-2021-6','5000','4','20000','KT-2021-2','Coca Cola 300Ml',NULL,NULL),(46,'INV-2021-5-20','5','MN-2021-3','25000','4','100000','MN-2021-3','Ayam Goreng',NULL,NULL),(47,'INV-2021-1-21','1','MN-2021-3','25000','4','100000','MN-2021-3','Ayam Goreng',NULL,NULL),(48,'INV-2021-1-22','1','DB-2021-2','4000','4','16000','KT-2021-1','Aqua 600ml',NULL,NULL),(49,'INV-2021-5-23','5','DB-2021-5','2000','4','8000','KT-2021-1','Telur Ayam',NULL,NULL),(50,'INV-2021-6-24','6','DB-2021-3','50','40','2000','KT-2021-1','Nasi Putih',NULL,NULL),(51,'INV-2021-6-25','6','DB-2021-4','50','50','2500','KT-2021-1','Kecap Manis',NULL,NULL),(52,'INV-2021-5-26','5','DB-2021-1','5000','5','25000','KT-2021-1','Nasi Goreng',NULL,NULL),(53,'INV-2021-3-27','3','DB-2021-1','5000','5','25000','KT-2021-1','Nasi Goreng',NULL,NULL),(54,'INV-2021-5-28','5','DB-2021-1','5000','5','25000','KT-2021-1','Nasi Goreng',NULL,NULL),(55,'INV-2021-5-29','5','DB-2021-1','5000','6','30000','KT-2021-1','Nasi Goreng',NULL,NULL),(56,'INV-2021-6-30','6','DB-2021-1','5000','5','25000','KT-2021-1','Nasi Goreng',NULL,NULL),(57,'INV-2021-6-30','6','DB-2021-5','2000','5','10000','KT-2021-1','Telur Ayam',NULL,NULL),(58,'INV-2021-6-31','6','DB-2021-2','4000','5','20000','KT-2021-1','Aqua 600ml',NULL,NULL),(59,'INV-2021-6-32','6','DB-2021-6','5000','2','10000','KT-2021-2','Coca Cola 300Ml',NULL,NULL),(60,'INV-2021-6-32','6','MN-2021-5','35000','2','70000','MN-2021-5','Kerang Bakar',NULL,NULL),(61,'INV-2021-3-33','3','DB-2021-5','2000','4','8000','KT-2021-1','Telur Ayam',NULL,NULL),(62,'INV-2021-2-34','2','DB-2021-1','5000','4','20000','KT-2021-1','Nasi Goreng',NULL,NULL),(63,'INV-2021-2-34','2','DB-2021-6','5000','2','10000','KT-2021-2','Coca Cola 300Ml',NULL,NULL),(64,'INV-2021-3-35','3','DB-2021-2','4000','4','16000','KT-2021-1','Aqua 600ml',NULL,NULL),(65,'INV-2021-5-36','5','DB-2021-1','5000','3','15000','KT-2021-1','Nasi Goreng',NULL,NULL),(66,'INV-2021-4-37','4','DB-2021-1','5000','5','25000','KT-2021-1','Nasi Goreng',NULL,NULL),(67,'INV-2021-4-38','4','DB-2021-6','5000','4','20000','KT-2021-2','Coca Cola 300Ml',NULL,NULL),(68,'INV-2021-5-39','5','DB-2021-6','5000','3','15000','KT-2021-2','Coca Cola 300Ml',NULL,NULL),(69,'INV-2021-6-40','6','DB-2021-6','5000','4','20000','KT-2021-2','Coca Cola 300Ml',NULL,NULL),(70,'INV-2021-6-40','6','MN-2021-5','35000','4','140000','MN-2021-5','Kerang Bakar',NULL,NULL),(71,'INV-2021-6-41','6','DB-2021-1','5000','4','20000','KT-2021-1','Nasi Goreng',NULL,NULL),(72,'INV-2021-6-41','6','DB-2021-6','5000','4','20000','KT-2021-2','Coca Cola 300Ml',NULL,NULL),(73,'INV-2021-6-41','6','MN-2021-5','35000','4','140000','MN-2021-5','Kerang Bakar',NULL,NULL),(74,'INV-2021-5-42','5','DB-2021-6','5000','4','20000','KT-2021-2','Coca Cola 300Ml',NULL,NULL),(75,'INV-2021-5-42','5','MN-2021-5','35000','4','140000','MN-2021-5','Kerang Bakar',NULL,NULL),(76,'INV-2021-5-43','5','DB-2021-2','4000','4','16000','KT-2021-1','Aqua 600ml',NULL,NULL),(77,'INV-2021-5-43','5','MN-2021-5','35000','4','140000','MN-2021-5','Kerang Bakar',NULL,NULL),(78,'INV-2021-6-44','6','DB-2021-2','4000','4','16000','KT-2021-1','Aqua 600ml',NULL,NULL),(79,'INV-2021-6-45','6','DB-2021-6','5000','4','20000','KT-2021-2','Coca Cola 300Ml',NULL,NULL),(80,'INV-2021-6-45','6','DB-2021-4','50','4','200','KT-2021-1','Kecap Manis',NULL,NULL),(81,'INV-2021-3-46','3','DB-2021-2','4000','4','16000','KT-2021-1','Aqua 600ml',NULL,NULL),(82,'INV-2021-3-46','3','DB-2021-8','50','10','500','KT-2021-1','Kentang',NULL,NULL),(83,'INV-2021-1-47','1','DB-2021-6','5000','4','20000','KT-2021-2','Coca Cola 300Ml',NULL,NULL),(84,'INV-2021-1-47','1','MN-2021-5','35000','4','140000','MN-2021-5','Kerang Bakar',NULL,NULL),(85,'INV-2021-4-48','4','DB-2021-1','5000','4','20000','KT-2021-1','Nasi Goreng',NULL,NULL);
+INSERT INTO `tblpenjualandetail` VALUES (1,'INV-2021-1-1','1','DB-2021-1','5000','2','10000','KT-2021-1','Nasi Goreng',NULL,NULL),(2,'INV-2021-1-1','1','MN-2021-1','15000','2','30000','MN-2021-1','Nasi Goreng',NULL,NULL),(3,'INV-2021-3-2','3','DB-2021-1','5000','2','10000','KT-2021-1','Nasi Goreng',NULL,NULL),(4,'INV-2021-3-2','3','DB-2021-3','50','2','100','KT-2021-1','Nasi Putih',NULL,NULL),(5,'INV-2021-3-2','3','DB-2021-5','2000','2','4000','KT-2021-1','Telur Ayam',NULL,NULL),(6,'INV-2021-3-2','3','MN-2021-1','15000','2','30000','MN-2021-1','Nasi Goreng',NULL,NULL),(7,'INV-2021-3-3','3','DB-2021-1','5000','2','10000','KT-2021-1','Nasi Goreng',NULL,NULL),(8,'INV-2021-3-3','3','MN-2021-1','15000','2','30000','MN-2021-1','Nasi Goreng',NULL,NULL),(9,'INV-2021-3-3','3','DB-2021-2','4000','2','8000','KT-2021-1','Aqua 600ml',NULL,NULL),(10,'INV-2021-3-4','3','DB-2021-1','5000','2','10000','KT-2021-1','Nasi Goreng',NULL,NULL),(11,'INV-2021-3-4','3','DB-2021-2','4000','2','8000','KT-2021-1','Aqua 600ml',NULL,NULL),(12,'INV-2021-3-5','3','DB-2021-1','5000','2','10000','KT-2021-1','Nasi Goreng',NULL,NULL),(13,'INV-2021-3-5','3','DB-2021-2','4000','2','8000','KT-2021-1','Aqua 600ml',NULL,NULL),(14,'INV-2021-3-6','3','DB-2021-1','5000','2','10000','KT-2021-1','Nasi Goreng',NULL,NULL),(15,'INV-2021-3-6','3','DB-2021-5','2000','2','4000','KT-2021-1','Telur Ayam',NULL,NULL),(16,'INV-2021-3-7','3','DB-2021-2','4000','2','8000','KT-2021-1','Aqua 600ml',NULL,NULL),(17,'INV-2021-3-7','3','MN-2021-1','15000','2','30000','MN-2021-1','Nasi Goreng',NULL,NULL),(18,'INV-2021-3-7','3','DB-2021-5','2000','2','4000','KT-2021-1','Telur Ayam',NULL,NULL),(19,'INV-2021-3-8','3','DB-2021-5','2000','2','4000','KT-2021-1','Telur Ayam',NULL,NULL),(20,'INV-2021-3-8','3','MN-2021-1','15000','2','30000','MN-2021-1','Nasi Goreng',NULL,NULL),(21,'INV-2021-2-9','2','DB-2021-5','2000','2','4000','KT-2021-1','Telur Ayam',NULL,NULL),(22,'INV-2021-2-9','2','DB-2021-2','4000','2','8000','KT-2021-1','Aqua 600ml',NULL,NULL),(23,'INV-2021-3-10','3','DB-2021-5','2000','2','4000','KT-2021-1','Telur Ayam',NULL,NULL),(24,'INV-2021-3-10','3','DB-2021-2','4000','2','8000','KT-2021-1','Aqua 600ml',NULL,NULL),(25,'INV-2021-3-11','3','DB-2021-1','5000','2','10000','KT-2021-1','Nasi Goreng',NULL,NULL),(26,'INV-2021-3-11','3','MN-2021-2','5000','1','5000','MN-2021-2','JAJO uli',NULL,NULL),(27,'INV-2021-3-12','3','DB-2021-1','5000','4','20000','KT-2021-1','Nasi Goreng',NULL,NULL),(28,'INV-2021-3-12','3','MN-2021-2','5000','4','20000','MN-2021-2','JAJO uli',NULL,NULL),(29,'INV-2021-3-12','3','DB-2021-2','4000','4','16000','KT-2021-1','Aqua 600ml',NULL,NULL),(30,'INV-2021-2-13','2','DB-2021-3','50','8','400','KT-2021-1','Nasi Putih',NULL,NULL),(31,'INV-2021-2-13','2','DB-2021-5','2000','8','16000','KT-2021-1','Telur Ayam',NULL,NULL),(32,'INV-2021-5-14','5','DB-2021-1','5000','2','10000','KT-2021-1','Nasi Goreng',NULL,NULL),(33,'INV-2021-5-14','5','MN-2021-2','5000','2','10000','MN-2021-2','JAJO uli',NULL,NULL),(34,'INV-2021-5-14','5','DB-2021-2','4000','2','8000','KT-2021-1','Aqua 600ml',NULL,NULL),(35,'INV-2021-2-15','2','DB-2021-1','5000','3','15000','KT-2021-1','Nasi Goreng',NULL,NULL),(36,'INV-2021-2-15','2','MN-2021-1','15000','3','45000','MN-2021-1','Nasi Goreng',NULL,NULL),(37,'INV-2021-2-15','2','DB-2021-5','2000','3','6000','KT-2021-1','Telur Ayam',NULL,NULL),(38,'INV-2021-4-16','4','DB-2021-3','50','50','2500','KT-2021-1','Nasi Putih',NULL,NULL),(39,'INV-2021-4-16','4','DB-2021-5','2000','5','10000','KT-2021-1','Telur Ayam',NULL,NULL),(40,'INV-2021-4-16','4','MN-2021-1','15000','5','75000','MN-2021-1','Nasi Goreng',NULL,NULL),(41,'INV-2021-5-17','5','DB-2021-1','5000','100','500000','KT-2021-1','Nasi Goreng',NULL,NULL),(42,'INV-2021-5-18','5','DB-2021-6','5000','4','20000','KT-2021-2','Coca Cola 300Ml',NULL,NULL),(43,'INV-2021-5-18','5','DB-2021-5','2000','4','8000','KT-2021-1','Telur Ayam',NULL,NULL),(44,'INV-2021-2-19','2','MN-2021-2','20000','2','40000','MN-2021-2','JAJO uli',NULL,NULL),(45,'INV-2021-5-20','5','DB-2021-6','5000','4','20000','KT-2021-2','Coca Cola 300Ml',NULL,NULL),(46,'INV-2021-5-20','5','MN-2021-3','25000','4','100000','MN-2021-3','Ayam Goreng',NULL,NULL),(47,'INV-2021-1-21','1','MN-2021-3','25000','4','100000','MN-2021-3','Ayam Goreng',NULL,NULL),(48,'INV-2021-1-22','1','DB-2021-2','4000','4','16000','KT-2021-1','Aqua 600ml',NULL,NULL),(49,'INV-2021-5-23','5','DB-2021-5','2000','4','8000','KT-2021-1','Telur Ayam',NULL,NULL),(50,'INV-2021-6-24','6','DB-2021-3','50','40','2000','KT-2021-1','Nasi Putih',NULL,NULL),(51,'INV-2021-6-25','6','DB-2021-4','50','50','2500','KT-2021-1','Kecap Manis',NULL,NULL),(52,'INV-2021-5-26','5','DB-2021-1','5000','5','25000','KT-2021-1','Nasi Goreng',NULL,NULL),(53,'INV-2021-3-27','3','DB-2021-1','5000','5','25000','KT-2021-1','Nasi Goreng',NULL,NULL),(54,'INV-2021-5-28','5','DB-2021-1','5000','5','25000','KT-2021-1','Nasi Goreng',NULL,NULL),(55,'INV-2021-5-29','5','DB-2021-1','5000','6','30000','KT-2021-1','Nasi Goreng',NULL,NULL),(56,'INV-2021-6-30','6','DB-2021-1','5000','5','25000','KT-2021-1','Nasi Goreng',NULL,NULL),(57,'INV-2021-6-30','6','DB-2021-5','2000','5','10000','KT-2021-1','Telur Ayam',NULL,NULL),(58,'INV-2021-6-31','6','DB-2021-2','4000','5','20000','KT-2021-1','Aqua 600ml',NULL,NULL),(59,'INV-2021-6-32','6','DB-2021-6','5000','2','10000','KT-2021-2','Coca Cola 300Ml',NULL,NULL),(60,'INV-2021-6-32','6','MN-2021-5','35000','2','70000','MN-2021-5','Kerang Bakar',NULL,NULL),(61,'INV-2021-3-33','3','DB-2021-5','2000','4','8000','KT-2021-1','Telur Ayam',NULL,NULL),(62,'INV-2021-2-34','2','DB-2021-1','5000','4','20000','KT-2021-1','Nasi Goreng',NULL,NULL),(63,'INV-2021-2-34','2','DB-2021-6','5000','2','10000','KT-2021-2','Coca Cola 300Ml',NULL,NULL),(64,'INV-2021-3-35','3','DB-2021-2','4000','4','16000','KT-2021-1','Aqua 600ml',NULL,NULL),(65,'INV-2021-5-36','5','DB-2021-1','5000','3','15000','KT-2021-1','Nasi Goreng',NULL,NULL),(66,'INV-2021-4-37','4','DB-2021-1','5000','5','25000','KT-2021-1','Nasi Goreng',NULL,NULL),(67,'INV-2021-4-38','4','DB-2021-6','5000','4','20000','KT-2021-2','Coca Cola 300Ml',NULL,NULL),(68,'INV-2021-5-39','5','DB-2021-6','5000','3','15000','KT-2021-2','Coca Cola 300Ml',NULL,NULL),(69,'INV-2021-6-40','6','DB-2021-6','5000','4','20000','KT-2021-2','Coca Cola 300Ml',NULL,NULL),(70,'INV-2021-6-40','6','MN-2021-5','35000','4','140000','MN-2021-5','Kerang Bakar',NULL,NULL),(71,'INV-2021-6-41','6','DB-2021-1','5000','4','20000','KT-2021-1','Nasi Goreng',NULL,NULL),(72,'INV-2021-6-41','6','DB-2021-6','5000','4','20000','KT-2021-2','Coca Cola 300Ml',NULL,NULL),(73,'INV-2021-6-41','6','MN-2021-5','35000','4','140000','MN-2021-5','Kerang Bakar',NULL,NULL),(74,'INV-2021-5-42','5','DB-2021-6','5000','4','20000','KT-2021-2','Coca Cola 300Ml',NULL,NULL),(75,'INV-2021-5-42','5','MN-2021-5','35000','4','140000','MN-2021-5','Kerang Bakar',NULL,NULL),(76,'INV-2021-5-43','5','DB-2021-2','4000','4','16000','KT-2021-1','Aqua 600ml',NULL,NULL),(77,'INV-2021-5-43','5','MN-2021-5','35000','4','140000','MN-2021-5','Kerang Bakar',NULL,NULL),(78,'INV-2021-6-44','6','DB-2021-2','4000','4','16000','KT-2021-1','Aqua 600ml',NULL,NULL),(79,'INV-2021-6-45','6','DB-2021-6','5000','4','20000','KT-2021-2','Coca Cola 300Ml',NULL,NULL),(80,'INV-2021-6-45','6','DB-2021-4','50','4','200','KT-2021-1','Kecap Manis',NULL,NULL),(81,'INV-2021-3-46','3','DB-2021-2','4000','4','16000','KT-2021-1','Aqua 600ml',NULL,NULL),(82,'INV-2021-3-46','3','DB-2021-8','50','10','500','KT-2021-1','Kentang',NULL,NULL),(83,'INV-2021-1-47','1','DB-2021-6','5000','4','20000','KT-2021-2','Coca Cola 300Ml',NULL,NULL),(84,'INV-2021-1-47','1','MN-2021-5','35000','4','140000','MN-2021-5','Kerang Bakar',NULL,NULL),(85,'INV-2021-4-48','4','DB-2021-1','5000','4','20000','KT-2021-1','Nasi Goreng',NULL,NULL),(86,'INV-2021-4-1','4','DB-2021-10','5000','2','10000','KT-2021-2','Akua 600ml',NULL,NULL),(87,'INV-2021-4-1','4','MN-2021-1','25000','2','50000','MN-2021-1','Ayam Bakar',NULL,NULL),(88,'INV-2021-4-2','4','DB-2021-9','4000','4','16000','KT-2021-2','Cola 600ml',NULL,NULL),(89,'INV-2021-4-2','4','MN-2021-2','35000','4','140000','MN-2021-2','Kerang Bakar',NULL,NULL),(90,'INV-2021-2-3','2','DB-2021-10','5000','4','20000','KT-2021-2','Akua 600ml',NULL,NULL),(91,'INV-2021-2-3','2','MN-2021-1','25000','4','100000','MN-2021-1','Ayam Bakar',NULL,NULL);
 /*!40000 ALTER TABLE `tblpenjualandetail` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -649,7 +687,7 @@ CREATE TABLE `tbltmp_transaksidetail` (
   `nmBarangTmp` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `noNotaTmp` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=305 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=311 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -730,4 +768,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-03-22  7:51:18
+-- Dump completed on 2021-03-29  8:22:54
