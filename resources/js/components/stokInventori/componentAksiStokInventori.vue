@@ -91,7 +91,7 @@ export default {
             },
 
             DetailAction() {
-                const path = '/detailInventori/' + this.data.id;
+                const path = '/detailInventori/' + this.data.kdBarang;
                 this.$router.push(path)
                 //alert('edit' + this.data.id)
                 //this.$store.commit(edit, this.data)

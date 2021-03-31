@@ -45,25 +45,33 @@
                                 </div>
                             </div>
 
-                            <div class="form-group">
-                            <label>Select Kategori:</label>
-                            <select class='form-control' v-model='post.ktgBarang'>
-                                <option value='0' >Select Kategori</option>
-                                <option v-for='data in countries' :value='data.kodeKtg' :key='data.id'>{{ data.namaKtg }}</option>
-                            </select>
-                            </div>
-
-                            <div class="form-group">
-                            <label>Jenis Barang: </label>
-                            <select class='form-control' v-model='post.stsBarang'>
-                                <option value='1' >Barang Jadi</option>
-                                <option value='2' >Barang Mentah</option>
-                            </select>
-                            </div>
 
                 </div>
             </div>
     
+                                                    <table class="table table-hover table-bordered">
+                                                        <thead>
+                                                        <tr>
+                                                            <th>Nama Barang </th>
+                                                            <th>Tgl</th>
+                                                            <th>Qty Masuk</th>
+                                                            <th>Qty Keluar</th>
+                                                            <th>No. Transaksi</th>
+                                                            <th>Keterangan</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        <tr v-for="pe in pem" :key="pe.id">
+                                                            <td>{{ pe.kdBarang }} </td>
+                                                            <td>{{ pe.tglInv }}</td>
+                                                            <td>{{ pe.qtyMasukInv}}</td>
+                                                            <td>{{ pe.qtyKeluarInv}}</td>
+                                                            <td>{{ pe.noTransaksiInv}}</td>
+                                                            <td>{{ pe.keteranganKartuInv }}</td>
+
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
 
       
         
@@ -80,6 +88,7 @@
         data() {
             return {
                 post: {},
+                pem: {},
                 validation: [],
                 selected : '',
                 country: 0,
@@ -93,27 +102,19 @@
             }
         },
         created() {
-            let uri = `/api/posts/${this.$route.params.id}`;
+            let uri = `/api/detailbarang/${this.$route.params.id}`;
             this.axios.get(uri).then((response) => {
                 this.post = response.data.data;
-                this.getCountries()
             });
+            this.loadDetailInventori();
         },
         methods: {
-            PostUpdate() {
-                let uri = `/api/posts/update/${this.$route.params.id}`;
-                this.axios.post(uri, this.post)
-                    .then((response) => {
-                        this.$router.push({name: 'posts'});
-                    }).catch(error => {
-                    this.validation = error.response.data.data;
-                });
-            },
-            getCountries: function(){
-                axios.get('/api/kategori')
-                    .then(function (response) {
-                        this.countries = response.data.data;
-                    }.bind(this));
+            loadDetailInventori:function(){
+                let uri = `/api/detailinventori/${this.$route.params.id}`;
+                this.axios.post(uri).then(response => {
+                    this.pem = response.data.data;
+                   // alert('no nota '+ this.data.noNota);
+            });
             },
             PostDeleteTrx(id)
             {
@@ -129,6 +130,13 @@
             },
            
         },
+        props: {
+        data: {
+            type: Object,
+            required: true,
+           
+        },
+    },
        
     }
 </script>

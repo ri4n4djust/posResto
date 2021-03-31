@@ -26,6 +26,7 @@ Route::get('/semuabarang', 'salesController@semua');
 Route::get('/mentah', 'salesController@mentah');
 Route::post('/posts/store', 'salesController@store');
 Route::get('/posts/{id?}', 'salesController@show');
+Route::get('/detailbarang/{id?}', 'salesController@showDetailBarang');
 Route::post('/posts/update/{id?}', 'salesController@update');
 Route::delete('/posts/{id?}', 'salesController@destroy');
 
@@ -133,3 +134,4 @@ Route::post('/addOpname/store', 'stokController@addTransaksiOpname');
 
 //=========Inventori
 Route::get('/inventori', 'stokController@indexInventori');
+Route::post('/detailinventori/{id}', 'stokController@DetailInventori');

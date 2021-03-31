@@ -146,6 +146,25 @@ class salesController extends Controller
         }
     }
 
+    public function showDetailBarang($id)
+    {
+        $post = Barang::where('kdBarang', $id)->first();
+
+        if ($post) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Detail Post!',
+                'data'    => $post
+            ], 200);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Post Tidak Ditemukan!',
+                'data'    => ''
+            ], 404);
+        }
+    }
+
     public function update(Request $request)
     {
         //validate data

@@ -13179,10 +13179,19 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       post: {},
+      pem: {},
       validation: [],
       selected: '',
       country: 0,
@@ -13197,30 +13206,20 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {
     var _this = this;
 
-    var uri = "/api/posts/".concat(this.$route.params.id);
+    var uri = "/api/detailbarang/".concat(this.$route.params.id);
     this.axios.get(uri).then(function (response) {
       _this.post = response.data.data;
-
-      _this.getCountries();
     });
+    this.loadDetailInventori();
   },
   methods: {
-    PostUpdate: function PostUpdate() {
+    loadDetailInventori: function loadDetailInventori() {
       var _this2 = this;
 
-      var uri = "/api/posts/update/".concat(this.$route.params.id);
-      this.axios.post(uri, this.post).then(function (response) {
-        _this2.$router.push({
-          name: 'posts'
-        });
-      })["catch"](function (error) {
-        _this2.validation = error.response.data.data;
+      var uri = "/api/detailinventori/".concat(this.$route.params.id);
+      this.axios.post(uri).then(function (response) {
+        _this2.pem = response.data.data; // alert('no nota '+ this.data.noNota);
       });
-    },
-    getCountries: function getCountries() {
-      axios.get('/api/kategori').then(function (response) {
-        this.countries = response.data.data;
-      }.bind(this));
     },
     PostDeleteTrx: function PostDeleteTrx(id) {
       var _this3 = this;
@@ -13236,6 +13235,12 @@ __webpack_require__.r(__webpack_exports__);
           alert('system error!');
         });
       }
+    }
+  },
+  props: {
+    data: {
+      type: Object,
+      required: true
     }
   }
 });
@@ -13832,7 +13837,7 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     DetailAction: function DetailAction() {
-      var path = '/detailInventori/' + this.data.id;
+      var path = '/detailInventori/' + this.data.kdBarang;
       this.$router.push(path); //alert('edit' + this.data.id)
       //this.$store.commit(edit, this.data)
     },
@@ -61174,108 +61179,58 @@ var render = function() {
                   )
                 ])
               : _vm._e()
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group" }, [
-            _c("label", [_vm._v("Select Kategori:")]),
-            _vm._v(" "),
-            _c(
-              "select",
-              {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.post.ktgBarang,
-                    expression: "post.ktgBarang"
-                  }
-                ],
-                staticClass: "form-control",
-                on: {
-                  change: function($event) {
-                    var $$selectedVal = Array.prototype.filter
-                      .call($event.target.options, function(o) {
-                        return o.selected
-                      })
-                      .map(function(o) {
-                        var val = "_value" in o ? o._value : o.value
-                        return val
-                      })
-                    _vm.$set(
-                      _vm.post,
-                      "ktgBarang",
-                      $event.target.multiple ? $$selectedVal : $$selectedVal[0]
-                    )
-                  }
-                }
-              },
-              [
-                _c("option", { attrs: { value: "0" } }, [
-                  _vm._v("Select Kategori")
-                ]),
-                _vm._v(" "),
-                _vm._l(_vm.countries, function(data) {
-                  return _c(
-                    "option",
-                    { key: data.id, domProps: { value: data.kodeKtg } },
-                    [_vm._v(_vm._s(data.namaKtg))]
-                  )
-                })
-              ],
-              2
-            )
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group" }, [
-            _c("label", [_vm._v("Jenis Barang: ")]),
-            _vm._v(" "),
-            _c(
-              "select",
-              {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.post.stsBarang,
-                    expression: "post.stsBarang"
-                  }
-                ],
-                staticClass: "form-control",
-                on: {
-                  change: function($event) {
-                    var $$selectedVal = Array.prototype.filter
-                      .call($event.target.options, function(o) {
-                        return o.selected
-                      })
-                      .map(function(o) {
-                        var val = "_value" in o ? o._value : o.value
-                        return val
-                      })
-                    _vm.$set(
-                      _vm.post,
-                      "stsBarang",
-                      $event.target.multiple ? $$selectedVal : $$selectedVal[0]
-                    )
-                  }
-                }
-              },
-              [
-                _c("option", { attrs: { value: "1" } }, [
-                  _vm._v("Barang Jadi")
-                ]),
-                _vm._v(" "),
-                _c("option", { attrs: { value: "2" } }, [
-                  _vm._v("Barang Mentah")
-                ])
-              ]
-            )
           ])
         ])
+      ]),
+      _vm._v(" "),
+      _c("table", { staticClass: "table table-hover table-bordered" }, [
+        _vm._m(0),
+        _vm._v(" "),
+        _c(
+          "tbody",
+          _vm._l(_vm.pem, function(pe) {
+            return _c("tr", { key: pe.id }, [
+              _c("td", [_vm._v(_vm._s(pe.kdBarang) + " ")]),
+              _vm._v(" "),
+              _c("td", [_vm._v(_vm._s(pe.tglInv))]),
+              _vm._v(" "),
+              _c("td", [_vm._v(_vm._s(pe.qtyMasukInv))]),
+              _vm._v(" "),
+              _c("td", [_vm._v(_vm._s(pe.qtyKeluarInv))]),
+              _vm._v(" "),
+              _c("td", [_vm._v(_vm._s(pe.noTransaksiInv))]),
+              _vm._v(" "),
+              _c("td", [_vm._v(_vm._s(pe.keteranganKartuInv))])
+            ])
+          }),
+          0
+        )
       ])
     ])
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", [_vm._v("Nama Barang ")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Tgl")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Qty Masuk")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Qty Keluar")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("No. Transaksi")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Keterangan")])
+      ])
+    ])
+  }
+]
 render._withStripped = true
 
 
