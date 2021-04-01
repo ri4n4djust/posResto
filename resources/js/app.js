@@ -83,6 +83,7 @@ import liveorder from './components/LiveOrder.vue';
 
 import homeComponent from './components/Home.vue';
 
+
 import LaporanPenjualanComponent from './components/laporan/laporanPenjualan.vue';
 import LaporanPembelianComponent from './components/laporan/laporanPembelian.vue';
 import StokOpnameComponent from './components/laporan/laporanStokOpname.vue';

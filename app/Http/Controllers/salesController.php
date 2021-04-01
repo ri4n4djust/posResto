@@ -12,6 +12,10 @@ use Auth;
 
 use App\Barang;
 use App\Inventori;
+use App\KartuStok;
+use App\KartuStokInventori;
+use App\StokOpnameDetail;
+use App\StokOpname;
 //use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -148,7 +152,10 @@ class salesController extends Controller
 
     public function showDetailBarang($id)
     {
-        $post = Barang::where('kdBarang', $id)->first();
+        $post = Barang::join('tblKategori', 'tblBarang.ktgBarang', 'tblKategori.kodeKtg')
+                        ->join('tblInventori', 'tblBarang.kdBarang', 'tblInventori.kdBarang')
+                        ->where('tblBarang.kdBarang', $id)
+                        ->first();
 
         if ($post) {
             return response()->json([
@@ -193,7 +200,7 @@ class salesController extends Controller
                 'nmBarang'     => $request->input('nmBarang'),
                 'hrgPokok'   => $request->input('hrgPokok'),
                 'hrgJual'   => $request->input('hrgJual'),
-                'stkBarang'   => $request->input('stkBarang'),
+                'stkBarang'   => '0',
                 'deskripsi'   => $request->input('deskripsi'),
                 'ktgBarang' => $request->input('ktgBarang'),
                 'satuanBarang' => $request->input('satuanBarang'),
@@ -227,6 +234,19 @@ class salesController extends Controller
 
         $inven = Inventori::where('kdBarang', $kodebarang)->delete();
 
+        
+
+        $delKartu = KartuStok::where('kdBarang', $kodebarang);
+        $delInv = Inventori::where('kdBarang', $kodebarang);
+        $delStok = StokOpname::where('kdBarang', $kodebarang);
+        $delStokDetail = StokOpnameDetail::where('kdBarang', $kodebarang);
+        $delKartuInv= KartuStokInventori::where('kdBarang', $kodebarang);
+
+        $delKartu->delete();
+        $delInv->delete();
+        $delStok->delete();
+        $delStokDetail->delete();
+        $delKartuInv->delete();
         $post->delete();
 
         if ($post) {

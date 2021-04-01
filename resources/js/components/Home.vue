@@ -63,6 +63,7 @@
                     this.$session.start()
                     this.$session.set('user', response.data.data.name)
                     this.$session.set('userId', response.data.data.id)
+                    this.$session.set('roleID', response.data.data.role)
                     //Vue.http.headers.common['Authorization'] = 'Bearer ' + response.body.token
                     alert('suskes Login')
                     window.location.href = "/barang"

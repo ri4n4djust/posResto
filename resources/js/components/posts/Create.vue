@@ -75,28 +75,6 @@
           <!-- general form elements -->
                 <div class="box box-info">
 
-                            <div class="form-group">
-                                <label>Stok</label>
-                                <input type="text" class="form-control" v-model="post.stkBarang"
-                                       placeholder="Stok Barang" @keypress="onlyNumber">
-                                <div v-if="validation.stkBarang">
-                                    <div class="alert alert-danger mt-1" role="alert">
-                                        {{ validation.stkBarang[0] }}
-                                    </div>
-                                </div>
-                                
-                            </div>
-
-                            <div class="form-group">
-                                <label>Stok Pcs</label>
-                                <input type="text" class="form-control" v-model="post.stkInve"
-                                       placeholder="Stok Pcs" @keypress="onlyNumber">
-                                <div v-if="validation.stkInve">
-                                    <div class="alert alert-danger mt-1" role="alert">
-                                        {{ validation.stkInve[0] }}
-                                    </div>
-                                </div>
-                            </div>
 
                             <div class="form-group">
                                 <label>Satuan</label>

@@ -17,6 +17,7 @@
                                         <h4 class="modal-title">Detail</h4>
                                     </div>
                                     <div class="modal-body">
+                                        
                                                                                        
                                                         <table class="table table-hover table-bordered">
                                                         <thead>

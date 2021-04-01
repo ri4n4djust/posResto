@@ -1,6 +1,6 @@
 <template>
     <div >
-        <button class="btn btn-outline-success" @click="showModalDetail = true">
+        <button class="btn btn-outline-success" @click="loadDetailStok()">
             <span class="glyphicon glyphicon-check"></span>
         </button>
                         
@@ -17,7 +17,7 @@
                                         <h4 class="modal-title">Detail</h4>
                                     </div>
                                     <div class="modal-body">
-                                                                                       
+                                      {{data.kdBarang}}  {{data.nmBarang}}                                                 
                                                         <table class="table table-hover table-bordered">
                                                         <thead>
                                                         <tr>
@@ -74,7 +74,7 @@ export default {
     created() {
             this.loadData()
             //this.something()
-            this.loadDetailStok()
+            //this.loadDetailStok()
         },
     methods: {
 
@@ -87,8 +87,9 @@ export default {
             },
             
             loadDetailStok:function(){
+                this.showModalDetail = true ;
                 let uri = '/api/detailstok/'+ this.data.kdBarang;
-                this.axios.post(uri).then(response => {
+                this.axios.get(uri).then(response => {
                     this.pem = response.data.data;
                    // alert('no nota '+ this.data.noNota);
             });

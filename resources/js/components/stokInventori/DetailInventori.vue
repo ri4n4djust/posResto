@@ -5,49 +5,23 @@
                     <div class="card-body">
 
 
-                            <div class="col-md-6">
+
           <!-- general form elements -->
                 <div class="box box-primary">
                             
-                             <div class="form-group">
-                                <input type="text" class="form-control" v-model="post.kdBarang" disabled >
-                             </div>
                             <div class="form-group">
-                                <label>TITLE</label>
-                                <input type="text" class="form-control" v-model="post.nmBarang"
-                                       placeholder="Masukkan Title">
-                                <div v-if="validation.nmBarang">
-                                    <div class="alert alert-danger mt-1" role="alert">
-                                        {{ validation.nmBarang[0] }}
-                                    </div>
-                                </div>
+                                <label>Nama Barang : {{post.nmBarang}}</label>
+                            </div>
+                            <div class="form-group">
+                                <label>Stok : {{post.stkBarang}} {{post.satuanBarang}}</label>
+                            </div>
+                            <div class="form-group">
+                                <label>Stok Inventori : {{post.stkInventori}}</label>
                             </div>
 
-                            <div class="form-group">
-                                <label>Harga Pokok</label>
-                                <input type="text" class="form-control" v-model="post.hrgPokok"
-                                       placeholder="Harga Pokok">
-                                <div v-if="validation.hrgPokok">
-                                    <div class="alert alert-danger mt-1" role="alert">
-                                        {{ validation.hrgPokok[0] }}
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label>Harga Jual</label>
-                                <input type="text" class="form-control" v-model="post.hrgJual"
-                                       placeholder="Harga Jual">
-                                <div v-if="validation.hrgJual">
-                                    <div class="alert alert-danger mt-1" role="alert">
-                                        {{ validation.hrgJual[0] }}
-                                    </div>
-                                </div>
-                            </div>
 
 
                 </div>
-            </div>
     
                                                     <table class="table table-hover table-bordered">
                                                         <thead>

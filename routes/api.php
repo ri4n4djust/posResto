@@ -123,7 +123,7 @@ Route::post('/lapPembelian', 'pembelianController@sorting');
 Route::post('/detailpembelian/{id}', 'pembelianController@listDetailPembelian');
 
 //=========Stok
-Route::post('/detailstok/{id}', 'stokController@DetailStok');
+Route::get('/detailstok/{id}', 'stokController@DetailStok');
 Route::post('/detailstokopname/{id}', 'stokController@DetailStokOpname');
 Route::get('/stokopname', 'stokController@allOpname');
 Route::post('/addItemOpname/store', 'stokController@addItemOpname');

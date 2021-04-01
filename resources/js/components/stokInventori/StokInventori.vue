@@ -2,7 +2,7 @@
 
     <div class="card-body">
                         <h3>Stok Inventori</h3>
-                        <router-link :to="{ name: 'stokinventoricreate' }" class="btn btn-md btn-success">Stok Opname Baru</router-link>
+                        <router-link :to="{ name: 'stokinventoricreate' }" class="btn btn-md btn-success">Penyesuaian Inventori</router-link>
                         <p>
                         <div class="col-md-12">
                         <div class="nav-tabs-custom">
