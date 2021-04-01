@@ -1,6 +1,6 @@
 <template>
     <div >
-        <button  @click="showModalPenjualan = true">
+        <button  @click="loadDetailPenjualan()">
             <i class="fa fa-eye"></i>
         </button>
        
@@ -96,7 +96,7 @@ export default {
     created() {
             this.loadData()
             //this.something()
-            this.loadDetailPenjualan()
+            //this.loadDetailPenjualan()
         },
    
        
@@ -115,8 +115,9 @@ export default {
             });
             },
             loadDetailPenjualan:function(){
+                this.showModalPenjualan = true;
                 let uri = '/api/detailpenjualan/'+ this.data.noNota;
-                this.axios.post(uri).then(response => {
+                this.axios.get(uri).then(response => {
                     this.pem = response.data.data;
                    // alert('no nota '+ this.data.noNota);
             });

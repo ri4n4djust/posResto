@@ -1,6 +1,6 @@
 <template>
     <div >
-        <button  @click="showModalPembelian = true">
+        <button  @click="loadDetailPembelian()">
             <i class="fa fa-eye"></i>
         </button>
        
@@ -28,7 +28,7 @@
                                         {{data.noNotaPembelian}}
                                         </p>
                                         <p class="text-muted text-left">
-                                            <label>Pelanggan : </label>
+                                            <label>Supplier : </label>
                                         {{data.nmSupplier}}
                                         </p>
                                         
@@ -87,7 +87,7 @@ export default {
         },
     created() {
             this.loadData()
-            this.loadDetailPenjualan()
+            //this.loadDetailPembelian()
         },
    
        
@@ -101,9 +101,10 @@ export default {
                 
             });
             },
-            loadDetailPenjualan:function(){
+            loadDetailPembelian:function(){
+                this.showModalPembelian = true;
                 let uri = '/api/detailpembelian/'+ this.data.noNotaPembelian;
-                this.axios.post(uri).then(response => {
+                this.axios.get(uri).then(response => {
                     this.pem = response.data.data;
                    // alert('no nota '+ this.data.noNota);
             });

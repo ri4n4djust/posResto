@@ -115,12 +115,12 @@ Route::delete('/komposisi/{id?}', 'komposisiController@destroy');
 //=====Laporan Penjualan
 Route::get('/penjualan', 'penjualanController@index');
 Route::post('/lapPenjualan', 'penjualanController@sorting');
-Route::post('/detailpenjualan/{id}', 'penjualanController@listDetailPenjualan');
+Route::get('/detailpenjualan/{id}', 'penjualanController@listDetailPenjualan');
 
 //=====Laporan Pembelian
 Route::get('/pembelian', 'pembelianController@index');
 Route::post('/lapPembelian', 'pembelianController@sorting');
-Route::post('/detailpembelian/{id}', 'pembelianController@listDetailPembelian');
+Route::get('/detailpembelian/{id}', 'pembelianController@listDetailPembelian');
 
 //=========Stok
 Route::get('/detailstok/{id}', 'stokController@DetailStok');
