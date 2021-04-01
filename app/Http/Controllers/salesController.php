@@ -236,17 +236,12 @@ class salesController extends Controller
 
         
 
-        $delKartu = KartuStok::where('kdBarang', $kodebarang);
-        $delInv = Inventori::where('kdBarang', $kodebarang);
-        $delStok = StokOpname::where('kdBarang', $kodebarang);
-        $delStokDetail = StokOpnameDetail::where('kdBarang', $kodebarang);
-        $delKartuInv= KartuStokInventori::where('kdBarang', $kodebarang);
+        $delKartu = KartuStok::where('kdBarang', $kodebarang)->delete();
+        $delInv = Inventori::where('kdBarang', $kodebarang)->delete();
+        $delStok = StokOpname::where('kdBarang', $kodebarang)->delete();
+        $delStokDetail = StokOpnameDetail::where('kdBarang', $kodebarang)->delete();
+        $delKartuInv= KartuStokInventori::where('kdBarang', $kodebarang)->delete();
 
-        $delKartu->delete();
-        $delInv->delete();
-        $delStok->delete();
-        $delStokDetail->delete();
-        $delKartuInv->delete();
         $post->delete();
 
         if ($post) {
