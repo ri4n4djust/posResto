@@ -11121,6 +11121,7 @@ __webpack_require__.r(__webpack_exports__);
       brg: '',
       taxDebit: '',
       noDebit: '',
+      pembayaran: '1',
       //waitername : this.waiter.name,
       //optionLabel: users.nmBarang,
       tglNota: new Date().toJSON().slice(0, 10).replace(/-/g, '/')
@@ -11316,14 +11317,9 @@ __webpack_require__.r(__webpack_exports__);
         userNota: this.$session.get('userId'),
         waiterNota: this.post.waiterMeja,
         kembalianNota: this.totalBayar - (this.subtotal * this.pajak / 100 + this.subtotal - (this.subtotal * this.pajak / 100 + this.subtotal) * this.diskon / 100)
-      }) //window.print(printMe)
-      //this.showModalBayar = false
-      //this.$router.push({name: 'meja'})
-      .then(function (response) {
+      }).then(function (response) {
         //this.$print(printMe);
-        window.print(printMe); //this.cekStatusMeja()
-        //this.print(this.$refs['printMu'])
-        //alert('Transaksi Selesai');
+        window.print(printMe);
       });
     }
   }
@@ -56055,7 +56051,7 @@ var render = function() {
                   _vm._l(_vm.waiters, function(waiter) {
                     return _c(
                       "option",
-                      { key: waiter.id, domProps: { value: waiter.id } },
+                      { key: waiter.id, domProps: { value: waiter.name } },
                       [_vm._v(_vm._s(waiter.name))]
                     )
                   }),
@@ -57356,277 +57352,258 @@ var render = function() {
                             _vm._v(" "),
                             _c("br"),
                             _vm._v(" "),
-                            _c("div", { staticClass: "nav-tabs-custom" }, [
-                              _c("ul", { staticClass: "nav nav-tabs" }, [
-                                _c("li", { staticClass: "active" }, [
-                                  _c(
-                                    "a",
-                                    {
-                                      attrs: {
-                                        href: "#cash",
-                                        "data-toggle": "tab"
-                                      }
-                                    },
-                                    [_vm._v("Cash")]
-                                  )
-                                ]),
-                                _vm._v(" "),
-                                _c("li", [
-                                  _c(
-                                    "a",
-                                    {
-                                      attrs: {
-                                        href: "#debit",
-                                        "data-toggle": "tab"
-                                      }
-                                    },
-                                    [_vm._v("Card")]
-                                  )
-                                ]),
-                                _vm._v(" "),
-                                _c("li", [
-                                  _c(
-                                    "a",
-                                    {
-                                      attrs: {
-                                        href: "#emoney",
-                                        "data-toggle": "tab"
-                                      }
-                                    },
-                                    [_vm._v("Emoney")]
-                                  )
-                                ])
-                              ]),
-                              _vm._v(" "),
-                              _c("div", { staticClass: "tab-content" }, [
-                                _c(
-                                  "div",
+                            _c(
+                              "select",
+                              {
+                                directives: [
                                   {
-                                    staticClass: "active tab-pane",
-                                    attrs: { id: "cash" }
-                                  },
-                                  [
-                                    _c("div", { staticClass: "input-group" }, [
-                                      _c(
-                                        "span",
-                                        { staticClass: "input-group-addon" },
-                                        [_vm._v("Rp.")]
-                                      ),
-                                      _vm._v(" "),
-                                      _c("input", {
-                                        directives: [
-                                          {
-                                            name: "model",
-                                            rawName: "v-model",
-                                            value: _vm.totalBayar,
-                                            expression: "totalBayar"
-                                          }
-                                        ],
-                                        staticClass: "form-control",
-                                        attrs: {
-                                          type: "number",
-                                          placeholder: "Bayar",
-                                          required: ""
-                                        },
-                                        domProps: { value: _vm.totalBayar },
-                                        on: {
-                                          input: function($event) {
-                                            if ($event.target.composing) {
-                                              return
-                                            }
-                                            _vm.totalBayar = $event.target.value
-                                          }
-                                        }
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.pembayaran,
+                                    expression: "pembayaran"
+                                  }
+                                ],
+                                staticClass: "form-control",
+                                on: {
+                                  change: function($event) {
+                                    var $$selectedVal = Array.prototype.filter
+                                      .call($event.target.options, function(o) {
+                                        return o.selected
                                       })
-                                    ]),
-                                    _vm._v(" "),
+                                      .map(function(o) {
+                                        var val =
+                                          "_value" in o ? o._value : o.value
+                                        return val
+                                      })
+                                    _vm.pembayaran = $event.target.multiple
+                                      ? $$selectedVal
+                                      : $$selectedVal[0]
+                                  }
+                                }
+                              },
+                              [
+                                _c(
+                                  "option",
+                                  { attrs: { value: "1", selected: "" } },
+                                  [_vm._v("Cash")]
+                                ),
+                                _vm._v(" "),
+                                _c("option", { attrs: { value: "2" } }, [
+                                  _vm._v("Debit")
+                                ]),
+                                _vm._v(" "),
+                                _c("option", { attrs: { value: "3" } }, [
+                                  _vm._v("E-Money")
+                                ])
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c("br"),
+                            _vm._v(" "),
+                            _vm.pembayaran === "1"
+                              ? _c("div", [
+                                  _c("div", { staticClass: "input-group" }, [
                                     _c(
-                                      "h3",
-                                      { staticClass: "profile-username " },
-                                      [
-                                        _vm._v(
-                                          "Kembali : " +
-                                            _vm._s(
-                                              _vm._f("currency")(
-                                                _vm.totalBayar -
-                                                  ((_vm.subtotal * _vm.pajak) /
-                                                    100 +
-                                                    _vm.subtotal -
-                                                    (((_vm.subtotal *
-                                                      _vm.pajak) /
-                                                      100 +
-                                                      _vm.subtotal) *
-                                                      _vm.diskon) /
-                                                      100) || 0
-                                              )
-                                            )
-                                        )
-                                      ]
+                                      "span",
+                                      { staticClass: "input-group-addon" },
+                                      [_vm._v("Rp.")]
                                     ),
                                     _vm._v(" "),
+                                    _c("input", {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value: _vm.totalBayar,
+                                          expression: "totalBayar"
+                                        }
+                                      ],
+                                      staticClass: "form-control",
+                                      attrs: {
+                                        type: "number",
+                                        placeholder: "Bayar",
+                                        required: ""
+                                      },
+                                      domProps: { value: _vm.totalBayar },
+                                      on: {
+                                        input: function($event) {
+                                          if ($event.target.composing) {
+                                            return
+                                          }
+                                          _vm.totalBayar = $event.target.value
+                                        }
+                                      }
+                                    })
+                                  ]),
+                                  _vm._v(" "),
+                                  _c(
+                                    "h3",
+                                    { staticClass: "profile-username " },
+                                    [
+                                      _vm._v(
+                                        "Kembali : " +
+                                          _vm._s(
+                                            _vm._f("currency")(
+                                              _vm.totalBayar -
+                                                ((_vm.subtotal * _vm.pajak) /
+                                                  100 +
+                                                  _vm.subtotal -
+                                                  (((_vm.subtotal * _vm.pajak) /
+                                                    100 +
+                                                    _vm.subtotal) *
+                                                    _vm.diskon) /
+                                                    100) || 0
+                                            )
+                                          )
+                                      )
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "p",
+                                    { staticClass: "text-muted text-center" },
+                                    [
+                                      _c(
+                                        "button",
+                                        {
+                                          staticClass: "btn btn-md btn-success",
+                                          attrs: { type: "submit" }
+                                        },
+                                        [_vm._v("Bayar")]
+                                      )
+                                    ]
+                                  )
+                                ])
+                              : _vm.pembayaran === "2"
+                              ? _c("div", [
+                                  _c("div", { staticClass: "input-group" }, [
                                     _c(
-                                      "p",
-                                      { staticClass: "text-muted text-center" },
-                                      [
-                                        _c(
-                                          "button",
-                                          {
-                                            staticClass:
-                                              "btn btn-md btn-success",
-                                            attrs: { type: "submit" }
-                                          },
-                                          [_vm._v("Bayar")]
-                                        )
-                                      ]
-                                    )
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "div",
-                                  {
-                                    staticClass: "tab-pane",
-                                    attrs: { id: "debit" }
-                                  },
-                                  [
-                                    _c("div", { staticClass: "input-group" }, [
-                                      _c(
-                                        "span",
-                                        { staticClass: "input-group-addon" },
-                                        [_vm._v("Card Carge %")]
-                                      ),
-                                      _vm._v(" "),
-                                      _c("input", {
-                                        directives: [
-                                          {
-                                            name: "model",
-                                            rawName: "v-model",
-                                            value: _vm.taxDebit,
-                                            expression: "taxDebit"
-                                          }
-                                        ],
-                                        staticClass: "form-control",
-                                        attrs: {
-                                          type: "number",
-                                          placeholder: "0"
-                                        },
-                                        domProps: { value: _vm.taxDebit },
-                                        on: {
-                                          input: function($event) {
-                                            if ($event.target.composing) {
-                                              return
-                                            }
-                                            _vm.taxDebit = $event.target.value
-                                          }
+                                      "span",
+                                      { staticClass: "input-group-addon" },
+                                      [_vm._v("Card Carge %")]
+                                    ),
+                                    _vm._v(" "),
+                                    _c("input", {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value: _vm.taxDebit,
+                                          expression: "taxDebit"
                                         }
-                                      })
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("br"),
-                                    _vm._v(" "),
-                                    _c("div", { staticClass: "input-group" }, [
-                                      _c(
-                                        "span",
-                                        { staticClass: "input-group-addon" },
-                                        [_vm._v("Card No.")]
-                                      ),
-                                      _vm._v(" "),
-                                      _c("input", {
-                                        directives: [
-                                          {
-                                            name: "model",
-                                            rawName: "v-model",
-                                            value: _vm.noDebit,
-                                            expression: "noDebit"
+                                      ],
+                                      staticClass: "form-control",
+                                      attrs: {
+                                        type: "number",
+                                        placeholder: "0"
+                                      },
+                                      domProps: { value: _vm.taxDebit },
+                                      on: {
+                                        input: function($event) {
+                                          if ($event.target.composing) {
+                                            return
                                           }
-                                        ],
-                                        staticClass: "form-control",
-                                        attrs: {
-                                          type: "number",
-                                          placeholder: "No Kartu"
-                                        },
-                                        domProps: { value: _vm.noDebit },
-                                        on: {
-                                          input: function($event) {
-                                            if ($event.target.composing) {
-                                              return
-                                            }
-                                            _vm.noDebit = $event.target.value
-                                          }
+                                          _vm.taxDebit = $event.target.value
                                         }
-                                      })
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("br"),
-                                    _vm._v(" "),
-                                    _c("div", { staticClass: "input-group" }, [
-                                      _c(
-                                        "span",
-                                        { staticClass: "input-group-addon" },
-                                        [_vm._v("Rp.")]
-                                      ),
-                                      _vm._v(" "),
-                                      _c("input", {
-                                        directives: [
-                                          {
-                                            name: "model",
-                                            rawName: "v-model",
-                                            value: _vm.totalBayar,
-                                            expression: "totalBayar"
-                                          }
-                                        ],
-                                        staticClass: "form-control",
-                                        attrs: {
-                                          type: "number",
-                                          placeholder: "Bayar",
-                                          required: ""
-                                        },
-                                        domProps: { value: _vm.totalBayar },
-                                        on: {
-                                          input: function($event) {
-                                            if ($event.target.composing) {
-                                              return
-                                            }
-                                            _vm.totalBayar = $event.target.value
-                                          }
-                                        }
-                                      })
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("br"),
-                                    _vm._v(" "),
+                                      }
+                                    })
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("br"),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "input-group" }, [
                                     _c(
-                                      "p",
-                                      { staticClass: "text-muted text-center" },
-                                      [
-                                        _c(
-                                          "button",
-                                          {
-                                            staticClass:
-                                              "btn btn-md btn-success",
-                                            attrs: { type: "submit" }
-                                          },
-                                          [_vm._v("Bayar")]
-                                        )
-                                      ]
-                                    )
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "div",
-                                  {
-                                    staticClass: "tab-pane",
-                                    attrs: { id: "emoney" }
-                                  },
-                                  [
-                                    _vm._v(
-                                      "\n                                Emoney\n                              "
-                                    )
-                                  ]
-                                )
-                              ])
-                            ])
+                                      "span",
+                                      { staticClass: "input-group-addon" },
+                                      [_vm._v("Card No.")]
+                                    ),
+                                    _vm._v(" "),
+                                    _c("input", {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value: _vm.noDebit,
+                                          expression: "noDebit"
+                                        }
+                                      ],
+                                      staticClass: "form-control",
+                                      attrs: {
+                                        type: "number",
+                                        placeholder: "No Kartu"
+                                      },
+                                      domProps: { value: _vm.noDebit },
+                                      on: {
+                                        input: function($event) {
+                                          if ($event.target.composing) {
+                                            return
+                                          }
+                                          _vm.noDebit = $event.target.value
+                                        }
+                                      }
+                                    })
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("br"),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "input-group" }, [
+                                    _c(
+                                      "span",
+                                      { staticClass: "input-group-addon" },
+                                      [_vm._v("Rp.")]
+                                    ),
+                                    _vm._v(" "),
+                                    _c("input", {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value: _vm.totalBayar,
+                                          expression: "totalBayar"
+                                        }
+                                      ],
+                                      staticClass: "form-control",
+                                      attrs: {
+                                        type: "number",
+                                        placeholder: "Bayar",
+                                        required: ""
+                                      },
+                                      domProps: { value: _vm.totalBayar },
+                                      on: {
+                                        input: function($event) {
+                                          if ($event.target.composing) {
+                                            return
+                                          }
+                                          _vm.totalBayar = $event.target.value
+                                        }
+                                      }
+                                    })
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("br"),
+                                  _vm._v(" "),
+                                  _c(
+                                    "p",
+                                    { staticClass: "text-muted text-center" },
+                                    [
+                                      _c(
+                                        "button",
+                                        {
+                                          staticClass: "btn btn-md btn-success",
+                                          attrs: { type: "submit" }
+                                        },
+                                        [_vm._v("Bayar")]
+                                      )
+                                    ]
+                                  )
+                                ])
+                              : _vm.pembayaran === "3"
+                              ? _c("div", [
+                                  _vm._v(
+                                    "\n                              Emoney\n                            "
+                                  )
+                                ])
+                              : _vm._e()
                           ]
                         ),
                         _vm._v(" "),
@@ -57677,6 +57654,32 @@ var render = function() {
                             _c("div", { staticClass: "col-sm-4 invoice-col" }, [
                               _c("b", [_vm._v("Waiter : ")]),
                               _vm._v(_vm._s(_vm.waiter.name)),
+                              _c("br")
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-sm-4 invoice-col" }, [
+                              _c("b", [_vm._v("Payment : ")]),
+                              _vm._v(" "),
+                              _vm.pembayaran === "1"
+                                ? _c("div", [
+                                    _vm._v(
+                                      "\n                    Cash\n                  "
+                                    )
+                                  ])
+                                : _vm.pembayaran === "2"
+                                ? _c("div", [
+                                    _vm._v(
+                                      "\n                    Debit\n                  "
+                                    )
+                                  ])
+                                : _vm.pembayaran === "3"
+                                ? _c("div", [
+                                    _vm._v(
+                                      "\n                    E-Money\n                  "
+                                    )
+                                  ])
+                                : _vm._e(),
+                              _vm._v(" "),
                               _c("br")
                             ])
                           ]),

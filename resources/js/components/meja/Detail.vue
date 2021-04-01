@@ -46,7 +46,7 @@
                   <div class="input-group">
                     <span class="input-group-addon">Nm Waiter</span>
                   <select  class="form-control" v-model='post.waiterMeja' >
-                    <option v-for='waiter in waiters' :value='waiter.id' :key="waiter.id">{{waiter.name}}</option>
+                    <option v-for='waiter in waiters' :value='waiter.name' :key="waiter.id">{{waiter.name}}</option>
                   </select>
                   <input type="text" class="form-control" v-model="post.waiterMeja" placeholder="No nota">
                   </div>
@@ -330,18 +330,14 @@
                 </div>
               </div>
               <br>
-             
-
-                      <div class="nav-tabs-custom">
-                            <ul class="nav nav-tabs">
-                            <li class="active"><a href="#cash" data-toggle="tab">Cash</a></li>
-                            <li><a href="#debit" data-toggle="tab">Card</a></li>
-                            <li><a href="#emoney" data-toggle="tab">Emoney</a></li>
-                            </ul>
-                            <div class="tab-content">
-
-                              <div class="active tab-pane" id="cash">
-                                  <div class="input-group">
+                            <select class='form-control' v-model='pembayaran' >
+                                <option value='1' selected>Cash</option>
+                                <option value='2'>Debit</option>
+                                <option value='3'>E-Money</option>
+                            </select>
+                            <br>
+                            <div v-if="pembayaran === '1'">
+                              <div class="input-group">
                                     <span class="input-group-addon">Rp.</span>
                                     <input type="number" class="form-control" v-model="totalBayar" placeholder="Bayar" required>
                                   </div>
@@ -350,10 +346,9 @@
                                   <p class="text-muted text-center">
                                   <button type="submit"  class="btn btn-md btn-success" >Bayar</button>                
                                   </p>
-                              </div>
-
-                              <div class="tab-pane" id="debit">
-                                  <div class="input-group">
+                            </div>
+                            <div v-else-if="pembayaran === '2'">
+                              <div class="input-group">
                                     <span class="input-group-addon">Card Carge %</span>
                                     <input type="number" class="form-control" v-model="taxDebit" placeholder="0" >
                                   </div>
@@ -371,19 +366,10 @@
                                   <p class="text-muted text-center">
                                   <button type="submit"  class="btn btn-md btn-success" >Bayar</button>                
                                   </p>
-                              </div>
-
-                              <div class="tab-pane" id="emoney">
-                                Emoney
-                              </div>
-
                             </div>
-                      </div>
-                
-
-                
-
-                
+                            <div v-else-if="pembayaran === '3'">
+                              Emoney
+                            </div>
 
                
               </form>
@@ -415,6 +401,20 @@
 
                 <div class="col-sm-4 invoice-col">
                   <b>Waiter : </b>{{waiter.name}}<br>
+                  
+                </div>
+                <div class="col-sm-4 invoice-col">
+                  <b>Payment : </b>
+                  <div v-if="pembayaran === '1'">
+                    Cash
+                  </div>
+                  <div v-else-if="pembayaran === '2'">
+                    Debit
+                  </div>
+                  <div v-else-if="pembayaran === '3'">
+                    E-Money
+                  </div>
+                  <br>
                   
                 </div>
                 <!-- /.col -->
@@ -561,6 +561,7 @@
                 brg: '',
                 taxDebit: '',
                 noDebit: '',
+                pembayaran: '1',
                 //waitername : this.waiter.name,
                 //optionLabel: users.nmBarang,
                 tglNota: new Date().toJSON().slice(0,10).replace(/-/g,'/'),
@@ -750,17 +751,9 @@
                     kembalianNota: this.totalBayar - ((this.subtotal * this.pajak / 100 + this.subtotal) - ((this.subtotal * this.pajak / 100 + this.subtotal) * this.diskon / 100)),
                     
                 })
-                //window.print(printMe)
-                //this.showModalBayar = false
-                //this.$router.push({name: 'meja'})
                     .then((response) => {
                         //this.$print(printMe);
-                        window.print(printMe)
-                        //this.cekStatusMeja()
-                        
-                        //this.print(this.$refs['printMu'])
-                        //alert('Transaksi Selesai');
-                        
+                        window.print(printMe)                        
                     });
                 
             },
