@@ -159,6 +159,7 @@ Vue.component("data-table", DataTable);
                 endDate: '',
                 ActionButtons: null,
                 validation: null,
+                index: ''
                 //actionTriggered: null,
                 
                 //totalSum: '',
@@ -218,12 +219,27 @@ Vue.component("data-table", DataTable);
             }
         },
         created() {
-            let uri = '/api/pembelian';
-            this.axios.get(uri).then(response => {
-                this.posts = response.data.data;
-            });
+            this.loadData();
+        },
+        mounted () {
+            //this.intervalFetchData1();
+            this.intervalFetchData();
+            //this.bindings()
+            //this.loadData()
         },
         methods: {
+            loadData(){
+                let uri = '/api/pembelian';
+                this.axios.get(uri).then(response => {
+                    this.posts = response.data.data;
+                });
+            },
+
+            intervalFetchData: function () {
+            setInterval(() => {    
+                this.loadData();
+                }, 3000);    
+            },
             
             PostDelete(id, index)
             {

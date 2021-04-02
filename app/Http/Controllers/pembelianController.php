@@ -17,6 +17,7 @@ class pembelianController extends Controller
     public function index()
     {
         $posts = Pembelian::join('tblSupplier', 'tblPembelian.idSupplier', '=', 'tblSupplier.kdSupplier')
+                            ->select('tblPembelian.*', 'tblSupplier.nmSupplier', 'tblSupplier.kdSupplier')
                             ->get();
         return response([
             'success' => true,
@@ -297,6 +298,28 @@ class pembelianController extends Controller
             ->where('kdBarang', $kodebarang)
             ->where('noTransaksiInv', $noNotaPembelian)
             ->delete();
+
+        $post->delete();
+
+        if ($post) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Post Berhasil Dihapus!',
+            ], 200);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Post Gagal Dihapus!',
+            ], 500);
+        }
+    }
+
+    public function hapusPembelian($id)
+    {
+        $post = Pembelian::findOrFail($id);
+        $kdPembelian = $post->noNotaPembelian;
+
+        PembelianDetail::where('noNotaPembelian', $kdPembelian)->delete();
 
         $post->delete();
 

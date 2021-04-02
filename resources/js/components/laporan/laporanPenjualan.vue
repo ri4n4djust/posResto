@@ -269,10 +269,13 @@ Vue.component("data-table", DataTable);
             }
         },
         created() {
-            let uri = '/api/penjualan';
-            this.axios.get(uri).then(response => {
-                this.posts = response.data.data;
-            });
+            this.loadData();
+        },
+        mounted () {
+            //this.intervalFetchData1();
+            this.intervalFetchData();
+            //this.bindings()
+            //this.loadData()
         },
         methods: {
 
@@ -280,15 +283,14 @@ Vue.component("data-table", DataTable);
                 this.$print(this.$refs[ref])
             },
             
-            PostDelete(id, index)
-            {
-                this.axios.delete(`/api/penjualan/${id}`)
-                    .then(response => {
-                        this.posts.splice(index, 1);
-                    }).catch(error => {
-                    alert('system error!');
-                });
+            loadData:function(){
+                let uri = '/api/penjualan';
+                this.axios.get(uri).then(response => {
+                this.posts = response.data.data;
+                        
+            });
             },
+            
             lapPenjualan() {
                 let uri = '/api/lapPenjualan';
                 this.axios.post(uri, 
@@ -307,6 +309,11 @@ Vue.component("data-table", DataTable);
                     });
                 
             },
+            intervalFetchData: function () {
+            setInterval(() => {    
+                this.loadData();
+                }, 3000);    
+            }
             //print () {
             // Pass the element id here
             //this.$htmlToPaper('printMe');

@@ -23,6 +23,7 @@
                                             <div class="col-sm-4 invoice-col">
                                             
                                             <address>
+                                                {{data.id}}
                                                 <strong>Customer :</strong> {{data.pelangganNota}}<br>
                                                 <b> Tgl : </b>{{data.tglNota}}<br>
                                                 <b> Meja No : </b>{{data.noMeja}}<br>
@@ -46,6 +47,9 @@
                                         
                                         <p class="text-muted text-center">
                                         </p>
+                                        <a href="#"  @click="showModal = true" class="btn btn-md btn-success"><b>Re-Print</b></a>
+                                        <a href="#"  @click="showModalMenu = true" class="btn btn-md btn-success"><b>Edit</b></a>
+                                        <a href="#"   @click.prevent="DeletePenjualan(data.id, index)" class="btn btn-md btn-success"><b>Delete</b></a>
 
                                                     <table class="table table-hover table-bordered">
                                                         <thead>
@@ -80,7 +84,9 @@
     </div>
 </template>
 <script>
+
 export default {
+
     name: "ActionButtons",
     data() {
             return {
@@ -101,6 +107,19 @@ export default {
    
        
     methods: {
+            DeletePenjualan(id, index)
+            {
+                if(confirm("Do you really want to delete?")){
+                this.axios.delete(`/api/hapuspenjualan/${id}`)
+                    .then(response => {
+                        this.posts.splice(index, 1);
+                        this.showModalPenjualan = false;
+                       
+                    }).catch(error => {
+                    alert('system error!');
+                });
+                }
+            },
             something() {
                 return new Promise((resolve) => {
                 resolve('np:'+ this.data.noNota);

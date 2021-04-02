@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Penjualan;
+use App\PenjualanDetail;
+
 //use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
@@ -15,6 +17,7 @@ class penjualanController extends Controller
     {
         $posts = Penjualan::join('tblMeja', 'tblPenjualan.noMeja', 'tblMeja.id')
                 ->join('users', 'tblPenjualan.userNota', 'users.id')
+                ->select('tblpenjualan.*', 'tblMeja.noMeja', 'users.name')
                 ->get();
         return response([
             'success' => true,
@@ -68,4 +71,25 @@ class penjualanController extends Controller
         }
     }
     
+    public function destroy($id)
+    {
+        $post = Penjualan::findOrFail($id);
+        $kdPenjualan = $post->noNota;
+
+        PenjualanDetail::where('noNota', $kdPenjualan)->delete();
+
+        $post->delete();
+
+        if ($post) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Post Berhasil Dihapus!',
+            ], 200);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Post Gagal Dihapus!',
+            ], 500);
+        }
+    }
 }

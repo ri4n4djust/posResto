@@ -46,10 +46,13 @@
                   <div class="input-group">
                     <span class="input-group-addon">Nm Waiter</span>
                   <select  class="form-control" v-model='post.waiterMeja' >
-                    <option v-for='waiter in waiters' :value='waiter.name' :key="waiter.id">{{waiter.name}}</option>
+                    <option v-for='waiter in waiters' :value='waiter.id' :key="waiter.id">{{waiter.name}} | {{waiter.id}}</option>
                   </select>
+
                   <input type="text" class="form-control" v-model="post.waiterMeja" placeholder="No nota">
                   </div>
+
+                  {{post.name}}
 
                 <input type="hidden" class="form-control" :value="subtotal" :name="totalTransaksi" >
                 <h3 class="profile-username text-center">Total {{ subtotal  || 0 | currency }}</h3>

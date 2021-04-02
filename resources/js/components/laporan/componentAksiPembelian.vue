@@ -15,10 +15,10 @@
                                         <button type="button" class="close" @click="showModalPembelian=false">
                                         <span aria-hidden="true">&times;</span>
                                         </button>
-                                        <h4 class="modal-title">Detail Penjualan</h4>
+                                        <h4 class="modal-title">Detail Pembelian</h4>
                                     </div>
                                     <div class="modal-body">
-
+                                        
                                         <p class="text-muted text-left">
                                             <label>Tgl : </label>
                                         {{data.tglNotaPembelian}}
@@ -38,6 +38,7 @@
                                         
                                         <p class="text-muted text-center">
                                         </p>
+                                        <a href="#"   @click.prevent="DeletePembelian(data.id, index)" class="btn btn-md btn-success"><b>Delete</b></a>
 
                                                     <table class="table table-hover table-bordered">
                                                         <thead>
@@ -81,6 +82,7 @@ export default {
                 showModalPembelian: false,
                 np: this.data.noNota,
                 sukses: '',
+                index: '',
                 
             }
 
@@ -92,6 +94,19 @@ export default {
    
        
     methods: {
+        DeletePembelian(id, index)
+            {
+                if(confirm("Do you really want to delete?")){
+                this.axios.delete(`/api/hapuspembelian/${id}`)
+                    .then(response => {
+                        this.posts.splice(index, 1);
+                        this.showModalPembelian = false;
+                       
+                    }).catch(error => {
+                    alert('system error!');
+                });
+                }
+            },
             
             loadData:function(){
                 let uri = '/api/pembelian';
