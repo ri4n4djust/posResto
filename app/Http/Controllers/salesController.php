@@ -232,7 +232,11 @@ class salesController extends Controller
         $post = Barang::findOrFail($id);
         $kodebarang = $post->kdBarang;
 
-        $inven = Inventori::where('kdBarang', $kodebarang)->delete();
+        Inventori::where('kdBarang', $kodebarang)->delete();
+        KartuStok::where('kdBarang', $kodebarang)->delete();
+        KartuStokInventori::where('kdBarang', $kodebarang)->delete();
+        StokOpname::where('kdBarang', $kodebarang)->delete();
+        StokOpnameDetail::where('kdBarang', $kodebarang)->delete();
 
         
         $post->delete();
