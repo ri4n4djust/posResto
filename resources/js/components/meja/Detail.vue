@@ -12,7 +12,7 @@
 
               <h3 class="profile-username text-center">Meja No. {{post.noMeja}}</h3>
 
-              <p class="text-muted text-center">Max Pax {{post.paxMeja}}</p>{{waitername}}
+              <p class="text-muted text-center">Max Pax {{post.paxMeja}}</p>
             </div>
             <!-- /.box-body -->
           </div>
@@ -45,14 +45,10 @@
                 <p class="text-muted text-center">
                   <div class="input-group">
                     <span class="input-group-addon">Nm Waiter</span>
-                  <select  class="form-control" v-model='post.waiterMeja' >
-                    <option v-for='waiter in waiters' :value='waiter.id' :key="waiter.id">{{waiter.name}} | {{waiter.id}}</option>
-                  </select>
-
-                  <input type="text" class="form-control" v-model="post.waiterMeja" placeholder="No nota">
+                  <input type="text" class="form-control" v-model="post.name" disabled>
                   </div>
 
-                  {{post.name}}
+                  
 
                 <input type="hidden" class="form-control" :value="subtotal" :name="totalTransaksi" >
                 <h3 class="profile-username text-center">Total {{ subtotal  || 0 | currency }}</h3>
@@ -386,9 +382,8 @@
                     Phone: (804) 123-5432<br>
                     Email: info@almasaeedstudio.com
                   </address>
-              <div class="row invoice-info">
-                <div class="col-sm-4 invoice-col">
-                
+              <div class="row">
+                <div class="col-md-4 invoice-col">
                   <address>
                     <strong>Customer :</strong> {{pelanggan}}<br>
                     <b> Tgl : </b>{{tglNota}}<br>
@@ -396,18 +391,17 @@
                   </address>
                 </div>
                 <!-- /.col -->
-                <div class="col-sm-4 invoice-col">
-                  <b>No Invoice : </b>{{noNota}}<br>
+                <div class="col-md-4 invoice-col">
+                  <address>
+                  <b>No Inv: </b>{{noNota}}<br>
                   <b>Kasir : </b>{{$session.get('user')}}
-                  
+                  </address>
                 </div>
 
-                <div class="col-sm-4 invoice-col">
-                  <b>Waiter : </b>{{waiter.name}}<br>
-                  
-                </div>
-                <div class="col-sm-4 invoice-col">
-                  <b>Payment : </b>
+                <div class="col-md-4 invoice-col">
+                  <address>
+                  <b>Waiter : </b>{{post.name}}<br>
+                  <b>Type : </b>
                   <div v-if="pembayaran === '1'">
                     Cash
                   </div>
@@ -417,8 +411,7 @@
                   <div v-else-if="pembayaran === '3'">
                     E-Money
                   </div>
-                  <br>
-                  
+                  </address>
                 </div>
                 <!-- /.col -->
               </div>
