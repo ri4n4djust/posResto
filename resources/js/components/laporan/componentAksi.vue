@@ -23,7 +23,7 @@
                                             <div class="col-sm-4 invoice-col">
                                             
                                             <address>
-                                                {{data.id}}
+                                               
                                                 <strong>Customer :</strong> {{data.pelangganNota}}<br>
                                                 <b> Tgl : </b>{{data.tglNota}}<br>
                                                 <b> Meja No : </b>{{data.noMeja}}<br>
@@ -32,7 +32,8 @@
                                             <!-- /.col -->
                                             <div class="col-sm-4 invoice-col">
                                             <b>No Invoice : </b>{{data.noNota}}<br>
-                                            <b>Kasir : </b>{{data.name}}
+                                            <b>Kasir : </b>{{data.name}}<br>
+                                            <b>Waiter : </b>{{data.waiterNota}}<br>
                                             
                                             </div>
                                             <!-- /.col -->

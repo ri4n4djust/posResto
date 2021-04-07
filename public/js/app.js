@@ -9449,6 +9449,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "ActionButtons",
   data: function data() {
@@ -11382,7 +11383,7 @@ __webpack_require__.r(__webpack_exports__);
         totalNota: this.subtotal * this.pajak / 100 + this.subtotal - (this.subtotal * this.pajak / 100 + this.subtotal) * this.diskon / 100,
         bayarNota: this.totalBayar,
         userNota: this.$session.get('userId'),
-        waiterNota: this.post.waiterMeja,
+        waiterNota: this.post.name,
         kembalianNota: this.totalBayar - (this.subtotal * this.pajak / 100 + this.subtotal - (this.subtotal * this.pajak / 100 + this.subtotal) * this.diskon / 100)
       }).then(function (response) {
         //this.$print(printMe);
@@ -54706,11 +54707,6 @@ var render = function() {
                         _c("div", { staticClass: "row invoice-info" }, [
                           _c("div", { staticClass: "col-sm-4 invoice-col" }, [
                             _c("address", [
-                              _vm._v(
-                                "\n                                            " +
-                                  _vm._s(_vm.data.id) +
-                                  "\n                                            "
-                              ),
                               _c("strong", [_vm._v("Customer :")]),
                               _vm._v(" " + _vm._s(_vm.data.pelangganNota)),
                               _c("br"),
@@ -54731,10 +54727,12 @@ var render = function() {
                             _c("br"),
                             _vm._v(" "),
                             _c("b", [_vm._v("Kasir : ")]),
-                            _vm._v(
-                              _vm._s(_vm.data.name) +
-                                "\n                                        \n                                        "
-                            )
+                            _vm._v(_vm._s(_vm.data.name)),
+                            _c("br"),
+                            _vm._v(" "),
+                            _c("b", [_vm._v("Waiter : ")]),
+                            _vm._v(_vm._s(_vm.data.waiterNota)),
+                            _c("br")
                           ]),
                           _vm._v(" "),
                           _c("div", { staticClass: "col-sm-4 invoice-col" }, [

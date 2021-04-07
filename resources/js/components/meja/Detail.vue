@@ -743,7 +743,7 @@
                     totalNota: ((this.subtotal * this.pajak / 100 + this.subtotal) - ((this.subtotal * this.pajak / 100 + this.subtotal) * this.diskon / 100)),
                     bayarNota: this.totalBayar,
                     userNota: this.$session.get('userId'),
-                    waiterNota: this.post.waiterMeja,
+                    waiterNota: this.post.name,
                     kembalianNota: this.totalBayar - ((this.subtotal * this.pajak / 100 + this.subtotal) - ((this.subtotal * this.pajak / 100 + this.subtotal) * this.diskon / 100)),
                     
                 })
