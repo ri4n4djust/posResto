@@ -15,3 +15,8 @@
 .DS_Store
 .env
 .env
+public/js/app.js
+node_modules/.cache/babel-loader/54ba56229a55144ad63de7c99e791ee5.json.gz
+node_modules/.cache/babel-loader/0e1ce0d83cc86ba1677d0b68e38ed468.json.gz
+public/js/app.js
+.env
