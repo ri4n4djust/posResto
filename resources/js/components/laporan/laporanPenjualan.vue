@@ -71,7 +71,7 @@
                                     </tfoot>
                                 </table>
 
-                                <div id="printMe" ref="printMu" >
+                                <div id="printMe1" ref="printMu" >
                                 <table width="90%" border="1" style="border:1px solid black; border-collapse: collapse;">
                                     <thead>
                                     <tr>
@@ -273,7 +273,7 @@ Vue.component("data-table", DataTable);
         },
         mounted () {
             //this.intervalFetchData1();
-            this.intervalFetchData();
+            //this.intervalFetchData();
             //this.bindings()
             //this.loadData()
         },

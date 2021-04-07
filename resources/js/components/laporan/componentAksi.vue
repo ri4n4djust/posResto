@@ -3,6 +3,8 @@
         <button  @click="loadDetailPenjualan()">
             <i class="fa fa-eye"></i>
         </button>
+
+        
        
 
                         <div v-if="showModalPenjualan">
@@ -20,28 +22,28 @@
                                     <div class="modal-body">
 
                                         <div class="row invoice-info">
-                                            <div class="col-sm-4 invoice-col">
-                                            
-                                            <address>
-                                               
+                                        <!-- accepted payments column -->
+                                            <div class="col-xs-6">
+                                            <p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">
                                                 <strong>Customer :</strong> {{data.pelangganNota}}<br>
                                                 <b> Tgl : </b>{{data.tglNota}}<br>
                                                 <b> Meja No : </b>{{data.noMeja}}<br>
-                                            </address>
+                                                <b>Waiter : </b>{{data.waiterNota}}<br>
+                                            </p>
                                             </div>
                                             <!-- /.col -->
-                                            <div class="col-sm-4 invoice-col">
-                                            <b>No Invoice : </b>{{data.noNota}}<br>
-                                            <b>Kasir : </b>{{data.name}}<br>
-                                            <b>Waiter : </b>{{data.waiterNota}}<br>
-                                            
+                                            <div class="col-xs-6">
+                                            <p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">
+                                                <b>No Inv: </b>{{data.noNota}}<br>
+                                                <b>Kasir : </b>{{ data.name }}<br>
+                                                <b>Type : </b><br>
+                                                <b>Tax: </b>{{data.taxNota | currency}}<br>
+                                                <b>Diskon : </b>{{ data.diskonNota | currency }}<br>
+                                            </p>
                                             </div>
                                             <!-- /.col -->
-                                            <div class="col-sm-4 invoice-col">
-                                                <b>Pajak : </b>{{data.taxNota | currency}}<br>
-                                                <b>Diskon : </b>{{data.diskonNota | currency}}
-                                            </div>
-                                        </div>
+                                        
+                                    </div>
                                         <h3 class="profile-username text-left">
                                             <label>Total : </label>
                                             {{ data.totalNota  || 0 | currency }}</h3>
@@ -51,17 +53,103 @@
                                         
                                         
                                         <div v-if="adminuser === 'Admin'">
-                                            <a href="#"  @click="showModal = true" class="btn btn-md btn-success"><b>Re-Print</b></a>
+                                            <a href="#"  @click="rePrint()" class="btn btn-md btn-success"><b>Re-Print</b></a>
                                             <a href="#"  @click="showModalMenu = true" class="btn btn-md btn-success"><b>Edit</b></a>
                                             <a href="#"   @click.prevent="DeletePenjualan(data.id, index)" class="btn btn-md btn-success"><b>Delete</b></a>
                                         </div>
                                         <div v-else-if="adminuser === 'Operator'">
-                                            <a href="#"  @click="showModal = true" class="btn btn-md btn-success"><b>Re-Print</b></a>
+                                            <a href="#"  @click="rePrint()" class="btn btn-md btn-success"><b>Re-Print</b></a>
                                             <a href="#"  @click="showModalMenu = true" class="btn btn-md btn-success"><b>Edit</b></a>
                                         </div>
                                         <div v-else-if="adminuser === 'Kasir'">
-                                            <a href="#"  @click="showModal = true" class="btn btn-md btn-success"><b>Re-Print</b></a>
+                                            <a href="#"  @click="rePrint()" class="btn btn-md btn-success"><b>Re-Print</b></a>
                                         </div>
+            <div id="printMe" class="row">
+            <section class="invoice">
+                <!-- info row -->
+               <address>
+                    <strong>Ala Desa.</strong><br>
+                    Sangeh<br>
+
+                    Phone: (804) 123-5432<br>
+                    Email: info@almasaeedstudio.com
+                  </address>
+              <div class="row invoice-info">
+                  <!-- accepted payments column -->
+                    <div class="col-xs-6">
+                    <p class="text-muted" style="margin-top: 2px;">
+                        <strong>Customer :</strong> {{data.pelangganNota}}<br>
+                        <b> Tgl : </b>{{data.tglNota}}<br>
+                        <b> Meja No : </b>{{data.noMeja}}<br>
+                        <b>Waiter : </b>{{data.waiterNota}}<br>
+                    </p>
+                    </div>
+                    <!-- /.col -->
+                    <div class="col-xs-6">
+                    <p class="text-muted" style="margin-top: 2px;">
+                        <b>No Inv: </b>{{data.noNota}}<br>
+                        <b>Kasir : </b>{{ data.name }}<br>
+                        <b>Type : </b>
+                    </p>
+                    </div>
+                    <!-- /.col -->
+
+                    <div class="col-xs-12 table-responsive">
+                  <table class="table table-striped">
+                                <thead>
+                                <tr>
+                                    <th>Nama </th>
+                                    <th>Qty</th>
+                                    <th>Harga</th>
+                                    <th>Total</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr v-for="trx in pem" :key="trx.noN">
+                                    <td>{{ trx.nmBarang }} </td>
+                                    <td>{{ trx.qty}}</td>
+                                    <td>{{ trx.hrgJual | currency }}</td>
+                                    <td>{{ trx.qty * trx.hrgJual | currency }}</td>
+                                </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th colspan="3">subTotal :</th>
+                                        <th>{{data.totalNota | currency}}</th>
+                                    </tr>
+                                    <tr>
+                                        <th colspan="3">Tax & Service :</th>
+                                        <th>{{ data.taxNota | currency}}</th>
+                                    </tr>
+                                    <tr>
+                                        <th colspan="3">Discount</th>
+                                        <th>{{ data.diskonNota | currency}}</th>
+                                    </tr>
+                                    <tr>
+                                        <th colspan="3">subTotal :</th>
+                                        <th>{{ data.totalNota | currency }}</th>
+                                    </tr>
+                                    <tr>
+                                        <th colspan="3">Payment :</th>
+                                        <th>{{data.bayarNota | currency}}</th>
+                                    </tr>
+                                    <tr>
+                                        <th colspan="3">Kembalian :</th>
+                                        <th>{{ data.kembalianNota | currency }}</th>
+                                    </tr>
+                                    <tr>
+                                        <th colspan="5">Terima Kasih Telah Berbelanja</th>
+
+                                    </tr>
+                                </tfoot>
+                            </table>
+                </div>
+                
+              </div>
+              <!-- /.row -->
+                
+            </section>
+            </div>
 
                                         
                                         
@@ -98,6 +186,27 @@
        
     </div>
 </template>
+
+<style type="text/css">
+
+    #printMe { display: none; }
+
+    @media print
+    {
+  body * {
+    visibility: hidden;
+  }
+  #printMe, #printMe * {
+    visibility: visible;
+  }
+  #printMe {
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+}
+    </style>
+
 <script>
 
 export default {
@@ -123,6 +232,9 @@ export default {
         },
        
     methods: {
+        rePrint: function(){
+            window.print(printMe);
+        },
             DeletePenjualan(id, index)
             {
                 if(confirm("Do you really want to delete?")){
