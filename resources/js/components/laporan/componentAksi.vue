@@ -64,7 +64,7 @@
                                         <div v-else-if="adminuser === 'Kasir'">
                                             <a href="#"  @click="rePrint()" class="btn btn-md btn-success"><b>Re-Print</b></a>
                                         </div>
-            <div id="printMe" class="row">
+            <div id="printMe">
             <section class="invoice">
                 <!-- info row -->
                <address>

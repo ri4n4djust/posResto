@@ -1,6 +1,7 @@
 <template>
 
                     <div class="card-body">
+                        <status-login></status-login>
                         <h3>Live Order</h3>
                         <!-- TO DO List -->
                         <div class="box box-primary">

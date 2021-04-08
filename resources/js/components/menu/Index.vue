@@ -1,6 +1,9 @@
 <template>
 
+
                     <div class="card-body">
+                        <status-login></status-login>
+                        
                         <h3>
                         <router-link :to="{ name: 'createMenu' }" class="btn btn-md btn-success">TAMBAH MENU</router-link>
                         </h3>

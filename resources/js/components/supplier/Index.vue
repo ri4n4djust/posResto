@@ -3,6 +3,7 @@
 
 
                     <div class="card-body">
+                        <status-login></status-login>
                         <h3>
                         <router-link :to="{ name: 'createSupplier' }" class="btn btn-md btn-success">TAMBAH SUPPLIER</router-link>
                         </h3>

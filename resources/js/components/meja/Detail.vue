@@ -1,6 +1,6 @@
 <template>
     <div class="mt-3">
-
+      <status-login></status-login>
     <section class="content">
 
       <div class="row">
@@ -744,6 +744,7 @@
                     bayarNota: this.totalBayar,
                     userNota: this.$session.get('userId'),
                     waiterNota: this.post.name,
+                    typeNota: this.pembayaran,
                     kembalianNota: this.totalBayar - ((this.subtotal * this.pajak / 100 + this.subtotal) - ((this.subtotal * this.pajak / 100 + this.subtotal) * this.diskon / 100)),
                     
                 })

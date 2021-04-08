@@ -1,6 +1,6 @@
 <template>
     <div class="mt-3">
-
+<status-login></status-login>
         <section class="content">
 
       <div class="row">

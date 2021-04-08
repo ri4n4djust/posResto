@@ -1,7 +1,9 @@
 <template>
 
                     <div class="card-body">
+                        <status-login></status-login>
                         <h3>
+                            DAFTAR KATEGORI<br>
                         <router-link :to="{ name: 'createKategori' }" class="btn btn-md btn-success">TAMBAH KATEGORI</router-link>
                         </h3>
                             <table class="table table-hover table-bordered">

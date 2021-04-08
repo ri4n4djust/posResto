@@ -1,27 +1,7 @@
 <template>
 <div class="mt-3">
   
-
-      <div class="row">
-        <div class="col-md-3">
-
-          <!-- About Me Box -->
-          <div class="box box-primary">
-            <div class="box-header with-border">
-              <h5 class="box-title">
-                  Login As {{ this.$session.get('user') }} | Role : {{ this.$session.get('roleID') }}
-                  <button type="button" class="btn-sm btn-success" @click="logout()">Log Out</button>
-              </h5>
-
-              
-            </div>
-            <!-- /.box-header -->
-
-          </div>
-          <!-- /.box -->
-        </div>
-        <!-- /.col -->
-      </div>
+<status-login></status-login>
 
 
                     <div class="card-body">

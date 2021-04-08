@@ -1,6 +1,7 @@
 <template>
 
     <div class="card-body">
+        <status-login></status-login>
                         <h3>Stok Opname
                         <router-link :to="{ name: 'stokopnamecreate' }" class="btn btn-md btn-success">Stok Opname Baru</router-link>
                         </h3>

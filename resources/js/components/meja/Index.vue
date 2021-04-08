@@ -1,6 +1,7 @@
 <template>
 
                     <div class="card-body">
+                      <status-login></status-login>
                         <h3>
                         <router-link :to="{ name: 'createMeja' }" class="btn btn-md btn-success">TAMBAH MEJA</router-link>
                         </h3>

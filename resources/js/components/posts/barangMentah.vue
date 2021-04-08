@@ -1,6 +1,7 @@
 <template>
 
                     <div class="card-body">
+                        <status-login></status-login>
                         <h3>Barang Mentah</h3>
                         <h3>
                         <router-link :to="{ name: 'create' }" class="btn btn-md btn-success">TAMBAH BARANG</router-link>

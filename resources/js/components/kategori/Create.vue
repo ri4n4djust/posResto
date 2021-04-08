@@ -1,7 +1,9 @@
 <template>
     <div class="mt-3">
+        <status-login></status-login>
+        <h3>
                     <div class="card-header">TAMBAH SUPPLIER</div>
-
+        </h3>
                     <div class="card-body">
 
                         <form @submit.prevent="PostStore">
@@ -27,6 +29,7 @@
                             <div class="form-group">
                                 <button type="submit" class="btn btn-md btn-success">SIMPAN</button>
                                 <button type="reset" class="btn btn-md btn-danger">RESET</button>
+                                <router-link :to="{ name: 'kategori' }" class="btn btn-primary btn-success">KEMBALI</router-link>
                             </div>
 
 

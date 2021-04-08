@@ -26,6 +26,7 @@ class CreatePenjualansTable extends Migration
             $table->string('kembalianNota');
             $table->string('userNota');
             $table->string('waiterNota');
+            $table->string('typeNota');
             $table->timestamps();
         });
     }

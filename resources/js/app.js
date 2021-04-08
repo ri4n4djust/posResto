@@ -82,6 +82,8 @@ import CreatePembelian from './components/PembelianCreate.vue';
 import liveorder from './components/LiveOrder.vue';
 
 import homeComponent from './components/Home.vue';
+import StatusLogin from './components/Status.vue';
+Vue.component('status-login', StatusLogin);
 
 
 import LaporanPenjualanComponent from './components/laporan/laporanPenjualan.vue';

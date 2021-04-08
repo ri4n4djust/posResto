@@ -1,5 +1,7 @@
 <template>
     <div class="mt-3">
+      
+      <status-login></status-login>
 
         <section class="content">
 
@@ -208,9 +210,10 @@
   import DatePicker from 'vue2-datepicker';
   import 'vue2-datepicker/index.css';
   import VueSingleSelect from "vue-single-select";
+  import StatusLogin from './Status.vue';
   
     export default {
-        components: { DatePicker, VueSingleSelect },         
+        components: { DatePicker, VueSingleSelect, StatusLogin },         
         data() {
             return {
                 post: {},

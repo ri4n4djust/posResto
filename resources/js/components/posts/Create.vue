@@ -1,5 +1,6 @@
 <template>
     <div class="mt-3">
+        <status-login></status-login>
       <div class="card-header">TAMBAH BARANG</div>
         <div class="card-body">
         

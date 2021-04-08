@@ -1,6 +1,7 @@
 <template>
 
                     <div class="card-body">
+                        <status-login></status-login>
                          <h3>Laporan Penjualan</h3>
                         <div class="col-md-12">
                         <div class="nav-tabs-custom">

@@ -512,6 +512,7 @@ class mejaController extends Controller
             'pelangganNota'     => $request->input('pelanggan'),
             'userNota'     => $request->input('userNota'),
             'waiterNota'     => $request->input('waiterNota'),
+            'typeNota'  => $request->input('typeNota'),
         ]);
 
         
