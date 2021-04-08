@@ -22,6 +22,7 @@ class CreatePenjualansTable extends Migration
             $table->string('totalNota');
             $table->string('taxNota');
             $table->string('diskonNota');
+            $table->string('chargeNota');
             $table->string('bayarNota');
             $table->string('kembalianNota');
             $table->string('userNota');

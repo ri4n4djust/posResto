@@ -313,7 +313,7 @@
 
                 <p class="text-muted text-center">
                 <input type="hidden" class="form-control" :value="((subtotal * pajak / 100 + subtotal) - ((subtotal * pajak / 100 + subtotal) * diskon / 100))  || 0 " :name="totalTransaksiBayar"  >
-                <h3 class="profile-username ">Total {{ ((subtotal * pajak / 100 + subtotal) - ((subtotal * pajak / 100 + subtotal) * diskon / 100))  || 0 | currency }}</h3>
+                <h3 class="profile-username ">Total {{ ((subtotal * pajak / 100 + subtotal) - ((subtotal * pajak / 100 + subtotal) * diskon / 100)) + ((subtotal * pajak / 100 + subtotal) - ((subtotal * pajak / 100 + subtotal) * diskon / 100)) * taxDebit / 100  || 0 | currency }}</h3>
 
 
                 <div class="row input-group">
@@ -349,7 +349,8 @@
                             <div v-else-if="pembayaran === '2'">
                               <div class="input-group">
                                     <span class="input-group-addon">Card Carge %</span>
-                                    <input type="number" class="form-control" v-model="taxDebit" placeholder="0" >
+                                    <input type="number" step=".01" class="form-control" v-model="taxDebit" placeholder="0" >
+                                    <input type="text" class="form-control" :value="((subtotal * pajak / 100 + subtotal) - ((subtotal * pajak / 100 + subtotal) * diskon / 100)) * taxDebit / 100 " :name="pajakKartu" >
                                   </div>
                                   <br>
                                   <div class="input-group">
@@ -555,9 +556,10 @@
                 totalTransaksiBayar: '',
                 type: '',
                 brg: '',
-                taxDebit: '',
-                noDebit: '',
+                taxDebit: '0',
+                noDebit: '0',
                 pembayaran: '1',
+                pajakKartu:'',
                 //waitername : this.waiter.name,
                 //optionLabel: users.nmBarang,
                 tglNota: new Date().toJSON().slice(0,10).replace(/-/g,'/'),
@@ -739,12 +741,19 @@
                     pelanggan: this.pelanggan,
                     tglNota: this.tglNota,
                     taxNota: (this.subtotal * this.pajak / 100),
+                    chargeNota: ((this.subtotal * this.pajak / 100 + this.subtotal) - ((this.subtotal * this.pajak / 100 + this.subtotal) * this.diskon / 100)) * this.taxDebit / 100,
                     diskonNota: ((this.subtotal * this.pajak / 100 + this.subtotal) * this.diskon / 100),
-                    totalNota: ((this.subtotal * this.pajak / 100 + this.subtotal) - ((this.subtotal * this.pajak / 100 + this.subtotal) * this.diskon / 100)),
+                    totalNota: ((this.subtotal * this.pajak / 100 + this.subtotal) - ((this.subtotal * this.pajak / 100 + this.subtotal) * this.diskon / 100)) + ((this.subtotal * this.pajak / 100 + this.subtotal) - ((this.subtotal * this.pajak / 100 + this.subtotal) * this.diskon / 100)) * this.taxDebit / 100,
                     bayarNota: this.totalBayar,
                     userNota: this.$session.get('userId'),
                     waiterNota: this.post.name,
                     typeNota: this.pembayaran,
+
+                    pajakPembayaran: this.pajak,
+                    diskonPembayaran: this.diskon,
+                    chargePembayaran: this.taxDebit,
+                    noKartuPembayaran: this.noDebit,
+                    
                     kembalianNota: this.totalBayar - ((this.subtotal * this.pajak / 100 + this.subtotal) - ((this.subtotal * this.pajak / 100 + this.subtotal) * this.diskon / 100)),
                     
                 })

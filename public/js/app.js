@@ -11288,6 +11288,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 
@@ -11336,9 +11337,10 @@ __webpack_require__.r(__webpack_exports__);
       totalTransaksiBayar: '',
       type: '',
       brg: '',
-      taxDebit: '',
-      noDebit: '',
+      taxDebit: '0',
+      noDebit: '0',
       pembayaran: '1',
+      pajakKartu: '',
       //waitername : this.waiter.name,
       //optionLabel: users.nmBarang,
       tglNota: new Date().toJSON().slice(0, 10).replace(/-/g, '/')
@@ -11528,12 +11530,17 @@ __webpack_require__.r(__webpack_exports__);
         pelanggan: this.pelanggan,
         tglNota: this.tglNota,
         taxNota: this.subtotal * this.pajak / 100,
+        chargeNota: (this.subtotal * this.pajak / 100 + this.subtotal - (this.subtotal * this.pajak / 100 + this.subtotal) * this.diskon / 100) * this.taxDebit / 100,
         diskonNota: (this.subtotal * this.pajak / 100 + this.subtotal) * this.diskon / 100,
-        totalNota: this.subtotal * this.pajak / 100 + this.subtotal - (this.subtotal * this.pajak / 100 + this.subtotal) * this.diskon / 100,
+        totalNota: this.subtotal * this.pajak / 100 + this.subtotal - (this.subtotal * this.pajak / 100 + this.subtotal) * this.diskon / 100 + (this.subtotal * this.pajak / 100 + this.subtotal - (this.subtotal * this.pajak / 100 + this.subtotal) * this.diskon / 100) * this.taxDebit / 100,
         bayarNota: this.totalBayar,
         userNota: this.$session.get('userId'),
         waiterNota: this.post.name,
         typeNota: this.pembayaran,
+        pajakPembayaran: this.pajak,
+        diskonPembayaran: this.diskon,
+        chargePembayaran: this.taxDebit,
+        noKartuPembayaran: this.noDebit,
         kembalianNota: this.totalBayar - (this.subtotal * this.pajak / 100 + this.subtotal - (this.subtotal * this.pajak / 100 + this.subtotal) * this.diskon / 100)
       }).then(function (response) {
         //this.$print(printMe);
@@ -57955,6 +57962,14 @@ var render = function() {
                                           (((_vm.subtotal * _vm.pajak) / 100 +
                                             _vm.subtotal) *
                                             _vm.diskon) /
+                                            100 +
+                                          (((_vm.subtotal * _vm.pajak) / 100 +
+                                            _vm.subtotal -
+                                            (((_vm.subtotal * _vm.pajak) / 100 +
+                                              _vm.subtotal) *
+                                              _vm.diskon) /
+                                              100) *
+                                            _vm.taxDebit) /
                                             100 || 0
                                       )
                                     )
@@ -58206,6 +58221,7 @@ var render = function() {
                                         staticClass: "form-control",
                                         attrs: {
                                           type: "number",
+                                          step: ".01",
                                           placeholder: "0"
                                         },
                                         domProps: { value: _vm.taxDebit },
@@ -58216,6 +58232,26 @@ var render = function() {
                                             }
                                             _vm.taxDebit = $event.target.value
                                           }
+                                        }
+                                      }),
+                                      _vm._v(" "),
+                                      _c("input", {
+                                        staticClass: "form-control",
+                                        attrs: {
+                                          type: "text",
+                                          name: _vm.pajakKartu
+                                        },
+                                        domProps: {
+                                          value:
+                                            (((_vm.subtotal * _vm.pajak) / 100 +
+                                              _vm.subtotal -
+                                              (((_vm.subtotal * _vm.pajak) /
+                                                100 +
+                                                _vm.subtotal) *
+                                                _vm.diskon) /
+                                                100) *
+                                              _vm.taxDebit) /
+                                            100
                                         }
                                       })
                                     ]),

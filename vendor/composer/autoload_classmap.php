@@ -39,6 +39,7 @@ return array(
     'App\\Komposisi' => $baseDir . '/app/Komposisi.php',
     'App\\Meja' => $baseDir . '/app/Meja.php',
     'App\\Menu' => $baseDir . '/app/Menu.php',
+    'App\\Pembayara' => $baseDir . '/app/Pembayara.php',
     'App\\Pembelian' => $baseDir . '/app/Pembelian.php',
     'App\\PembelianDetail' => $baseDir . '/app/PembelianDetail.php',
     'App\\Penjualan' => $baseDir . '/app/Penjualan.php',

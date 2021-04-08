@@ -10,6 +10,7 @@ use App\Barang;
 use App\Penjualan;
 use App\KartuStok;
 use App\KartuStokInventori;
+use App\Pembayara;
 
 use Illuminate\Support\Facades\DB;
 
@@ -513,6 +514,16 @@ class mejaController extends Controller
             'userNota'     => $request->input('userNota'),
             'waiterNota'     => $request->input('waiterNota'),
             'typeNota'  => $request->input('typeNota'),
+            'chargeNota'  => $request->input('chargeNota'),
+        ]);
+
+        Pembayara::insert([
+            'notaPembayaran'     => $request->input('noNota'),
+            'diskonPembayaran'     => $request->input('diskonPembayaran'),
+            'pajakPembayaran'     => $request->input('pajakPembayaran'),
+            'typePembayaran'     => $request->input('typeNota'),
+            'chargePembayaran'     => $request->input('chargePembayaran'),
+            'noKartuPembayaran'     => $request->input('noKartuPembayaran'),
         ]);
 
         
