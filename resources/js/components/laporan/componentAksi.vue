@@ -87,7 +87,7 @@
                     <!-- /.col -->
                     <div class="col-xs-6">
                     <p class="text-muted" style="margin-top: 2px;">
-                        <b>No Inv: </b>{{data.noNota}}<br>
+                        <b>Inv: </b>{{data.noNota}}<br>
                         <b>Kasir : </b>{{ data.name }}<br>
                         <b>Type : </b>
                     </p>
@@ -112,7 +112,7 @@
                                     <td>{{ trx.qty * trx.hrgJual | currency }}</td>
                                 </tr>
                                 </tbody>
-                                <tfoot>
+                                
                                     <tr>
                                         <th colspan="3">subTotal :</th>
                                         <th>{{data.totalNota | currency}}</th>
@@ -141,7 +141,7 @@
                                         <th colspan="5">Terima Kasih Telah Berbelanja</th>
 
                                     </tr>
-                                </tfoot>
+                               
                             </table>
                 </div>
                 
@@ -203,6 +203,8 @@
     position: absolute;
     left: 0;
     top: 0;
+    font-size: 8pt;
+    width: 100%;
   }
 }
     </style>

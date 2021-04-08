@@ -750,7 +750,10 @@
                 })
                     .then((response) => {
                         //this.$print(printMe);
-                        window.print(printMe)                        
+                        window.print(printMe)
+                        setTimeout(function(){
+                            window.location.href = '/meja';
+                        }, 10000);           
                     });
                 
             },
