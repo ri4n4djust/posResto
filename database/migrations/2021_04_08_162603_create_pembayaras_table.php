@@ -15,7 +15,7 @@ class CreatePembayarasTable extends Migration
     {
         Schema::create('tblPembayaran', function (Blueprint $table) {
             $table->id();
-            $table->string('notaPembarayan');
+            $table->string('notaPembayaran');
             $table->string('diskonPembayaran');
             $table->string('pajakPembayaran');
             $table->string('typePembayaran');

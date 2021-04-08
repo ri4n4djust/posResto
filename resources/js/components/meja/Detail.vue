@@ -441,21 +441,28 @@
                                         <th>{{subtotal | currency}}</th>
                                     </tr>
                                     <tr>
-                                        <th colspan="3">Tax & Service :</th>
+                                        <th colspan="3">Tax & Service : {{ pajak }} %</th>
                                         <th>{{ (subtotal * pajak / 100 ) | currency}}</th>
                                     </tr>
                                     <tr>
-                                        <th colspan="3">Discount</th>
+                                        <th colspan="3">Discount : {{ diskon }} %</th>
                                         <th>{{ ((subtotal * pajak / 100 + subtotal) * diskon / 100) | currency}}</th>
                                     </tr>
                                     <tr>
                                         <th colspan="3">subTotal :</th>
                                         <th>{{ ((subtotal * pajak / 100 + subtotal) - ((subtotal * pajak / 100 + subtotal) * diskon / 100))  || 0 | currency }}</th>
                                     </tr>
+
+                                    <tr v-if="pembayaran === 2">
+                                        <th colspan="3">Card Charge :</th>
+                                        <th>{{ taxDebit }}</th>
+                                    </tr>
+
                                     <tr>
                                         <th colspan="3">Payment :</th>
                                         <th>{{totalBayar | currency}}</th>
                                     </tr>
+
                                     <tr>
                                         <th colspan="3">Kembalian :</th>
                                         <th>{{ totalBayar - ((subtotal * pajak / 100 + subtotal) - ((subtotal * pajak / 100 + subtotal) * diskon / 100))  || 0 | currency }}</th>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Penjualan;
 use App\PenjualanDetail;
+use App\Pembayara;
 
 //use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -77,6 +78,7 @@ class penjualanController extends Controller
         $kdPenjualan = $post->noNota;
 
         PenjualanDetail::where('noNota', $kdPenjualan)->delete();
+        Pembayara::where('notaPembayaran', $kdPenjualan)->delete();
 
         $post->delete();
 
