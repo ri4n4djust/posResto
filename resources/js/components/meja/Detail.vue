@@ -352,12 +352,12 @@
                                     <input type="number" step=".01" class="form-control" v-model="taxDebit" placeholder="0" >
                                     <input type="hidden" class="form-control" :value="((subtotal * pajak / 100 + subtotal) - ((subtotal * pajak / 100 + subtotal) * diskon / 100)) * taxDebit / 100 " :name="pajakKartu" >
                                   </div>
-                                  <br>
+                                  <p>
                                   <div class="input-group">
                                     <span class="input-group-addon">Card No.</span>
                                     <input type="number" class="form-control" v-model="noDebit" placeholder="No Kartu" >
                                   </div>
-                                  <br>
+                                  <p>
                                   <div class="input-group">
                                     <span class="input-group-addon">Rp.</span>
                                     <input type="number" class="form-control" v-model="totalBayar" placeholder="Bayar" required>
@@ -415,7 +415,7 @@
                 </div>
 
                 <!-- /.col -->
-              </div>
+
               <!-- /.row -->
 
                 <div class="col-xs-12 table-responsive">
@@ -436,7 +436,6 @@
                                     <td>{{ trx.totalTmp | currency }}</td>
                                 </tr>
                                 </tbody>
-                                <tfoot>
                                     <tr>
                                         <th colspan="3">subTotal :</th>
                                         <th>{{subtotal | currency}}</th>
@@ -477,9 +476,9 @@
                                         <th colspan="5">Terima Kasih Telah Berbelanja</th>
 
                                     </tr>
-                                </tfoot>
                             </table>
                 </div>
+              </div>
                 </section>
     </div>
               
@@ -517,6 +516,8 @@
     position: absolute;
     left: 0;
     top: 0;
+    font-size: 8pt;
+    width: 100%;
   }
 }
     </style>

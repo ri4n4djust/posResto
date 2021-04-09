@@ -10,7 +10,7 @@
                             <table class="table table-hover table-bordered">
                                 <thead>
                                 <tr>
-                                    <th>Kode</th>
+                                    <th>Kode dgdg</th>
                                     <th>Nama Menu</th>
                                     <th>Harga Jual</th>
                                     <th>Hpp Menu</th>
