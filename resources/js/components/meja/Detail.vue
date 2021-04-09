@@ -1,5 +1,5 @@
 <template>
-    <div class="mt-3">
+    <div class="card-body">
       <status-login></status-login>
     <section class="content">
 
@@ -35,7 +35,7 @@
                     <span class="input-group-addon">Pelanggan</span>
                     <input type="text" class="form-control" v-model="pelanggan" placeholder="Customer">
                   </div>
-               
+                
                 <p class="text-muted text-center">
                   <div class="input-group">
                     <span class="input-group-addon">No Invoice</span>
@@ -51,7 +51,7 @@
                   
 
                 <input type="hidden" class="form-control" :value="subtotal" :name="totalTransaksi" >
-                <h3 class="profile-username text-center">Total {{ subtotal  || 0 | currency }}</h3>
+                <h3 class="profile-username text-center">Total {{ Math.floor(subtotal)  || 0 | currency }}</h3>
                 
                 <p class="text-muted text-center">
                 <a href="#" @click="showModalBayar = true" class="btn btn-primary btn-block"><b>Payment</b></a>
@@ -313,7 +313,7 @@
 
                 <p class="text-muted text-center">
                 <input type="hidden" class="form-control" :value="((subtotal * pajak / 100 + subtotal) - ((subtotal * pajak / 100 + subtotal) * diskon / 100))  || 0 " :name="totalTransaksiBayar"  >
-                <h3 class="profile-username ">Total {{ ((subtotal * pajak / 100 + subtotal) - ((subtotal * pajak / 100 + subtotal) * diskon / 100)) + ((subtotal * pajak / 100 + subtotal) - ((subtotal * pajak / 100 + subtotal) * diskon / 100)) * taxDebit / 100  || 0 | currency }}</h3>
+                <h3 class="profile-username ">Total {{ Math.floor(((subtotal * pajak / 100 + subtotal) - ((subtotal * pajak / 100 + subtotal) * diskon / 100)) + ((subtotal * pajak / 100 + subtotal) - ((subtotal * pajak / 100 + subtotal) * diskon / 100)) * taxDebit / 100)  || 0 | currency }}</h3>
 
 
                 <div class="row input-group">
@@ -341,7 +341,7 @@
                                     <input type="number" class="form-control" v-model="totalBayar" placeholder="Bayar" required>
                                   </div>
                                   
-                                  <h3 class="profile-username ">Kembali : {{ totalBayar - ((subtotal * pajak / 100 + subtotal) - ((subtotal * pajak / 100 + subtotal) * diskon / 100))  || 0 | currency }}</h3>
+                                  <h3 class="profile-username ">Kembali : {{ Math.floor(totalBayar - ((subtotal * pajak / 100 + subtotal) - ((subtotal * pajak / 100 + subtotal) * diskon / 100)))  || 0 | currency  }}</h3>
                                   <p class="text-muted text-center">
                                   <button type="submit"  class="btn btn-md btn-success" >Bayar</button>                
                                   </p>
@@ -350,7 +350,7 @@
                               <div class="input-group">
                                     <span class="input-group-addon">Card Carge %</span>
                                     <input type="number" step=".01" class="form-control" v-model="taxDebit" placeholder="0" >
-                                    <input type="text" class="form-control" :value="((subtotal * pajak / 100 + subtotal) - ((subtotal * pajak / 100 + subtotal) * diskon / 100)) * taxDebit / 100 " :name="pajakKartu" >
+                                    <input type="hidden" class="form-control" :value="((subtotal * pajak / 100 + subtotal) - ((subtotal * pajak / 100 + subtotal) * diskon / 100)) * taxDebit / 100 " :name="pajakKartu" >
                                   </div>
                                   <br>
                                   <div class="input-group">
@@ -375,50 +375,51 @@
               </form>
 
               <div id="printMe">
+                <section class="invoice">
                 <!-- info row -->
                <address>
                     <strong>Ala Desa.</strong><br>
                     Sangeh<br>
-
                     Phone: (804) 123-5432<br>
                     Email: info@almasaeedstudio.com
                   </address>
-              <div class="row">
-                <div class="col-md-4 invoice-col">
+              <div class="row invoice-info">
+                <div class="col-xs-6">
+                  <p class="text-muted" style="margin-top: 2px;">
                   <address>
                     <strong>Customer :</strong> {{pelanggan}}<br>
                     <b> Tgl : </b>{{tglNota}}<br>
                     <b> Meja No : </b>{{post.noMeja}}<br>
+                    <b>Waiter : </b>{{post.name}}<br>
                   </address>
+                  
                 </div>
                 <!-- /.col -->
-                <div class="col-md-4 invoice-col">
+                <div class="col-xs-6">
+                  <p class="text-muted" style="margin-top: 2px;">
                   <address>
                   <b>No Inv: </b>{{noNota}}<br>
-                  <b>Kasir : </b>{{$session.get('user')}}
+                  <b>Kasir : </b>{{$session.get('user')}}<br>
+                  <b>Type : </b>
+                  <span v-if="pembayaran === '1'">
+                    Cash
+                  </span>
+                  <span v-else-if="pembayaran === '2'">
+                    Debit
+                  </span>
+                  <span v-else-if="pembayaran === '3'">
+                    E-Money
+                  </span>
                   </address>
+                  
                 </div>
 
-                <div class="col-md-4 invoice-col">
-                  <address>
-                  <b>Waiter : </b>{{post.name}}<br>
-                  <b>Type : </b>
-                  <div v-if="pembayaran === '1'">
-                    Cash
-                  </div>
-                  <div v-else-if="pembayaran === '2'">
-                    Debit
-                  </div>
-                  <div v-else-if="pembayaran === '3'">
-                    E-Money
-                  </div>
-                  </address>
-                </div>
                 <!-- /.col -->
               </div>
               <!-- /.row -->
-                
-                  <table width="90%" border="1" style="border:1px solid black; border-collapse: collapse;">
+
+                <div class="col-xs-12 table-responsive">
+                  <table class="table table-striped">
                                 <thead>
                                 <tr>
                                     <th>Nama </th>
@@ -442,38 +443,44 @@
                                     </tr>
                                     <tr>
                                         <th colspan="3">Tax & Service : {{ pajak }} %</th>
-                                        <th>{{ (subtotal * pajak / 100 ) | currency}}</th>
+                                        <th>{{ Math.floor(subtotal * pajak / 100 ) | currency}}</th>
                                     </tr>
                                     <tr>
                                         <th colspan="3">Discount : {{ diskon }} %</th>
-                                        <th>{{ ((subtotal * pajak / 100 + subtotal) * diskon / 100) | currency}}</th>
+                                        <th>{{ Math.floor((subtotal * pajak / 100 + subtotal) * diskon / 100) | currency}}</th>
                                     </tr>
                                     <tr>
                                         <th colspan="3">subTotal :</th>
-                                        <th>{{ ((subtotal * pajak / 100 + subtotal) - ((subtotal * pajak / 100 + subtotal) * diskon / 100))  || 0 | currency }}</th>
+                                        <th>{{ Math.floor((subtotal * pajak / 100 + subtotal) - ((subtotal * pajak / 100 + subtotal) * diskon / 100))  || 0 | currency }}</th>
                                     </tr>
 
-                                    <tr v-if="pembayaran === 2">
-                                        <th colspan="3">Card Charge :</th>
-                                        <th>{{ taxDebit }}</th>
+                                    <tr v-if="pembayaran === '1'">
+                                    </tr>
+                                    <tr v-else-if="pembayaran === '2'">
+                                        <th colspan="3">Card Charge : {{ taxDebit }} %</th>
+                                        <th>{{ Math.floor((subtotal * pajak / 100 + subtotal) - ((subtotal * pajak / 100 + subtotal) * diskon / 100)) * taxDebit / 100 | currency }}</th>
                                     </tr>
 
                                     <tr>
                                         <th colspan="3">Payment :</th>
-                                        <th>{{totalBayar | currency}}</th>
+                                        <th>{{ Math.floor(totalBayar) | currency }}</th>
                                     </tr>
 
-                                    <tr>
+                                    <tr v-if="pembayaran === '1'">
                                         <th colspan="3">Kembalian :</th>
-                                        <th>{{ totalBayar - ((subtotal * pajak / 100 + subtotal) - ((subtotal * pajak / 100 + subtotal) * diskon / 100))  || 0 | currency }}</th>
+                                        <th>{{ Math.floor(totalBayar - ((subtotal * pajak / 100 + subtotal) - ((subtotal * pajak / 100 + subtotal) * diskon / 100)))  || 0 | currency }}</th>
                                     </tr>
+                                    <tr v-else-if="pembayaran === '2'">
+                                    </tr>
+
                                     <tr>
                                         <th colspan="5">Terima Kasih Telah Berbelanja</th>
 
                                     </tr>
                                 </tfoot>
                             </table>
-
+                </div>
+                </section>
     </div>
               
 
@@ -747,10 +754,10 @@
                     noMeja: this.post.id,
                     pelanggan: this.pelanggan,
                     tglNota: this.tglNota,
-                    taxNota: (this.subtotal * this.pajak / 100),
-                    chargeNota: ((this.subtotal * this.pajak / 100 + this.subtotal) - ((this.subtotal * this.pajak / 100 + this.subtotal) * this.diskon / 100)) * this.taxDebit / 100,
-                    diskonNota: ((this.subtotal * this.pajak / 100 + this.subtotal) * this.diskon / 100),
-                    totalNota: ((this.subtotal * this.pajak / 100 + this.subtotal) - ((this.subtotal * this.pajak / 100 + this.subtotal) * this.diskon / 100)) + ((this.subtotal * this.pajak / 100 + this.subtotal) - ((this.subtotal * this.pajak / 100 + this.subtotal) * this.diskon / 100)) * this.taxDebit / 100,
+                    taxNota: Math.floor(this.subtotal * this.pajak / 100),
+                    chargeNota: Math.floor((this.subtotal * this.pajak / 100 + this.subtotal) - ((this.subtotal * this.pajak / 100 + this.subtotal) * this.diskon / 100)) * this.taxDebit / 100,
+                    diskonNota: Math.floor((this.subtotal * this.pajak / 100 + this.subtotal) * this.diskon / 100),
+                    totalNota: Math.floor((this.subtotal * this.pajak / 100 + this.subtotal) - ((this.subtotal * this.pajak / 100 + this.subtotal) * this.diskon / 100)) + ((this.subtotal * this.pajak / 100 + this.subtotal) - ((this.subtotal * this.pajak / 100 + this.subtotal) * this.diskon / 100)) * this.taxDebit / 100,
                     bayarNota: this.totalBayar,
                     userNota: this.$session.get('userId'),
                     waiterNota: this.post.name,
@@ -761,7 +768,7 @@
                     chargePembayaran: this.taxDebit,
                     noKartuPembayaran: this.noDebit,
                     
-                    kembalianNota: this.totalBayar - ((this.subtotal * this.pajak / 100 + this.subtotal) - ((this.subtotal * this.pajak / 100 + this.subtotal) * this.diskon / 100)),
+                    kembalianNota: Math.floor(this.totalBayar - (((this.subtotal * this.pajak / 100 + this.subtotal) - ((this.subtotal * this.pajak / 100 + this.subtotal) * this.diskon / 100)) + ((this.subtotal * this.pajak / 100 + this.subtotal) - ((this.subtotal * this.pajak / 100 + this.subtotal) * this.diskon / 100)) * this.taxDebit / 100)),
                     
                 })
                     .then((response) => {

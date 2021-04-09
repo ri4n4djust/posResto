@@ -17,8 +17,11 @@ class penjualanController extends Controller
     public function index()
     {
         $posts = Penjualan::join('tblMeja', 'tblPenjualan.noMeja', 'tblMeja.id')
+                ->join('tblPembayaran', 'tblPenjualan.noNota', 'tblPembayaran.notaPembayaran')
                 ->join('users', 'tblPenjualan.userNota', 'users.id')
-                ->select('tblpenjualan.*', 'tblMeja.noMeja', 'users.name')
+                ->select('tblpenjualan.*', 'tblMeja.noMeja', 'users.name', 
+                'tblPembayaran.pajakPembayaran', 'tblPembayaran.diskonPembayaran',
+                'tblPembayaran.typePembayaran', 'tblPembayaran.chargePembayaran', 'tblPembayaran.noKartuPembayaran')
                 ->get();
         return response([
             'success' => true,

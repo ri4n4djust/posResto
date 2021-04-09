@@ -274,7 +274,7 @@ Vue.component("data-table", DataTable);
         },
         mounted () {
             //this.intervalFetchData1();
-            //this.intervalFetchData();
+            this.intervalFetchData();
             //this.bindings()
             //this.loadData()
         },

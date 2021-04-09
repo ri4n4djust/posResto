@@ -20,7 +20,7 @@
                                         <h4 class="modal-title">Detail Penjualan</h4>
                                     </div>
                                     <div class="modal-body">
-
+{{data.id}}
                                         <div class="row invoice-info">
                                         <!-- accepted payments column -->
                                             <div class="col-xs-6">
@@ -39,6 +39,7 @@
                                                 <b>Type : </b><br>
                                                 <b>Tax: </b>{{data.taxNota | currency}}<br>
                                                 <b>Diskon : </b>{{ data.diskonNota | currency }}<br>
+                                                <b>Card Charge : </b>
                                             </p>
                                             </div>
                                             <!-- /.col -->
@@ -64,13 +65,13 @@
                                         <div v-else-if="adminuser === 'Kasir'">
                                             <a href="#"  @click="rePrint()" class="btn btn-md btn-success"><b>Re-Print</b></a>
                                         </div>
+                                        <br>
             <div id="printMe">
             <section class="invoice">
                 <!-- info row -->
                <address>
                     <strong>Ala Desa.</strong><br>
                     Sangeh<br>
-
                     Phone: (804) 123-5432<br>
                     Email: info@almasaeedstudio.com
                   </address>
