@@ -8506,18 +8506,17 @@ __webpack_require__.r(__webpack_exports__);
 
           alert('suskes Login');
 
-          if (response.data.role === 'Admin') {
+          if (response.data.role == 'Admin') {
+            //router.push({ name: 'barang' });
+            window.location.href = "/barang";
+          } else if (response.data.role == 'Kasir') {
+            //router.push({ name: 'meja' });
+            window.location.href = "/meja";
+          } else if (response.data.role == 'Operator') {
             router.push({
               name: 'barang'
             });
-          } else if (response.data.role === 'Kasir') {
-            router.push({
-              name: 'meja'
-            });
-          } else if (response.data.role === 'Operator') {
-            router.push({
-              name: 'barang'
-            });
+            window.location.href = "/barang";
           } //window.location.href = "/barang"
 
         } else {
@@ -60334,7 +60333,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("thead", [
       _c("tr", [
-        _c("th", [_vm._v("Kode hfhgfhg")]),
+        _c("th", [_vm._v("Kode dgdg")]),
         _vm._v(" "),
         _c("th", [_vm._v("Nama Menu")]),
         _vm._v(" "),

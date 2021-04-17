@@ -66,12 +66,15 @@
                     this.$session.set('roleID', response.data.data.role)
                     //Vue.http.headers.common['Authorization'] = 'Bearer ' + response.body.token
                     alert('suskes Login')
-                    if (response.data.role === 'Admin' ) {
+                    if (response.data.role == 'Admin' ) {
+                      //router.push({ name: 'barang' });
+                      window.location.href = "/barang"
+                    }else if (response.data.role == 'Kasir' ){
+                      //router.push({ name: 'meja' });
+                      window.location.href = "/meja"
+                    }else if (response.data.role == 'Operator' ){
                       router.push({ name: 'barang' });
-                    }else if (response.data.role === 'Kasir' ){
-                      router.push({ name: 'meja' });
-                    }else if (response.data.role === 'Operator' ){
-                      router.push({ name: 'barang' });
+                      window.location.href = "/barang"
                     }
                     //window.location.href = "/barang"
                   } else {
