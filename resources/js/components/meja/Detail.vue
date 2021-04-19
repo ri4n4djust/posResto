@@ -377,11 +377,14 @@
               <div id="printMe">
                 <section class="invoice">
                 <!-- info row -->
+                <img :src="'/image/logo.png'" >
                <address>
                     <strong>Ala Desa.</strong><br>
                     Sangeh<br>
-                    Phone: (804) 123-5432<br>
-                    Email: info@almasaeedstudio.com
+                    Phone / Wa: 081 239 099 998<br>
+                    Email: warungdaladesa@gmail.com<br>
+                    FB : warungdaladesa<br>
+                    IG : warung.daladesa.sangeh
                   </address>
               <div class="row invoice-info">
                 <div class="col-xs-6">
@@ -473,8 +476,10 @@
                                     </tr>
 
                                     <tr>
-                                        <th colspan="5">Terima Kasih Telah Berbelanja</th>
-
+                                        <th colspan="5">Terima Kasih <br>Berbelanja Anda Hal Baik Bagi Dunia</th>
+                                    </tr>
+                                    <tr>
+                                        <th colspan="5">Tidak enak Kasi Tau Kami, ENAK kasi tau temanmu</th>
                                     </tr>
                             </table>
                 </div>

@@ -35,6 +35,11 @@ Vue.use(VueSession);
 import vmodal from 'vue-js-modal';
     Vue.use(vmodal);
 
+import Vue from 'vue';
+import VueImg from 'v-img';
+    
+    Vue.use(VueImg);
+
 
 import VueHtmlToPaper from 'vue-html-to-paper';
 const options = {

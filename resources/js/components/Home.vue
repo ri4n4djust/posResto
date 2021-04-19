@@ -4,7 +4,8 @@
         
        <!-- /.login-logo -->
   <div class="login-box-body">
-    <p class="login-box-msg"><img :src="image_src"></p>
+    <p class="login-box-msg"><img v-bind:src="image_src"><img :src="'http://localhost:8000/image/logo.png'" ></p>
+    <img v-img src="image/aladesa.png">
     <p class="login-box-msg">Sign in to start your session </p>
 
     <form @submit.prevent="postLogin">
@@ -36,6 +37,7 @@
 
 
 <script>
+//import foto1 from '../image/logo.png';
   export default {
         data() {
             return {
@@ -43,6 +45,9 @@
                 password: '',
                 post: {},
                 image_src: '/image/logo.png',
+                image: '/image/aladesa.png',
+                icon: '/image/aladesa.png',
+                publicPath: 'public',
 
             }
         },
