@@ -8480,10 +8480,7 @@ __webpack_require__.r(__webpack_exports__);
       username: '',
       password: '',
       post: {},
-      image_src: '/image/logo.png',
-      image: '/image/aladesa.png',
-      icon: '/image/aladesa.png',
-      publicPath: 'public'
+      image_src: '/image/logo.png'
     };
   },
   watch: {
@@ -9385,6 +9382,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
 //
 //
 //
@@ -53563,14 +53561,11 @@ var render = function() {
   return _c("div", { staticClass: "mt-3" }, [
     _c("div", { staticClass: "login-box-body" }, [
       _c("p", { staticClass: "login-box-msg" }, [
-        _c("img", { attrs: { src: _vm.image_src } }),
-        _c("img", { attrs: { src: "http://localhost:8000/image/logo.png" } })
+        _c("img", {
+          staticClass: "img-fluid img-thumbnail",
+          attrs: { src: _vm.image_src, width: "200" }
+        })
       ]),
-      _vm._v(" "),
-      _c("img", {
-        directives: [{ name: "img", rawName: "v-img" }],
-        attrs: { src: "image/aladesa.png" }
-      }),
       _vm._v(" "),
       _c("p", { staticClass: "login-box-msg" }, [
         _vm._v("Sign in to start your session ")
@@ -55191,6 +55186,10 @@ var render = function() {
                         _vm._v(" "),
                         _c("div", { attrs: { id: "printMe" } }, [
                           _c("section", { staticClass: "invoice" }, [
+                            _c("img", {
+                              attrs: { src: "/image/logoNota.png" }
+                            }),
+                            _vm._v(" "),
                             _c("address", [
                               _c("strong", [_vm._v("Ala Desa.")]),
                               _c("br"),
@@ -58417,7 +58416,9 @@ var render = function() {
                           _vm._v(" "),
                           _c("div", { attrs: { id: "printMe" } }, [
                             _c("section", { staticClass: "invoice" }, [
-                              _c("img", { attrs: { src: "/image/logo.png" } }),
+                              _c("img", {
+                                attrs: { src: "/image/logoNota.png" }
+                              }),
                               _vm._v(" "),
                               _c("address", [
                                 _c("strong", [_vm._v("Ala Desa.")]),

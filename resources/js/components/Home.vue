@@ -4,8 +4,8 @@
         
        <!-- /.login-logo -->
   <div class="login-box-body">
-    <p class="login-box-msg"><img v-bind:src="image_src"><img :src="'http://localhost:8000/image/logo.png'" ></p>
-    <img v-img src="image/aladesa.png">
+    <p class="login-box-msg"><img v-bind:src="image_src" class="img-fluid img-thumbnail" width="200"></p>
+   
     <p class="login-box-msg">Sign in to start your session </p>
 
     <form @submit.prevent="postLogin">
@@ -45,9 +45,6 @@
                 password: '',
                 post: {},
                 image_src: '/image/logo.png',
-                image: '/image/aladesa.png',
-                icon: '/image/aladesa.png',
-                publicPath: 'public',
 
             }
         },

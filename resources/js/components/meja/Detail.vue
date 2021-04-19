@@ -377,7 +377,7 @@
               <div id="printMe">
                 <section class="invoice">
                 <!-- info row -->
-                <img :src="'/image/logo.png'" >
+                <img :src="'/image/logoNota.png'" >
                <address>
                     <strong>Ala Desa.</strong><br>
                     Sangeh<br>
