@@ -56,7 +56,7 @@
                             <div class="form-group">
                             <label>Select Kategori:</label>
                             <select class='form-control' v-model='post.stsBarang' required>
-                                <option  value='1'>Barang Jadi</option>
+                                <option  value='1' selected>Barang Jadi</option>
                                 <option value='2' >Barang Mentah</option>
                             </select>
                             </div>
@@ -147,13 +147,16 @@
     export default {
         data() {
             return {
-                post: {},
+                post: {
+                    stsBarang: '1',
+                },
                 kodes: {},
                 validation: [],
                 country: 0,
                 countries: {},
                 total: {},
                 kdBarang: '',
+                stsBarang: '1',
             }
             
         },
