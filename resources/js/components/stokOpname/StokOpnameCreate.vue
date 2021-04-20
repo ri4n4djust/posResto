@@ -54,41 +54,46 @@
                   <form  @submit.prevent="PostItemOpname" >
                     <div class="row">
                        
-                        <div class="col-xs-1">
+                        <div class="col-xs-2">
                           <label>Stok</label>
                           <input type="hidden" class="form-control" v-model="noStokOpname" >
                           <input type="hidden" class="form-control" v-model="tglStok" >
-                        <input type="text" v-model="post1.stkBarang " class="form-control" placeholder="stok" disabled>
-                        <input type="text" v-model="post1.stkInventori " class="form-control" placeholder="stok" disabled>
+                          <div class="input-group">
+                            
+                            <input type="text" v-model="post1.stkBarang " class="form-control" placeholder="stok" disabled>
+                            <span class="input-group-addon">{{post1.satuanBarang}}</span>
+                          </div>
+
+                        
                         </div>
                         <div class="col-xs-2">
                           <label>Satuan</label>
-                        <input type="text" v-model="post1.satuanBarang " class="form-control" placeholder="stok" disabled>
+                          <div class="input-group">
+                          <input type="text" v-model="post1.stkInventori " class="form-control" placeholder="stok" disabled>
+                          <span class="input-group-addon">Pcs</span>
+                          </div>
                         </div>
                         <div class="col-xs-2">
-                          <input type="text" v-model="post1.stkSatuan" class="form-control" placeholder="stk Satuan" pattern="\d+">
+                          <input type="hidden" v-model="post1.stkSatuan" class="form-control" placeholder="stk Satuan" pattern="\d+">
                           <label>Real Satuan</label>
-                        <input type="text" :value="qtyInventori * post1.stkSatuan" :name="qtyGudang" class="form-control" placeholder="Qty" pattern="\d+">
+                        <input type="text" :value="qtyInventori * post1.stkSatuan" :name="qtyGudang" class="form-control" placeholder="Qty" disabled>
                         </div>
                         <div class="col-xs-2">
-                          <label>Real Inventori</label>
+                          <label>Real Pcs</label>
                         <input type="text" v-model="qtyInventori" class="form-control" placeholder="Qty" pattern="\d+">
                         </div>
-                        <div class="col-xs-2">
-                          <label>Selisih Satuan</label>
-                        <input type="text" :value="(qtyInventori * post1.stkSatuan) - post1.stkBarang  " :name="selisihStok" class="form-control" placeholder="Selisih" disabled>
-                        </div>
-                        <div class="col-xs-2">
-                          <label>Selisih Inventori</label>
+                        <div class="col-xs-1">
+                          <input type="hidden" :value="(qtyInventori * post1.stkSatuan) - post1.stkBarang  " :name="selisihStok" class="form-control" placeholder="Selisih" disabled>
+                          <label>Selisih </label>
                         <input type="text" :value=" qtyInventori - post1.stkInventori  " :name="selisihInventori" class="form-control" placeholder="Selisih" disabled>
                         </div>
                         <div class="col-xs-2">
                           <label>Keterangan</label>
                         <input type="text" v-model="keterangan" class="form-control" placeholder="Ket" required>
                         </div>
-                        <div class="col-xs-2">
+                        <div class="col-xs-1">
                           <label>Aksi</label>
-                          <button type="submit" class="btn btn-md btn-success form-control">Add</button>                        
+                          <button type="submit" class="btn btn-xs btn-success form-control">Add</button>                        
                         </div>
                     </div>
                     {{  post1.hrgPokok * (post1.stkBarang - (qtyInventori * post1.stkSatuan))  }}
@@ -233,6 +238,7 @@
                     kdBarang: this.post1.kdBarang,
                     qtyGudang: this.qtyInventori * this.post1.stkSatuan,
                     selisihStok: (this.qtyInventori * this.post1.stkSatuan) - this.post1.stkBarang,
+                    selisihStokInv: this.qtyInventori - this.post1.stkInventori,
                     keteranganStok: this.keterangan,
                     tglStok: this.tglStok,
                     satuanStok: this.post1.satuanBarang,
@@ -241,11 +247,11 @@
                     .then((response) => {
                         //this.loadTotal()
                         this.loadTransaksiOpname()
-                        alert('sukses donkkkkkkkk');
+                        alert('sukses');
                         //this.loadTransaksiPenjualan()
                         this.loadTotal()
                     }).catch(error => {
-                        alert('data Sudah Ada')
+                        alert('ada yg error')
                         this.loadTransaksiOpname()
                 });
                 

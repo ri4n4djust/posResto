@@ -135,10 +135,16 @@ class stokController extends Controller
             $stokLama = $barang->stkBarang;
             $satuanKartu = $barang->satuanBarang;
 
+            $barangInv = DB::table('tblInventori')->where('kdBarang', $request->input('kdBarang'))->first();
+            $stokLamaInv = $barangInv->stkInventori;
+
             if($request->input('qtyGudang') > $stokLama){
                 //$nilai = $request->input('selisihStok');
                 DB::table('tblBarang')->where('kdBarang', $request->input('kdBarang'))->update([
                     'stkBarang'     => $stokLama + $request->input('selisihStok')
+                ]);
+                DB::table('tblInventori')->where('kdBarang', $request->input('kdBarang'))->update([
+                    'stkInventori'     => $stokLamaInv + $request->input('selisihStokInv')
                 ]);
                 KartuStok::create([
                     'kdBarang'     => $request->input('kdBarang'),
@@ -148,6 +154,16 @@ class stokController extends Controller
                     'noTransaksi'     => $request->input('noStokOpname'),
                     'keteranganKartu'     => 'Stok Opname'.'-'.$request->input('keteranganStok'),
                     'satuanKartu' => $satuanKartu,
+                ]);
+
+                KartuStokInventori::create([
+                    'kdBarang'     => $request->input('kdBarang'),
+                    'tglInv'     => $request->input('tglStok'),
+                    'qtyMasukInv'     => $request->input('selisihStokInv'),
+                    'qtyKeluarInv'     => '0',
+                    'noTransaksiInv'     => $request->input('noStokOpname'),
+                    'keteranganKartuInv'     => 'Stok Opname'.'-'.$request->input('keteranganStok'),
+                    'satuanKartuInv' => 'PCS',
                 ]);
     
                     return response()->json([
@@ -159,6 +175,9 @@ class stokController extends Controller
                 DB::table('tblBarang')->where('kdBarang', $request->input('kdBarang'))->update([
                     'stkBarang'     => $stokLama + $request->input('selisihStok')
                 ]);
+                DB::table('tblInventori')->where('kdBarang', $request->input('kdBarang'))->update([
+                    'stkInventori'     => $stokLamaInv + $request->input('selisihStokInv')
+                ]);
                 KartuStok::create([
                     'kdBarang'     => $request->input('kdBarang'),
                     'tglKartu'     => $request->input('tglStok'),
@@ -167,6 +186,15 @@ class stokController extends Controller
                     'noTransaksi'     => $request->input('noStokOpname'),
                     'keteranganKartu'     => 'Stok Opname'.'-'.$request->input('keteranganStok'),
                     'satuanKartu' => $satuanKartu,
+                ]);
+                KartuStokInventori::create([
+                    'kdBarang'     => $request->input('kdBarang'),
+                    'tglInv'     => $request->input('tglStok'),
+                    'qtyMasukInv'     => '0',
+                    'qtyKeluarInv'     => $request->input('selisihStokInv'),
+                    'noTransaksiInv'     => $request->input('noStokOpname'),
+                    'keteranganKartuInv'     => 'Stok Opname'.'-'.$request->input('keteranganStok'),
+                    'satuanKartuInv' => 'PCS',
                 ]);
     
                     return response()->json([
