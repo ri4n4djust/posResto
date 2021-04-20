@@ -25,8 +25,10 @@ class salesController extends Controller
     public function index()
     {
         $posts = Barang::join('tblKategori', 'tblBarang.ktgBarang', '=', 'tblKategori.kodeKtg')
+                        ->join('tblInventori', 'tblBarang.kdBarang', '=', 'tblInventori.kdBarang')
                 //->where('tblBarang.stsBarang', '1')
-                ->get(['tblBarang.*', 'tblKategori.namaKtg']);
+                ->get(['tblBarang.*', 'tblKategori.namaKtg', 'tblInventori.satuanInventori', 
+                'tblInventori.stkInventori', 'tblInventori.hrgSatuan', 'tblInventori.stkSatuan']);
         //$posts = Barang::latest()->get();
         $count = Barang::count();
         return response([
@@ -110,7 +112,7 @@ class salesController extends Controller
                 'nmBarang'     => $request->input('nmBarang'),
                 'hrgPokok'   => $request->input('hrgPokok'),
                 'hrgJual'   => $request->input('hrgJual'),
-                'stkBarang'   => $request->input('stkBarang'),
+                'stkBarang'   => '0',
                 'deskripsi'   => $request->input('deskripsi'),
                 'ktgBarang' => $request->input('ktgBarang'),
                 'satuanBarang' => $request->input('satuanBarang'),
@@ -122,7 +124,7 @@ class salesController extends Controller
             
             Inventori::create([
                     'kdBarang' => $request->input('kdBarang'),
-                    'stkInventori' => $request->input('stkInve'),
+                    'stkInventori' => '0',
                     'hrgSatuan' => $request->input('hrgPokok'),
                     'stkSatuan' => '1',
 
@@ -247,7 +249,7 @@ class salesController extends Controller
         Inventori::where('kdBarang', $kodebarang)->delete();
         KartuStok::where('kdBarang', $kodebarang)->delete();
         KartuStokInventori::where('kdBarang', $kodebarang)->delete();
-        StokOpname::where('kdBarang', $kodebarang)->delete();
+        //StokOpname::where('kdBarang', $kodebarang)->delete();
         StokOpnameDetail::where('kdBarang', $kodebarang)->delete();
 
         

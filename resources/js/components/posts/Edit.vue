@@ -141,7 +141,7 @@
             </div>
                             <div class="form-group">
                                 <button type="submit" class="btn btn-md btn-success">UPDATE </button>
-                                <button @click.prevent="PostDeleteTrx(post.id)" class="btn btn-md btn-danger">HAPUS</button>
+                                <button @click.prevent="PostDeleteTrx(id= post.id)" class="btn btn-md btn-danger">HAPUS</button>
                                 <router-link :to="{ name: 'posts' }" class="btn btn-primary btn-success">KEMBALI</router-link>
                             
                             </div>
@@ -196,7 +196,7 @@
             },
             PostDeleteTrx(id)
             {
-            if(confirm("Do you really want to delete?")){
+            if(confirm("Do you really want to delete?"+ this.post.nmBarang)){
                this.axios.delete(`/api/posts/${id}`)
                     .then(response => {
                         this.$router.push({name: 'posts'});

@@ -53,29 +53,34 @@
                  
                   <form  @submit.prevent="PostItemOpname" >
                     <div class="row">
-                        <div class="col-xs-2">
-                          <label>Nama</label>
-                        <select v-model='post1' class="form-control" >
-                        <option v-for='post1 in users' v-bind:value='post1' :key="post1.id" >{{post1.nmBarang}}</option>
-                        </select>
-                        </div>
+                       
                         <div class="col-xs-1">
                           <label>Stok</label>
                           <input type="hidden" class="form-control" v-model="noStokOpname" >
                           <input type="hidden" class="form-control" v-model="tglStok" >
                         <input type="text" v-model="post1.stkBarang " class="form-control" placeholder="stok" disabled>
+                        <input type="text" v-model="post1.stkInventori " class="form-control" placeholder="stok" disabled>
                         </div>
                         <div class="col-xs-2">
                           <label>Satuan</label>
                         <input type="text" v-model="post1.satuanBarang " class="form-control" placeholder="stok" disabled>
                         </div>
-                        <div class="col-xs-1">
-                          <label>Real</label>
-                        <input type="text" v-model="qtyGudang" class="form-control" placeholder="Qty" pattern="\d+">
+                        <div class="col-xs-2">
+                          <input type="text" v-model="post1.stkSatuan" class="form-control" placeholder="stk Satuan" pattern="\d+">
+                          <label>Real Satuan</label>
+                        <input type="text" :value="qtyInventori * post1.stkSatuan" :name="qtyGudang" class="form-control" placeholder="Qty" pattern="\d+">
                         </div>
                         <div class="col-xs-2">
-                          <label>Selisih</label>
-                        <input type="text" :value=" qtyGudang - post1.stkBarang  " :name="selisihStok" class="form-control" placeholder="Selisih" disabled>
+                          <label>Real Inventori</label>
+                        <input type="text" v-model="qtyInventori" class="form-control" placeholder="Qty" pattern="\d+">
+                        </div>
+                        <div class="col-xs-2">
+                          <label>Selisih Satuan</label>
+                        <input type="text" :value="(qtyInventori * post1.stkSatuan) - post1.stkBarang  " :name="selisihStok" class="form-control" placeholder="Selisih" disabled>
+                        </div>
+                        <div class="col-xs-2">
+                          <label>Selisih Inventori</label>
+                        <input type="text" :value=" qtyInventori - post1.stkInventori  " :name="selisihInventori" class="form-control" placeholder="Selisih" disabled>
                         </div>
                         <div class="col-xs-2">
                           <label>Keterangan</label>
@@ -86,7 +91,7 @@
                           <button type="submit" class="btn btn-md btn-success form-control">Add</button>                        
                         </div>
                     </div>
-                    {{ (qtyGudang - post1.stkBarang) * post1.hrgPokok  }}
+                    {{  post1.hrgPokok * (post1.stkBarang - (qtyInventori * post1.stkSatuan))  }}
                     </form>
                     </div>
                     
@@ -154,7 +159,9 @@
                 users: {},
                 pem: {},
                 qtyGudang: '',
+                qtyInventori: '',
                 selisihStok: '',
+                selisihInventori: '',
                 nilaiStok: '',
                 //selisih1: Math.abs(this.selisih),
                 keterangan: '',
@@ -224,8 +231,8 @@
                 {
                     noStokOpname: this.noStokOpname,
                     kdBarang: this.post1.kdBarang,
-                    qtyGudang: this.qtyGudang,
-                    selisihStok: this.qtyGudang - this.post1.stkBarang,
+                    qtyGudang: this.qtyInventori * this.post1.stkSatuan,
+                    selisihStok: (this.qtyInventori * this.post1.stkSatuan) - this.post1.stkBarang,
                     keteranganStok: this.keterangan,
                     tglStok: this.tglStok,
                     satuanStok: this.post1.satuanBarang,

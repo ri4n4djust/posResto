@@ -12611,7 +12611,8 @@ __webpack_require__.r(__webpack_exports__);
         document.getElementById("anyName").reset();
         alert('sukses Tambah Barang');
       })["catch"](function (error) {
-        _this.validation = error.response.data.data; //this.post.kdBarang;
+        //this.validation = error.response.data.data;
+        alert('ada yang error'); //this.post.kdBarang;
       });
     },
     PostDelete: function PostDelete(id, index) {
@@ -12866,7 +12867,7 @@ __webpack_require__.r(__webpack_exports__);
     PostDeleteTrx: function PostDeleteTrx(id) {
       var _this3 = this;
 
-      if (confirm("Do you really want to delete?")) {
+      if (confirm("Do you really want to delete?" + this.post.nmBarang)) {
         this.axios["delete"]("/api/posts/".concat(id)).then(function (response) {
           _this3.$router.push({
             name: 'posts'
@@ -14429,6 +14430,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 
@@ -14445,7 +14451,9 @@ __webpack_require__.r(__webpack_exports__);
       users: {},
       pem: {},
       qtyGudang: '',
+      qtyInventori: '',
       selisihStok: '',
+      selisihInventori: '',
       nilaiStok: '',
       //selisih1: Math.abs(this.selisih),
       keterangan: '',
@@ -14516,8 +14524,8 @@ __webpack_require__.r(__webpack_exports__);
       this.axios.post(uri, {
         noStokOpname: this.noStokOpname,
         kdBarang: this.post1.kdBarang,
-        qtyGudang: this.qtyGudang,
-        selisihStok: this.qtyGudang - this.post1.stkBarang,
+        qtyGudang: this.qtyInventori * this.post1.stkSatuan,
+        selisihStok: this.qtyInventori * this.post1.stkSatuan - this.post1.stkBarang,
         keteranganStok: this.keterangan,
         tglStok: this.tglStok,
         satuanStok: this.post1.satuanBarang,
@@ -55189,15 +55197,13 @@ var render = function() {
                         _vm._v(" "),
                         _c("div", { attrs: { id: "printMe" } }, [
                           _c("section", { staticClass: "invoice" }, [
-                            _c("img", {
-                              attrs: { src: "/image/logoNota.png" }
-                            }),
+                            _c("p", { staticClass: "text-muted text-center" }, [
+                              _c("img", {
+                                attrs: { src: "/image/logoNota.png" }
+                              })
+                            ]),
                             _vm._v(" "),
                             _c("address", [
-                              _c("strong", [_vm._v("Ala Desa.")]),
-                              _c("br"),
-                              _vm._v("\n                    Sangeh"),
-                              _c("br"),
                               _vm._v(
                                 "\n                    Phone / Wa: 081 239 099 998"
                               ),
@@ -58437,15 +58443,17 @@ var render = function() {
                           _vm._v(" "),
                           _c("div", { attrs: { id: "printMe" } }, [
                             _c("section", { staticClass: "invoice" }, [
-                              _c("img", {
-                                attrs: { src: "/image/logoNota.png" }
-                              }),
+                              _c(
+                                "p",
+                                { staticClass: "text-muted text-center" },
+                                [
+                                  _c("img", {
+                                    attrs: { src: "/image/logoNota.png" }
+                                  })
+                                ]
+                              ),
                               _vm._v(" "),
                               _c("address", [
-                                _c("strong", [_vm._v("Ala Desa.")]),
-                                _c("br"),
-                                _vm._v("\n                    Sangeh"),
-                                _c("br"),
                                 _vm._v(
                                   "\n                    Phone / Wa: 081 239 099 998"
                                 ),
@@ -61573,7 +61581,7 @@ var render = function() {
                     on: {
                       click: function($event) {
                         $event.preventDefault()
-                        return _vm.PostDeleteTrx(_vm.post.id)
+                        return _vm.PostDeleteTrx((_vm.id = _vm.post.id))
                       }
                     }
                   },
@@ -63017,49 +63025,6 @@ var render = function() {
                     },
                     [
                       _c("div", { staticClass: "row" }, [
-                        _c("div", { staticClass: "col-xs-2" }, [
-                          _c("label", [_vm._v("Nama")]),
-                          _vm._v(" "),
-                          _c(
-                            "select",
-                            {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: _vm.post1,
-                                  expression: "post1"
-                                }
-                              ],
-                              staticClass: "form-control",
-                              on: {
-                                change: function($event) {
-                                  var $$selectedVal = Array.prototype.filter
-                                    .call($event.target.options, function(o) {
-                                      return o.selected
-                                    })
-                                    .map(function(o) {
-                                      var val =
-                                        "_value" in o ? o._value : o.value
-                                      return val
-                                    })
-                                  _vm.post1 = $event.target.multiple
-                                    ? $$selectedVal
-                                    : $$selectedVal[0]
-                                }
-                              }
-                            },
-                            _vm._l(_vm.users, function(post1) {
-                              return _c(
-                                "option",
-                                { key: post1.id, domProps: { value: post1 } },
-                                [_vm._v(_vm._s(post1.nmBarang))]
-                              )
-                            }),
-                            0
-                          )
-                        ]),
-                        _vm._v(" "),
                         _c("div", { staticClass: "col-xs-1" }, [
                           _c("label", [_vm._v("Stok")]),
                           _vm._v(" "),
@@ -63135,6 +63100,36 @@ var render = function() {
                                 )
                               }
                             }
+                          }),
+                          _vm._v(" "),
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.post1.stkInventori,
+                                expression: "post1.stkInventori "
+                              }
+                            ],
+                            staticClass: "form-control",
+                            attrs: {
+                              type: "text",
+                              placeholder: "stok",
+                              disabled: ""
+                            },
+                            domProps: { value: _vm.post1.stkInventori },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.post1,
+                                  "stkInventori",
+                                  $event.target.value
+                                )
+                              }
+                            }
                           })
                         ]),
                         _vm._v(" "),
@@ -63172,16 +63167,63 @@ var render = function() {
                           })
                         ]),
                         _vm._v(" "),
-                        _c("div", { staticClass: "col-xs-1" }, [
-                          _c("label", [_vm._v("Real")]),
+                        _c("div", { staticClass: "col-xs-2" }, [
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.post1.stkSatuan,
+                                expression: "post1.stkSatuan"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            attrs: {
+                              type: "text",
+                              placeholder: "stk Satuan",
+                              pattern: "\\d+"
+                            },
+                            domProps: { value: _vm.post1.stkSatuan },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.post1,
+                                  "stkSatuan",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c("label", [_vm._v("Real Satuan")]),
+                          _vm._v(" "),
+                          _c("input", {
+                            staticClass: "form-control",
+                            attrs: {
+                              type: "text",
+                              name: _vm.qtyGudang,
+                              placeholder: "Qty",
+                              pattern: "\\d+"
+                            },
+                            domProps: {
+                              value: _vm.qtyInventori * _vm.post1.stkSatuan
+                            }
+                          })
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col-xs-2" }, [
+                          _c("label", [_vm._v("Real Inventori")]),
                           _vm._v(" "),
                           _c("input", {
                             directives: [
                               {
                                 name: "model",
                                 rawName: "v-model",
-                                value: _vm.qtyGudang,
-                                expression: "qtyGudang"
+                                value: _vm.qtyInventori,
+                                expression: "qtyInventori"
                               }
                             ],
                             staticClass: "form-control",
@@ -63190,20 +63232,20 @@ var render = function() {
                               placeholder: "Qty",
                               pattern: "\\d+"
                             },
-                            domProps: { value: _vm.qtyGudang },
+                            domProps: { value: _vm.qtyInventori },
                             on: {
                               input: function($event) {
                                 if ($event.target.composing) {
                                   return
                                 }
-                                _vm.qtyGudang = $event.target.value
+                                _vm.qtyInventori = $event.target.value
                               }
                             }
                           })
                         ]),
                         _vm._v(" "),
                         _c("div", { staticClass: "col-xs-2" }, [
-                          _c("label", [_vm._v("Selisih")]),
+                          _c("label", [_vm._v("Selisih Satuan")]),
                           _vm._v(" "),
                           _c("input", {
                             staticClass: "form-control",
@@ -63214,7 +63256,26 @@ var render = function() {
                               disabled: ""
                             },
                             domProps: {
-                              value: _vm.qtyGudang - _vm.post1.stkBarang
+                              value:
+                                _vm.qtyInventori * _vm.post1.stkSatuan -
+                                _vm.post1.stkBarang
+                            }
+                          })
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col-xs-2" }, [
+                          _c("label", [_vm._v("Selisih Inventori")]),
+                          _vm._v(" "),
+                          _c("input", {
+                            staticClass: "form-control",
+                            attrs: {
+                              type: "text",
+                              name: _vm.selisihInventori,
+                              placeholder: "Selisih",
+                              disabled: ""
+                            },
+                            domProps: {
+                              value: _vm.qtyInventori - _vm.post1.stkInventori
                             }
                           })
                         ]),
@@ -63254,8 +63315,9 @@ var render = function() {
                       _vm._v(
                         "\n                    " +
                           _vm._s(
-                            (_vm.qtyGudang - _vm.post1.stkBarang) *
-                              _vm.post1.hrgPokok
+                            _vm.post1.hrgPokok *
+                              (_vm.post1.stkBarang -
+                                _vm.qtyInventori * _vm.post1.stkSatuan)
                           ) +
                           "\n                    "
                       )

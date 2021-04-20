@@ -186,7 +186,8 @@
                         alert('sukses Tambah Barang')
                         
                     }).catch(error => {
-                    this.validation = error.response.data.data;
+                    //this.validation = error.response.data.data;
+                    alert('ada yang error');
                     //this.post.kdBarang;
                 });
             },

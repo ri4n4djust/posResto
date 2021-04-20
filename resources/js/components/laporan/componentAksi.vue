@@ -69,10 +69,10 @@
             <div id="printMe">
             <section class="invoice">
                 <!-- info row -->
+                <p class="text-muted text-center">
                 <img :src="'/image/logoNota.png'" >
+                </p>
                <address>
-                    <strong>Ala Desa.</strong><br>
-                    Sangeh<br>
                     Phone / Wa: 081 239 099 998<br>
                     Email: warungdaladesa@gmail.com<br>
                     FB : warungdaladesa<br>

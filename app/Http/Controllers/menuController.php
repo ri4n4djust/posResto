@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Menu;
+use App\Komposisi;
 use Illuminate\Support\Facades\Validator;
 
 class menuController extends Controller
@@ -136,6 +137,10 @@ class menuController extends Controller
     public function destroy($id)
     {
         $post = Menu::findOrFail($id);
+        $kodeMenu = $post->kdMenu;
+
+        Komposisi::where('idMenu', $kodeMenu)->delete();
+
         $post->delete();
 
         if ($post) {
