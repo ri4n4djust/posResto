@@ -9595,6 +9595,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "ActionButtons",
   data: function data() {
@@ -13369,8 +13371,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -13842,7 +13842,7 @@ __webpack_require__.r(__webpack_exports__);
     loadBarang: function loadBarang() {
       var _this3 = this;
 
-      var uri = '/api/posts';
+      var uri = '/api/baranginventori';
       this.axios.get(uri).then(function (response) {
         _this3.users = response.data.data;
       });
@@ -55196,11 +55196,19 @@ var render = function() {
                               _vm._v("\n                    Sangeh"),
                               _c("br"),
                               _vm._v(
-                                "\n                    Phone: (804) 123-5432"
+                                "\n                    Phone / Wa: 081 239 099 998"
                               ),
                               _c("br"),
                               _vm._v(
-                                "\n                    Email: info@almasaeedstudio.com\n                  "
+                                "\n                    Email: warungdaladesa@gmail.com"
+                              ),
+                              _c("br"),
+                              _vm._v(
+                                "\n                    FB : warungdaladesa"
+                              ),
+                              _c("br"),
+                              _vm._v(
+                                "\n                    IG : warung.daladesa.sangeh\n                  "
                               )
                             ]),
                             _vm._v(" "),
@@ -55407,8 +55415,18 @@ var render = function() {
                                       _vm._v(" "),
                                       _c("tr", [
                                         _c("th", { attrs: { colspan: "5" } }, [
+                                          _vm._v("Terima Kasih "),
+                                          _c("br"),
                                           _vm._v(
-                                            "Terima Kasih Telah Berbelanja"
+                                            "Berbelanja Anda Hal Baik Bagi Dunia"
+                                          )
+                                        ])
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("tr", [
+                                        _c("th", { attrs: { colspan: "5" } }, [
+                                          _vm._v(
+                                            "Tidak enak Kasi Tau Kami, ENAK kasi tau temanmu"
                                           )
                                         ])
                                       ])
@@ -61840,28 +61858,44 @@ var render = function() {
       _c("div", { staticClass: "card-header" }, [_vm._v("Detail")]),
       _vm._v(" "),
       _c("div", { staticClass: "card-body" }, [
-        _c("div", { staticClass: "box box-primary" }, [
-          _c("div", { staticClass: "form-group" }, [
-            _c("label", [_vm._v("Nama Barang : " + _vm._s(_vm.post.nmBarang))])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group" }, [
-            _c("label", [
-              _vm._v(
-                "Stok : " +
-                  _vm._s(_vm.post.stkBarang) +
-                  " " +
-                  _vm._s(_vm.post.satuanBarang)
-              )
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group" }, [
-            _c("label", [
-              _vm._v("Stok Inventori : " + _vm._s(_vm.post.stkInventori))
-            ])
-          ])
-        ]),
+        _c(
+          "div",
+          { staticClass: "box box-primary" },
+          [
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", [
+                _vm._v("Nama Barang : " + _vm._s(_vm.post.nmBarang))
+              ]),
+              _vm._v(" "),
+              _c("br"),
+              _vm._v(" "),
+              _c("label", [
+                _vm._v(
+                  "Stok : " +
+                    _vm._s(_vm.post.stkBarang) +
+                    " " +
+                    _vm._s(_vm.post.satuanBarang)
+                )
+              ]),
+              _vm._v(" "),
+              _c("br"),
+              _vm._v(" "),
+              _c("label", [
+                _vm._v("Stok Inventori : " + _vm._s(_vm.post.stkInventori))
+              ])
+            ]),
+            _vm._v(" "),
+            _c(
+              "router-link",
+              {
+                staticClass: "btn btn-primary btn-success",
+                attrs: { to: { name: "stokinventori" } }
+              },
+              [_vm._v("KEMBALI")]
+            )
+          ],
+          1
+        ),
         _vm._v(" "),
         _c("table", { staticClass: "table table-hover table-bordered" }, [
           _vm._m(0),
@@ -62304,8 +62338,8 @@ var render = function() {
                               {
                                 name: "model",
                                 rawName: "v-model",
-                                value: _vm.post1.stkBarang,
-                                expression: "post1.stkBarang "
+                                value: _vm.post1.stkInventori,
+                                expression: "post1.stkInventori "
                               }
                             ],
                             staticClass: "form-control",
@@ -62314,7 +62348,7 @@ var render = function() {
                               placeholder: "stok",
                               disabled: ""
                             },
-                            domProps: { value: _vm.post1.stkBarang },
+                            domProps: { value: _vm.post1.stkInventori },
                             on: {
                               input: function($event) {
                                 if ($event.target.composing) {
@@ -62322,7 +62356,7 @@ var render = function() {
                                 }
                                 _vm.$set(
                                   _vm.post1,
-                                  "stkBarang",
+                                  "stkInventori",
                                   $event.target.value
                                 )
                               }
@@ -62338,8 +62372,8 @@ var render = function() {
                               {
                                 name: "model",
                                 rawName: "v-model",
-                                value: _vm.post1.satuanBarang,
-                                expression: "post1.satuanBarang "
+                                value: _vm.post1.satuanInventori,
+                                expression: "post1.satuanInventori "
                               }
                             ],
                             staticClass: "form-control",
@@ -62348,7 +62382,7 @@ var render = function() {
                               placeholder: "stok",
                               disabled: ""
                             },
-                            domProps: { value: _vm.post1.satuanBarang },
+                            domProps: { value: _vm.post1.satuanInventori },
                             on: {
                               input: function($event) {
                                 if ($event.target.composing) {
@@ -62356,7 +62390,7 @@ var render = function() {
                                 }
                                 _vm.$set(
                                   _vm.post1,
-                                  "satuanBarang",
+                                  "satuanInventori",
                                   $event.target.value
                                 )
                               }
@@ -62406,7 +62440,7 @@ var render = function() {
                               disabled: ""
                             },
                             domProps: {
-                              value: _vm.qtyGudang - _vm.post1.stkBarang
+                              value: _vm.qtyGudang - _vm.post1.stkInventori
                             }
                           })
                         ]),
@@ -62446,8 +62480,8 @@ var render = function() {
                       _vm._v(
                         "\n                    " +
                           _vm._s(
-                            (_vm.qtyGudang - _vm.post1.stkBarang) *
-                              _vm.post1.hrgPokok
+                            (_vm.qtyGudang - _vm.post1.stkInventori) *
+                              _vm.post1.hrgSatuan
                           ) +
                           "\n                    "
                       )
@@ -62508,7 +62542,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "box-header with-border" }, [
-      _c("h3", { staticClass: "box-title" }, [_vm._v("Stok Opname barang")])
+      _c("h3", { staticClass: "box-title" }, [_vm._v("Stok Inventori barang")])
     ])
   },
   function() {

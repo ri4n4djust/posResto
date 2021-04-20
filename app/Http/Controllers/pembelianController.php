@@ -18,6 +18,7 @@ class pembelianController extends Controller
     {
         $posts = Pembelian::join('tblSupplier', 'tblPembelian.idSupplier', '=', 'tblSupplier.kdSupplier')
                             ->select('tblPembelian.*', 'tblSupplier.nmSupplier', 'tblSupplier.kdSupplier')
+                            ->orderBy('tblPembelian.id', 'DESC')
                             ->get();
         return response([
             'success' => true,

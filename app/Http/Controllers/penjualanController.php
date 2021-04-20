@@ -22,6 +22,7 @@ class penjualanController extends Controller
                 ->select('tblpenjualan.*', 'tblMeja.noMeja', 'users.name', 
                 'tblPembayaran.pajakPembayaran', 'tblPembayaran.diskonPembayaran',
                 'tblPembayaran.typePembayaran', 'tblPembayaran.chargePembayaran', 'tblPembayaran.noKartuPembayaran')
+                ->orderBy('tblPenjualan.id', 'DESC')
                 ->get();
         return response([
             'success' => true,

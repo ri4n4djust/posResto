@@ -9,7 +9,7 @@
           <!-- About Me Box -->
           <div class="box box-primary">
             <div class="box-header with-border">
-              <h3 class="box-title">Stok Opname barang</h3>
+              <h3 class="box-title">Stok Inventori barang</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
@@ -63,11 +63,11 @@
                           <label>Stok</label>
                           <input type="hidden" class="form-control" v-model="noStokOpname" >
                           <input type="hidden" class="form-control" v-model="tglStok" >
-                        <input type="text" v-model="post1.stkBarang " class="form-control" placeholder="stok" disabled>
+                        <input type="text" v-model="post1.stkInventori " class="form-control" placeholder="stok" disabled>
                         </div>
                         <div class="col-xs-2">
                           <label>Satuan</label>
-                        <input type="text" v-model="post1.satuanBarang " class="form-control" placeholder="stok" disabled>
+                        <input type="text" v-model="post1.satuanInventori " class="form-control" placeholder="stok" disabled>
                         </div>
                         <div class="col-xs-1">
                           <label>Real</label>
@@ -75,7 +75,7 @@
                         </div>
                         <div class="col-xs-2">
                           <label>Selisih</label>
-                        <input type="text" :value=" qtyGudang - post1.stkBarang  " :name="selisihStok" class="form-control" placeholder="Selisih" disabled>
+                        <input type="text" :value=" qtyGudang - post1.stkInventori  " :name="selisihStok" class="form-control" placeholder="Selisih" disabled>
                         </div>
                         <div class="col-xs-2">
                           <label>Keterangan</label>
@@ -86,7 +86,7 @@
                           <button type="submit" class="btn btn-md btn-success form-control">Add</button>                        
                         </div>
                     </div>
-                    {{ (qtyGudang - post1.stkBarang) * post1.hrgPokok  }}
+                    {{ (qtyGudang - post1.stkInventori) * post1.hrgSatuan  }}
                     </form>
                     </div>
                     
@@ -192,7 +192,7 @@
             });
             },
             loadBarang:function(){
-                let uri = '/api/posts';
+                let uri = '/api/baranginventori';
                 this.axios.get(uri).then(response => {
                 this.users = response.data.data;
                 

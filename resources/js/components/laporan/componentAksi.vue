@@ -73,8 +73,10 @@
                <address>
                     <strong>Ala Desa.</strong><br>
                     Sangeh<br>
-                    Phone: (804) 123-5432<br>
-                    Email: info@almasaeedstudio.com
+                    Phone / Wa: 081 239 099 998<br>
+                    Email: warungdaladesa@gmail.com<br>
+                    FB : warungdaladesa<br>
+                    IG : warung.daladesa.sangeh
                   </address>
               <div class="row invoice-info">
                   <!-- accepted payments column -->
@@ -139,12 +141,12 @@
                                         <th colspan="3">Kembalian :</th>
                                         <th>{{ data.kembalianNota | currency }}</th>
                                     </tr>
-                                    <tr>
-                                        <th colspan="5">Terima Kasih Telah Berbelanja</th>
-
+<tr>
+                                        <th colspan="5">Terima Kasih <br>Berbelanja Anda Hal Baik Bagi Dunia</th>
                                     </tr>
-                               
-                            </table>
+                                    <tr>
+                                        <th colspan="5">Tidak enak Kasi Tau Kami, ENAK kasi tau temanmu</th>
+                                    </tr>                            </table>
                 </div>
                 
               </div>

@@ -61,7 +61,9 @@ class stokController extends Controller
     public function DetailStokOpname($id)
     {
         //$post = TransaksiDetail::whereId($id)->first();
-        $post = StokOpnameDetail::where('noStokOpname', $id)->get();
+        $post = StokOpnameDetail::where('noStokOpname', $id)
+                                    ->orderBy('id', 'DESC')
+                                    ->get();
 
         if ($post) {
             return response()->json([
@@ -81,7 +83,9 @@ class stokController extends Controller
     public function DetailInventori($id)
     {
         //$post = TransaksiDetail::whereId($id)->first();
-        $post = KartuStokInventori::where('kdBarang', $id)->get();
+        $post = KartuStokInventori::where('kdBarang', $id)
+                                    ->orderBy('id', 'DESC')
+                                    ->get();
 
         if ($post) {
             return response()->json([

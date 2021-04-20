@@ -11,14 +11,12 @@
                             
                             <div class="form-group">
                                 <label>Nama Barang : {{post.nmBarang}}</label>
-                            </div>
-                            <div class="form-group">
+                            <br>
                                 <label>Stok : {{post.stkBarang}} {{post.satuanBarang}}</label>
-                            </div>
-                            <div class="form-group">
+                           <br>
                                 <label>Stok Inventori : {{post.stkInventori}}</label>
                             </div>
-
+                    <router-link :to="{ name: 'stokinventori' }" class="btn btn-primary btn-success">KEMBALI</router-link>  
 
 
                 </div>

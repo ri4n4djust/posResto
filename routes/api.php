@@ -136,4 +136,5 @@ Route::post('/addOpname/store', 'stokController@addTransaksiOpname');
 
 //=========Inventori
 Route::get('/inventori', 'stokController@indexInventori');
+Route::get('/baranginventori', 'salesController@barangInventori');
 Route::post('/detailinventori/{id}', 'stokController@DetailInventori');

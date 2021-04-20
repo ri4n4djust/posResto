@@ -50,6 +50,18 @@ class salesController extends Controller
         ], 200);
     }
 
+    public function barangInventori()
+    {
+        $posts = Barang::join('tblInventori', 'tblBarang.kdBarang', '=', 'tblInventori.kdBarang')
+                ->get(['tblBarang.nmBarang', 'tblInventori.*']);
+        //$posts = Barang::latest()->get();
+        return response([
+            'success' => true,
+            'message' => 'List Semua Posts',
+            'data' => $posts
+        ], 200);
+    }
+
 
     public function mentah()
     {
