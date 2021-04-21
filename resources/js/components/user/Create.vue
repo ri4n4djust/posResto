@@ -34,7 +34,7 @@
                             <div class="form-group">
                                 <label>Email</label>
                                 <input type="text" class="form-control" v-model="post.email"
-                                       placeholder="Harga">
+                                       placeholder="Email">
                                 <div v-if="validation.email">
                                     <div class="alert alert-danger mt-1" role="alert">
                                         {{ validation.email[0] }}
@@ -45,7 +45,7 @@
                             <div class="form-group">
                                 <label>Password</label>
                                 <input type="text" class="form-control" v-model="post.password"
-                                       placeholder="Stok">
+                                       placeholder="Password">
                                 <div v-if="validation.password">
                                     <div class="alert alert-danger mt-1" role="alert">
                                         {{ validation.password[0] }}
