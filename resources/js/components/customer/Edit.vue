@@ -1,14 +1,14 @@
 <template>
     <div class="mt-3">
         <status-login></status-login>
-                    <div class="card-header">EDIT SUPPLIER</div>
+                    <div class="card-header">EDIT Pelanggan</div>
 
                     <div class="card-body">
 
                         <form @submit.prevent="PostUpdate">
 
                             <div class="form-group">
-                                <label>Nama Spplier</label>
+                                <label>Nama Nama</label>
                                 <input type="text" class="form-control" v-model="post.nmSupplier"
                                        placeholder="Masukkan Nama Supplier">
                                 <div v-if="validation.nmSupplier">
@@ -18,7 +18,7 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label>Alamat Supplier</label>
+                                <label>Alamat </label>
                                 <input type="text" class="form-control" v-model="post.almtSupplier"
                                        placeholder="Alamat Supplier">
                                 <div v-if="validation.almtSupplier">
@@ -34,16 +34,6 @@
                                 <div v-if="validation.noHp">
                                     <div class="alert alert-danger mt-1" role="alert">
                                         {{ validation.noHp[0] }}
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label>Kontak Person</label>
-                                <input type="text" class="form-control" v-model="post.kontakSupplier"
-                                       placeholder="Kontak Supplier">
-                                <div v-if="validation.kontakSupplier">
-                                    <div class="alert alert-danger mt-1" role="alert">
-                                        {{ validation.kontakSupplier[0] }}
                                     </div>
                                 </div>
                             </div>

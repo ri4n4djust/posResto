@@ -71,6 +71,7 @@
                 post: {},
                 validation: [],
                 kdMenu: '',
+                stokMenu: '1',
             }
         },
         beforeCreate: function () {

@@ -75,11 +75,10 @@
               <div class="active tab-pane" id="activity">
 
                 <!-- Post -->
-                <a href="#"  @click="showModal = true" class="btn btn-md btn-success"><b>Add Item</b></a>
                 <a href="#"  @click="showModalMenu = true" class="btn btn-md btn-success"><b>Add Menu</b></a>
                 <a href="#"  @click="showModalMove = true" class="btn btn-md btn-success"><b>Pindah Meja</b></a>
                 <router-link :to="{ name: 'meja' }" class="btn btn-primary btn-success">KEMBALI</router-link>
-                isi tab aktiifiti
+                
                 <!-- /.post -->
                 <table class="table table-hover table-bordered">
                                 <thead>
@@ -152,8 +151,9 @@
                 <div v-if="move1">
                   <form  @submit.prevent="PostMove" >
                     <div class="form-group">
-                      <input type="text" v-model="post.id">
-                      <input type="text" class="form-control" v-model="move1.id">
+                      <input type="hidden" v-model="post.id">
+                      <input type="hidden" v-model="post.waiterMeja">
+                      <input type="hidden" class="form-control" v-model="move1.id">
                     </div>
                     <div class="form-group">
                     <button type="submit" class="btn btn-md btn-success">Pindah</button>
@@ -672,11 +672,12 @@
                 this.axios.post(uri, {
                   noMejaLama: this.post.id,
                   noMejaBaru: this.move1.id,
+                  waiterMeja: this.post.waiterMeja,
                 })
                     .then((response) => {
                         this.$router.push({name: 'meja'});
                     }).catch(error => {
-                    this.validation = error.response.data.data;
+                        this.$router.push({name: 'meja'});
                 });
             },
             loadMejaKosong:function(){

@@ -7,31 +7,14 @@
                         <h3>
                         <router-link :to="{ name: 'createMenu' }" class="btn btn-md btn-success">TAMBAH MENU</router-link>
                         </h3>
-                            <table class="table table-hover table-bordered">
-                                <thead>
-                                <tr>
-                                    <th>Kode dgdg</th>
-                                    <th>Nama Menu</th>
-                                    <th>Harga Jual</th>
-                                    <th>Hpp Menu</th>
-                                    <th>Stok</th>
-                                    <th>AKSI</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr v-for="(post, index) in posts" :key="post.id">
-                                    <td>{{ post.kdMenu }}</td>
-                                    <td>{{ post.nmMenu }}</td>
-                                    <td>{{ post.hargaMenu | currency }}</td>
-                                    <td>{{ post.hppMenu | currency }}</td>
-                                    <td>{{ post.stokMenu }}</td>
-                                    <td class="text-center">
-                                        <router-link :to="{name: 'editMenu', params: { id: post.kdMenu }}" class="btn btn-sm btn-primary">EDIT</router-link>
-                                        <button @click.prevent="PostDelete(post.id, index)" class="btn btn-sm btn-danger">HAPUS</button>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
+                            
+                            <div>
+                                
+                                <data-table v-bind="bindings" @actionTriggered="ActionButtons"/>
+                                
+                            </div>
+
+                            
                         </div>
 
                 
@@ -40,17 +23,64 @@
 
 
 <script>
+import Vue from 'vue';
+import DataTable from "@andresouzaabreu/vue-data-table";
+
+import ActionButtons from './componentAksi.vue';
+Vue.component("data-table", DataTable);
+
     export default {
         data() {
             return {
                 posts: []
             }
         },
+        computed: {
+            bindings() {
+                return {
+                    actionMode: "multiple",
+                    name: "ActionButtons",
+                    columns: [
+                        {
+                            key: "kdMenu",
+                        },
+                        {
+                            key: "nmMenu",
+                            title: "Nama Menu",
+                            sortable: false,
+                        },
+                        {
+                            key: 'hppMenu',
+                            title: "Harga Pokok",
+                            sortable: false,
+                            searchable: false,
+                        },
+                        {
+                            key: "hargaMenu",
+                            title: "Harga Jual",
+                            sortable: false,
+                            searchable: false,
+                        },
+                        {
+                            title: "Action",
+                            sortable: false,
+                            searchable: false,
+                            /* this will make this column appear to the right of the table
+                            since its index is greater than others*/
+                            
+                            component: ActionButtons,
+                            index:100,
+                        },
+                        
+                    ],
+                    data: this.posts,
+                    /* other props...*/
+                    
+                }
+            }
+        },
         created() {
-            let uri = '/api/menu';
-            this.axios.get(uri).then(response => {
-                this.posts = response.data.data;
-            });
+            this.loadData();
         },
         beforeCreate: function () {
             if (!this.$session.exists()) {
@@ -58,6 +88,14 @@
             }
         },
         methods: {
+
+            loadData:function() {
+            let uri = '/api/menu';
+            this.axios.get(uri).then(response => {
+                this.posts = response.data.data;
+            });
+            },
+
             PostDelete(id, index)
             {
             if(confirm("Do you really want to delete?")){
