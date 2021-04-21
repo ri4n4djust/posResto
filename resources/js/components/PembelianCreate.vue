@@ -88,12 +88,8 @@
                         <div class="col-xs-2">
                           <label>Total</label>
                         <input type="text" :value="(post1.hrgPokok * qtyBeli) || 0" :name="subTotal" class="form-control" placeholder="Total">
+                        <input type="hidden" v-model="qtySa" class="form-control" placeholder="Qty Satuan" @keypress="onlyNumber">
                         </div>
-                        <div class="col-xs-2">
-                          <label>Qty Satuan</label>
-                        <input type="text" v-model="qtySa" class="form-control" placeholder="Qty Satuan" @keypress="onlyNumber">
-                        </div>
-
                         <div class="col-xs-2">
                           <label>Aksi</label>
                           <button type="submit" class="btn btn-md btn-success form-control">Add</button>                        

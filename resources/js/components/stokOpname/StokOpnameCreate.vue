@@ -54,18 +54,13 @@
                   <form  @submit.prevent="PostItemOpname" >
                     <div class="row">
                        
-                        <div class="col-xs-2">
-                          <label>Stok</label>
+                        
                           <input type="hidden" class="form-control" v-model="noStokOpname" >
                           <input type="hidden" class="form-control" v-model="tglStok" >
-                          <div class="input-group">
-                            
-                            <input type="text" v-model="post1.stkBarang " class="form-control" placeholder="stok" disabled>
-                            <span class="input-group-addon">{{post1.satuanBarang}}</span>
-                          </div>
-
-                        
-                        </div>
+                          <input type="hidden" v-model="post1.stkBarang " class="form-control" placeholder="stok" disabled>
+                          <input type="hidden" v-model="post1.stkSatuan" class="form-control" placeholder="stk Satuan" pattern="\d+">
+                          <input type="hidden" :value="qtyInventori * post1.stkSatuan" :name="qtyGudang" class="form-control" placeholder="Qty" disabled>
+    
                         <div class="col-xs-2">
                           <label>Satuan</label>
                           <div class="input-group">
@@ -73,19 +68,13 @@
                           <span class="input-group-addon">Pcs</span>
                           </div>
                         </div>
-                        <div class="col-xs-2">
-                          <input type="hidden" v-model="post1.stkSatuan" class="form-control" placeholder="stk Satuan" pattern="\d+">
-                          <label>Real Satuan</label>
-                          <div class="input-group">
-                          <input type="text" :value="qtyInventori * post1.stkSatuan" :name="qtyGudang" class="form-control" placeholder="Qty" disabled>
-                          <span class="input-group-addon">{{post1.satuanBarang}}</span>
-                          </div>
-                        </div>
+                          
+                         
                         <div class="col-xs-2">
                           <label>Real Pcs</label>
                         <input type="text" v-model="qtyInventori" class="form-control" placeholder="Qty" pattern="\d+">
                         </div>
-                        <div class="col-xs-1">
+                        <div class="col-xs-2">
                           <input type="hidden" :value="(qtyInventori * post1.stkSatuan) - post1.stkBarang  " :name="selisihStok" class="form-control" placeholder="Selisih" disabled>
                           <label>Selisih </label>
                         <input type="text" :value=" qtyInventori - post1.stkInventori  " :name="selisihInventori" class="form-control" placeholder="Selisih" disabled>
@@ -94,7 +83,7 @@
                           <label>Keterangan</label>
                         <input type="text" v-model="keterangan" class="form-control" placeholder="Ket" required>
                         </div>
-                        <div class="col-xs-1">
+                        <div class="col-xs-2">
                           <label>Aksi</label>
                           <button type="submit" class="btn btn-xs btn-success form-control">Add</button>                        
                         </div>
@@ -115,20 +104,18 @@
                                     <th>Nama </th>
                                     <th>Qty Gudang</th>
                                     <th>Selisih</th>
-                                    <th>Satuan</th>
                                     <th>Keterangan</th>
                                     <th>AKSI</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr v-for="pe in pem" :key="pe.id">
+                                <tr v-for="pe in pemInv" :key="pe.id">
                                     <td>{{ pe.nmBarang }} </td>
-                                    <td>{{ pe.qtyGudang}}</td>
-                                    <td>{{ pe.selisihStok }}</td>
-                                    <td>{{ pe.satuanStok }}</td>
-                                    <td>{{ pe.keteranganStok }}</td>
+                                    <td>{{ pe.stkInventori}}</td>
+                                    <td>{{ pe.qtyMasukInv }}{{ pe.qtyKeluarInv }}</td>
+                                    <td>{{ pe.keteranganKartuInv }}</td>
                                     <td class="text-center">
-                                        <button @click.prevent="PostDeleteTrx(pe.id)" class="btn btn-sm btn-danger">HAPUS</button>
+                                        <button @click.prevent="PostDeleteTrxInv(pe.id)" class="btn btn-sm btn-danger">HAPUS</button>
                                     </td>
                                 </tr>
                                 </tbody>
@@ -166,6 +153,7 @@
                 post1: {},
                 users: {},
                 pem: {},
+                pemInv: {},
                 qtyGudang: '',
                 qtyInventori: '',
                 selisihStok: '',
@@ -220,6 +208,13 @@
                    // alert('no nota '+ this.data.noNota);
             });
             },
+            loadTransaksiInventori:function(){
+                let uri = '/api/dataStokInventori/'+ this.noStokOpname;
+                this.axios.post(uri).then(response => {
+                    this.pemInv = response.data.data;
+                   // alert('no nota '+ this.data.noNota);
+            });
+            },
             PostDeleteTrx(id)
             {
               if(confirm("Do you really want to delete?")){
@@ -228,6 +223,22 @@
                         alert('Berhasil Di Hapus');
                         //this.loadTotal()
                         this.loadTransaksiOpname()
+                        this.loadTransaksiInventori()
+                    }).catch(error => {
+                    
+                });
+              }
+            },
+
+            PostDeleteTrxInv(id)
+            {
+              if(confirm("Do you really want to delete?")){
+                this.axios.delete(`/api/opnameInvDelete/${id}`)
+                    .then(response => {
+                        alert('Berhasil Di Hapus');
+                        //this.loadTotal()
+                        this.loadTransaksiOpname()
+                        this.loadTransaksiInventori()
                     }).catch(error => {
                     
                 });
@@ -250,12 +261,14 @@
                     .then((response) => {
                         //this.loadTotal()
                         this.loadTransaksiOpname()
+                        this.loadTransaksiInventori()
                         alert('sukses');
                         //this.loadTransaksiPenjualan()
                         this.loadTotal()
                     }).catch(error => {
                         alert('ada yg error')
                         this.loadTransaksiOpname()
+                        this.loadTransaksiInventori()
                 });
                 
             },

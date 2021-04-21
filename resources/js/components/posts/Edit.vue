@@ -73,16 +73,6 @@
           <!-- general form elements -->
                 <div class="box box-info">
 
-                            <div class="form-group">
-                                <label>Stok</label>
-                                <input type="text" class="form-control" v-model="post.stkBarang"
-                                       placeholder="Stok Barang" disabled>
-                                <div v-if="validation.stkBarang">
-                                    <div class="alert alert-danger mt-1" role="alert">
-                                        {{ validation.stkBarang[0] }}
-                                    </div>
-                                </div>
-                            </div>
 
                             <div class="form-group">
                                 <label>Satuan</label>

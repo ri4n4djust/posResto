@@ -8852,10 +8852,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
 
 
 
@@ -12808,16 +12804,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -12962,11 +12948,6 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component("data-table", _andresouzaab
         }, {
           key: "hrgJual",
           title: "Harga Jual",
-          sortable: false,
-          searchable: false
-        }, {
-          key: "stkBarang",
-          title: "Stok",
           sortable: false,
           searchable: false
         }, {
@@ -13445,9 +13426,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _andresouzaabreu_vue_data_table__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @andresouzaabreu/vue-data-table */ "./node_modules/@andresouzaabreu/vue-data-table/dist/DataTable.umd.js");
 /* harmony import */ var _andresouzaabreu_vue_data_table__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_andresouzaabreu_vue_data_table__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var vue_html_to_paper__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue-html-to-paper */ "./node_modules/vue-html-to-paper/dist/index.js");
-/* harmony import */ var vue_html_to_paper__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(vue_html_to_paper__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _componentAksiStokInventori_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./componentAksiStokInventori.vue */ "./resources/js/components/stokInventori/componentAksiStokInventori.vue");
+/* harmony import */ var vue_single_select__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue-single-select */ "./node_modules/vue-single-select/dist/index.js");
+/* harmony import */ var vue_html_to_paper__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue-html-to-paper */ "./node_modules/vue-html-to-paper/dist/index.js");
+/* harmony import */ var vue_html_to_paper__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(vue_html_to_paper__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _componentAksiStokInventori_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./componentAksiStokInventori.vue */ "./resources/js/components/stokInventori/componentAksiStokInventori.vue");
 //
 //
 //
@@ -13533,6 +13515,63 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 
@@ -13540,16 +13579,22 @@ var options = {
   name: '_blank',
   specs: ['fullscreen=yes', 'titlebar=yes', 'scrollbars=yes']
 };
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_html_to_paper__WEBPACK_IMPORTED_MODULE_2___default.a, options);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_html_to_paper__WEBPACK_IMPORTED_MODULE_3___default.a, options);
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component("data-table", _andresouzaabreu_vue_data_table__WEBPACK_IMPORTED_MODULE_1___default.a);
 /* harmony default export */ __webpack_exports__["default"] = ({
+  components: {
+    VueSingleSelect: vue_single_select__WEBPACK_IMPORTED_MODULE_2__["default"]
+  },
   data: function data() {
     return {
       posts: [],
+      post: {},
+      post1: {},
       ActionButtons: null,
-      actionTriggered: {} //showModal: false,
-
+      actionTriggered: {},
+      ModalInputInventori: false,
+      tglInv: new Date().toJSON().slice(0, 10).replace(/-/g, '/')
     };
   },
   computed: {
@@ -13569,18 +13614,13 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component("data-table", _andresouzaab
           sortable: true,
           searchable: false
         }, {
-          key: "hrgSatuan",
-          title: "Harga Satuan",
-          sortable: false,
-          searchable: false
-        }, {
           title: "Action",
           sortable: false,
           searchable: false,
 
           /* this will make this column appear to the right of the table
           since its index is greater than others*/
-          component: _componentAksiStokInventori_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
+          component: _componentAksiStokInventori_vue__WEBPACK_IMPORTED_MODULE_4__["default"],
           index: 100
         }],
         data: this.posts
@@ -13599,19 +13639,37 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component("data-table", _andresouzaab
     //setInterval(this.loadData(),60000)
   },
   methods: {
-    loadData: function loadData() {
+    PostInput: function PostInput() {
       var _this = this;
+
+      var uri = "/api/inputInventori";
+      this.axios.post(uri, {
+        kdBarang: this.post1.kdBarang,
+        qty: this.post1.qty,
+        tglInv: this.tglInv
+      }).then(function (response) {
+        alert('inventori Berhasil di input');
+
+        _this.loadData(); //this.$router.push({name: 'kategori'});
+
+      })["catch"](function (error) {
+        //this.validation = error.response.data.data;
+        alert('ada yang error');
+      });
+    },
+    loadData: function loadData() {
+      var _this2 = this;
 
       var uri = '/api/inventori';
       this.axios.get(uri).then(function (response) {
-        _this.posts = response.data.data;
+        _this2.posts = response.data.data;
       });
     },
     intervalFetchData: function intervalFetchData() {
-      var _this2 = this;
+      var _this3 = this;
 
       setInterval(function () {
-        _this2.loadData();
+        _this3.loadData();
       }, 3000);
     },
     print: function print() {
@@ -14426,19 +14484,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -14454,6 +14499,7 @@ __webpack_require__.r(__webpack_exports__);
       post1: {},
       users: {},
       pem: {},
+      pemInv: {},
       qtyGudang: '',
       qtyInventori: '',
       selisihStok: '',
@@ -14510,19 +14556,42 @@ __webpack_require__.r(__webpack_exports__);
         _this4.pem = response.data.data; // alert('no nota '+ this.data.noNota);
       });
     },
-    PostDeleteTrx: function PostDeleteTrx(id) {
+    loadTransaksiInventori: function loadTransaksiInventori() {
       var _this5 = this;
+
+      var uri = '/api/dataStokInventori/' + this.noStokOpname;
+      this.axios.post(uri).then(function (response) {
+        _this5.pemInv = response.data.data; // alert('no nota '+ this.data.noNota);
+      });
+    },
+    PostDeleteTrx: function PostDeleteTrx(id) {
+      var _this6 = this;
 
       if (confirm("Do you really want to delete?")) {
         this.axios["delete"]("/api/opnameDelete/".concat(id)).then(function (response) {
           alert('Berhasil Di Hapus'); //this.loadTotal()
 
-          _this5.loadTransaksiOpname();
+          _this6.loadTransaksiOpname();
+
+          _this6.loadTransaksiInventori();
+        })["catch"](function (error) {});
+      }
+    },
+    PostDeleteTrxInv: function PostDeleteTrxInv(id) {
+      var _this7 = this;
+
+      if (confirm("Do you really want to delete?")) {
+        this.axios["delete"]("/api/opnameInvDelete/".concat(id)).then(function (response) {
+          alert('Berhasil Di Hapus'); //this.loadTotal()
+
+          _this7.loadTransaksiOpname();
+
+          _this7.loadTransaksiInventori();
         })["catch"](function (error) {});
       }
     },
     PostItemOpname: function PostItemOpname() {
-      var _this6 = this;
+      var _this8 = this;
 
       var uri = '/api/addItemOpname/store';
       this.axios.post(uri, {
@@ -14537,19 +14606,23 @@ __webpack_require__.r(__webpack_exports__);
         nilaiStok: (this.qtyGudang - this.post1.stkBarang) * this.post1.hrgPokok
       }).then(function (response) {
         //this.loadTotal()
-        _this6.loadTransaksiOpname();
+        _this8.loadTransaksiOpname();
+
+        _this8.loadTransaksiInventori();
 
         alert('sukses'); //this.loadTransaksiPenjualan()
 
-        _this6.loadTotal();
+        _this8.loadTotal();
       })["catch"](function (error) {
         alert('ada yg error');
 
-        _this6.loadTransaksiOpname();
+        _this8.loadTransaksiOpname();
+
+        _this8.loadTransaksiInventori();
       });
     },
     PostOpname: function PostOpname() {
-      var _this7 = this;
+      var _this9 = this;
 
       var uri = '/api/addOpname/store';
       this.axios.post(uri, {
@@ -14559,7 +14632,7 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (response) {
         alert('Transaksi Selesai');
 
-        _this7.$router.go(0); //this.$router.push({name: 'pembelian'});
+        _this9.$router.go(0); //this.$router.push({name: 'pembelian'});
 
       });
     }
@@ -54065,11 +54138,7 @@ var render = function() {
                           domProps: {
                             value: _vm.post1.hrgPokok * _vm.qtyBeli || 0
                           }
-                        })
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col-xs-2" }, [
-                        _c("label", [_vm._v("Qty Satuan")]),
+                        }),
                         _vm._v(" "),
                         _c("input", {
                           directives: [
@@ -54081,7 +54150,7 @@ var render = function() {
                             }
                           ],
                           staticClass: "form-control",
-                          attrs: { type: "text", placeholder: "Qty Satuan" },
+                          attrs: { type: "hidden", placeholder: "Qty Satuan" },
                           domProps: { value: _vm.qtySa },
                           on: {
                             keypress: _vm.onlyNumber,
@@ -61291,55 +61360,6 @@ var render = function() {
             _c("div", { staticClass: "col-md-6" }, [
               _c("div", { staticClass: "box box-info" }, [
                 _c("div", { staticClass: "form-group" }, [
-                  _c("label", [_vm._v("Stok")]),
-                  _vm._v(" "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.post.stkBarang,
-                        expression: "post.stkBarang"
-                      }
-                    ],
-                    staticClass: "form-control",
-                    attrs: {
-                      type: "text",
-                      placeholder: "Stok Barang",
-                      disabled: ""
-                    },
-                    domProps: { value: _vm.post.stkBarang },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(_vm.post, "stkBarang", $event.target.value)
-                      }
-                    }
-                  }),
-                  _vm._v(" "),
-                  _vm.validation.stkBarang
-                    ? _c("div", [
-                        _c(
-                          "div",
-                          {
-                            staticClass: "alert alert-danger mt-1",
-                            attrs: { role: "alert" }
-                          },
-                          [
-                            _vm._v(
-                              "\n                                    " +
-                                _vm._s(_vm.validation.stkBarang[0]) +
-                                "\n                                "
-                            )
-                          ]
-                        )
-                      ])
-                    : _vm._e()
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "form-group" }, [
                   _c("label", [_vm._v("Satuan")]),
                   _vm._v(" "),
                   _c("input", {
@@ -61990,6 +62010,28 @@ var render = function() {
     [
       _c("status-login"),
       _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-md btn-success",
+          on: {
+            click: function($event) {
+              _vm.ModalInputInventori = true
+            }
+          }
+        },
+        [_vm._v("\n        Input Inventori\n    ")]
+      ),
+      _vm._v(" "),
+      _c(
+        "router-link",
+        {
+          staticClass: "btn btn-md btn-success",
+          attrs: { to: { name: "stokopnamecreate" } }
+        },
+        [_vm._v("Stok Opname Baru")]
+      ),
+      _vm._v(" "),
       _c("h3", [_vm._v("Stok Inventori")]),
       _vm._v(" "),
       _c("p"),
@@ -62064,7 +62106,177 @@ var render = function() {
             ])
           ])
         ])
-      ])
+      ]),
+      _vm._v(" "),
+      _vm.ModalInputInventori
+        ? _c(
+            "div",
+            [
+              _c("transition", { attrs: { name: "modal" } }, [
+                _c("div", { staticClass: "modal-mask" }, [
+                  _c("div", { staticClass: "modal-wrapper" }, [
+                    _c("div", { staticClass: "modal-dialog" }, [
+                      _c("div", { staticClass: "modal-content" }, [
+                        _c("div", { staticClass: "modal-header" }, [
+                          _c(
+                            "button",
+                            {
+                              staticClass: "close",
+                              attrs: { type: "button" },
+                              on: {
+                                click: function($event) {
+                                  _vm.ModalInputInventori = false
+                                }
+                              }
+                            },
+                            [
+                              _c("span", { attrs: { "aria-hidden": "true" } }, [
+                                _vm._v("×")
+                              ])
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c("h4", { staticClass: "modal-title" }, [
+                            _vm._v("Input Inventori")
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "modal-body" }, [
+                          _c(
+                            "form",
+                            {
+                              on: {
+                                submit: function($event) {
+                                  $event.preventDefault()
+                                  return _vm.PostInput($event)
+                                }
+                              }
+                            },
+                            [
+                              _c(
+                                "div",
+                                { staticClass: "form-group" },
+                                [
+                                  _c("label", [_vm._v("Nama Barang")]),
+                                  _vm._v(" "),
+                                  _c("vue-single-select", {
+                                    attrs: {
+                                      options: _vm.posts,
+                                      required: true,
+                                      optionLabel: "nmBarang"
+                                    },
+                                    model: {
+                                      value: _vm.post1,
+                                      callback: function($$v) {
+                                        _vm.post1 = $$v
+                                      },
+                                      expression: "post1"
+                                    }
+                                  }),
+                                  _vm._v(" "),
+                                  _c("input", {
+                                    directives: [
+                                      {
+                                        name: "model",
+                                        rawName: "v-model",
+                                        value: _vm.post1.kdBarang,
+                                        expression: "post1.kdBarang"
+                                      }
+                                    ],
+                                    staticClass: "form-control",
+                                    attrs: { type: "text" },
+                                    domProps: { value: _vm.post1.kdBarang },
+                                    on: {
+                                      input: function($event) {
+                                        if ($event.target.composing) {
+                                          return
+                                        }
+                                        _vm.$set(
+                                          _vm.post1,
+                                          "kdBarang",
+                                          $event.target.value
+                                        )
+                                      }
+                                    }
+                                  }),
+                                  _vm._v(" "),
+                                  _c("input", {
+                                    directives: [
+                                      {
+                                        name: "model",
+                                        rawName: "v-model",
+                                        value: _vm.tglInv,
+                                        expression: "tglInv"
+                                      }
+                                    ],
+                                    staticClass: "form-control",
+                                    attrs: { type: "text" },
+                                    domProps: { value: _vm.tglInv },
+                                    on: {
+                                      input: function($event) {
+                                        if ($event.target.composing) {
+                                          return
+                                        }
+                                        _vm.tglInv = $event.target.value
+                                      }
+                                    }
+                                  })
+                                ],
+                                1
+                              ),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "form-group" }, [
+                                _c("label", [_vm._v("Stok Inventori")]),
+                                _vm._v(" "),
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.post1.qty,
+                                      expression: "post1.qty"
+                                    }
+                                  ],
+                                  staticClass: "form-control",
+                                  attrs: { type: "text", placeholder: "Stok" },
+                                  domProps: { value: _vm.post1.qty },
+                                  on: {
+                                    input: function($event) {
+                                      if ($event.target.composing) {
+                                        return
+                                      }
+                                      _vm.$set(
+                                        _vm.post1,
+                                        "qty",
+                                        $event.target.value
+                                      )
+                                    }
+                                  }
+                                })
+                              ]),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "form-group" }, [
+                                _c(
+                                  "button",
+                                  {
+                                    staticClass: "btn btn-md btn-success",
+                                    attrs: { type: "submit" }
+                                  },
+                                  [_vm._v("Input")]
+                                )
+                              ])
+                            ]
+                          )
+                        ])
+                      ])
+                    ])
+                  ])
+                ])
+              ])
+            ],
+            1
+          )
+        : _vm._e()
     ],
     1
   )
@@ -63021,89 +63233,122 @@ var render = function() {
                     },
                     [
                       _c("div", { staticClass: "row" }, [
-                        _c("div", { staticClass: "col-xs-2" }, [
-                          _c("label", [_vm._v("Stok")]),
-                          _vm._v(" "),
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.noStokOpname,
-                                expression: "noStokOpname"
-                              }
-                            ],
-                            staticClass: "form-control",
-                            attrs: { type: "hidden" },
-                            domProps: { value: _vm.noStokOpname },
-                            on: {
-                              input: function($event) {
-                                if ($event.target.composing) {
-                                  return
-                                }
-                                _vm.noStokOpname = $event.target.value
-                              }
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.noStokOpname,
+                              expression: "noStokOpname"
                             }
-                          }),
-                          _vm._v(" "),
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.tglStok,
-                                expression: "tglStok"
+                          ],
+                          staticClass: "form-control",
+                          attrs: { type: "hidden" },
+                          domProps: { value: _vm.noStokOpname },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
                               }
-                            ],
-                            staticClass: "form-control",
-                            attrs: { type: "hidden" },
-                            domProps: { value: _vm.tglStok },
-                            on: {
-                              input: function($event) {
-                                if ($event.target.composing) {
-                                  return
-                                }
-                                _vm.tglStok = $event.target.value
-                              }
+                              _vm.noStokOpname = $event.target.value
                             }
-                          }),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "input-group" }, [
-                            _c("input", {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: _vm.post1.stkBarang,
-                                  expression: "post1.stkBarang "
-                                }
-                              ],
-                              staticClass: "form-control",
-                              attrs: {
-                                type: "text",
-                                placeholder: "stok",
-                                disabled: ""
-                              },
-                              domProps: { value: _vm.post1.stkBarang },
-                              on: {
-                                input: function($event) {
-                                  if ($event.target.composing) {
-                                    return
-                                  }
-                                  _vm.$set(
-                                    _vm.post1,
-                                    "stkBarang",
-                                    $event.target.value
-                                  )
-                                }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.tglStok,
+                              expression: "tglStok"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          attrs: { type: "hidden" },
+                          domProps: { value: _vm.tglStok },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
                               }
-                            }),
-                            _vm._v(" "),
-                            _c("span", { staticClass: "input-group-addon" }, [
-                              _vm._v(_vm._s(_vm.post1.satuanBarang))
-                            ])
-                          ])
-                        ]),
+                              _vm.tglStok = $event.target.value
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.post1.stkBarang,
+                              expression: "post1.stkBarang "
+                            }
+                          ],
+                          staticClass: "form-control",
+                          attrs: {
+                            type: "hidden",
+                            placeholder: "stok",
+                            disabled: ""
+                          },
+                          domProps: { value: _vm.post1.stkBarang },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.post1,
+                                "stkBarang",
+                                $event.target.value
+                              )
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.post1.stkSatuan,
+                              expression: "post1.stkSatuan"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          attrs: {
+                            type: "hidden",
+                            placeholder: "stk Satuan",
+                            pattern: "\\d+"
+                          },
+                          domProps: { value: _vm.post1.stkSatuan },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.post1,
+                                "stkSatuan",
+                                $event.target.value
+                              )
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("input", {
+                          staticClass: "form-control",
+                          attrs: {
+                            type: "hidden",
+                            name: _vm.qtyGudang,
+                            placeholder: "Qty",
+                            disabled: ""
+                          },
+                          domProps: {
+                            value: _vm.qtyInventori * _vm.post1.stkSatuan
+                          }
+                        }),
                         _vm._v(" "),
                         _c("div", { staticClass: "col-xs-2" }, [
                           _c("label", [_vm._v("Satuan")]),
@@ -63146,59 +63391,6 @@ var render = function() {
                         ]),
                         _vm._v(" "),
                         _c("div", { staticClass: "col-xs-2" }, [
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.post1.stkSatuan,
-                                expression: "post1.stkSatuan"
-                              }
-                            ],
-                            staticClass: "form-control",
-                            attrs: {
-                              type: "hidden",
-                              placeholder: "stk Satuan",
-                              pattern: "\\d+"
-                            },
-                            domProps: { value: _vm.post1.stkSatuan },
-                            on: {
-                              input: function($event) {
-                                if ($event.target.composing) {
-                                  return
-                                }
-                                _vm.$set(
-                                  _vm.post1,
-                                  "stkSatuan",
-                                  $event.target.value
-                                )
-                              }
-                            }
-                          }),
-                          _vm._v(" "),
-                          _c("label", [_vm._v("Real Satuan")]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "input-group" }, [
-                            _c("input", {
-                              staticClass: "form-control",
-                              attrs: {
-                                type: "text",
-                                name: _vm.qtyGudang,
-                                placeholder: "Qty",
-                                disabled: ""
-                              },
-                              domProps: {
-                                value: _vm.qtyInventori * _vm.post1.stkSatuan
-                              }
-                            }),
-                            _vm._v(" "),
-                            _c("span", { staticClass: "input-group-addon" }, [
-                              _vm._v(_vm._s(_vm.post1.satuanBarang))
-                            ])
-                          ])
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "col-xs-2" }, [
                           _c("label", [_vm._v("Real Pcs")]),
                           _vm._v(" "),
                           _c("input", {
@@ -63228,7 +63420,7 @@ var render = function() {
                           })
                         ]),
                         _vm._v(" "),
-                        _c("div", { staticClass: "col-xs-1" }, [
+                        _c("div", { staticClass: "col-xs-2" }, [
                           _c("input", {
                             staticClass: "form-control",
                             attrs: {
@@ -63313,17 +63505,17 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "tbody",
-                _vm._l(_vm.pem, function(pe) {
+                _vm._l(_vm.pemInv, function(pe) {
                   return _c("tr", { key: pe.id }, [
                     _c("td", [_vm._v(_vm._s(pe.nmBarang) + " ")]),
                     _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(pe.qtyGudang))]),
+                    _c("td", [_vm._v(_vm._s(pe.stkInventori))]),
                     _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(pe.selisihStok))]),
+                    _c("td", [
+                      _vm._v(_vm._s(pe.qtyMasukInv) + _vm._s(pe.qtyKeluarInv))
+                    ]),
                     _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(pe.satuanStok))]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(pe.keteranganStok))]),
+                    _c("td", [_vm._v(_vm._s(pe.keteranganKartuInv))]),
                     _vm._v(" "),
                     _c("td", { staticClass: "text-center" }, [
                       _c(
@@ -63333,7 +63525,7 @@ var render = function() {
                           on: {
                             click: function($event) {
                               $event.preventDefault()
-                              return _vm.PostDeleteTrx(pe.id)
+                              return _vm.PostDeleteTrxInv(pe.id)
                             }
                           }
                         },
@@ -63373,7 +63565,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-xs-1" }, [
+    return _c("div", { staticClass: "col-xs-2" }, [
       _c("label", [_vm._v("Aksi")]),
       _vm._v(" "),
       _c(
@@ -63397,8 +63589,6 @@ var staticRenderFns = [
         _c("th", [_vm._v("Qty Gudang")]),
         _vm._v(" "),
         _c("th", [_vm._v("Selisih")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Satuan")]),
         _vm._v(" "),
         _c("th", [_vm._v("Keterangan")]),
         _vm._v(" "),

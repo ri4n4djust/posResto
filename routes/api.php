@@ -130,6 +130,7 @@ Route::post('/detailstokopname/{id}', 'stokController@DetailStokOpname');
 Route::get('/stokopname', 'stokController@allOpname');
 Route::post('/addItemOpname/store', 'stokController@addItemOpname');
 Route::post('/dataStokOpname/{id}', 'stokController@listTransaksiOpname');
+
 Route::delete('/opnameDelete/{id?}', 'stokController@destroy1');
 Route::post('/totalTrxOpname', 'stokController@totalTrxOpname');
 Route::post('/addOpname/store', 'stokController@addTransaksiOpname');
@@ -138,3 +139,6 @@ Route::post('/addOpname/store', 'stokController@addTransaksiOpname');
 Route::get('/inventori', 'stokController@indexInventori');
 Route::get('/baranginventori', 'salesController@barangInventori');
 Route::post('/detailinventori/{id}', 'stokController@DetailInventori');
+Route::post('/inputInventori', 'stokController@inputInv');
+Route::post('/dataStokInventori/{id}', 'stokController@listTransaksiInventori');
+Route::delete('/opnameInvDelete/{id?}', 'stokController@destroyInv');

@@ -112,6 +112,28 @@ class stokController extends Controller
         ], 200);
     }
 
+
+    public function inputInv(Request $request)
+    {
+        $barang = DB::table('tblInventori')->where('kdBarang', $request->input('kdBarang'))->first();
+            $stokLama = $barang->stkInventori;
+
+        DB::table('tblInventori')->where('kdBarang', $request->input('kdBarang'))->update([
+            'stkInventori'     => $stokLama + $request->input('qty')
+        ]);
+
+        KartuStokInventori::create([
+            'kdBarang'     => $request->input('kdBarang'),
+            'tglInv'     => $request->input('tglInv'),
+            'qtyMasukInv'     => $request->input('qty'),
+            'qtyKeluarInv'     => '0',
+            'noTransaksiInv'     => '-',
+            'keteranganKartuInv'     => 'Input Inventori',
+            'satuanKartuInv' => 'PCS',
+        ]);
+    }
+
+
     public function addItemOpname(Request $request)
     {
         $brg = DB::table('tblStokOpnameDetail')
@@ -241,6 +263,30 @@ class stokController extends Controller
         }
     }
 
+    public function listTransaksiInventori($id)
+    {
+        //$post = TransaksiDetail::whereId($id)->first();
+        $post = DB::table('tblKartuStokInventori')
+                    ->join('tblBarang', 'tblBarang.kdBarang', '=', 'tblKartuStokInventori.kdBarang')
+                    ->join('tblInventori', 'tblBarang.kdBarang', '=', 'tblInventori.kdBarang')
+                    ->select('tblKartuStokInventori.*', 'tblBarang.nmBarang', 'tblInventori.stkInventori')
+                    ->where('tblKartuStokInventori.noTransaksiInv', $id)->get();
+
+        if ($post) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Detail Post!',
+                'data'    => $post
+            ], 200);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Post Tidak Ditemukan!',
+                'data'    => ''
+            ], 404);
+        }
+    }
+
     public function totalTrxOpname(Request $request)
     {
         $totalNota = DB::table('tblStokOpnameDetail')
@@ -312,6 +358,26 @@ class stokController extends Controller
             ->where('noTransaksi', $noStokOpname)
             ->delete();
 
+        $post->delete();
+
+        if ($post) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Post Berhasil Dihapus!',
+            ], 200);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Post Gagal Dihapus!',
+            ], 500);
+        }
+    }
+
+    public function destroyInv($id)
+    {
+        
+
+        $post = KartuStokInventori::findOrFail($id);
         $post->delete();
 
         if ($post) {

@@ -77,12 +77,6 @@ Vue.component("data-table", DataTable);
                             searchable: false,
                         },
                         {
-                            key: "stkBarang",
-                            title: "Stok",
-                            sortable: false,
-                            searchable: false,
-                        },
-                        {
                             key: "satuanBarang",
                             title: "Satuan",
                             sortable: false,

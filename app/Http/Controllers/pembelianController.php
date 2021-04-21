@@ -103,7 +103,7 @@ class pembelianController extends Controller
             $inven = DB::table('tblInventori')->where('kdBarang', $request->input('kdBarang'))->first();
             $stokLamaInv = $inven->stkInventori;
             DB::table('tblInventori')->where('kdBarang', $request->input('kdBarang'))->update([
-                'stkInventori'     => $stokLamaInv + $request->input('qtySatuan'),
+                //'stkInventori'     => $stokLamaInv + $request->input('qtySatuan'),
                 'hrgSatuan' => $request->input('hrgSatuan'),
                 'stkSatuan' => $request->input('stkSatuan'),
             ]);
@@ -119,6 +119,7 @@ class pembelianController extends Controller
                 'keteranganKartu'     => 'Pembelian',
                 'satuanKartu' => $satuanKartu,
             ]);
+            /*
             KartuStokInventori::create([
                 'kdBarang'     => $request->input('kdBarang'),
                 'tglInv'     => $request->input('tglNotaPembelian'),
@@ -128,6 +129,7 @@ class pembelianController extends Controller
                 'keteranganKartuInv'     => 'Pembelian',
                 'satuanKartuInv' => $satuanKartu,
             ]);
+            */
 
                 return response()->json([
                     'success' => true,

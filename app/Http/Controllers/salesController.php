@@ -126,7 +126,7 @@ class salesController extends Controller
                     'kdBarang' => $request->input('kdBarang'),
                     'stkInventori' => '0',
                     'hrgSatuan' => $request->input('hrgPokok'),
-                    'stkSatuan' => '1',
+                    'stkSatuan' => 1,
 
             ]);
 

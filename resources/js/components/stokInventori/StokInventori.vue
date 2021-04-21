@@ -2,6 +2,10 @@
 
     <div class="card-body">
         <status-login></status-login>
+        <button class="btn btn-md btn-success" @click="ModalInputInventori = true" >
+            Input Inventori
+        </button>
+        <router-link :to="{ name: 'stokopnamecreate' }" class="btn btn-md btn-success">Stok Opname Baru</router-link>
                         <h3>Stok Inventori</h3>
                         <p>
                         <div class="col-md-12">
@@ -65,7 +69,59 @@
                         </div>
                         <!-- /.nav-tabs-custom -->
                         </div>                            
+
+                        <div v-if="ModalInputInventori">
+                            <transition name="modal">
+                            <div class="modal-mask">
+                                <div class="modal-wrapper">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" @click="ModalInputInventori=false">
+                                        <span aria-hidden="true">&times;</span>
+                                        </button>
+                                        <h4 class="modal-title">Input Inventori</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        
+                                                                                       
+                                       
+                        <form @submit.prevent="PostInput">
+
+                            <div class="form-group">
+                                <label>Nama Barang</label>
+                                <vue-single-select
+                                            v-model="post1"
+                                            :options="posts"
+                                            :required="true"
+                                            optionLabel="nmBarang" 
+                                ></vue-single-select>
+                                <input type="text" class="form-control" v-model="post1.kdBarang" >
+                                <input type="text" class="form-control" v-model="tglInv" >
+                            </div>
+                            <div class="form-group">
+                                <label>Stok Inventori</label>
+                                <input type="text" class="form-control" v-model="post1.qty"
+                                       placeholder="Stok" >
+                            </div>
                             
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-md btn-success">Input</button>
+                            </div>
+
+                        </form>
+                                        
+
+
+                                        
+
+                                    </div>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+                            </transition>
+                        </div>                      
                     
 
 
@@ -87,7 +143,10 @@
 import Vue from 'vue';
 
 import DataTable from "@andresouzaabreu/vue-data-table";
+import VueSingleSelect from "vue-single-select";
+
 import VueHtmlToPaper from 'vue-html-to-paper';
+
 
 const options = {
   name: '_blank',
@@ -104,12 +163,16 @@ Vue.use(VueHtmlToPaper, options);
 import ActionButtons from './componentAksiStokInventori.vue';
 Vue.component("data-table", DataTable);
     export default {
+        components: { VueSingleSelect},
         data() {
             return {
                 posts: [],
+                post:{},
+                post1:{},
                 ActionButtons: null,
                 actionTriggered: {},
-                //showModal: false,
+                ModalInputInventori: false,
+                tglInv: new Date().toJSON().slice(0,10).replace(/-/g,'/'),
             }
 
         },
@@ -134,13 +197,6 @@ Vue.component("data-table", DataTable);
                             sortable: true,
                             searchable: false,
                         },
-                        {
-                            key: "hrgSatuan",
-                            title: "Harga Satuan",
-                            sortable: false,
-                            searchable: false,
-                        },
-                        
                         {
                             title: "Action",
                             sortable: false,
@@ -171,7 +227,22 @@ Vue.component("data-table", DataTable);
             
         },
         methods: {
-            
+            PostInput() {
+                let uri = `/api/inputInventori`;
+                this.axios.post(uri, {
+                    kdBarang: this.post1.kdBarang,
+                    qty: this.post1.qty,
+                    tglInv: this.tglInv,
+                })
+                    .then((response) => {
+                        alert('inventori Berhasil di input');
+                        this.loadData()
+                        //this.$router.push({name: 'kategori'});
+                    }).catch(error => {
+                    //this.validation = error.response.data.data;
+                    alert('ada yang error');
+                });
+            },
             loadData:function(){
                 let uri = '/api/inventori';
                 this.axios.get(uri).then(response => {
