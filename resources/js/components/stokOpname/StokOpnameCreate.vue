@@ -76,7 +76,10 @@
                         <div class="col-xs-2">
                           <input type="hidden" v-model="post1.stkSatuan" class="form-control" placeholder="stk Satuan" pattern="\d+">
                           <label>Real Satuan</label>
-                        <input type="text" :value="qtyInventori * post1.stkSatuan" :name="qtyGudang" class="form-control" placeholder="Qty" disabled>
+                          <div class="input-group">
+                          <input type="text" :value="qtyInventori * post1.stkSatuan" :name="qtyGudang" class="form-control" placeholder="Qty" disabled>
+                          <span class="input-group-addon">{{post1.satuanBarang}}</span>
+                          </div>
                         </div>
                         <div class="col-xs-2">
                           <label>Real Pcs</label>
