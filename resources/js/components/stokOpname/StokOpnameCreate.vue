@@ -265,7 +265,7 @@
                 {
                     noStokOpname: this.noStokOpname,
                     tglStok: this.tglStok,
-                    nilaiStok: this.nilaiStok,
+                    nilaiStok: (this.qtyGudang - this.post1.stkBarang) * this.post1.hrgPokok,
                     
                 })
                     .then((response) => {
