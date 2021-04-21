@@ -66,6 +66,10 @@ import IndexSupComponent from './components/supplier/Index.vue';
 import CreateSupComponent from './components/supplier/Create.vue';
 import EditSupComponent from './components/supplier/Edit.vue';
 
+import IndexCustComponent from './components/customer/Index.vue';
+import CreateCustComponent from './components/customer/Create.vue';
+import EditCustComponent from './components/customer/Edit.vue';
+
 import IndexKatComponent from './components/kategori/Index.vue';
 import CreateKatComponent from './components/kategori/Create.vue';
 import EditKatComponent from './components/kategori/Edit.vue';
@@ -149,6 +153,22 @@ const routes = [
         name: 'editSupplier',
         path: '/supplier/edit/:id',
         component: EditSupComponent
+    },
+    //pelanggan
+    {
+        name: 'pelanggan',
+        path: '/pelanggan',
+        component: IndexCustComponent
+    },
+    {
+        name: 'createPelanggan',
+        path: '/pelanggan/create',
+        component: CreateCustComponent
+    },
+    {
+        name: 'editPelanggan',
+        path: '/pelanggan/edit/:id',
+        component: EditCustComponent
     },
     //Kategori
     {

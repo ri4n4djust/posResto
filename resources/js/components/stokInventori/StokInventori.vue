@@ -86,7 +86,7 @@
                                         
                                                                                        
                                        
-                        <form @submit.prevent="PostInput">
+                        <form @submit.prevent="PostInput" id="anyName">
 
                             <div class="form-group">
                                 <label>Nama Barang</label>
@@ -96,8 +96,8 @@
                                             :required="true"
                                             optionLabel="nmBarang" 
                                 ></vue-single-select>
-                                <input type="text" class="form-control" v-model="post1.kdBarang" >
-                                <input type="text" class="form-control" v-model="tglInv" >
+                                <input type="hidden" class="form-control" v-model="post1.kdBarang" >
+                                <input type="hidden" class="form-control" v-model="tglInv" >
                             </div>
                             <div class="form-group">
                                 <label>Stok Inventori</label>
@@ -236,7 +236,8 @@ Vue.component("data-table", DataTable);
                 })
                     .then((response) => {
                         alert('inventori Berhasil di input');
-                        this.loadData()
+                        this.loadData();
+                        document.getElementById("anyName").reset();
                         //this.$router.push({name: 'kategori'});
                     }).catch(error => {
                     //this.validation = error.response.data.data;
