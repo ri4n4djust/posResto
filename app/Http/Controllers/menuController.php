@@ -32,7 +32,7 @@ class menuController extends Controller
                 'kdMenu'     => $request->input('kdMenu'),
                 'nmMenu'     => $request->input('nmMenu'),
                 'hargaMenu'   => $request->input('hargaMenu'),
-                'stokMenu'   => $request->input('stokMenu')
+                'stokMenu'   => 1,
             ]);
 
 

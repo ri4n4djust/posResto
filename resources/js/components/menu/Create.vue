@@ -32,18 +32,6 @@
                                     </div>
                                 </div>
                             </div>
-
-                            <div class="form-group">
-                                <label>Stok</label>
-                                <input type="text" class="form-control" v-model="post.stokMenu"
-                                       placeholder="Stok">
-                                <div v-if="validation.stokMenu">
-                                    <div class="alert alert-danger mt-1" role="alert">
-                                        {{ validation.stokMenu[0] }}
-                                    </div>
-                                </div>
-                            </div>
-
                             
 
                             <div class="form-group">

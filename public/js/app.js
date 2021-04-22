@@ -12277,18 +12277,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -12344,13 +12332,6 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_single_select__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-single-select */ "./node_modules/vue-single-select/dist/index.js");
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -60633,51 +60614,6 @@ var render = function() {
                 : _vm._e()
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "form-group" }, [
-              _c("label", [_vm._v("Stok")]),
-              _vm._v(" "),
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.post.stokMenu,
-                    expression: "post.stokMenu"
-                  }
-                ],
-                staticClass: "form-control",
-                attrs: { type: "text", placeholder: "Stok" },
-                domProps: { value: _vm.post.stokMenu },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.$set(_vm.post, "stokMenu", $event.target.value)
-                  }
-                }
-              }),
-              _vm._v(" "),
-              _vm.validation.stokMenu
-                ? _c("div", [
-                    _c(
-                      "div",
-                      {
-                        staticClass: "alert alert-danger mt-1",
-                        attrs: { role: "alert" }
-                      },
-                      [
-                        _vm._v(
-                          "\n                                    " +
-                            _vm._s(_vm.validation.stokMenu[0]) +
-                            "\n                                "
-                        )
-                      ]
-                    )
-                  ])
-                : _vm._e()
-            ]),
-            _vm._v(" "),
             _c(
               "div",
               { staticClass: "form-group" },
@@ -60844,75 +60780,30 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group" }, [
-                      _c("label", [_vm._v("Stok")]),
+                      _c("label", [_vm._v("Hpp Menu")]),
                       _vm._v(" "),
                       _c("input", {
                         directives: [
                           {
                             name: "model",
                             rawName: "v-model",
-                            value: _vm.post.stokMenu,
-                            expression: "post.stokMenu"
+                            value: _vm.tot,
+                            expression: "tot"
                           }
                         ],
                         staticClass: "form-control",
-                        attrs: {
-                          type: "text",
-                          placeholder: "Stok",
-                          disabled: ""
-                        },
-                        domProps: { value: _vm.post.stokMenu },
+                        attrs: { type: "text" },
+                        domProps: { value: _vm.tot },
                         on: {
                           input: function($event) {
                             if ($event.target.composing) {
                               return
                             }
-                            _vm.$set(_vm.post, "stokMenu", $event.target.value)
+                            _vm.tot = $event.target.value
                           }
                         }
-                      }),
-                      _vm._v(" "),
-                      _vm.validation.stokMenu
-                        ? _c("div", [
-                            _c(
-                              "div",
-                              {
-                                staticClass: "alert alert-danger mt-1",
-                                attrs: { role: "alert" }
-                              },
-                              [
-                                _vm._v(
-                                  "\n                                        " +
-                                    _vm._s(_vm.validation.stokMenu[0]) +
-                                    "\n                                    "
-                                )
-                              ]
-                            )
-                          ])
-                        : _vm._e()
+                      })
                     ]),
-                    _vm._v(" "),
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.tot,
-                          expression: "tot"
-                        }
-                      ],
-                      staticClass: "form-control",
-                      attrs: { type: "text" },
-                      domProps: { value: _vm.tot },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.tot = $event.target.value
-                        }
-                      }
-                    }),
                     _vm._v(" "),
                     _c(
                       "div",
