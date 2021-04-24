@@ -11,6 +11,7 @@ use App\Penjualan;
 use App\KartuStok;
 use App\KartuStokInventori;
 use App\Pembayara;
+use App\Order;
 
 use Illuminate\Support\Facades\DB;
 
@@ -53,6 +54,11 @@ class mejaController extends Controller
         ]);
             $post = TransaksiDetail::where('noMejaTmp', $request->input('noMejaLama'))->update([
                 'noMejaTmp'     => $request->input('noMejaBaru'),
+                //'paxMeja'   => $request->input('paxMeja'),
+            ]);
+
+            Order::where('idMeja', $request->input('noMejaLama'))->update([
+                'idMeja'     => $request->input('noMejaBaru'),
                 //'paxMeja'   => $request->input('paxMeja'),
             ]);
 
@@ -243,129 +249,22 @@ class mejaController extends Controller
             }
     }
 
-    public function addItem(Request $request)
-    {
-        $brg = DB::table('tblTmp_TransaksiDetail')
-                ->where('kdBarangTmp', $request->input('idBarang'))
-                ->where('noNotaTmp', $request->input('noNota'))
-                ->first();
-        if ($brg == null ){
-            
-            $post = TransaksiDetail::create([
-                'noNotaTmp'     => $request->input('noNota'),
-                'noMejaTmp'     => $request->input('noMeja'),
-                'kdBarangTmp'     => $request->input('idBarang'),
-                'hrgJualTmp'     => $request->input('hargaJual'),
-                'qtyTmp'     => $request->input('qtyBarang'),
-                'totalTmp'     => $request->input('total'),
-                'typeTmp'     => $request->input('type'),
-                'nmBarangTmp'     => $request->input('nmBarang'),
-            ]);
-            
-            $barang = DB::table('tblBarang')->where('kdBarang', $request->input('idBarang'))->first();
-            $stokLama = $barang->stkBarang;
-            $satuanBarang = $barang->satuanBarang;
-            DB::table('tblBarang')->where('kdBarang', $request->input('idBarang'))->update([
-                'stkBarang'     => $stokLama - $request->input('qtyBarang')
-            ]);
-
-            $barangInv = DB::table('tblInventori')->where('kdBarang', $request->input('idBarang'))->first();
-            $stokLamaInv = $barangInv->stkInventori;
-            //$satuanBarang = $barang->satuanBarang;
-            DB::table('tblInventori')->where('kdBarang', $request->input('idBarang'))->update([
-                'stkInventori'     => $stokLamaInv - $request->input('qtyBarang')
-            ]);
-
-            KartuStok::create([
-                'kdBarang'     => $request->input('idBarang'),
-                'tglKartu'     => $request->input('tglNota'),
-                'qtyMasuk'     => '0',
-                'qtyKeluar'     => $request->input('qtyBarang'),
-                'noTransaksi'     => $request->input('noNota'),
-                'keteranganKartu'     => 'Penjualan',
-                'satuanKartu' => $satuanBarang,
-            ]);
-            KartuStokInventori::create([
-                'kdBarang'     => $request->input('idBarang'),
-                'tglInv'     => $request->input('tglNota'),
-                'qtyMasukInv'     => '0',
-                'qtyKeluarInv'     => $request->input('qtyBarang'),
-                'noTransaksiInv'     => $request->input('noNota'),
-                'keteranganKartuInv'     => 'Penjualan',
-                'satuanKartuInv' => $satuanBarang,
-            ]);
-
-                return response()->json([
-                    'success' => true,
-                    'message' => 'Post Berhasil Disimpan!',
-                ], 200);
-            } else {
-
-                $brng = DB::table('tblTmp_TransaksiDetail')
-                ->where('kdBarangTmp', $request->input('idBarang'))
-                ->where('noNotaTmp', $request->input('noNota'))
-                ->first();
-                $qtyB = $brng->qtyTmp ;
-                $totalB = $brng->totalTmp ;
-
-                DB::table('tblTmp_transaksiDetail')
-                    ->where('kdBarangTmp', $request->input('idBarang'))
-                    ->where('noNotaTmp', $request->input('noNota'))
-                    ->update([
-                        'qtyTmp' => $qtyB + $request->input('qtyBarang'),
-                        'totalTmp' => $totalB + $request->input('total'),
-                        ]);
-                
-                $barang = DB::table('tblBarang')->where('kdBarang', $request->input('idBarang'))->first();
-                $stokLama = $barang->stkBarang;
-                DB::table('tblBarang')->where('kdBarang', $request->input('idBarang'))->update([
-                'stkBarang'     => $stokLama - $request->input('qtyBarang')
-                ]);
-
-                $barangInv = DB::table('tblInventori')->where('kdBarang', $request->input('idBarang'))->first();
-                $stokLamaInv = $barangInv->stkInventori;
-                DB::table('tblInventori')->where('kdBarang', $request->input('idBarang'))->update([
-                'stkInventori'     => $stokLamaInv - $request->input('qtyBarang')
-                ]);
-                //=========Update Kartu Stok
-                    $brngstok = DB::table('tblKartuStok')
-                    ->where('kdBarang', $request->input('idBarang'))
-                    ->where('noTransaksi', $request->input('noNota'))
-                    ->first();
-                $qtyS = $brngstok->qtyKeluar ;
-                DB::table('tblKartuStok')
-                    ->where('kdBarang', $request->input('idBarang'))
-                    ->where('noTransaksi', $request->input('noNota'))
-                    ->update([
-                        'qtyKeluar' => $qtyS + $request->input('qtyBarang'),
-                        ]);
-                //===================
-                        $brngstokInv = DB::table('tblKartuStokInventori')
-                        ->where('kdBarang', $request->input('idBarang'))
-                        ->where('noTransaksiInv', $request->input('noNota'))
-                        ->first();
-                    $qtySInv = $brngstokInv->qtyKeluarInv ;
-                    DB::table('tblKartuStokInventori')
-                        ->where('kdBarang', $request->input('idBarang'))
-                        ->where('noTransaksiInv', $request->input('noNota'))
-                        ->update([
-                            'qtyKeluarInv' => $qtySInv + $request->input('qtyBarang'),
-                            ]);
-                //=========endKartu stok
-
-                return response()->json([
-                    'success' => true,
-                    'message' => 'Post Berhasil Disimpan!',
-                ], 200);
-            }
-        
-    }
+    
 
     public function addMenu(Request $request)
     {
+        Order::create([
+            'kdMenu'    => $request->input('idBarang'),
+            'idMeja'    => $request->input('noMeja'),
+            'wktOrder'  => date("Y-m-d h:i:sa"),
+            'waiterOrder'   =>$request->input('waiterOrder'),
+            'stsPrintOrder' => '0',
+            'qtyOrder'  => $request->input('qtyBarang'),
+
+        ]);
         $brg = DB::table('tblTmp_TransaksiDetail')
                 ->where('kdBarangTmp', $request->input('idBarang'))
-                ->where('noNotaTmp', $request->input('noNota'))
+                //->where('noNotaTmp', $request->input('noNota'))
                 ->first();
         if ($brg == null ){
 
@@ -546,6 +445,7 @@ class mejaController extends Controller
         DB::table('tblPenjualanDetail')->insert($dataSet);
         DB::table('tblMeja')->where('id', $request->input('noMeja'))->update(['status'   => '0' ,]);
         DB::table('tblTmp_TransaksiDetail')->where('noMejaTmp', $request->input('noMeja'))->delete();
+        DB::table('tblOrder')->where('idMeja', $request->input('noMeja'))->delete();
 
 
             if ($post) {
@@ -604,6 +504,31 @@ class mejaController extends Controller
         }
     }
 
+    public function printOrder($id)
+    {
+        //$post = TransaksiDetail::whereId($id)->first();
+        $post = Order::join('tblmeja', 'tblOrder.idMeja', '=', 'tblmeja.id')
+                        ->join('tblMenu', 'tblOrder.kdMenu', 'tblMenu.kdMenu')
+                ->where('tblOrder.idMeja', $id)
+                ->where('tblOrder.stsPrintOrder', '0')
+                ->select('tblMeja.noMeja', 'tblOrder.*', 'tblMenu.nmMenu')
+                ->orderBy('tblOrder.id', 'ASC')
+                ->get();
+        if ($post) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Detail Post!',
+                'data'    => $post
+            ], 200);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Post Tidak Ditemukan!',
+                'data'    => ''
+            ], 404);
+        }
+    }
+
     public function totalTrx($id)
     {
         $totalNota = DB::table('tblTmp_TransaksiDetail')
@@ -616,12 +541,6 @@ class mejaController extends Controller
                 'message' => 'Detail Post!',
                 'subTotal'    => $totalNota
             ], 200);
-        } else {
-            return response()->json([
-                'success' => false,
-                'message' => 'Post Tidak Ditemukan!',
-                'data'    => ''
-            ], 404);
         }
     }
 
@@ -632,6 +551,8 @@ class mejaController extends Controller
         $noNotaTmp = $post->noNotaTmp;
         $kodebarang = $post->kdBarangTmp;
         $qtybarang = $post->qtyTmp;
+
+        DB::table('tblOrder')->where('kdMenu', $kodebarang)->delete();
         
         
         if (Barang::where('kdBarang', $kodebarang)->exists()) {
@@ -648,6 +569,7 @@ class mejaController extends Controller
                 'stkInventori'     => $stokLamaInv + $qtybarang
         ]);
 
+        DB::table('tblOrder')->where('kdMenu', $kodebarang)->delete();
 
         DB::table('tblKartuStok')
             ->where('kdBarang', $kodebarang)

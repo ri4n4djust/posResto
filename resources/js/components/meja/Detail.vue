@@ -39,7 +39,7 @@
                 <p class="text-muted text-center">
                   <div class="input-group">
                     <span class="input-group-addon">No Invoice</span>
-                    <input type="text" class="form-control" v-model="noNota" placeholder="No nota">
+                    <input type="text" class="form-control" v-model="noNota" placeholder="No nota" disabled>
                   </div>
                
                 <p class="text-muted text-center">
@@ -48,7 +48,6 @@
                   <input type="text" class="form-control" v-model="post.name" disabled>
                   </div>
 
-                  
 
                 <input type="hidden" class="form-control" :value="subtotal" :name="totalTransaksi" >
                 <h3 class="profile-username text-center">Total {{ Math.floor(subtotal)  || 0 | currency }}</h3>
@@ -77,6 +76,7 @@
                 <!-- Post -->
                 <a href="#"  @click="showModalMenu = true" class="btn btn-md btn-success"><b>Add Menu</b></a>
                 <a href="#"  @click="showModalMove = true" class="btn btn-md btn-success"><b>Pindah Meja</b></a>
+                <a href="#"  @click="printOrder()" class="btn btn-md btn-success">Print Order</a>
                 <router-link :to="{ name: 'meja' }" class="btn btn-primary btn-success">KEMBALI</router-link>
                 
                 <!-- /.post -->
@@ -107,6 +107,24 @@
               <div class="tab-pane" id="timeline">
                 <!-- The timeline -->
                 isi timeline
+
+              <table class="table">
+                <tr>
+                  <td>No.</td>
+                  <td>Menu</td>
+                  <td>Qty</td>
+                  <td>No Meja</td>
+                  <td>Jam</td>
+                </tr>
+                <tr v-for="order, key in orders" :key="order.id">
+                  <td>{{ key + 1}}</td>
+                  <td>{{ order.nmMenu }}</td>
+                  <td>{{ order.qtyOrder }}</td>
+                  <td>{{ order.noMeja }}</td>
+                  <td>{{ order.wktOrder }} </td>
+                </tr>
+              </table>
+
               </div>
               <!-- /.tab-pane -->
 
@@ -175,66 +193,7 @@
   <!------End Modal Move ----->
 
 
-  <div v-if="showModal">
-    <transition name="modal">
-      <div class="modal-mask">
-        <div class="modal-wrapper">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <button type="button" class="close" @click="showModal=false">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-                <h4 class="modal-title">Add Item</h4>
-              </div>
-              <div class="modal-body">
-
-                <vue-single-select
-                            v-model="post1"
-                            :options="users"
-                            :required="true"
-                            optionLabel="nmBarang" 
-                ></vue-single-select>
-                
-                <div v-if="post1">
-                  <form  @submit.prevent="PostItem" >
-                    <div class="form-group">
-                      <input type="hidden" v-model="post.noMeja">
-                      <input type="hidden" v-model="post.id">
-                      <input type="hidden" v-model="noNota" placeholder="No nota">
-                      <input type="hidden" v-model="post1.kdBarang">
-                      <input type="hidden" v-model="post1.stkBarang">
-                      <input type="hidden" class="form-control" :value="(post1.stkBarang - qtyBarang)" :name="sisaStok">
-                      <input type="hidden" v-model="post1.ktgBarang" placeholder="type">
-                      <input type="hidden" class="form-control" v-model="post1.nmBarang">
-
-                    </div>
-                    <div class="form-group">
-                      <input type="text" class="form-control" v-model="post1.hrgJual">
-                    </div>
-                    <div class="form-group">
-                      <input type="number" class="form-control" v-model="qtyBarang" placeholder="Qty" required>
-                    </div>
-                    <div class="form-group">
-                      <input type="text" class="form-control" :value="(post1.hrgJual * qtyBarang) || 0" :name="total"  placeholder="total">
-                    </div>
-                    <div class="form-group">
-                    <button type="submit" data-dismiss="showModal" class="btn btn-md btn-success">Add</button>
-                    </div>
-                  </form>
-                </div>
-                <div v-else>
-                  No Selected
-                </div>
-                
-
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </transition>
-  </div>
+  
   <div v-if="showModalMenu">
     <transition name="modal">
       <div class="modal-mask">
@@ -269,7 +228,7 @@
                       <input type="text" class="form-control" v-model="post2.hargaMenu">
                     </div>
                     <div class="form-group">
-                      <input type="number" class="form-control" v-model="qtyBarang" placeholder="Qty" required>
+                      <input type="number" class="form-control" v-model="qtyBarang" placeholder="Qty" @keypress="onlyNumber" required>
                     </div>
                     <div class="form-group">
                       <input type="text" class="form-control" :value="(post2.hargaMenu * qtyBarang) || 0" :name="total"  placeholder="total">
@@ -543,6 +502,7 @@
                 post: {},
                 waiters: {},
                 statusMeja:{},
+                orders:{},
                 move1: null,
                 post1: null,
                 post2: null,
@@ -599,10 +559,10 @@
             this.loadMejaKosong()
             this.loadTotal()
             this.loadNota()
-            this.loadData()
             this.loadDataMenu()
             this.loadDataTransaksi()
             this.loadWaiter()
+            this.ListOrder();
             
             
         },
@@ -616,11 +576,30 @@
         
 
         methods: {
+          onlyNumber ($event) {
+                //console.log($event.keyCode); //keyCodes value
+                let keyCode = ($event.keyCode ? $event.keyCode : $event.which);
+                if ((keyCode < 48 || keyCode > 57) && keyCode !== 46) { // 46 is dot
+                    $event.preventDefault();
+                }   
+            },
             cekStok() {
                 this.brg = this.post1 - this.qtyBarang;
             },
-
-
+            printOrder() {
+                alert('print last order');
+            },
+            ListOrder(){
+              let uri = `/api/orderprint/${this.$route.params.id}`;
+                this.axios.post(uri, this.post)
+                    .then((response) => {
+                        //this.$router.push({name: 'posts'});
+                        this.orders = response.data.data;
+                    }).catch(error => {
+                    //this.validation = error.response.data.data;
+                      alert('ada yang error');
+                });
+            },
             PostUpdate() {
                 let uri = `/api/posts/update/${this.$route.params.id}`;
                 this.axios.post(uri, this.post)
@@ -642,13 +621,6 @@
                 let uri = `/api/noNota/${this.$route.params.id}`;
                 this.axios.post(uri).then(response => {
                 this.noNota = response.data.noNota;
-                
-            });
-            },
-            loadData:function(){
-                let uri = '/api/posts';
-                this.axios.get(uri).then(response => {
-                this.users = response.data.data;
                 
             });
             },
@@ -705,30 +677,7 @@
                     
                 });
             },
-            PostItem() {
-                let uri = '/api/addItem/store';
-                this.axios.post(uri, 
-                {
-                    noNota: this.noNota,
-                    noMeja: this.post.id,
-                    nmBarang: this.post1.nmBarang,
-                    idBarang: this.post1.kdBarang,
-                    hargaJual: this.post1.hrgJual,
-                    qtyBarang: this.qtyBarang,
-                    total: this.post1.hrgJual * this.qtyBarang,
-                    //sisaStok: this.post1.stkBarang - this.qtyBarang,
-                    type: this.post1.ktgBarang,
-                    tglNota: this.tglNota,
-                })
-                    .then((response) => {
-                        //alert('sukses donkkkkkkkk');
-                        alert('sukses ditambahkan');
-                        this.loadDataTransaksi()
-                        this.loadTotal()
-                        this.showModal = false
-                    });
-                
-            },
+            
             PostMenu() {
                 let uri = '/api/addMenu/store';
                 this.axios.post(uri, 
@@ -742,12 +691,14 @@
                     total: this.post2.hargaMenu * this.qtyBarang,
                     type: this.post2.kdMenu,
                     tglNota: this.tglNota,
+                    waiterOrder: this.post.name,
                 })
                     .then((response) => {
                         //alert('sukses donkkkkkkkk');
                         alert('sukses ditambahkan');
-                        this.loadDataTransaksi()
-                        this.loadTotal()
+                        this.loadDataTransaksi();
+                        this.loadTotal();
+                        this.ListOrder();
                         //this.cekStatusMeja()
                         this.showModalMenu = false
                     });

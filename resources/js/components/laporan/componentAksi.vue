@@ -56,7 +56,7 @@
                                         <div v-if="adminuser === 'Admin'">
                                             <a href="#"  @click="rePrint()" class="btn btn-md btn-success"><b>Re-Print</b></a>
                                             <a href="#"  @click="showModalMenu = true" class="btn btn-md btn-success"><b>Edit</b></a>
-                                            <a href="#"   @click.prevent="DeletePenjualan(data.id, index)" class="btn btn-md btn-success"><b>Delete</b></a>
+                                            <a href="#"   @click.prevent="DeletePenjualan(id = data.id)" class="btn btn-md btn-success"><b>Delete</b></a>
                                         </div>
                                         <div v-else-if="adminuser === 'Operator'">
                                             <a href="#"  @click="rePrint()" class="btn btn-md btn-success"><b>Re-Print</b></a>
@@ -241,14 +241,14 @@ export default {
         rePrint: function(){
             window.print(printMe);
         },
-            DeletePenjualan(id, index)
+            DeletePenjualan(id)
             {
                 if(confirm("Do you really want to delete?")){
                 this.axios.delete(`/api/hapuspenjualan/${id}`)
                     .then(response => {
-                        this.posts.splice(index, 1);
+                        //this.posts.splice(index, 1);
                         this.showModalPenjualan = false;
-                       
+                        this.loadData();
                     }).catch(error => {
                     alert('system error!');
                 });
