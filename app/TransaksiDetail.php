@@ -10,6 +10,7 @@ class TransaksiDetail extends Model
     protected $table = 'tblTmp_TransaksiDetail';
 
     protected $fillable = [
-        'noNotaTmp', 'noMejaTmp', 'kdBarangTmp', 'hrgJualTmp', 'qtyTmp', 'totalTmp', 'typeTmp', 'nmBarangTmp'
+        'noNotaTmp', 'noMejaTmp', 'kdBarangTmp', 'hrgJualTmp', 'qtyTmp', 'totalTmp',
+         'typeTmp', 'nmBarangTmp', 'note'
     ];
 }

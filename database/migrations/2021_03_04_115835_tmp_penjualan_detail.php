@@ -24,6 +24,7 @@ class TmpPenjualanDetail extends Migration
             $table->string('totalTmp');
             $table->string('typeTmp');
             $table->string('nmBarangTmp');
+            $table->string('note')->nullable();
             $table->timestamps();
         });
     }

@@ -64,6 +64,7 @@ Route::post('/transaksi/{id}', 'mejaController@listTransaksi');
 Route::delete('/orderDelete/{id?}', 'mejaController@destroy1');
 Route::post('/addTransaksi/store', 'mejaController@addTransaksi');
 Route::post('/orderprint/{id}', 'mejaController@printOrder');
+Route::post('/afterorderprint/{id}', 'mejaController@afterPrintOrder');
 
 //=========total
 Route::post('/totalTrx/{id}', 'mejaController@totalTrx');

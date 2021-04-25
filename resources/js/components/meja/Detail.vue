@@ -76,9 +76,29 @@
                 <!-- Post -->
                 <a href="#"  @click="showModalMenu = true" class="btn btn-md btn-success"><b>Add Menu</b></a>
                 <a href="#"  @click="showModalMove = true" class="btn btn-md btn-success"><b>Pindah Meja</b></a>
-                <a href="#"  @click="printOrder()" class="btn btn-md btn-success">Print Order</a>
+                <a href="#"  @click="printOrder(id= $route.params.id)" class="btn btn-md btn-success">Print Order</a>
                 <router-link :to="{ name: 'meja' }" class="btn btn-primary btn-success">KEMBALI</router-link>
                 
+                <div id="lastOrder">
+                <table class="table">
+                  <tr>
+                    <td>No.</td>
+                    <td>Menu</td>
+                    <td>Qty</td>
+                    <td>No Meja</td>
+                    <td>Jam</td>
+                  </tr>
+                  <tr v-for="order, key in orders" :key="order.id">
+                    <td>{{ key + 1}}</td>
+                    <td>{{ order.nmMenu }}<br>
+                        {{order.noteOrder }}</td>
+                    <td>{{ order.qtyOrder }}</td>
+                    <td>{{ order.noMeja }}</td>
+                    <td>{{ order.wktOrder }} </td>
+                  </tr>
+                </table>
+              </div>
+
                 <!-- /.post -->
                 <table class="table table-hover table-bordered">
                                 <thead>
@@ -108,22 +128,7 @@
                 <!-- The timeline -->
                 isi timeline
 
-              <table class="table">
-                <tr>
-                  <td>No.</td>
-                  <td>Menu</td>
-                  <td>Qty</td>
-                  <td>No Meja</td>
-                  <td>Jam</td>
-                </tr>
-                <tr v-for="order, key in orders" :key="order.id">
-                  <td>{{ key + 1}}</td>
-                  <td>{{ order.nmMenu }}</td>
-                  <td>{{ order.qtyOrder }}</td>
-                  <td>{{ order.noMeja }}</td>
-                  <td>{{ order.wktOrder }} </td>
-                </tr>
-              </table>
+              
 
               </div>
               <!-- /.tab-pane -->
@@ -225,13 +230,15 @@
                       <input type="hidden" class="form-control" v-model="post2.nmMenu">
                     </div>
                     <div class="form-group">
-                      <input type="text" class="form-control" v-model="post2.hargaMenu">
+                      <input type="hidden" class="form-control" v-model="post2.hargaMenu">
+                      <textarea class="form-control" v-model="note" rows="2"
+                                          placeholder="Note"></textarea>
                     </div>
                     <div class="form-group">
                       <input type="number" class="form-control" v-model="qtyBarang" placeholder="Qty" @keypress="onlyNumber" required>
                     </div>
                     <div class="form-group">
-                      <input type="text" class="form-control" :value="(post2.hargaMenu * qtyBarang) || 0" :name="total"  placeholder="total">
+                      <input type="text" class="form-control" :value="(post2.hargaMenu * qtyBarang) || 0" :name="total"  disabled>
                     </div>
                     <div class="form-group">
                     <button type="submit"  class="btn btn-md btn-success">Add</button>
@@ -470,20 +477,30 @@
 
     @media print
     {
-  body * {
-    visibility: hidden;
-  }
-  #printMe, #printMe * {
-    visibility: visible;
-  }
-  #printMe {
-    position: absolute;
-    left: 0;
-    top: 0;
-    font-size: 8pt;
-    width: 100%;
-  }
-}
+      body * {
+        visibility: hidden;
+      }
+      #printMe, #printMe * {
+        visibility: visible;
+      }
+      #lastOrder, #lastOrder * {
+        visibility: visible;
+      }
+      #printMe {
+        position: absolute;
+        left: 0;
+        top: 0;
+        font-size: 8pt;
+        width: 100%;
+      }
+      #lastOrder {
+        position: absolute;
+        left: 0;
+        top: 0;
+        font-size: 8pt;
+        width: 100%;
+      }
+    }
     </style>
 
 
@@ -520,6 +537,7 @@
                 idBarang: '',
                 hargaJual: '',
                 qtyBarang: '',
+                note:  '',
                 sisaStok: '',
                 noNota: '',
                 pelanggan: 'Cash',
@@ -586,8 +604,19 @@
             cekStok() {
                 this.brg = this.post1 - this.qtyBarang;
             },
-            printOrder() {
-                alert('print last order');
+            printOrder(id) {
+                alert('print last order'+ id);
+                window.print(lastOrder);
+                let uri = `/api/afterorderprint/${this.$route.params.id}`;
+                this.axios.post(uri, this.post)
+                    .then((response) => {
+                        //this.$router.push({name: 'posts'});
+                        this.ListOrder();
+                        this.orders = response.data.data;
+                    }).catch(error => {
+                    //this.validation = error.response.data.data;
+                      alert('ada yang error');
+                });
             },
             ListOrder(){
               let uri = `/api/orderprint/${this.$route.params.id}`;
@@ -671,8 +700,9 @@
                 this.axios.delete(`/api/orderDelete/${id}`)
                     .then(response => {
                         alert('Berhasil Di Hapus');
-                        this.loadDataTransaksi()
-                        this.loadTotal()
+                        this.loadDataTransaksi();
+                        this.loadTotal();
+                        this.ListOrder();
                     }).catch(error => {
                     
                 });
@@ -692,6 +722,7 @@
                     type: this.post2.kdMenu,
                     tglNota: this.tglNota,
                     waiterOrder: this.post.name,
+                    note: this.note,
                 })
                     .then((response) => {
                         //alert('sukses donkkkkkkkk');

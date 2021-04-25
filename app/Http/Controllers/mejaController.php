@@ -260,13 +260,14 @@ class mejaController extends Controller
             'waiterOrder'   =>$request->input('waiterOrder'),
             'stsPrintOrder' => '0',
             'qtyOrder'  => $request->input('qtyBarang'),
+            'noteOrder'  => $request->input('note'),
 
         ]);
         $brg = DB::table('tblTmp_TransaksiDetail')
                 ->where('kdBarangTmp', $request->input('idBarang'))
-                //->where('noNotaTmp', $request->input('noNota'))
+                ->where('noMejaTmp', $request->input('noMeja'))
                 ->first();
-        if ($brg == null ){
+        if ($brg === null ){
 
         $post = TransaksiDetail::create([
             'noNotaTmp'     => $request->input('noNota'),
@@ -277,6 +278,7 @@ class mejaController extends Controller
             'totalTmp'     => $request->input('total'),
             'typeTmp'     => $request->input('type'),
             'nmBarangTmp'     => $request->input('nmBarang'),
+            'note'  => $request->input('note'),
         ]);
 
         
@@ -334,14 +336,14 @@ class mejaController extends Controller
 
                 $brng = DB::table('tblTmp_TransaksiDetail')
                 ->where('kdBarangTmp', $request->input('idBarang'))
-                ->where('noNotaTmp', $request->input('noNota'))
+                ->where('noMejaTmp', $request->input('noMeja'))
                 ->first();
                 $qtyB = $brng->qtyTmp ;
                 $totalB = $brng->totalTmp ;
 
                 DB::table('tblTmp_transaksiDetail')
                     ->where('kdBarangTmp', $request->input('idBarang'))
-                    ->where('noNotaTmp', $request->input('noNota'))
+                    ->where('noMejaTmp', $request->input('noMeja'))
                     ->update([
                         'qtyTmp' => $qtyB + $request->input('qtyBarang'),
                         'totalTmp' => $totalB + $request->input('total'),
@@ -514,6 +516,27 @@ class mejaController extends Controller
                 ->select('tblMeja.noMeja', 'tblOrder.*', 'tblMenu.nmMenu')
                 ->orderBy('tblOrder.id', 'ASC')
                 ->get();
+        if ($post) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Detail Post!',
+                'data'    => $post
+            ], 200);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Post Tidak Ditemukan!',
+                'data'    => ''
+            ], 404);
+        }
+    }
+
+    public function afterPrintOrder($id)
+    {
+        //$post = TransaksiDetail::whereId($id)->first();
+        $post = Order::where('idMeja', $id)->update([
+            'stsPrintOrder'     => '1',
+        ]);
         if ($post) {
             return response()->json([
                 'success' => true,

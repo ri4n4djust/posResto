@@ -10,7 +10,8 @@ class Order extends Model
     protected $table = 'tblOrder';
 
     protected $fillable = [
-        'kdMenu', 'idMeja', 'wktOrder', 'waiterOrder', 'stsPrintOrder', 'qtyOrder'
+        'kdMenu', 'idMeja', 'wktOrder', 'waiterOrder', 'stsPrintOrder', 'qtyOrder',
+        'noteOrder'
 
     ];
 }

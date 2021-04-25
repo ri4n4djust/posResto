@@ -236,6 +236,12 @@ export default {
             //this.loadDetailPenjualan()
             this.adminuser = this.$session.get('roleID')
         },
+    mounted () {
+            //this.intervalFetchData1();
+            //this.intervalFetchData();
+            //this.bindings()
+            this.loadData()
+    },
        
     methods: {
         rePrint: function(){
@@ -274,6 +280,11 @@ export default {
                     this.pem = response.data.data;
                    // alert('no nota '+ this.data.noNota);
             });
+            },
+            intervalFetchData: function () {
+            setInterval(() => {    
+                this.loadData();
+                }, 3000);    
             },
                       
         },

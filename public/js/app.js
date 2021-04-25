@@ -9929,6 +9929,12 @@ __webpack_require__.r(__webpack_exports__);
 
     this.adminuser = this.$session.get('roleID');
   },
+  mounted: function mounted() {
+    //this.intervalFetchData1();
+    //this.intervalFetchData();
+    //this.bindings()
+    this.loadData();
+  },
   methods: {
     rePrint: function rePrint() {
       window.print(printMe);
@@ -9970,6 +9976,13 @@ __webpack_require__.r(__webpack_exports__);
       this.axios.get(uri).then(function (response) {
         _this4.pem = response.data.data; // alert('no nota '+ this.data.noNota);
       });
+    },
+    intervalFetchData: function intervalFetchData() {
+      var _this5 = this;
+
+      setInterval(function () {
+        _this5.loadData();
+      }, 3000);
     }
   },
   props: {
@@ -11586,6 +11599,23 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -11619,6 +11649,7 @@ __webpack_require__.r(__webpack_exports__);
       idBarang: '',
       hargaJual: '',
       qtyBarang: '',
+      note: '',
       sisaStok: '',
       noNota: '',
       pelanggan: 'Cash',
@@ -11684,69 +11715,82 @@ __webpack_require__.r(__webpack_exports__);
     cekStok: function cekStok() {
       this.brg = this.post1 - this.qtyBarang;
     },
-    printOrder: function printOrder() {
-      alert('print last order');
-    },
-    ListOrder: function ListOrder() {
+    printOrder: function printOrder(id) {
       var _this2 = this;
 
-      var uri = "/api/orderprint/".concat(this.$route.params.id);
+      alert('print last order' + id);
+      window.print(lastOrder);
+      var uri = "/api/afterorderprint/".concat(this.$route.params.id);
       this.axios.post(uri, this.post).then(function (response) {
         //this.$router.push({name: 'posts'});
+        _this2.ListOrder();
+
         _this2.orders = response.data.data;
       })["catch"](function (error) {
         //this.validation = error.response.data.data;
         alert('ada yang error');
       });
     },
-    PostUpdate: function PostUpdate() {
+    ListOrder: function ListOrder() {
       var _this3 = this;
+
+      var uri = "/api/orderprint/".concat(this.$route.params.id);
+      this.axios.post(uri, this.post).then(function (response) {
+        //this.$router.push({name: 'posts'});
+        _this3.orders = response.data.data;
+      })["catch"](function (error) {
+        //this.validation = error.response.data.data;
+        alert('ada yang error');
+      });
+    },
+    PostUpdate: function PostUpdate() {
+      var _this4 = this;
 
       var uri = "/api/posts/update/".concat(this.$route.params.id);
       this.axios.post(uri, this.post).then(function (response) {
-        _this3.$router.push({
+        _this4.$router.push({
           name: 'posts'
         });
       })["catch"](function (error) {
-        _this3.validation = error.response.data.data;
+        _this4.validation = error.response.data.data;
       });
     },
     loadTotal: function loadTotal() {
-      var _this4 = this;
+      var _this5 = this;
 
       var uri = "/api/totalTrx/".concat(this.$route.params.id);
       this.axios.post(uri).then(function (response) {
-        _this4.subtotal = response.data.subTotal;
+        _this5.subtotal = response.data.subTotal;
       })["catch"](function (error) {
         console.log(error.response);
       });
     },
     loadNota: function loadNota() {
-      var _this5 = this;
+      var _this6 = this;
 
       var uri = "/api/noNota/".concat(this.$route.params.id);
       this.axios.post(uri).then(function (response) {
-        _this5.noNota = response.data.noNota;
+        _this6.noNota = response.data.noNota;
       });
     },
     loadDataMenu: function loadDataMenu() {
-      var _this6 = this;
+      var _this7 = this;
 
       var uri = '/api/menu';
       this.axios.get(uri).then(function (response) {
-        _this6.menus = response.data.data;
+        _this7.menus = response.data.data;
       });
     },
     loadDataTransaksi: function loadDataTransaksi() {
-      var _this7 = this;
+      var _this8 = this;
 
       var uri = "/api/transaksi/".concat(this.$route.params.id);
       this.axios.post(uri).then(function (response) {
-        _this7.trxs = response.data.data;
+        _this8.trxs = response.data.data;
       });
     },
     PostMove: function PostMove() {
-      var _this8 = this;
+      var _this9 = this;
 
       var uri = '/api/meja/pindah';
       this.axios.post(uri, {
@@ -11754,21 +11798,21 @@ __webpack_require__.r(__webpack_exports__);
         noMejaBaru: this.move1.id,
         waiterMeja: this.post.waiterMeja
       }).then(function (response) {
-        _this8.$router.push({
+        _this9.$router.push({
           name: 'meja'
         });
       })["catch"](function (error) {
-        _this8.$router.push({
+        _this9.$router.push({
           name: 'meja'
         });
       });
     },
     loadMejaKosong: function loadMejaKosong() {
-      var _this9 = this;
+      var _this10 = this;
 
       var uri = '/api/mejakosong/';
       this.axios.get(uri).then(function (response) {
-        _this9.mejaKosong = response.data.data;
+        _this10.mejaKosong = response.data.data;
       });
     },
     loadWaiter: function loadWaiter() {
@@ -11777,18 +11821,20 @@ __webpack_require__.r(__webpack_exports__);
       }.bind(this));
     },
     PostDeleteTrx: function PostDeleteTrx(id) {
-      var _this10 = this;
+      var _this11 = this;
 
       this.axios["delete"]("/api/orderDelete/".concat(id)).then(function (response) {
         alert('Berhasil Di Hapus');
 
-        _this10.loadDataTransaksi();
+        _this11.loadDataTransaksi();
 
-        _this10.loadTotal();
+        _this11.loadTotal();
+
+        _this11.ListOrder();
       })["catch"](function (error) {});
     },
     PostMenu: function PostMenu() {
-      var _this11 = this;
+      var _this12 = this;
 
       var uri = '/api/addMenu/store';
       this.axios.post(uri, {
@@ -11801,19 +11847,20 @@ __webpack_require__.r(__webpack_exports__);
         total: this.post2.hargaMenu * this.qtyBarang,
         type: this.post2.kdMenu,
         tglNota: this.tglNota,
-        waiterOrder: this.post.name
+        waiterOrder: this.post.name,
+        note: this.note
       }).then(function (response) {
         //alert('sukses donkkkkkkkk');
         alert('sukses ditambahkan');
 
-        _this11.loadDataTransaksi();
+        _this12.loadDataTransaksi();
 
-        _this11.loadTotal();
+        _this12.loadTotal();
 
-        _this11.ListOrder(); //this.cekStatusMeja()
+        _this12.ListOrder(); //this.cekStatusMeja()
 
 
-        _this11.showModalMenu = false;
+        _this12.showModalMenu = false;
       });
     },
     PostTransaksi: function PostTransaksi() {
@@ -12059,7 +12106,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -12157,8 +12203,8 @@ __webpack_require__.r(__webpack_exports__);
   },
   mounted: function mounted() {
     //this.intervalFetchData1();
-    //this.intervalFetchData();
-    //this.bindings()
+    this.intervalFetchData(); //this.bindings()
+
     this.loadData();
   },
   beforeDestroy: function beforeDestroy() {
@@ -20402,7 +20448,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n#printMe { display: none;\n}\n@media print\n    {\nbody * {\n    visibility: hidden;\n}\n#printMe, #printMe * {\n    visibility: visible;\n}\n#printMe {\n    position: absolute;\n    left: 0;\n    top: 0;\n    font-size: 8pt;\n    width: 100%;\n}\n}\n    ", ""]);
+exports.push([module.i, "\n#printMe { display: none;\n}\n@media print\n{\nbody * {\n    visibility: hidden;\n}\n#printMe, #printMe * {\n    visibility: visible;\n}\n#lastOrder, #lastOrder * {\n    visibility: visible;\n}\n#printMe {\n    position: absolute;\n    left: 0;\n    top: 0;\n    font-size: 8pt;\n    width: 100%;\n}\n#lastOrder {\n    position: absolute;\n    left: 0;\n    top: 0;\n    font-size: 8pt;\n    width: 100%;\n}\n}\n", ""]);
 
 // exports
 
@@ -57948,7 +57994,9 @@ var render = function() {
                         attrs: { href: "#" },
                         on: {
                           click: function($event) {
-                            return _vm.printOrder()
+                            return _vm.printOrder(
+                              (_vm.id = _vm.$route.params.id)
+                            )
                           }
                         }
                       },
@@ -57964,11 +58012,43 @@ var render = function() {
                       [_vm._v("KEMBALI")]
                     ),
                     _vm._v(" "),
+                    _c("div", { attrs: { id: "lastOrder" } }, [
+                      _c(
+                        "table",
+                        { staticClass: "table" },
+                        [
+                          _vm._m(2),
+                          _vm._v(" "),
+                          _vm._l(_vm.orders, function(order, key) {
+                            return _c("tr", { key: order.id }, [
+                              _c("td", [_vm._v(_vm._s(key + 1))]),
+                              _vm._v(" "),
+                              _c("td", [
+                                _vm._v(_vm._s(order.nmMenu)),
+                                _c("br"),
+                                _vm._v(
+                                  "\n                        " +
+                                    _vm._s(order.noteOrder)
+                                )
+                              ]),
+                              _vm._v(" "),
+                              _c("td", [_vm._v(_vm._s(order.qtyOrder))]),
+                              _vm._v(" "),
+                              _c("td", [_vm._v(_vm._s(order.noMeja))]),
+                              _vm._v(" "),
+                              _c("td", [_vm._v(_vm._s(order.wktOrder) + " ")])
+                            ])
+                          })
+                        ],
+                        2
+                      )
+                    ]),
+                    _vm._v(" "),
                     _c(
                       "table",
                       { staticClass: "table table-hover table-bordered" },
                       [
-                        _vm._m(2),
+                        _vm._m(3),
                         _vm._v(" "),
                         _c(
                           "tbody",
@@ -58017,28 +58097,8 @@ var render = function() {
                   "div",
                   { staticClass: "tab-pane", attrs: { id: "timeline" } },
                   [
-                    _vm._v("\n                isi timeline\n\n              "),
-                    _c(
-                      "table",
-                      { staticClass: "table" },
-                      [
-                        _vm._m(3),
-                        _vm._v(" "),
-                        _vm._l(_vm.orders, function(order, key) {
-                          return _c("tr", { key: order.id }, [
-                            _c("td", [_vm._v(_vm._s(key + 1))]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(order.nmMenu))]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(order.qtyOrder))]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(order.noMeja))]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(order.wktOrder) + " ")])
-                          ])
-                        })
-                      ],
-                      2
+                    _vm._v(
+                      "\n                isi timeline\n\n              \n\n              "
                     )
                   ]
                 ),
@@ -58451,7 +58511,7 @@ var render = function() {
                                             }
                                           ],
                                           staticClass: "form-control",
-                                          attrs: { type: "text" },
+                                          attrs: { type: "hidden" },
                                           domProps: {
                                             value: _vm.post2.hargaMenu
                                           },
@@ -58465,6 +58525,31 @@ var render = function() {
                                                 "hargaMenu",
                                                 $event.target.value
                                               )
+                                            }
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _c("textarea", {
+                                          directives: [
+                                            {
+                                              name: "model",
+                                              rawName: "v-model",
+                                              value: _vm.note,
+                                              expression: "note"
+                                            }
+                                          ],
+                                          staticClass: "form-control",
+                                          attrs: {
+                                            rows: "2",
+                                            placeholder: "Note"
+                                          },
+                                          domProps: { value: _vm.note },
+                                          on: {
+                                            input: function($event) {
+                                              if ($event.target.composing) {
+                                                return
+                                              }
+                                              _vm.note = $event.target.value
                                             }
                                           }
                                         })
@@ -58506,7 +58591,7 @@ var render = function() {
                                           attrs: {
                                             type: "text",
                                             name: _vm.total,
-                                            placeholder: "total"
+                                            disabled: ""
                                           },
                                           domProps: {
                                             value:
@@ -59571,6 +59656,22 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
+    return _c("tr", [
+      _c("td", [_vm._v("No.")]),
+      _vm._v(" "),
+      _c("td", [_vm._v("Menu")]),
+      _vm._v(" "),
+      _c("td", [_vm._v("Qty")]),
+      _vm._v(" "),
+      _c("td", [_vm._v("No Meja")]),
+      _vm._v(" "),
+      _c("td", [_vm._v("Jam")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
     return _c("thead", [
       _c("tr", [
         _c("th", [_vm._v("Nama ")]),
@@ -59583,22 +59684,6 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", [_vm._v("AKSI")])
       ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("tr", [
-      _c("td", [_vm._v("No.")]),
-      _vm._v(" "),
-      _c("td", [_vm._v("Menu")]),
-      _vm._v(" "),
-      _c("td", [_vm._v("Qty")]),
-      _vm._v(" "),
-      _c("td", [_vm._v("No Meja")]),
-      _vm._v(" "),
-      _c("td", [_vm._v("Jam")])
     ])
   }
 ]
@@ -59825,93 +59910,85 @@ var render = function() {
         return _c("div", { key: post.id, staticClass: "col-lg-3 col-xs-6" }, [
           post.status === "0"
             ? _c("div", [
-                _c(
-                  "div",
-                  { staticClass: "small-box bg-green" },
-                  [
-                    _c("div", { staticClass: "inner" }, [
-                      _c("h3", [
-                        _vm._v("Meja No :"),
-                        _c("br"),
-                        _vm._v(_vm._s(post.noMeja))
-                      ]),
+                _c("div", { staticClass: "small-box bg-green" }, [
+                  _c(
+                    "div",
+                    { staticClass: "inner" },
+                    [
+                      _c("h3", [_vm._v("Meja:" + _vm._s(post.noMeja))]),
                       _vm._v(" "),
-                      _c("p", [_vm._v(_vm._s(post.pax))])
-                    ]),
-                    _vm._v(" "),
-                    _vm._m(0, true),
-                    _vm._v(" "),
-                    _c(
-                      "router-link",
-                      {
-                        staticClass: "btn btn-md btn-primary",
-                        attrs: {
-                          to: { name: "editMeja", params: { id: post.id } }
-                        }
-                      },
-                      [_vm._v("EDIT")]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-md btn-success",
-                        on: {
-                          click: function($event) {
-                            _vm.showModalCekin = post.id
+                      _c("p", [_vm._v(_vm._s(post.paxMeja))]),
+                      _vm._v(" "),
+                      _c(
+                        "router-link",
+                        {
+                          staticClass: "btn btn-md btn-primary",
+                          attrs: {
+                            to: { name: "editMeja", params: { id: post.id } }
                           }
-                        }
-                      },
-                      [_vm._v("CEK IN")]
-                    )
-                  ],
-                  1
-                )
+                        },
+                        [_vm._v("EDIT")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-md btn-success",
+                          on: {
+                            click: function($event) {
+                              _vm.showModalCekin = post.id
+                            }
+                          }
+                        },
+                        [_vm._v("CEK IN")]
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _vm._m(0, true)
+                ])
               ])
             : _c("div", [
-                _c(
-                  "div",
-                  { staticClass: "small-box bg-red" },
-                  [
-                    _c("div", { staticClass: "inner" }, [
-                      _c("h3", [
-                        _vm._v("Meja No :"),
-                        _c("br"),
-                        _vm._v(_vm._s(post.noMeja))
-                      ]),
+                _c("div", { staticClass: "small-box bg-red" }, [
+                  _c(
+                    "div",
+                    { staticClass: "inner" },
+                    [
+                      _c("h3", [_vm._v("Meja:" + _vm._s(post.noMeja))]),
                       _vm._v(" "),
-                      _c("p", [_vm._v(_vm._s(post.pax))])
-                    ]),
-                    _vm._v(" "),
-                    _vm._m(1, true),
-                    _vm._v(" "),
-                    _c(
-                      "router-link",
-                      {
-                        staticClass: "btn btn-md btn-primary",
-                        attrs: {
-                          to: { name: "detailMeja", params: { id: post.id } }
-                        }
-                      },
-                      [_vm._v("Detail")]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-md btn-danger",
-                        on: {
-                          click: function($event) {
-                            $event.preventDefault()
-                            return _vm.CancelCekIn(post.id)
+                      _c("p", [_vm._v(_vm._s(post.paxMeja))]),
+                      _vm._v(" "),
+                      _c(
+                        "router-link",
+                        {
+                          staticClass: "btn btn-md btn-primary",
+                          attrs: {
+                            to: { name: "detailMeja", params: { id: post.id } }
                           }
-                        }
-                      },
-                      [_vm._v("Cancel")]
-                    )
-                  ],
-                  1
-                )
+                        },
+                        [_vm._v("Detail")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-md btn-danger",
+                          on: {
+                            click: function($event) {
+                              $event.preventDefault()
+                              return _vm.CancelCekIn(post.id)
+                            }
+                          }
+                        },
+                        [_vm._v("Cancel")]
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _vm._m(1, true)
+                ])
               ])
         ])
       }),

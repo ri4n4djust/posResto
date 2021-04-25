@@ -33,7 +33,7 @@ class nomorController extends Controller
         }else{
             $no = 0 ;
             $count = Penjualan::all()->last();
-            $terakhir = substr($count->noNota, 10,  13);
+            $terakhir = substr($count->noNota, -1);
             $kodeBaru = $terakhir + 1  ;
 
             $tahun = date('Y');

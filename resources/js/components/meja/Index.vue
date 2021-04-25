@@ -11,32 +11,31 @@
                             <div v-if="post.status === '0' ">
                                 <div class="small-box bg-green">
                                     <div class="inner">
-                                    <h3>Meja No :<br>{{ post.noMeja }}</h3>
-
-                                    <p>{{ post.pax }}</p>
+                                    <h3>Meja:{{ post.noMeja }}</h3>
+                                    <p>{{ post.paxMeja }}</p>
+                                    <router-link :to="{name: 'editMeja', params: { id: post.id }}" class="btn btn-md btn-primary">EDIT</router-link>
+                                    <button @click="showModalCekin = post.id" class="btn btn-md btn-success">CEK IN</button>
                                     </div>
                                     <div class="icon">
                                     <i class="ion ion-bag"></i>
                                     </div>
                                     
-                                    <router-link :to="{name: 'editMeja', params: { id: post.id }}" class="btn btn-md btn-primary">EDIT</router-link>
-                                    <button @click="showModalCekin = post.id" class="btn btn-md btn-success">CEK IN</button>
                                 </div>
                             </div>
                             <div v-else>
                                 <div class="small-box bg-red">
                                     <div class="inner">
-                                    <h3>Meja No :<br>{{ post.noMeja }}</h3>
-
-                                    <p>{{ post.pax }}</p>
+                                    <h3>Meja:{{ post.noMeja }}</h3>
+                                    <p>{{ post.paxMeja }}</p>
+                                    <router-link :to="{name: 'detailMeja', params: { id: post.id }}" class="btn btn-md btn-primary">Detail</router-link>
+                                    <button @click.prevent="CancelCekIn(post.id)" class="btn btn-md btn-danger">Cancel</button>
                                     </div>
                                     <div class="icon">
                                     <i class="ion ion-bag"></i>
                                     </div>
                                     
                                    
-                                    <router-link :to="{name: 'detailMeja', params: { id: post.id }}" class="btn btn-md btn-primary">Detail</router-link>
-                                    <button @click.prevent="CancelCekIn(post.id)" class="btn btn-md btn-danger">Cancel</button>
+                                    
                               
 
                                         
@@ -187,7 +186,7 @@
         },
         mounted () {
             //this.intervalFetchData1();
-            //this.intervalFetchData();
+            this.intervalFetchData();
             //this.bindings()
             this.loadData()
         },
