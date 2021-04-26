@@ -76,7 +76,13 @@
                 <!-- Post -->
                 <a href="#"  @click="showModalMenu = true" class="btn btn-md btn-success"><b>Add Menu</b></a>
                 <a href="#"  @click="showModalMove = true" class="btn btn-md btn-success"><b>Pindah Meja</b></a>
-                <a href="#"  @click="printOrder(id= $route.params.id)" class="btn btn-md btn-success">Print Order</a>
+                
+               
+                <a href="#"  @click="printOrder(id= $route.params.id)" class="btn btn-md btn-success disabled" role="button" aria-disabled="true">Print Order</a>
+                
+                  <a href="#"  @click="printOrder(id= $route.params.id)" class="btn btn-md btn-success" >Print Order</a>
+               
+
                 <router-link :to="{ name: 'meja' }" class="btn btn-primary btn-success">KEMBALI</router-link>
                 
                 <div id="lastOrder">

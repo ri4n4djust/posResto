@@ -495,13 +495,15 @@ class mejaController extends Controller
             return response()->json([
                 'success' => true,
                 'message' => 'Detail Post!',
-                'data'    => $post
+                'data'    => $post,
+                'ada'   => '1'
             ], 200);
         } else {
             return response()->json([
                 'success' => false,
                 'message' => 'Post Tidak Ditemukan!',
-                'data'    => ''
+                'data'    => '',
+                'ada'   => '0'
             ], 404);
         }
     }
@@ -516,17 +518,18 @@ class mejaController extends Controller
                 ->select('tblMeja.noMeja', 'tblOrder.*', 'tblMenu.nmMenu')
                 ->orderBy('tblOrder.id', 'ASC')
                 ->get();
-        if ($post) {
-            return response()->json([
-                'success' => true,
-                'message' => 'Detail Post!',
-                'data'    => $post
-            ], 200);
-        } else {
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Detail Post!',
+                    'data'    => $post,
+                    'ada'   => '1'
+                ], 200);
+        
+        if (!$post->isEmpty) {
             return response()->json([
                 'success' => false,
                 'message' => 'Post Tidak Ditemukan!',
-                'data'    => ''
+                'data'    => '0'
             ], 404);
         }
     }

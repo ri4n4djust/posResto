@@ -11616,6 +11616,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 
@@ -57985,6 +57991,26 @@ var render = function() {
                         }
                       },
                       [_c("b", [_vm._v("Pindah Meja")])]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "a",
+                      {
+                        staticClass: "btn btn-md btn-success disabled",
+                        attrs: {
+                          href: "#",
+                          role: "button",
+                          "aria-disabled": "true"
+                        },
+                        on: {
+                          click: function($event) {
+                            return _vm.printOrder(
+                              (_vm.id = _vm.$route.params.id)
+                            )
+                          }
+                        }
+                      },
+                      [_vm._v("Print Order")]
                     ),
                     _vm._v(" "),
                     _c(
