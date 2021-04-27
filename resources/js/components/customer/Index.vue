@@ -41,7 +41,7 @@
             }
         },
         created() {
-            let uri = 'http://localhost:8000/api/supplier';
+            let uri = '/api/supplier';
             this.axios.get(uri).then(response => {
                 this.posts = response.data.data;
             });

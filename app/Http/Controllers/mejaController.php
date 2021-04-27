@@ -525,13 +525,6 @@ class mejaController extends Controller
                     'ada'   => '1'
                 ], 200);
         
-        if (!$post->isEmpty) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Post Tidak Ditemukan!',
-                'data'    => '0'
-            ], 404);
-        }
     }
 
     public function afterPrintOrder($id)

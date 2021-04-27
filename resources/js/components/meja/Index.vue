@@ -146,7 +146,7 @@
                 })
                     .then((response) => {
                         this.showModalCekin = false;
-                        alert('sukses cek in')
+                        //alert('sukses cek in')
                         this.loadData();
                     }).catch(error => {
                 });
@@ -157,7 +157,7 @@
                     status: '0'
                 })
                     .then((response) => {
-                        alert('Cancel cek in')
+                        //alert('Cancel cek in')
                         this.loadData();
                     }).catch(error => {
                 });
@@ -186,7 +186,7 @@
         },
         mounted () {
             //this.intervalFetchData1();
-            this.intervalFetchData();
+            //this.intervalFetchData();
             //this.bindings()
             this.loadData()
         },

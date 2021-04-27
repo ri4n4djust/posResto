@@ -6,6 +6,12 @@
                             DAFTAR KATEGORI<br>
                         <router-link :to="{ name: 'createKategori' }" class="btn btn-md btn-success">TAMBAH KATEGORI</router-link>
                         </h3>
+                        
+                        <semipolar-spinner
+                        :animation-duration="2000"
+                        :size="65"
+                        color="#ff1d5e"/>
+
                             <table class="table table-hover table-bordered">
                                 <thead>
                                 <tr>
@@ -33,8 +39,10 @@
 </template>
 
 <script>
+import { SemipolarSpinner  } from 'epic-spinners'
 
     export default {
+        components: { SemipolarSpinner },
         data() {
             return {
                 posts: {}

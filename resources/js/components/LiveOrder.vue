@@ -24,6 +24,7 @@
                                     </span>
                                 <input type="checkbox" value="">
                                 <span class="text">{{post1.nmBarangTmp}}</span>
+                                <span class="text">{{post1.qtyTmp}}</span>
                                 <small class="label label-danger"><i class="fa fa-clock-o"></i>Meja No. {{post1.noMeja}}</small>
                                 <div class="tools">
                                     <i class="fa fa-edit"></i>
