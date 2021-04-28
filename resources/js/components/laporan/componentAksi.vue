@@ -20,7 +20,7 @@
                                         <h4 class="modal-title">Detail Penjualan</h4>
                                     </div>
                                     <div class="modal-body">
-{{data.id}}
+
                                         <div class="row invoice-info">
                                         <!-- accepted payments column -->
                                             <div class="col-xs-6">
@@ -29,6 +29,8 @@
                                                 <b> Tgl : </b>{{data.tglNota}}<br>
                                                 <b> Meja No : </b>{{data.noMeja}}<br>
                                                 <b>Waiter : </b>{{data.waiterNota}}<br>
+                                                <b>Bayar : </b>{{data.bayarNota | currency}}<br>
+                                                <b>Kembalian : </b>{{data.kembalianNota | currency}}<br>
                                             </p>
                                             </div>
                                             <!-- /.col -->
@@ -36,10 +38,20 @@
                                             <p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">
                                                 <b>No Inv: </b>{{data.noNota}}<br>
                                                 <b>Kasir : </b>{{ data.name }}<br>
-                                                <b>Type : </b><br>
+                                                <b>Type : </b>
+                                                <span v-if="data.typePembayaran === '1'">
+                                                    Cash
+                                                </span>
+                                                <span v-else-if="data.typePembayaran === '2'">
+                                                    Debit
+                                                </span>
+                                                <span v-else-if="data.typePembayaran === '3'">
+                                                    E-Money
+                                                </span>
+                                                <br>
                                                 <b>Tax: </b>{{data.taxNota | currency}}<br>
                                                 <b>Diskon : </b>{{ data.diskonNota | currency }}<br>
-                                                <b>Card Charge : </b>
+                                                <b>Card Charge : {{ data.noKartuPembayaran }}</b>
                                             </p>
                                             </div>
                                             <!-- /.col -->
@@ -55,12 +67,10 @@
                                         
                                         <div v-if="adminuser === 'Admin'">
                                             <a href="#"  @click="rePrint()" class="btn btn-md btn-success"><b>Re-Print</b></a>
-                                            <a href="#"  @click="showModalMenu = true" class="btn btn-md btn-success"><b>Edit</b></a>
                                             <a href="#"   @click.prevent="DeletePenjualan(id = data.id)" class="btn btn-md btn-success"><b>Delete</b></a>
                                         </div>
                                         <div v-else-if="adminuser === 'Operator'">
                                             <a href="#"  @click="rePrint()" class="btn btn-md btn-success"><b>Re-Print</b></a>
-                                            <a href="#"  @click="showModalMenu = true" class="btn btn-md btn-success"><b>Edit</b></a>
                                         </div>
                                         <div v-else-if="adminuser === 'Kasir'">
                                             <a href="#"  @click="rePrint()" class="btn btn-md btn-success"><b>Re-Print</b></a>
@@ -94,6 +104,15 @@
                         <b>Inv: </b>{{data.noNota}}<br>
                         <b>Kasir : </b>{{ data.name }}<br>
                         <b>Type : </b>
+                        <span v-if="data.typePembayaran === '1'">
+                            Cash
+                        </span>
+                        <span v-else-if="data.typePembayaran === '2'">
+                            Debit
+                        </span>
+                        <span v-else-if="data.typePembayaran === '3'">
+                            E-Money
+                        </span>
                     </p>
                     </div>
                     <!-- /.col -->

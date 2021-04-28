@@ -9923,6 +9923,25 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "ActionButtons",
   data: function data() {
@@ -61443,11 +61462,6 @@ var render = function() {
                       ]),
                       _vm._v(" "),
                       _c("div", { staticClass: "modal-body" }, [
-                        _vm._v(
-                          "\n" +
-                            _vm._s(_vm.data.id) +
-                            "\n                                        "
-                        ),
                         _c("div", { staticClass: "row invoice-info" }, [
                           _c("div", { staticClass: "col-xs-6" }, [
                             _c(
@@ -61472,6 +61486,20 @@ var render = function() {
                                 _vm._v(" "),
                                 _c("b", [_vm._v("Waiter : ")]),
                                 _vm._v(_vm._s(_vm.data.waiterNota)),
+                                _c("br"),
+                                _vm._v(" "),
+                                _c("b", [_vm._v("Bayar : ")]),
+                                _vm._v(
+                                  _vm._s(_vm._f("currency")(_vm.data.bayarNota))
+                                ),
+                                _c("br"),
+                                _vm._v(" "),
+                                _c("b", [_vm._v("Kembalian : ")]),
+                                _vm._v(
+                                  _vm._s(
+                                    _vm._f("currency")(_vm.data.kembalianNota)
+                                  )
+                                ),
                                 _c("br")
                               ]
                             )
@@ -61495,6 +61523,27 @@ var render = function() {
                                 _c("br"),
                                 _vm._v(" "),
                                 _c("b", [_vm._v("Type : ")]),
+                                _vm._v(" "),
+                                _vm.data.typePembayaran === "1"
+                                  ? _c("span", [
+                                      _vm._v(
+                                        "\n                                                    Cash\n                                                "
+                                      )
+                                    ])
+                                  : _vm.data.typePembayaran === "2"
+                                  ? _c("span", [
+                                      _vm._v(
+                                        "\n                                                    Debit\n                                                "
+                                      )
+                                    ])
+                                  : _vm.data.typePembayaran === "3"
+                                  ? _c("span", [
+                                      _vm._v(
+                                        "\n                                                    E-Money\n                                                "
+                                      )
+                                    ])
+                                  : _vm._e(),
+                                _vm._v(" "),
                                 _c("br"),
                                 _vm._v(" "),
                                 _c("b", [_vm._v("Tax: ")]),
@@ -61511,7 +61560,12 @@ var render = function() {
                                 ),
                                 _c("br"),
                                 _vm._v(" "),
-                                _c("b", [_vm._v("Card Charge : ")])
+                                _c("b", [
+                                  _vm._v(
+                                    "Card Charge : " +
+                                      _vm._s(_vm.data.noKartuPembayaran)
+                                  )
+                                ])
                               ]
                             )
                           ])
@@ -61556,20 +61610,6 @@ var render = function() {
                                   attrs: { href: "#" },
                                   on: {
                                     click: function($event) {
-                                      _vm.showModalMenu = true
-                                    }
-                                  }
-                                },
-                                [_c("b", [_vm._v("Edit")])]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "a",
-                                {
-                                  staticClass: "btn btn-md btn-success",
-                                  attrs: { href: "#" },
-                                  on: {
-                                    click: function($event) {
                                       $event.preventDefault()
                                       return _vm.DeletePenjualan(
                                         (_vm.id = _vm.data.id)
@@ -61594,20 +61634,6 @@ var render = function() {
                                   }
                                 },
                                 [_c("b", [_vm._v("Re-Print")])]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "a",
-                                {
-                                  staticClass: "btn btn-md btn-success",
-                                  attrs: { href: "#" },
-                                  on: {
-                                    click: function($event) {
-                                      _vm.showModalMenu = true
-                                    }
-                                  }
-                                },
-                                [_c("b", [_vm._v("Edit")])]
                               )
                             ])
                           : _vm.adminuser === "Kasir"
@@ -61702,7 +61728,27 @@ var render = function() {
                                     _vm._v(_vm._s(_vm.data.name)),
                                     _c("br"),
                                     _vm._v(" "),
-                                    _c("b", [_vm._v("Type : ")])
+                                    _c("b", [_vm._v("Type : ")]),
+                                    _vm._v(" "),
+                                    _vm.data.typePembayaran === "1"
+                                      ? _c("span", [
+                                          _vm._v(
+                                            "\n                            Cash\n                        "
+                                          )
+                                        ])
+                                      : _vm.data.typePembayaran === "2"
+                                      ? _c("span", [
+                                          _vm._v(
+                                            "\n                            Debit\n                        "
+                                          )
+                                        ])
+                                      : _vm.data.typePembayaran === "3"
+                                      ? _c("span", [
+                                          _vm._v(
+                                            "\n                            E-Money\n                        "
+                                          )
+                                        ])
+                                      : _vm._e()
                                   ]
                                 )
                               ]),
