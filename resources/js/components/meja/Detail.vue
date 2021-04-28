@@ -481,7 +481,7 @@
 <style type="text/css">
 
     #printMe { display: none; }
-    #lastOrder { display: none; }
+
 
     @media print
     {
