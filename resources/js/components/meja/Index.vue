@@ -116,10 +116,7 @@
             }
         },
         created() {
-            let uri = '/api/meja';
-            this.axios.get(uri).then(response => {
-                this.posts = response.data.data;
-            });
+            this.loadData();
             this.loadWaiter();
         },
         watch: {
@@ -186,13 +183,14 @@
         },
         mounted () {
             //this.intervalFetchData1();
-            //this.intervalFetchData();
+            this.intervalFetchData();
             //this.bindings()
-            this.loadData()
+            //loadData.call(this)
+            //this.loadData()
         },
 
         beforeDestroy () {
-            clearInterval(this.posts)
+            clearInterval(this.loadData())
         },
     }
 </script>

@@ -87,12 +87,13 @@
                 <router-link :to="{ name: 'meja' }" class="btn btn-primary btn-success">KEMBALI</router-link>
                 
                 <div id="lastOrder">
-                <table class="table">
+                <div class="col-xs-12 table-responsive">
+                  <h3>Meja No: {{ post.noMeja }}</h3>
+                  <table class="table table-striped">
                   <tr>
                     <td>No.</td>
                     <td>Menu</td>
                     <td>Qty</td>
-                    <td>No Meja</td>
                     <td>Jam</td>
                   </tr>
                   <tr v-for="order, key in orders" :key="order.id">
@@ -100,10 +101,10 @@
                     <td>{{ order.nmMenu }}<br>
                         {{order.noteOrder }}</td>
                     <td>{{ order.qtyOrder }}</td>
-                    <td>{{ order.noMeja }}</td>
                     <td>{{ order.wktOrder }} </td>
                   </tr>
                 </table>
+                </div>
               </div>
 
                 <!-- /.post -->
@@ -449,7 +450,7 @@
                                     </tr>
 
                                     <tr>
-                                        <th colspan="5">Terima Kasih <br>Berbelanja Anda Hal Baik Bagi Dunia</th>
+                                        <th colspan="5">Terima Kasih <br>Belanja Anda Hal Baik Bagi Dunia</th>
                                     </tr>
                                     <tr>
                                         <th colspan="5">Tidak enak Kasi Tau Kami, ENAK kasi tau temanmu</th>
@@ -598,8 +599,7 @@
           }
         },
         //props: ['value'],
-        props: ['optionLabel', 'value'],
-        
+        props: ['optionLabel', 'value'],        
 
         methods: {
           onlyNumber ($event) {
@@ -615,16 +615,33 @@
             printOrder(id) {
                // alert('print last order'+ id);
                 window.print(lastOrder);
-                let uri = `/api/afterorderprint/${this.$route.params.id}`;
-                this.axios.post(uri, this.post)
-                    .then((response) => {
-                        //this.$router.push({name: 'posts'});
-                        this.ListOrder();
-                        this.orders = response.data.data;
-                    }).catch(error => {
-                    //this.validation = error.response.data.data;
-                      alert('ada yang error');
-                });
+                
+                  let uri = `/api/afterorderprint/${this.$route.params.id}`;
+                  this.axios.post(uri, this.post)
+                      .then((response) => {
+                          //this.$router.push({name: 'posts'});
+                          setTimeout(function(){
+                          //this.ListOrder();
+                          this.orders = response.data.data;
+                          
+                          let uri = `/api/orderprint/${this.$route.params.id}`;
+                          this.axios.post(uri, this.post)
+                              .then((response) => {
+                                  //this.$router.push({name: 'posts'});
+                                  this.orders = response.data.data;
+                              }).catch(error => {
+                              //this.validation = error.response.data.data;
+                                alert('ada yang error');
+                          });
+                          
+                          }, 10000); 
+                          
+
+                      }).catch(error => {
+                      //this.validation = error.response.data.data;
+                        alert('ada yang error');
+                  });
+                
             },
             ListOrder(){
               let uri = `/api/orderprint/${this.$route.params.id}`;
@@ -777,6 +794,22 @@
                     });
                 
             },
+            intervalFetchData: function () {
+            setInterval(() => {    
+                this.ListOrder();
+                }, 3000);    
+            },
+        },
+        mounted () {
+            //this.intervalFetchData1();
+            //this.intervalFetchData();
+            //this.bindings()
+            //loadData.call(this)
+            //this.loadData()
+        },
+
+        beforeDestroy () {
+            //clearInterval(this.ListOrder())
         },
         
     }

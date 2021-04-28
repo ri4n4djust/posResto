@@ -51,7 +51,7 @@
                                                 <br>
                                                 <b>Tax: </b>{{data.taxNota | currency}}<br>
                                                 <b>Diskon : </b>{{ data.diskonNota | currency }}<br>
-                                                <b>Card Charge : {{ data.noKartuPembayaran }}</b>
+                                                <b>Card Charge : {{ data.chargePembayaran }} %</b>
                                             </p>
                                             </div>
                                             <!-- /.col -->
@@ -161,7 +161,7 @@
                                         <th>{{ data.kembalianNota | currency }}</th>
                                     </tr>
 <tr>
-                                        <th colspan="5">Terima Kasih <br>Berbelanja Anda Hal Baik Bagi Dunia</th>
+                                        <th colspan="5">Terima Kasih <br>Belanja Anda Hal Baik Bagi Dunia</th>
                                     </tr>
                                     <tr>
                                         <th colspan="5">Tidak enak Kasi Tau Kami, ENAK kasi tau temanmu</th>
