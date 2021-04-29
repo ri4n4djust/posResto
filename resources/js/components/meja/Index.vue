@@ -108,6 +108,7 @@
                 selectedItem: undefined,
                 status: '1',
                 paxMeja: '',
+                my_timer: 0,
             }
         },
         beforeCreate: function () {
@@ -145,6 +146,7 @@
                         this.showModalCekin = false;
                         //alert('sukses cek in')
                         this.loadData();
+                        
                     }).catch(error => {
                 });
             },
@@ -175,7 +177,7 @@
                 });
             },
             intervalFetchData: function () {
-            setInterval(() => {    
+            this.my_timer = setInterval(() => {    
                 this.loadData();
                 }, 3000);    
             },
@@ -187,10 +189,12 @@
             //this.bindings()
             //loadData.call(this)
             //this.loadData()
+            //location.reload();
         },
 
         beforeDestroy () {
-            clearInterval(this.loadData())
+            clearInterval(this.my_timer)
+            console.log('sudah bersih')
         },
     }
 </script>

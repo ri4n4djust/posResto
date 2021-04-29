@@ -567,6 +567,7 @@
                 noDebit: '0',
                 pembayaran: '1',
                 pajakKartu:'',
+                mytimer: 0,
                 //waitername : this.waiter.name,
                 //optionLabel: users.nmBarang,
                 tglNota: new Date().toJSON().slice(0,10).replace(/-/g,'/'),
@@ -621,25 +622,16 @@
                       .then((response) => {
                           //this.$router.push({name: 'posts'});
                           setTimeout(function(){
-                          //this.ListOrder();
+                          //
                           this.orders = response.data.data;
                           
-                          let uri = `/api/orderprint/${this.$route.params.id}`;
-                          this.axios.post(uri, this.post)
-                              .then((response) => {
-                                  //this.$router.push({name: 'posts'});
-                                  this.orders = response.data.data;
-                              }).catch(error => {
-                              //this.validation = error.response.data.data;
-                                alert('ada yang error');
-                          });
-                          
+                          //this.intervalFetchData();
                           }, 10000); 
                           
 
                       }).catch(error => {
                       //this.validation = error.response.data.data;
-                        alert('ada yang error');
+                        alert('ada yang error stelah print');
                   });
                 
             },
@@ -795,21 +787,22 @@
                 
             },
             intervalFetchData: function () {
-            setInterval(() => {    
+            this.mytimer = setInterval(() => {    
                 this.ListOrder();
                 }, 3000);    
             },
         },
         mounted () {
             //this.intervalFetchData1();
-            //this.intervalFetchData();
+            this.intervalFetchData();
             //this.bindings()
             //loadData.call(this)
             //this.loadData()
         },
 
         beforeDestroy () {
-            //clearInterval(this.ListOrder())
+            clearInterval(this.mytimer)
+            console.log('detail bersih')
         },
         
     }
