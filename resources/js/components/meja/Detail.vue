@@ -78,7 +78,7 @@
                 <a href="#"  @click="showModalMove = true" class="btn btn-md btn-success"><b>Pindah Meja</b></a>
                 
                <span v-if=" orders.length == 0 "><a href="#"  class="btn btn-md btn-success disabled" role="button" aria-disabled="true">Print Order</a></span>
-               <span v-else><a href="#"  @click="printOrder(id= $route.params.id)" class="btn btn-md btn-success" >Print Order</a></span>
+               <span v-else><a href="#"  @click="printOrder(id= post.id)" class="btn btn-md btn-success" >Print Order</a></span>
                 
                 
                   
@@ -616,24 +616,20 @@
             printOrder(id) {
                // alert('print last order'+ id);
                 window.print(lastOrder);
-                
-                  let uri = `/api/afterorderprint/${this.$route.params.id}`;
+                setTimeout(function(){
+                  let uri = '/api/afterorderprint/'+ id;
                   this.axios.post(uri, this.post)
                       .then((response) => {
                           //this.$router.push({name: 'posts'});
-                          setTimeout(function(){
-                          //
                           this.orders = response.data.data;
-                          
+                          //this.ListOrder();
                           //this.intervalFetchData();
-                          }, 10000); 
-                          
-
                       }).catch(error => {
+                        this.ListOrder();
                       //this.validation = error.response.data.data;
-                        alert('ada yang error stelah print');
+                        //alert('ada yang error stelah print');
                   });
-                
+                }, 10000); 
             },
             ListOrder(){
               let uri = `/api/orderprint/${this.$route.params.id}`;
@@ -794,7 +790,7 @@
         },
         mounted () {
             //this.intervalFetchData1();
-            this.intervalFetchData();
+            //this.intervalFetchData();
             //this.bindings()
             //loadData.call(this)
             //this.loadData()

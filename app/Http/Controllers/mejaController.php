@@ -530,9 +530,16 @@ class mejaController extends Controller
     public function afterPrintOrder($id)
     {
         //$post = TransaksiDetail::whereId($id)->first();
-        $post = Order::where('idMeja', $id)->update([
+        Order::where('idMeja', $id)->update([
             'stsPrintOrder'     => '1',
         ]);
+        $post = Order::join('tblmeja', 'tblOrder.idMeja', '=', 'tblmeja.id')
+                        ->join('tblMenu', 'tblOrder.kdMenu', 'tblMenu.kdMenu')
+                ->where('tblOrder.idMeja', $id)
+                ->where('tblOrder.stsPrintOrder', '0')
+                ->select('tblMeja.noMeja', 'tblOrder.*', 'tblMenu.nmMenu')
+                ->orderBy('tblOrder.id', 'ASC')
+                ->get();
         if ($post) {
             return response()->json([
                 'success' => true,

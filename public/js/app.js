@@ -11760,78 +11760,81 @@ __webpack_require__.r(__webpack_exports__);
     printOrder: function printOrder(id) {
       // alert('print last order'+ id);
       window.print(lastOrder);
-      var uri = "/api/afterorderprint/".concat(this.$route.params.id);
-      this.axios.post(uri, this.post).then(function (response) {
-        //this.$router.push({name: 'posts'});
-        setTimeout(function () {
-          //
-          this.orders = response.data.data; //this.intervalFetchData();
-        }, 10000);
-      })["catch"](function (error) {
-        //this.validation = error.response.data.data;
-        alert('ada yang error stelah print');
-      });
+      setTimeout(function () {
+        var _this2 = this;
+
+        var uri = '/api/afterorderprint/' + id;
+        this.axios.post(uri, this.post).then(function (response) {
+          //this.$router.push({name: 'posts'});
+          _this2.orders = response.data.data; //this.ListOrder();
+          //this.intervalFetchData();
+        })["catch"](function (error) {
+          _this2.ListOrder(); //this.validation = error.response.data.data;
+          //alert('ada yang error stelah print');
+
+        });
+      }, 10000);
     },
     ListOrder: function ListOrder() {
-      var _this2 = this;
+      var _this3 = this;
 
       var uri = "/api/orderprint/".concat(this.$route.params.id);
       this.axios.post(uri, this.post).then(function (response) {
         //this.$router.push({name: 'posts'});
-        _this2.orders = response.data.data;
+        _this3.orders = response.data.data;
       })["catch"](function (error) {
         //this.validation = error.response.data.data;
         alert('ada yang error');
       });
     },
     PostUpdate: function PostUpdate() {
-      var _this3 = this;
+      var _this4 = this;
 
       var uri = "/api/posts/update/".concat(this.$route.params.id);
       this.axios.post(uri, this.post).then(function (response) {
-        _this3.$router.push({
+        _this4.$router.push({
           name: 'posts'
         });
       })["catch"](function (error) {
-        _this3.validation = error.response.data.data;
+        _this4.validation = error.response.data.data;
       });
     },
     loadTotal: function loadTotal() {
-      var _this4 = this;
+      var _this5 = this;
 
       var uri = "/api/totalTrx/".concat(this.$route.params.id);
       this.axios.post(uri).then(function (response) {
-        _this4.subtotal = response.data.subTotal;
+        _this5.subtotal = response.data.subTotal;
       })["catch"](function (error) {
         console.log(error.response);
       });
     },
     loadNota: function loadNota() {
-      var _this5 = this;
+      var _this6 = this;
 
       var uri = "/api/noNota/".concat(this.$route.params.id);
       this.axios.post(uri).then(function (response) {
-        _this5.noNota = response.data.noNota;
+        _this6.noNota = response.data.noNota;
       });
     },
     loadDataMenu: function loadDataMenu() {
-      var _this6 = this;
+      var _this7 = this;
 
       var uri = '/api/menu';
       this.axios.get(uri).then(function (response) {
-        _this6.menus = response.data.data;
+        _this7.menus = response.data.data;
       });
     },
     loadDataTransaksi: function loadDataTransaksi() {
-      var _this7 = this;
+      var _this8 = this;
 
       var uri = "/api/transaksi/".concat(this.$route.params.id);
       this.axios.post(uri).then(function (response) {
-        _this7.trxs = response.data.data;
+        _this8.trxs = response.data.data;
       });
     },
     PostMove: function PostMove() {
-      var _this8 = this;
+      var _this9 = this;
 
       var uri = '/api/meja/pindah';
       this.axios.post(uri, {
@@ -11839,21 +11842,21 @@ __webpack_require__.r(__webpack_exports__);
         noMejaBaru: this.move1.id,
         waiterMeja: this.post.waiterMeja
       }).then(function (response) {
-        _this8.$router.push({
+        _this9.$router.push({
           name: 'meja'
         });
       })["catch"](function (error) {
-        _this8.$router.push({
+        _this9.$router.push({
           name: 'meja'
         });
       });
     },
     loadMejaKosong: function loadMejaKosong() {
-      var _this9 = this;
+      var _this10 = this;
 
       var uri = '/api/mejakosong/';
       this.axios.get(uri).then(function (response) {
-        _this9.mejaKosong = response.data.data;
+        _this10.mejaKosong = response.data.data;
       });
     },
     loadWaiter: function loadWaiter() {
@@ -11862,20 +11865,20 @@ __webpack_require__.r(__webpack_exports__);
       }.bind(this));
     },
     PostDeleteTrx: function PostDeleteTrx(id) {
-      var _this10 = this;
+      var _this11 = this;
 
       this.axios["delete"]("/api/orderDelete/".concat(id)).then(function (response) {
         alert('Berhasil Di Hapus');
 
-        _this10.loadDataTransaksi();
+        _this11.loadDataTransaksi();
 
-        _this10.loadTotal();
+        _this11.loadTotal();
 
-        _this10.ListOrder();
+        _this11.ListOrder();
       })["catch"](function (error) {});
     },
     PostMenu: function PostMenu() {
-      var _this11 = this;
+      var _this12 = this;
 
       var uri = '/api/addMenu/store';
       this.axios.post(uri, {
@@ -11894,14 +11897,14 @@ __webpack_require__.r(__webpack_exports__);
         //alert('sukses donkkkkkkkk');
         alert('sukses ditambahkan');
 
-        _this11.loadDataTransaksi();
+        _this12.loadDataTransaksi();
 
-        _this11.loadTotal();
+        _this12.loadTotal();
 
-        _this11.ListOrder(); //this.cekStatusMeja()
+        _this12.ListOrder(); //this.cekStatusMeja()
 
 
-        _this11.showModalMenu = false;
+        _this12.showModalMenu = false;
       });
     },
     PostTransaksi: function PostTransaksi() {
@@ -11933,16 +11936,16 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     intervalFetchData: function intervalFetchData() {
-      var _this12 = this;
+      var _this13 = this;
 
       this.mytimer = setInterval(function () {
-        _this12.ListOrder();
+        _this13.ListOrder();
       }, 3000);
     }
   },
-  mounted: function mounted() {
-    //this.intervalFetchData1();
-    this.intervalFetchData(); //this.bindings()
+  mounted: function mounted() {//this.intervalFetchData1();
+    //this.intervalFetchData();
+    //this.bindings()
     //loadData.call(this)
     //this.loadData()
   },
@@ -63439,9 +63442,7 @@ var render = function() {
                               attrs: { href: "#" },
                               on: {
                                 click: function($event) {
-                                  return _vm.printOrder(
-                                    (_vm.id = _vm.$route.params.id)
-                                  )
+                                  return _vm.printOrder((_vm.id = _vm.post.id))
                                 }
                               }
                             },
