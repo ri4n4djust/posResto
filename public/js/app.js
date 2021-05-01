@@ -10730,6 +10730,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -10843,7 +10851,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component("data-table", _andresouzaab
   methods: {
     print: function print() {
       // Pass the element id here
-      this.$htmlToPaper('printMe');
+      window.print(printMe);
     },
     loadData: function loadData() {
       var _this = this;
@@ -11142,10 +11150,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_single_select__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue-single-select */ "./node_modules/vue-single-select/dist/index.js");
 /* harmony import */ var vue_print_plugin__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue-print-plugin */ "./node_modules/vue-print-plugin/dist/vue-print-plugin.common.js");
 /* harmony import */ var vue_print_plugin__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(vue_print_plugin__WEBPACK_IMPORTED_MODULE_3__);
-//
-//
-//
-//
 //
 //
 //
@@ -20880,7 +20884,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n#printMe { display: none;\n}\n@media print\n{\n#non-printable { display: none;\n}\n#printMe { display: block;\n}\n}\n", ""]);
+exports.push([module.i, "\n#printMe { display: none;\n}\n@media print\n\n{\n@page {\n    margin:0;\n}\n#non-printable { display: none;\n}\n#printMe { \n        display: block;\n        font-size: 6px;\n}\n}\n", ""]);
 
 // exports
 
@@ -20918,7 +20922,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n#printMe { display: none;\n}\n@media print\n{\n@page {\n  margin:0;\n}\nbody * {\n    visibility: hidden;\n}\n#printMe, #printMe * {\n    visibility: visible;\n}\n.lastOrder, .lastOrder * {\n    visibility: visible;\n}\n.printMe1, .printMe1 * {\n    visibility: visible;\n}\n#printMe {\n    position: absolute;\n    left: 0;\n    top: 0;\n    font-size: 7pt;\n    width: 100%;\n}\n.printMe1 {\n    position: absolute;\n    left: 0;\n    top: 0;\n    font-size: 7pt;\n    width: 100%;\n}\n.lastOrder {\n    position: absolute;\n    left: 0;\n    top: 0;\n    font-size: 8pt;\n    width: 100%;\n}\n}\n", ""]);
+exports.push([module.i, "\n#printMe { display: none;\n}\n@media print\n{\n@page{\n    margin: 0;\n}\nbody * {\n    visibility: hidden;\n}\n#printMe, #printMe * {\n    visibility: visible;\n    font-size: 8pt;\n}\n.lastOrder, .lastOrder * {\n    visibility: visible;\n}\n.printMe1, .printMe1 * {\n    visibility: visible;\n    font-size: 8pt;\n}\n#printMe {\n    position: absolute;\n    left: 0;\n    top: 0;\n    font-size: 8pt;\n    width: 100%;\n}\n.printMe1 {\n    position: absolute;\n    left: 0;\n    top: 0;\n    font-size: 8pt;\n    width: 100%;\n}\n.lastOrder {\n    position: absolute;\n    left: 0;\n    top: 0;\n    font-size: 8pt;\n    width: 100%;\n}\n}\n", ""]);
 
 // exports
 
@@ -62811,16 +62815,15 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("div", { attrs: { id: "printMe", hidden: "" } }, [
-                _c(
-                  "table",
-                  {
-                    staticStyle: {
-                      border: "1px solid black",
-                      "border-collapse": "collapse"
-                    },
-                    attrs: { width: "90%", border: "1" }
-                  },
-                  [
+                _c("div", { staticClass: "row invoice-info" }, [
+                  _vm._v(
+                    "\n                Laporan penjualan Tgl " +
+                      _vm._s(_vm.startDate) +
+                      " sd " +
+                      _vm._s(_vm.endDate) +
+                      "\n            "
+                  ),
+                  _c("table", { staticClass: "table table-striped" }, [
                     _vm._m(3),
                     _vm._v(" "),
                     _c(
@@ -62834,15 +62837,7 @@ var render = function() {
                             _vm._v(" "),
                             _c("td", [_vm._v(_vm._s(post1.tglNota))]),
                             _vm._v(" "),
-                            _c("td", [
-                              _vm._v(_vm._s(_vm._f("currency")(post1.taxNota)))
-                            ]),
-                            _vm._v(" "),
-                            _c("td", [
-                              _vm._v(
-                                _vm._s(_vm._f("currency")(post1.diskonNota))
-                              )
-                            ]),
+                            _c("td", [_vm._v(_vm._s(post1.noMeja))]),
                             _vm._v(" "),
                             _c("td", [
                               _vm._v(
@@ -62852,32 +62847,24 @@ var render = function() {
                           ])
                         }),
                         _vm._v(" "),
-                        _c("tfoot", [
-                          _c("tr", [
-                            _c("th"),
-                            _vm._v(" "),
-                            _c("th"),
-                            _vm._v(" "),
-                            _c("th"),
-                            _vm._v(" "),
-                            _c("th", [
-                              _vm._v(_vm._s(_vm._f("currency")(_vm.pajakS)))
-                            ]),
-                            _vm._v(" "),
-                            _c("th", [
-                              _vm._v(_vm._s(_vm._f("currency")(_vm.diskonS)))
-                            ]),
-                            _vm._v(" "),
-                            _c("th", [
-                              _vm._v(_vm._s(_vm._f("currency")(_vm.totalS)))
-                            ])
+                        _c("tr", [
+                          _c("th"),
+                          _vm._v(" "),
+                          _c("th"),
+                          _vm._v(" "),
+                          _c("th"),
+                          _vm._v(" "),
+                          _c("th"),
+                          _vm._v(" "),
+                          _c("th", [
+                            _vm._v(_vm._s(_vm._f("currency")(_vm.totalS)))
                           ])
                         ])
                       ],
                       2
                     )
-                  ]
-                )
+                  ])
+                ])
               ]),
               _vm._v(" "),
               _c(
@@ -62972,9 +62959,7 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", [_vm._v("Tgl")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Pajak")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Diskon")]),
+        _c("th", [_vm._v("Meja")]),
         _vm._v(" "),
         _c("th", [_vm._v("Total")])
       ])
@@ -63501,51 +63486,45 @@ var render = function() {
                       "div",
                       { staticClass: "lastOrder", attrs: { id: "lastOrder" } },
                       [
-                        _c("section", { staticClass: "invoice" }, [
-                          _c("div", { staticClass: "row invoice-info" }, [
+                        _c(
+                          "div",
+                          { staticClass: "col-xs-12 table-responsive" },
+                          [
+                            _c("h3", [
+                              _vm._v("Meja No: " + _vm._s(_vm.post.noMeja))
+                            ]),
+                            _vm._v(" "),
                             _c(
-                              "div",
-                              { staticClass: "col-xs-12 table-responsive" },
+                              "table",
+                              { staticClass: "table table-striped" },
                               [
-                                _c("h3", [
-                                  _vm._v("Meja No: " + _vm._s(_vm.post.noMeja))
-                                ]),
+                                _vm._m(2),
                                 _vm._v(" "),
-                                _c(
-                                  "table",
-                                  { staticClass: "table table-striped" },
-                                  [
-                                    _vm._m(2),
+                                _vm._l(_vm.orders, function(order, key) {
+                                  return _c("tr", { key: order.id }, [
+                                    _c("td", [_vm._v(_vm._s(key + 1))]),
                                     _vm._v(" "),
-                                    _vm._l(_vm.orders, function(order, key) {
-                                      return _c("tr", { key: order.id }, [
-                                        _c("td", [_vm._v(_vm._s(key + 1))]),
-                                        _vm._v(" "),
-                                        _c("td", [
-                                          _vm._v(_vm._s(order.nmMenu)),
-                                          _c("br"),
-                                          _vm._v(
-                                            "\n                        " +
-                                              _vm._s(order.noteOrder)
-                                          )
-                                        ]),
-                                        _vm._v(" "),
-                                        _c("td", [
-                                          _vm._v(_vm._s(order.qtyOrder))
-                                        ]),
-                                        _vm._v(" "),
-                                        _c("td", [
-                                          _vm._v(_vm._s(order.wktOrder) + " ")
-                                        ])
-                                      ])
-                                    })
-                                  ],
-                                  2
-                                )
-                              ]
+                                    _c("td", [
+                                      _vm._v(_vm._s(order.nmMenu)),
+                                      _c("br"),
+                                      _vm._v(
+                                        "\n                        " +
+                                          _vm._s(order.noteOrder)
+                                      )
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("td", [_vm._v(_vm._s(order.qtyOrder))]),
+                                    _vm._v(" "),
+                                    _c("td", [
+                                      _vm._v(_vm._s(order.wktOrder) + " ")
+                                    ])
+                                  ])
+                                })
+                              ],
+                              2
                             )
-                          ])
-                        ])
+                          ]
+                        )
                       ]
                     ),
                     _vm._v(" "),

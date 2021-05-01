@@ -84,10 +84,7 @@
                <span v-else><a href="#"  @click="printOrder(id= post.id)" class="btn btn-md btn-success" >Print Order</a></span>
                 <router-link :to="{ name: 'meja' }" class="btn btn-primary btn-success">KEMBALI</router-link>
                 <div id="printMe1" class="printMe1"></div>
-                
                 <div id="lastOrder" class="lastOrder">
-                <section class="invoice">
-                <div class="row invoice-info">
                 <div class="col-xs-12 table-responsive">
                   <h3>Meja No: {{ post.noMeja }}</h3>
                   <table class="table table-striped">
@@ -106,8 +103,6 @@
                   </tr>
                 </table>
                 </div>
-                </div>
-                </section>
               </div>
                   
                
@@ -500,34 +495,35 @@
 
     @media print
     {
-      @page {
-      margin:0;
-      
-    }
+      @page{
+        margin: 0;
+      }
       body * {
         visibility: hidden;
       }
       #printMe, #printMe * {
         visibility: visible;
+        font-size: 8pt;
       }
       .lastOrder, .lastOrder * {
         visibility: visible;
       }
       .printMe1, .printMe1 * {
         visibility: visible;
+        font-size: 8pt;
       }
       #printMe {
         position: absolute;
         left: 0;
         top: 0;
-        font-size: 7pt;
+        font-size: 8pt;
         width: 100%;
       }
       .printMe1 {
         position: absolute;
         left: 0;
         top: 0;
-        font-size: 7pt;
+        font-size: 8pt;
         width: 100%;
       }
       .lastOrder {

@@ -73,14 +73,15 @@
                                 </table>
 
                                 <div id="printMe" hidden>
-                                <table width="90%" border="1" style="border:1px solid black; border-collapse: collapse;">
+                                <div class="row invoice-info">
+                                    Laporan penjualan Tgl {{startDate}} sd {{endDate}}
+                                <table class="table table-striped">
                                     <thead>
                                     <tr>
                                         <th>No Nota</th>
                                         <th>Customer</th>
                                         <th>Tgl</th>
-                                        <th>Pajak</th>
-                                        <th>Diskon</th>
+                                        <th>Meja</th>
                                         <th>Total</th>
                                     </tr>
                                     </thead>
@@ -89,23 +90,22 @@
                                         <td>{{ post1.noNota }}</td>
                                         <td>{{ post1.pelangganNota }}</td>
                                         <td>{{ post1.tglNota }}</td>
-                                        <td>{{ post1.taxNota | currency }}</td>
-                                        <td>{{ post1.diskonNota | currency }}</td>
+                                        <td>{{ post1.noMeja}}</td>
                                         <td>{{ post1.totalNota | currency}}</td>
                                     </tr>
-                                    <tfoot>
+                                    
                                         <tr>
                                             <th></th>
                                             <th></th>
                                             <th></th>
-                                            <th>{{pajakS | currency}}</th>
-                                            <th>{{diskonS | currency}}</th>
+                                            <th></th>
                                             <th>{{totalS | currency}}</th>
                                         </tr>
-                                    </tfoot>
+                                
                                     </tbody>
                                     
                                 </table>
+                                </div>
                                 </div>
                                 <!-- OUTPUT -->
                                 <button type="button" class="btn btn-primary" @click="print('printMu')">Print</button>
@@ -140,9 +140,17 @@
     #printMe { display: none; }
 
     @media print
+
     {
+        @page {
+        margin:0;
+        }
         #non-printable { display: none; }
-        #printMe { display: block; }
+        #printMe { 
+            display: block;
+            font-size: 6px;
+            
+        }
     }
     </style>
 
@@ -280,7 +288,7 @@ Vue.component("data-table", DataTable);
 
             print () {
             // Pass the element id here
-            this.$htmlToPaper('printMe');
+            window.print(printMe)
             },
             
             loadData:function(){
