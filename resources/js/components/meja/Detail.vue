@@ -62,6 +62,9 @@
           </div>
           <!-- /.box -->
         </div>
+
+
+
         <!-- /.col -->
         <div class="col-md-9">
           <div class="nav-tabs-custom">
@@ -79,14 +82,12 @@
                 
                <span v-if=" orders.length == 0 "><a href="#"  class="btn btn-md btn-success disabled" role="button" aria-disabled="true">Print Order</a></span>
                <span v-else><a href="#"  @click="printOrder(id= post.id)" class="btn btn-md btn-success" >Print Order</a></span>
-                
-                
-                  
-               
-
                 <router-link :to="{ name: 'meja' }" class="btn btn-primary btn-success">KEMBALI</router-link>
+                <div id="printMe1" class="printMe1"></div>
                 
-                <div id="lastOrder">
+                <div id="lastOrder" class="lastOrder">
+                <section class="invoice">
+                <div class="row invoice-info">
                 <div class="col-xs-12 table-responsive">
                   <h3>Meja No: {{ post.noMeja }}</h3>
                   <table class="table table-striped">
@@ -105,7 +106,15 @@
                   </tr>
                 </table>
                 </div>
+                </div>
+                </section>
               </div>
+                  
+               
+
+                
+                
+                
 
                 <!-- /.post -->
                 <table class="table table-hover table-bordered">
@@ -265,6 +274,9 @@
       </div>
     </transition>
   </div>
+
+  
+
   <div v-if="showModalBayar">
     <transition name="modal">
       <div class="modal-mask">
@@ -317,7 +329,8 @@
                                   
                                   <h3 class="profile-username ">Kembali : {{ Math.floor(totalBayar - ((subtotal * pajak / 100 + subtotal) - ((subtotal * pajak / 100 + subtotal) * diskon / 100)))  || 0 | currency  }}</h3>
                                   <p class="text-muted text-center">
-                                  <button type="submit"  class="btn btn-md btn-success" >Bayar</button>                
+                                  <button type="submit"  class="btn btn-md btn-success" >Bayar</button> 
+                                  <a href="#"  @click="printBill(printMe)" class="btn btn-md btn-success" >Print Bill</a>               
                                   </p>
                             </div>
                             <div v-else-if="pembayaran === '2'">
@@ -338,7 +351,8 @@
                                   </div>
                                   <br>
                                   <p class="text-muted text-center">
-                                  <button type="submit"  class="btn btn-md btn-success" >Bayar</button>                
+                                  <button type="submit"  class="btn btn-md btn-success" >Bayar</button>       
+                                  <a href="#"  @click="printBill(printMe)" class="btn btn-md btn-success" >Print Bill</a>         
                                   </p>
                             </div>
                             <div v-else-if="pembayaran === '3'">
@@ -486,23 +500,37 @@
 
     @media print
     {
+      @page {
+      margin:0;
+      
+    }
       body * {
         visibility: hidden;
       }
       #printMe, #printMe * {
         visibility: visible;
       }
-      #lastOrder, #lastOrder * {
+      .lastOrder, .lastOrder * {
+        visibility: visible;
+      }
+      .printMe1, .printMe1 * {
         visibility: visible;
       }
       #printMe {
         position: absolute;
         left: 0;
         top: 0;
-        font-size: 8pt;
+        font-size: 7pt;
         width: 100%;
       }
-      #lastOrder {
+      .printMe1 {
+        position: absolute;
+        left: 0;
+        top: 0;
+        font-size: 7pt;
+        width: 100%;
+      }
+      .lastOrder {
         position: absolute;
         left: 0;
         top: 0;
@@ -568,6 +596,7 @@
                 pembayaran: '1',
                 pajakKartu:'',
                 mytimer: 0,
+                //printMe: '',
                 //waitername : this.waiter.name,
                 //optionLabel: users.nmBarang,
                 tglNota: new Date().toJSON().slice(0,10).replace(/-/g,'/'),
@@ -612,6 +641,11 @@
             },
             cekStok() {
                 this.brg = this.post1 - this.qtyBarang;
+            },
+            printBill() {
+              alert('print bill');
+                window.print(printMe1);
+                //this.showModalBayar = false
             },
             printOrder(id) {
                // alert('print last order'+ id);

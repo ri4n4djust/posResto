@@ -11657,6 +11657,34 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -11712,6 +11740,7 @@ __webpack_require__.r(__webpack_exports__);
       pembayaran: '1',
       pajakKartu: '',
       mytimer: 0,
+      //printMe: '',
       //waitername : this.waiter.name,
       //optionLabel: users.nmBarang,
       tglNota: new Date().toJSON().slice(0, 10).replace(/-/g, '/')
@@ -11756,6 +11785,10 @@ __webpack_require__.r(__webpack_exports__);
     },
     cekStok: function cekStok() {
       this.brg = this.post1 - this.qtyBarang;
+    },
+    printBill: function printBill() {
+      alert('print bill');
+      window.print(printMe1); //this.showModalBayar = false
     },
     printOrder: function printOrder(id) {
       // alert('print last order'+ id);
@@ -20885,7 +20918,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n#printMe { display: none;\n}\n@media print\n{\nbody * {\n    visibility: hidden;\n}\n#printMe, #printMe * {\n    visibility: visible;\n}\n#lastOrder, #lastOrder * {\n    visibility: visible;\n}\n#printMe {\n    position: absolute;\n    left: 0;\n    top: 0;\n    font-size: 8pt;\n    width: 100%;\n}\n#lastOrder {\n    position: absolute;\n    left: 0;\n    top: 0;\n    font-size: 8pt;\n    width: 100%;\n}\n}\n", ""]);
+exports.push([module.i, "\n#printMe { display: none;\n}\n@media print\n{\n@page {\n  margin:0;\n}\nbody * {\n    visibility: hidden;\n}\n#printMe, #printMe * {\n    visibility: visible;\n}\n.lastOrder, .lastOrder * {\n    visibility: visible;\n}\n.printMe1, .printMe1 * {\n    visibility: visible;\n}\n#printMe {\n    position: absolute;\n    left: 0;\n    top: 0;\n    font-size: 7pt;\n    width: 100%;\n}\n.printMe1 {\n    position: absolute;\n    left: 0;\n    top: 0;\n    font-size: 7pt;\n    width: 100%;\n}\n.lastOrder {\n    position: absolute;\n    left: 0;\n    top: 0;\n    font-size: 8pt;\n    width: 100%;\n}\n}\n", ""]);
 
 // exports
 
@@ -63459,41 +63492,62 @@ var render = function() {
                       [_vm._v("KEMBALI")]
                     ),
                     _vm._v(" "),
-                    _c("div", { attrs: { id: "lastOrder" } }, [
-                      _c("div", { staticClass: "col-xs-12 table-responsive" }, [
-                        _c("h3", [
-                          _vm._v("Meja No: " + _vm._s(_vm.post.noMeja))
-                        ]),
-                        _vm._v(" "),
-                        _c(
-                          "table",
-                          { staticClass: "table table-striped" },
-                          [
-                            _vm._m(2),
-                            _vm._v(" "),
-                            _vm._l(_vm.orders, function(order, key) {
-                              return _c("tr", { key: order.id }, [
-                                _c("td", [_vm._v(_vm._s(key + 1))]),
-                                _vm._v(" "),
-                                _c("td", [
-                                  _vm._v(_vm._s(order.nmMenu)),
-                                  _c("br"),
-                                  _vm._v(
-                                    "\n                        " +
-                                      _vm._s(order.noteOrder)
-                                  )
+                    _c("div", {
+                      staticClass: "printMe1",
+                      attrs: { id: "printMe1" }
+                    }),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "lastOrder", attrs: { id: "lastOrder" } },
+                      [
+                        _c("section", { staticClass: "invoice" }, [
+                          _c("div", { staticClass: "row invoice-info" }, [
+                            _c(
+                              "div",
+                              { staticClass: "col-xs-12 table-responsive" },
+                              [
+                                _c("h3", [
+                                  _vm._v("Meja No: " + _vm._s(_vm.post.noMeja))
                                 ]),
                                 _vm._v(" "),
-                                _c("td", [_vm._v(_vm._s(order.qtyOrder))]),
-                                _vm._v(" "),
-                                _c("td", [_vm._v(_vm._s(order.wktOrder) + " ")])
-                              ])
-                            })
-                          ],
-                          2
-                        )
-                      ])
-                    ]),
+                                _c(
+                                  "table",
+                                  { staticClass: "table table-striped" },
+                                  [
+                                    _vm._m(2),
+                                    _vm._v(" "),
+                                    _vm._l(_vm.orders, function(order, key) {
+                                      return _c("tr", { key: order.id }, [
+                                        _c("td", [_vm._v(_vm._s(key + 1))]),
+                                        _vm._v(" "),
+                                        _c("td", [
+                                          _vm._v(_vm._s(order.nmMenu)),
+                                          _c("br"),
+                                          _vm._v(
+                                            "\n                        " +
+                                              _vm._s(order.noteOrder)
+                                          )
+                                        ]),
+                                        _vm._v(" "),
+                                        _c("td", [
+                                          _vm._v(_vm._s(order.qtyOrder))
+                                        ]),
+                                        _vm._v(" "),
+                                        _c("td", [
+                                          _vm._v(_vm._s(order.wktOrder) + " ")
+                                        ])
+                                      ])
+                                    })
+                                  ],
+                                  2
+                                )
+                              ]
+                            )
+                          ])
+                        ])
+                      ]
+                    ),
                     _vm._v(" "),
                     _c(
                       "table",
@@ -64521,6 +64575,23 @@ var render = function() {
                                             attrs: { type: "submit" }
                                           },
                                           [_vm._v("Bayar")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "a",
+                                          {
+                                            staticClass:
+                                              "btn btn-md btn-success",
+                                            attrs: { href: "#" },
+                                            on: {
+                                              click: function($event) {
+                                                return _vm.printBill(
+                                                  _vm.printMe
+                                                )
+                                              }
+                                            }
+                                          },
+                                          [_vm._v("Print Bill")]
                                         )
                                       ]
                                     )
@@ -64664,6 +64735,23 @@ var render = function() {
                                             attrs: { type: "submit" }
                                           },
                                           [_vm._v("Bayar")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "a",
+                                          {
+                                            staticClass:
+                                              "btn btn-md btn-success",
+                                            attrs: { href: "#" },
+                                            on: {
+                                              click: function($event) {
+                                                return _vm.printBill(
+                                                  _vm.printMe
+                                                )
+                                              }
+                                            }
+                                          },
+                                          [_vm._v("Print Bill")]
                                         )
                                       ]
                                     )
