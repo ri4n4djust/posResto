@@ -10,7 +10,8 @@
                             <table class="table table-hover table-bordered">
                                 <thead>
                                 <tr>
-                                    <th>Nama Customer</th>
+                                    <th>Kode </th>
+                                    <th>Nama</th>
                                     <th>Alamat </th>
                                     <th>No. HP</th>
                                     <th>AKSI</th>
@@ -18,11 +19,12 @@
                                 </thead>
                                 <tbody>
                                 <tr v-for="(post, index) in posts" :key="post.id">
-                                    <td>{{ post.nmSupplier }}</td>
-                                    <td>{{ post.almtSupplier }}</td>
-                                    <td>{{ post.noHp }}</td>
+                                    <td>{{ post.kdPelanggan }}</td>
+                                    <td>{{ post.nmPelanggan }}</td>
+                                    <td>{{ post.almtPelanggan }}</td>
+                                    <td>{{ post.noHpPelanggan }}</td>
                                     <td class="text-center">
-                                        <router-link :to="{name: 'editSupplier', params: { id: post.id }}" class="btn btn-sm btn-primary">EDIT</router-link>
+                                        <router-link :to="{name: 'editPelanggan', params: { id: post.id }}" class="btn btn-sm btn-primary">EDIT</router-link>
                                         <button @click.prevent="PostDelete(post.id, index)" class="btn btn-sm btn-danger">HAPUS</button>
                                     </td>
                                 </tr>
@@ -41,7 +43,7 @@
             }
         },
         created() {
-            let uri = '/api/supplier';
+            let uri = '/api/pelanggan';
             this.axios.get(uri).then(response => {
                 this.posts = response.data.data;
             });
@@ -63,7 +65,7 @@
             }
         },
         created() {
-            let uri = '/api/supplier';
+            let uri = '/api/pelanggan';
             this.axios.get(uri).then(response => {
                 this.posts = response.data.data;
             });
@@ -71,12 +73,14 @@
         methods: {
             PostDelete(id, index)
             {
-                this.axios.delete(`/api/supplier/${id}`)
+                if(confirm("Do you really want to delete?")){
+                this.axios.delete(`/api/pelanggan/${id}`)
                     .then(response => {
                         this.posts.splice(index, 1);
                     }).catch(error => {
                     alert('system error!');
                 });
+                }
             }
         }
     }

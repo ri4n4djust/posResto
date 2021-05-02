@@ -9175,16 +9175,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -9204,12 +9194,12 @@ __webpack_require__.r(__webpack_exports__);
     PostStore: function PostStore() {
       var _this = this;
 
-      var uri = '/api/supplier/store';
+      var uri = '/api/pelanggan/store';
       this.axios.post(uri, this.post).then(function (response) {
         alert('berhasil ditambahkan');
 
         _this.$router.push({
-          name: 'supplier'
+          name: 'pelanggan'
         });
       })["catch"](function (error) {
         _this.validation = error.response.data.data;
@@ -9218,9 +9208,9 @@ __webpack_require__.r(__webpack_exports__);
     loadKdSupplier: function loadKdSupplier() {
       var _this2 = this;
 
-      var uri = '/api/kodeSupplier/';
+      var uri = '/api/kodePelanggan/';
       this.axios.get(uri).then(function (response) {
-        _this2.post.kdSupplier = response.data.kdSupplier;
+        _this2.post.kdPelanggan = response.data.kdPelanggan;
       });
     }
   }
@@ -9304,7 +9294,7 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {
     var _this = this;
 
-    var uri = "/api/supplier/".concat(this.$route.params.id);
+    var uri = "/api/pelanggan/".concat(this.$route.params.id);
     this.axios.get(uri).then(function (response) {
       _this.post = response.data.data;
     });
@@ -9313,10 +9303,10 @@ __webpack_require__.r(__webpack_exports__);
     PostUpdate: function PostUpdate() {
       var _this2 = this;
 
-      var uri = "/api/supplier/update/".concat(this.$route.params.id);
+      var uri = "/api/pelanggan/update/".concat(this.$route.params.id);
       this.axios.post(uri, this.post).then(function (response) {
         _this2.$router.push({
-          name: 'supplier'
+          name: 'pelanggan'
         });
       })["catch"](function (error) {
         _this2.validation = error.response.data.data;
@@ -9388,6 +9378,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -9402,7 +9394,7 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {
     var _this = this;
 
-    var uri = '/api/supplier';
+    var uri = '/api/pelanggan';
     this.axios.get(uri).then(function (response) {
       _this.posts = response.data.data;
     });
@@ -9411,11 +9403,13 @@ __webpack_require__.r(__webpack_exports__);
     PostDelete: function PostDelete(id, index) {
       var _this2 = this;
 
-      this.axios["delete"]("/api/supplier/".concat(id)).then(function (response) {
-        _this2.posts.splice(index, 1);
-      })["catch"](function (error) {
-        alert('system error!');
-      });
+      if (confirm("Do you really want to delete?")) {
+        this.axios["delete"]("/api/pelanggan/".concat(id)).then(function (response) {
+          _this2.posts.splice(index, 1);
+        })["catch"](function (error) {
+          alert('system error!');
+        });
+      }
     }
   }
 });
@@ -9691,8 +9685,6 @@ __webpack_require__.r(__webpack_exports__);
           alert('system error!');
         });
       }
-
-      f;
     }
   }
 });
@@ -60448,7 +60440,7 @@ var render = function() {
     [
       _c("status-login"),
       _vm._v(" "),
-      _c("div", { staticClass: "card-header" }, [_vm._v("TAMBAH SUPPLIER")]),
+      _c("div", { staticClass: "card-header" }, [_vm._v("TAMBAH PELANGGAN")]),
       _vm._v(" "),
       _c("div", { staticClass: "card-body" }, [
         _c(
@@ -60468,50 +60460,50 @@ var render = function() {
                   {
                     name: "model",
                     rawName: "v-model",
-                    value: _vm.post.kdSupplier,
-                    expression: "post.kdSupplier"
+                    value: _vm.post.kdPelanggan,
+                    expression: "post.kdPelanggan"
                   }
                 ],
                 staticClass: "form-control",
                 attrs: { type: "text", disabled: "", required: "" },
-                domProps: { value: _vm.post.kdSupplier },
+                domProps: { value: _vm.post.kdPelanggan },
                 on: {
                   input: function($event) {
                     if ($event.target.composing) {
                       return
                     }
-                    _vm.$set(_vm.post, "kdSupplier", $event.target.value)
+                    _vm.$set(_vm.post, "kdPelanggan", $event.target.value)
                   }
                 }
               })
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "form-group" }, [
-              _c("label", [_vm._v("Nama Supplier")]),
+              _c("label", [_vm._v("Nama Pelanggan")]),
               _vm._v(" "),
               _c("input", {
                 directives: [
                   {
                     name: "model",
                     rawName: "v-model",
-                    value: _vm.post.nmSupplier,
-                    expression: "post.nmSupplier"
+                    value: _vm.post.nmPelanggan,
+                    expression: "post.nmPelanggan"
                   }
                 ],
                 staticClass: "form-control",
                 attrs: { type: "text", placeholder: "Masukkan Nama" },
-                domProps: { value: _vm.post.nmSupplier },
+                domProps: { value: _vm.post.nmPelanggan },
                 on: {
                   input: function($event) {
                     if ($event.target.composing) {
                       return
                     }
-                    _vm.$set(_vm.post, "nmSupplier", $event.target.value)
+                    _vm.$set(_vm.post, "nmPelanggan", $event.target.value)
                   }
                 }
               }),
               _vm._v(" "),
-              _vm.validation.nmSupplier
+              _vm.validation.nmPelanggan
                 ? _c("div", [
                     _c(
                       "div",
@@ -60522,7 +60514,7 @@ var render = function() {
                       [
                         _vm._v(
                           "\n                                    " +
-                            _vm._s(_vm.validation.nmSupplier[0]) +
+                            _vm._s(_vm.validation.nmPelanggan[0]) +
                             "\n                                "
                         )
                       ]
@@ -60532,31 +60524,31 @@ var render = function() {
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "form-group" }, [
-              _c("label", [_vm._v("Alamat Supplier")]),
+              _c("label", [_vm._v("Alamat ")]),
               _vm._v(" "),
               _c("input", {
                 directives: [
                   {
                     name: "model",
                     rawName: "v-model",
-                    value: _vm.post.almtSupplier,
-                    expression: "post.almtSupplier"
+                    value: _vm.post.almtPelanggan,
+                    expression: "post.almtPelanggan"
                   }
                 ],
                 staticClass: "form-control",
-                attrs: { type: "text", placeholder: "Alamat Supplier" },
-                domProps: { value: _vm.post.almtSupplier },
+                attrs: { type: "text", placeholder: "Alamat Pelanggan" },
+                domProps: { value: _vm.post.almtPelanggan },
                 on: {
                   input: function($event) {
                     if ($event.target.composing) {
                       return
                     }
-                    _vm.$set(_vm.post, "almtSupplier", $event.target.value)
+                    _vm.$set(_vm.post, "almtPelanggan", $event.target.value)
                   }
                 }
               }),
               _vm._v(" "),
-              _vm.validation.almtSupplier
+              _vm.validation.almtPelanggan
                 ? _c("div", [
                     _c(
                       "div",
@@ -60567,7 +60559,7 @@ var render = function() {
                       [
                         _vm._v(
                           "\n                                    " +
-                            _vm._s(_vm.validation.almtSupplier[0]) +
+                            _vm._s(_vm.validation.almtPelanggan[0]) +
                             "\n                                "
                         )
                       ]
@@ -60584,24 +60576,24 @@ var render = function() {
                   {
                     name: "model",
                     rawName: "v-model",
-                    value: _vm.post.noHp,
-                    expression: "post.noHp"
+                    value: _vm.post.noHpPelanggan,
+                    expression: "post.noHpPelanggan"
                   }
                 ],
                 staticClass: "form-control",
                 attrs: { type: "text", placeholder: "No Tlp" },
-                domProps: { value: _vm.post.noHp },
+                domProps: { value: _vm.post.noHpPelanggan },
                 on: {
                   input: function($event) {
                     if ($event.target.composing) {
                       return
                     }
-                    _vm.$set(_vm.post, "noHp", $event.target.value)
+                    _vm.$set(_vm.post, "noHpPelanggan", $event.target.value)
                   }
                 }
               }),
               _vm._v(" "),
-              _vm.validation.noHp
+              _vm.validation.noHpPelanggan
                 ? _c("div", [
                     _c(
                       "div",
@@ -60612,52 +60604,7 @@ var render = function() {
                       [
                         _vm._v(
                           "\n                                    " +
-                            _vm._s(_vm.validation.noHp[0]) +
-                            "\n                                "
-                        )
-                      ]
-                    )
-                  ])
-                : _vm._e()
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "form-group" }, [
-              _c("label", [_vm._v("Kontak Person")]),
-              _vm._v(" "),
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.post.kontakSupplier,
-                    expression: "post.kontakSupplier"
-                  }
-                ],
-                staticClass: "form-control",
-                attrs: { type: "text", placeholder: "KOntak Person" },
-                domProps: { value: _vm.post.kontakSupplier },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.$set(_vm.post, "kontakSupplier", $event.target.value)
-                  }
-                }
-              }),
-              _vm._v(" "),
-              _vm.validation.kontakSupplier
-                ? _c("div", [
-                    _c(
-                      "div",
-                      {
-                        staticClass: "alert alert-danger mt-1",
-                        attrs: { role: "alert" }
-                      },
-                      [
-                        _vm._v(
-                          "\n                                    " +
-                            _vm._s(_vm.validation.kontakSupplier[0]) +
+                            _vm._s(_vm.validation.noHpPelanggan[0]) +
                             "\n                                "
                         )
                       ]
@@ -60721,7 +60668,7 @@ var render = function() {
     [
       _c("status-login"),
       _vm._v(" "),
-      _c("div", { staticClass: "card-header" }, [_vm._v("EDIT Pelanggan")]),
+      _c("div", { staticClass: "card-header" }, [_vm._v("EDIT PELANGGAN")]),
       _vm._v(" "),
       _c("div", { staticClass: "card-body" }, [
         _c(
@@ -60736,31 +60683,31 @@ var render = function() {
           },
           [
             _c("div", { staticClass: "form-group" }, [
-              _c("label", [_vm._v("Nama Nama")]),
+              _c("label", [_vm._v("Nama")]),
               _vm._v(" "),
               _c("input", {
                 directives: [
                   {
                     name: "model",
                     rawName: "v-model",
-                    value: _vm.post.nmSupplier,
-                    expression: "post.nmSupplier"
+                    value: _vm.post.nmPelanggan,
+                    expression: "post.nmPelanggan"
                   }
                 ],
                 staticClass: "form-control",
-                attrs: { type: "text", placeholder: "Masukkan Nama Supplier" },
-                domProps: { value: _vm.post.nmSupplier },
+                attrs: { type: "text", placeholder: "Masukkan Nama Pelanggan" },
+                domProps: { value: _vm.post.nmPelanggan },
                 on: {
                   input: function($event) {
                     if ($event.target.composing) {
                       return
                     }
-                    _vm.$set(_vm.post, "nmSupplier", $event.target.value)
+                    _vm.$set(_vm.post, "nmPelanggan", $event.target.value)
                   }
                 }
               }),
               _vm._v(" "),
-              _vm.validation.nmSupplier
+              _vm.validation.nmPelanggan
                 ? _c("div", [
                     _c(
                       "div",
@@ -60771,7 +60718,7 @@ var render = function() {
                       [
                         _vm._v(
                           "\n                                    " +
-                            _vm._s(_vm.validation.nmSupplier[0]) +
+                            _vm._s(_vm.validation.nmPelanggan[0]) +
                             "\n                                "
                         )
                       ]
@@ -60788,24 +60735,24 @@ var render = function() {
                   {
                     name: "model",
                     rawName: "v-model",
-                    value: _vm.post.almtSupplier,
-                    expression: "post.almtSupplier"
+                    value: _vm.post.almtPelanggan,
+                    expression: "post.almtPelanggan"
                   }
                 ],
                 staticClass: "form-control",
-                attrs: { type: "text", placeholder: "Alamat Supplier" },
-                domProps: { value: _vm.post.almtSupplier },
+                attrs: { type: "text", placeholder: "Alamat Pelanggan" },
+                domProps: { value: _vm.post.almtPelanggan },
                 on: {
                   input: function($event) {
                     if ($event.target.composing) {
                       return
                     }
-                    _vm.$set(_vm.post, "almtSupplier", $event.target.value)
+                    _vm.$set(_vm.post, "almtPelanggan", $event.target.value)
                   }
                 }
               }),
               _vm._v(" "),
-              _vm.validation.almtSupplier
+              _vm.validation.almtPelanggan
                 ? _c("div", [
                     _c(
                       "div",
@@ -60816,7 +60763,7 @@ var render = function() {
                       [
                         _vm._v(
                           "\n                                    " +
-                            _vm._s(_vm.validation.almtSupplier[0]) +
+                            _vm._s(_vm.validation.almtPelanggan[0]) +
                             "\n                                "
                         )
                       ]
@@ -60833,24 +60780,24 @@ var render = function() {
                   {
                     name: "model",
                     rawName: "v-model",
-                    value: _vm.post.noHp,
-                    expression: "post.noHp"
+                    value: _vm.post.noHpPelanggan,
+                    expression: "post.noHpPelanggan"
                   }
                 ],
                 staticClass: "form-control",
                 attrs: { type: "text", placeholder: "No HP" },
-                domProps: { value: _vm.post.noHp },
+                domProps: { value: _vm.post.noHpPelanggan },
                 on: {
                   input: function($event) {
                     if ($event.target.composing) {
                       return
                     }
-                    _vm.$set(_vm.post, "noHp", $event.target.value)
+                    _vm.$set(_vm.post, "noHpPelanggan", $event.target.value)
                   }
                 }
               }),
               _vm._v(" "),
-              _vm.validation.noHp
+              _vm.validation.noHpPelanggan
                 ? _c("div", [
                     _c(
                       "div",
@@ -60861,7 +60808,7 @@ var render = function() {
                       [
                         _vm._v(
                           "\n                                    " +
-                            _vm._s(_vm.validation.noHp[0]) +
+                            _vm._s(_vm.validation.noHpPelanggan[0]) +
                             "\n                                "
                         )
                       ]
@@ -60947,11 +60894,13 @@ var render = function() {
           "tbody",
           _vm._l(_vm.posts, function(post, index) {
             return _c("tr", { key: post.id }, [
-              _c("td", [_vm._v(_vm._s(post.nmSupplier))]),
+              _c("td", [_vm._v(_vm._s(post.kdPelanggan))]),
               _vm._v(" "),
-              _c("td", [_vm._v(_vm._s(post.almtSupplier))]),
+              _c("td", [_vm._v(_vm._s(post.nmPelanggan))]),
               _vm._v(" "),
-              _c("td", [_vm._v(_vm._s(post.noHp))]),
+              _c("td", [_vm._v(_vm._s(post.almtPelanggan))]),
+              _vm._v(" "),
+              _c("td", [_vm._v(_vm._s(post.noHpPelanggan))]),
               _vm._v(" "),
               _c(
                 "td",
@@ -60962,7 +60911,7 @@ var render = function() {
                     {
                       staticClass: "btn btn-sm btn-primary",
                       attrs: {
-                        to: { name: "editSupplier", params: { id: post.id } }
+                        to: { name: "editPelanggan", params: { id: post.id } }
                       }
                     },
                     [_vm._v("EDIT")]
@@ -61000,7 +60949,9 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("thead", [
       _c("tr", [
-        _c("th", [_vm._v("Nama Customer")]),
+        _c("th", [_vm._v("Kode ")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Nama")]),
         _vm._v(" "),
         _c("th", [_vm._v("Alamat ")]),
         _vm._v(" "),

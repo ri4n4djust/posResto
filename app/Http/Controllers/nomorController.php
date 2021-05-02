@@ -14,6 +14,7 @@ use App\PembelianDetail;
 use App\Supplier;
 use App\Kategori;
 use App\StokOpname;
+use App\Pelanggan;
 use Illuminate\Support\Facades\DB;
 
 class nomorController extends Controller
@@ -213,6 +214,46 @@ class nomorController extends Controller
             }
         }
     }
+
+    public function kodePelanggan()
+    {
+        $count = Pelanggan::all();
+        if($count->isEmpty()){
+            $tahun = date('Y');
+            $post = 'PL0'.$tahun.'0'.'1';
+            return response()->json([
+                'success' => true,
+                'message' => 'Detail Post!',
+                'kdPelanggan'    => $post
+            ], 200);
+        }else{
+            $no = 0 ;
+            $count = Pelanggan::all()->last();
+            $terakhir = substr($count->kdPelanggan, -1);
+            $kodeBaru = $terakhir + 1  ;
+
+            $tahun = date('Y');
+            $post = 'PL0'.$tahun.'0'.$kodeBaru;
+
+            if (Pelanggan::where('kdPelanggan', $post)->exists()) {
+                $kodeBarulagi = $kodeBaru + 1 ;
+                $post = 'PL0'.$tahun.'0'.$kodeBarulagi;
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Detail Post!',
+                    'kdPelanggan'    => $post
+                ], 200);
+            } else {
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Detail Post!',
+                    'kdPelanggan'    => $post
+                ], 200);
+            }
+        }
+    }
+
+
     public function kodeKategori()
     {
         $count = Kategori::all();

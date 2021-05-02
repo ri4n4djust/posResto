@@ -69,7 +69,7 @@ import { SemipolarSpinner  } from 'epic-spinners'
                     }).catch(error => {
                     alert('system error!');
                 });
-                }f
+                }
             }
         }
     }

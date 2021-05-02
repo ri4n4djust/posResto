@@ -40,6 +40,7 @@ return array(
     'App\\Meja' => $baseDir . '/app/Meja.php',
     'App\\Menu' => $baseDir . '/app/Menu.php',
     'App\\Order' => $baseDir . '/app/Order.php',
+    'App\\Pelanggan' => $baseDir . '/app/Pelanggan.php',
     'App\\Pembayara' => $baseDir . '/app/Pembayara.php',
     'App\\Pembelian' => $baseDir . '/app/Pembelian.php',
     'App\\PembelianDetail' => $baseDir . '/app/PembelianDetail.php',

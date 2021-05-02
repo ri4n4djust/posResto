@@ -534,6 +534,7 @@ class ComposerStaticInitc4f97d6204a4d34371f464f9dc423f38
         'App\\Meja' => __DIR__ . '/../..' . '/app/Meja.php',
         'App\\Menu' => __DIR__ . '/../..' . '/app/Menu.php',
         'App\\Order' => __DIR__ . '/../..' . '/app/Order.php',
+        'App\\Pelanggan' => __DIR__ . '/../..' . '/app/Pelanggan.php',
         'App\\Pembayara' => __DIR__ . '/../..' . '/app/Pembayara.php',
         'App\\Pembelian' => __DIR__ . '/../..' . '/app/Pembelian.php',
         'App\\PembelianDetail' => __DIR__ . '/../..' . '/app/PembelianDetail.php',

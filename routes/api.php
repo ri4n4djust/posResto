@@ -44,6 +44,13 @@ Route::get('/supplier/{id?}', 'supplierController@show');
 Route::post('/supplier/update/{id?}', 'supplierController@update');
 Route::delete('/supplier/{id?}', 'supplierController@destroy');
 
+//========pelanggan
+Route::get('/pelanggan', 'customerController@index');
+Route::post('/pelanggan/store', 'customerController@store');
+Route::get('/pelanggan/{id?}', 'customerController@show');
+Route::post('/pelanggan/update/{id?}', 'customerController@update');
+Route::delete('/pelanggan/{id?}', 'customerController@destroy');
+
 //========meja
 Route::get('/meja', 'mejaController@index');
 Route::get('/mejakosong', 'mejaController@mejakosong');
@@ -77,6 +84,7 @@ Route::get('/kodeBarang', 'nomorController@kodeBarang');
 Route::get('/kodeMenu', 'nomorController@kodeMenu');
 Route::get('/kodePembelian', 'nomorController@kodePembelian');
 Route::get('/kodeSupplier', 'nomorController@kodeSupplier');
+Route::get('/kodePelanggan', 'nomorController@kodePelanggan');
 Route::get('/kodeKategori', 'nomorController@kodeKategori');
 Route::get('/kodeStokOpname', 'nomorController@kodeStokOpname');
 Route::get('/username', 'nomorController@kodeUsername');

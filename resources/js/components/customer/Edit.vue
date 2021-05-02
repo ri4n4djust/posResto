@@ -1,39 +1,39 @@
 <template>
     <div class="mt-3">
         <status-login></status-login>
-                    <div class="card-header">EDIT Pelanggan</div>
+                    <div class="card-header">EDIT PELANGGAN</div>
 
                     <div class="card-body">
 
                         <form @submit.prevent="PostUpdate">
 
                             <div class="form-group">
-                                <label>Nama Nama</label>
-                                <input type="text" class="form-control" v-model="post.nmSupplier"
-                                       placeholder="Masukkan Nama Supplier">
-                                <div v-if="validation.nmSupplier">
+                                <label>Nama</label>
+                                <input type="text" class="form-control" v-model="post.nmPelanggan"
+                                       placeholder="Masukkan Nama Pelanggan">
+                                <div v-if="validation.nmPelanggan">
                                     <div class="alert alert-danger mt-1" role="alert">
-                                        {{ validation.nmSupplier[0] }}
+                                        {{ validation.nmPelanggan[0] }}
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label>Alamat </label>
-                                <input type="text" class="form-control" v-model="post.almtSupplier"
-                                       placeholder="Alamat Supplier">
-                                <div v-if="validation.almtSupplier">
+                                <input type="text" class="form-control" v-model="post.almtPelanggan"
+                                       placeholder="Alamat Pelanggan">
+                                <div v-if="validation.almtPelanggan">
                                     <div class="alert alert-danger mt-1" role="alert">
-                                        {{ validation.almtSupplier[0] }}
+                                        {{ validation.almtPelanggan[0] }}
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label>No. HP</label>
-                                <input type="text" class="form-control" v-model="post.noHp"
+                                <input type="text" class="form-control" v-model="post.noHpPelanggan"
                                        placeholder="No HP">
-                                <div v-if="validation.noHp">
+                                <div v-if="validation.noHpPelanggan">
                                     <div class="alert alert-danger mt-1" role="alert">
-                                        {{ validation.noHp[0] }}
+                                        {{ validation.noHpPelanggan[0] }}
                                     </div>
                                 </div>
                             </div>
@@ -65,17 +65,17 @@
             }
         },
         created() {
-            let uri = `/api/supplier/${this.$route.params.id}`;
+            let uri = `/api/pelanggan/${this.$route.params.id}`;
             this.axios.get(uri).then((response) => {
                 this.post = response.data.data;
             });
         },
         methods: {
             PostUpdate() {
-                let uri = `/api/supplier/update/${this.$route.params.id}`;
+                let uri = `/api/pelanggan/update/${this.$route.params.id}`;
                 this.axios.post(uri, this.post)
                     .then((response) => {
-                        this.$router.push({name: 'supplier'});
+                        this.$router.push({name: 'pelanggan'});
                     }).catch(error => {
                     this.validation = error.response.data.data;
                 });
