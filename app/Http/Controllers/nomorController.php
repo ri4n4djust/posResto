@@ -22,39 +22,49 @@ class nomorController extends Controller
     //
     public function noNota($id)
     {
+        $newid =  strlen($id);
+        if($newid === 1){
+            $id = '0'.$id;
+        }elseif($newid === 2){
+            $id = $id;
+        }
+
         $count = Penjualan::all();
         if($count->isEmpty()){
             $tahun = date('Y');
-            $post = 'INV0'.$tahun.'0'.$id.'0'.'1';
+            
+            $post = 'INV'.$tahun.'0'.$id.'0'.'1';
             return response()->json([
                 'success' => true,
                 'message' => 'Detail Post!',
-                'noNota'    => $post
+                'noNota'    => $post,
+                'panjang' => $newid
             ], 200);
         }else{
             $no = 0 ;
             $count = Penjualan::all()->last();
-            $terakhir = substr($count->noNota, -1);
+            $terakhir = substr($count->noNota, 11);
             $kodeBaru = $terakhir + 1  ;
 
             $tahun = date('Y');
-            $post = 'INV0'.$tahun.'0'.$id.'0'.$kodeBaru;
-
+            $post = 'INV'.$tahun.'0'.$id.'0'.$kodeBaru;
             
 
             if (Penjualan::where('noNota', $post)->exists()) {
                 $kodeBarulagi = $kodeBaru + 1 ;
-                $post = 'INV0'.$tahun.'0'.$id.'0'.$kodeBarulagi;
+                $post = 'INV'.$tahun.'0'.$id.'0'.$kodeBarulagi;
                 return response()->json([
                     'success' => true,
                     'message' => 'Detail Post!',
-                    'noNota'    => $post
+                    'noNota'    => $post,
+                    'panjang' => $newid
                 ], 200);
             } else {
                 return response()->json([
                     'success' => true,
                     'message' => 'Post Tidak Ditemukan!',
-                    'noNota'    => $post
+                    'noNota'    => $post,
+                    'panjang' => $newid
                 ], 200);
             }
         }
