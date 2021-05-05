@@ -2,7 +2,7 @@
 
                     <div class="card-body">
                         <status-login></status-login>
-                         <h3>Laporan Penjualan Bulanan</h3>
+                         <h3>Laporan Pembelian</h3>
                         <div class="col-md-12">
                         <div class="nav-tabs-custom">
                             <ul class="nav nav-tabs">
@@ -23,7 +23,7 @@
                             <!-- /.tab-pane -->
                             <div class="tab-pane" id="timeline">
                                 <!-- The timeline -->
-                                <form  @submit.prevent="lapPenjualan" >
+                                <form  @submit.prevent="lapPembelian" >
                                     
                                         <p class="text-muted text-left">
                                         <label>Start Date</label>
@@ -44,73 +44,53 @@
                                     <tr>
                                         <th>No</th>
                                         <th>Tgl</th>
-                                        <th>PPn</th>
-                                        <th>Diskon</th>
-                                        <th>Charge</th>
                                         <th>Total</th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     <tr v-for="post1, key in posts1" :key="post1.id">
                                         <td>{{ key +1 }}</td>
-                                        <td>{{ post1.tglNota }}</td>
-                                        <td>{{ post1.ppn | currency}}</td>
-                                        <td>{{ post1.diskon | currency }}</td>
-                                        <td>{{ post1.charge | currency }}</td>
-                                        <td>{{ post1.total | currency}}</td>
+                                        <td>{{ post1.tglNotaPembelian }}</td>
+                                        <td>{{ post1.total }}</td>
                                     </tr>
                                     </tbody>
                                     <tfoot>
                                         <tr>
                                             <th></th>
                                             <th></th>
-                                            <th>{{pajakS | currency}}</th>
-                                            <th>{{diskonS | currency}}</th>
-                                            <th>{{chargeS | currency}}</th>
-                                            <th>{{totalS | currency}}</th>
+                                            <th>{{totalP | currency}}</th>
                                         </tr>
                                     </tfoot>
                                 </table>
 
-                                <div id="printMe" hidden>
-                                <div class="row invoice-info">
-                                    Laporan penjualan Tgl {{startDate}} sd {{endDate}}
+                                <div id="printMe" >
                                 <table class="table table-hover table-bordered">
                                     <thead>
                                     <tr>
                                         <th>No</th>
                                         <th>Tgl</th>
-                                        <th>PPn</th>
-                                        <th>Diskon</th>
-                                        <th>Charge</th>
                                         <th>Total</th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     <tr v-for="post1, key in posts1" :key="post1.id">
                                         <td>{{ key +1 }}</td>
-                                        <td>{{ post1.tglNota }}</td>
-                                        <td>{{ post1.ppn | currency}}</td>
-                                        <td>{{ post1.diskon | currency }}</td>
-                                        <td>{{ post1.charge | currency }}</td>
-                                        <td>{{ post1.total | currency}}</td>
+                                        <td>{{ post1.tglNotaPembelian }}</td>
+                                        <td>{{ post1.total }}</td>
                                     </tr>
                                     </tbody>
                                     <tfoot>
                                         <tr>
                                             <th></th>
                                             <th></th>
-                                            <th>{{pajakS | currency}}</th>
-                                            <th>{{diskonS | currency}}</th>
-                                            <th>{{chargeS | currency}}</th>
-                                            <th>{{totalS | currency}}</th>
+                                            <th>{{totalP | currency}}</th>
                                         </tr>
                                     </tfoot>
                                 </table>
                                 </div>
-                                </div>
                                 <!-- OUTPUT -->
-                                <button type="button" class="btn btn-primary" @click="print('printMu')">Print</button>
+                                <button @click="print()" class="btn btn-md btn-success">Print</button>
+
 
                             </div>
                             <!-- /.tab-pane -->
@@ -136,7 +116,6 @@
                 
 
 </template>
-
 <style type="text/css">
 
     #printMe { display: none; }
@@ -165,20 +144,9 @@ import DatePicker from 'vue2-datepicker';
 import 'vue2-datepicker/index.css';
 import VueSingleSelect from "vue-single-select";
 
-import VueHtmlToPaper from 'vue-html-to-paper';
 
-const options = {
-  name: '_blank',
-  specs: [
-    'fullscreen=yes',
-    'titlebar=yes',
-    'scrollbars=yes'
-  ],
-}
 
-Vue.use(VueHtmlToPaper, options);
-
-import ActionButtons from './componentAksiBulanan.vue';
+import ActionButtons from './componentAksiPembelianBulanan.vue';
 Vue.component("data-table", DataTable);
     export default {
         components: { DatePicker, VueSingleSelect,  },
@@ -186,15 +154,14 @@ Vue.component("data-table", DataTable);
             return {
                 posts: [],
                 posts1: [],
+                totalP: [],
                 startDate: '',
                 endDate: '',
                 ActionButtons: null,
                 validation: null,
+                index: ''
                 //actionTriggered: null,
-                totalS: [],
-                pajakS: [],
-                diskonS: [],
-                chargeS: [],
+                
                 //totalSum: '',
             }
 
@@ -206,31 +173,14 @@ Vue.component("data-table", DataTable);
                     //name: "ActionButtons",
                     columns: [
                         {
-                            key: "tglNota",
+                            key: "tglNotaPembelian",
                             title: "Tgl",
                             sortable: false,
-                        },
-                        {
-                            key: "ppn",
-                            title: "PPn",
-                            sortable: false,
-                        },
-                        {
-                            key: "diskon",
-                            title: "Diskon",
-                            sortable: false,
-                        },
-                        {
-                            key: "charge",
-                            title: "Charge",
-                            sortable: false,
-                            searchable: false,
                         },
                         {
                             key: "total",
                             title: "Total",
                             sortable: false,
-                            searchable: false,
                         },
                         
                         {
@@ -261,27 +211,35 @@ Vue.component("data-table", DataTable);
         },
         mounted () {
             //this.intervalFetchData1();
-            //this.intervalFetchData();
+            this.intervalFetchData();
             //this.bindings()
-            this.loadData()
+            //this.loadData()
         },
         methods: {
-
-            print () {
-            // Pass the element id here
-            window.print(printMe)
-            },
-            
-            loadData:function(){
-                let uri = '/api/penjualanbulanan';
+            loadData(){
+                let uri = '/api/pembelianBulanan';
                 this.axios.get(uri).then(response => {
-                this.posts = response.data.data;
-                        
-            });
+                    this.posts = response.data.data;
+                });
+            },
+
+            intervalFetchData: function () {
+            setInterval(() => {    
+                this.loadData();
+                }, 3000);    
             },
             
-            lapPenjualan() {
-                let uri = '/api/lapPenjualanBulanan';
+            PostDelete(id, index)
+            {
+                this.axios.delete(`/api/pembelian/${id}`)
+                    .then(response => {
+                        this.posts.splice(index, 1);
+                    }).catch(error => {
+                    alert('system error!');
+                });
+            },
+            lapPembelian() {
+                let uri = '/api/lapPembelianBulanan';
                 this.axios.post(uri, 
                 {
                     startDate: this.startDate,
@@ -289,25 +247,17 @@ Vue.component("data-table", DataTable);
                 })
                     .then((response) => {
                         this.posts1 = response.data.data;
-                        this.totalS = response.data.notaSum;
-                        this.pajakS = response.data.pajakSum;
-                        this.diskonS = response.data.diskonSum;
-                        this.chargeS = response.data.chargeSum;
+                        this.totalP = response.data.notaSum;
                         //alert('Data Ditampilkan');
                         //this.loadDataSorting()
                         //this.loadTotal()
                     });
                 
             },
-            intervalFetchData: function () {
-            setInterval(() => {    
-                this.loadData();
-                }, 3000);    
-            }
-            //print () {
+            print () {
             // Pass the element id here
-            //this.$htmlToPaper('printMe');
-            //}
+            window.print(printMe)
+            },
            
         },
         

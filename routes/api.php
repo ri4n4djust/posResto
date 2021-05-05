@@ -133,7 +133,9 @@ Route::delete('/hapuspenjualan/{id?}', 'penjualanController@destroy');
 
 //=====Laporan Pembelian
 Route::get('/pembelian', 'pembelianController@index');
+Route::get('/pembelianBulanan', 'pembelianController@laporanBulanan');
 Route::post('/lapPembelian', 'pembelianController@sorting');
+Route::post('/lapPembelianBulanan', 'pembelianController@laporanBulananSorting');
 Route::get('/detailpembelian/{id}', 'pembelianController@listDetailPembelian');
 Route::delete('/hapuspembelian/{id?}', 'pembelianController@hapusPembelian');
 

@@ -26,6 +26,43 @@ class pembelianController extends Controller
             'data' => $posts
         ], 200);
     }
+    public function laporanBulanan()
+    {
+
+        $bulan = DB::table('tblPembelian as w')
+                ->select(array(DB::Raw('sum(w.totalNotaPembelian) as total'),DB::Raw('w.tglNotaPembelian')))
+                ->groupBy('w.tglNotaPembelian')
+                ->orderBy('w.tglNotaPembelian')
+                ->get();
+        return response([
+                    'success' => true,
+                    'message' => 'List Semua SPenjualan',
+                    'data' => $bulan
+                ], 200);
+    }
+    public function laporanBulananSorting(Request $request)
+    {
+
+        $startDate = $request->input('startDate');
+        $endDate = $request->input('endDate');
+
+        $bulan = DB::table('tblPembelian as w')
+                ->select(array(DB::Raw('sum(w.totalNotaPembelian) as total'),DB::Raw('w.tglNotaPembelian')))
+                ->groupBy('w.tglNotaPembelian')
+                ->orderBy('w.tglNotaPembelian')
+                ->whereBetween('w.tglNotaPembelian', [$startDate, $endDate])
+                ->get();
+                $NotalTOtal = Pembelian::whereBetween('tglNotaPembelian', [$startDate, $endDate])->sum('totalNotaPembelian');
+
+        return response([
+                    'success' => true,
+                    'message' => 'List Semua SPenjualan',
+                    'startDate' => $startDate,
+                    'endDate' => $endDate,
+                    'notaSum' => $NotalTOtal,
+                    'data' => $bulan
+                ], 200);
+    }
     public function sorting(Request $request)
     {
         //$from = date('2021/02/01');
