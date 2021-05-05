@@ -11681,6 +11681,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 
@@ -11717,6 +11722,7 @@ __webpack_require__.r(__webpack_exports__);
       note: '',
       sisaStok: '',
       noNota: '',
+      pelanggans: {},
       pelanggan: 'Cash',
       noMeja: '',
       total: '',
@@ -11761,6 +11767,7 @@ __webpack_require__.r(__webpack_exports__);
     this.loadDataTransaksi();
     this.loadWaiter();
     this.ListOrder();
+    this.loadPelanggan();
   },
   watch: {
     post: function post() {
@@ -11854,16 +11861,24 @@ __webpack_require__.r(__webpack_exports__);
         _this7.menus = response.data.data;
       });
     },
-    loadDataTransaksi: function loadDataTransaksi() {
+    loadPelanggan: function loadPelanggan() {
       var _this8 = this;
+
+      var uri = '/api/pelanggan';
+      this.axios.get(uri).then(function (response) {
+        _this8.pelanggans = response.data.data;
+      });
+    },
+    loadDataTransaksi: function loadDataTransaksi() {
+      var _this9 = this;
 
       var uri = "/api/transaksi/".concat(this.$route.params.id);
       this.axios.post(uri).then(function (response) {
-        _this8.trxs = response.data.data;
+        _this9.trxs = response.data.data;
       });
     },
     PostMove: function PostMove() {
-      var _this9 = this;
+      var _this10 = this;
 
       var uri = '/api/meja/pindah';
       this.axios.post(uri, {
@@ -11871,21 +11886,21 @@ __webpack_require__.r(__webpack_exports__);
         noMejaBaru: this.move1.id,
         waiterMeja: this.post.waiterMeja
       }).then(function (response) {
-        _this9.$router.push({
+        _this10.$router.push({
           name: 'meja'
         });
       })["catch"](function (error) {
-        _this9.$router.push({
+        _this10.$router.push({
           name: 'meja'
         });
       });
     },
     loadMejaKosong: function loadMejaKosong() {
-      var _this10 = this;
+      var _this11 = this;
 
       var uri = '/api/mejakosong/';
       this.axios.get(uri).then(function (response) {
-        _this10.mejaKosong = response.data.data;
+        _this11.mejaKosong = response.data.data;
       });
     },
     loadWaiter: function loadWaiter() {
@@ -11894,20 +11909,20 @@ __webpack_require__.r(__webpack_exports__);
       }.bind(this));
     },
     PostDeleteTrx: function PostDeleteTrx(id) {
-      var _this11 = this;
+      var _this12 = this;
 
       this.axios["delete"]("/api/orderDelete/".concat(id)).then(function (response) {
         alert('Berhasil Di Hapus');
 
-        _this11.loadDataTransaksi();
+        _this12.loadDataTransaksi();
 
-        _this11.loadTotal();
+        _this12.loadTotal();
 
-        _this11.ListOrder();
+        _this12.ListOrder();
       })["catch"](function (error) {});
     },
     PostMenu: function PostMenu() {
-      var _this12 = this;
+      var _this13 = this;
 
       var uri = '/api/addMenu/store';
       this.axios.post(uri, {
@@ -11926,14 +11941,14 @@ __webpack_require__.r(__webpack_exports__);
         //alert('sukses donkkkkkkkk');
         alert('sukses ditambahkan');
 
-        _this12.loadDataTransaksi();
+        _this13.loadDataTransaksi();
 
-        _this12.loadTotal();
+        _this13.loadTotal();
 
-        _this12.ListOrder(); //this.cekStatusMeja()
+        _this13.ListOrder(); //this.cekStatusMeja()
 
 
-        _this12.showModalMenu = false;
+        _this13.showModalMenu = false;
       });
     },
     PostTransaksi: function PostTransaksi() {
@@ -11965,10 +11980,10 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     intervalFetchData: function intervalFetchData() {
-      var _this13 = this;
+      var _this14 = this;
 
       this.mytimer = setInterval(function () {
-        _this13.ListOrder();
+        _this14.ListOrder();
       }, 3000);
     }
   },
@@ -63234,6 +63249,50 @@ var render = function() {
                     _vm._v("Pelanggan")
                   ]),
                   _vm._v(" "),
+                  _c(
+                    "select",
+                    {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.pelanggan,
+                          expression: "pelanggan"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      on: {
+                        change: function($event) {
+                          var $$selectedVal = Array.prototype.filter
+                            .call($event.target.options, function(o) {
+                              return o.selected
+                            })
+                            .map(function(o) {
+                              var val = "_value" in o ? o._value : o.value
+                              return val
+                            })
+                          _vm.pelanggan = $event.target.multiple
+                            ? $$selectedVal
+                            : $$selectedVal[0]
+                        }
+                      }
+                    },
+                    _vm._l(_vm.pelanggans, function(pel) {
+                      return _c(
+                        "option",
+                        { key: pel.id, domProps: { value: pel.nmPelanggan } },
+                        [
+                          _vm._v(
+                            "\n                            " +
+                              _vm._s(pel.nmPelanggan) +
+                              "\n                        "
+                          )
+                        ]
+                      )
+                    }),
+                    0
+                  ),
+                  _vm._v(" "),
                   _c("input", {
                     directives: [
                       {
@@ -63244,7 +63303,7 @@ var render = function() {
                       }
                     ],
                     staticClass: "form-control",
-                    attrs: { type: "text", placeholder: "Customer" },
+                    attrs: { type: "hidden", placeholder: "Customer" },
                     domProps: { value: _vm.pelanggan },
                     on: {
                       input: function($event) {

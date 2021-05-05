@@ -33,7 +33,12 @@
                 <p class="text-muted text-center">
                   <div class="input-group">
                     <span class="input-group-addon">Pelanggan</span>
-                    <input type="text" class="form-control" v-model="pelanggan" placeholder="Customer">
+                    <select v-model="pelanggan" class="form-control">
+                        <option v-for="pel in pelanggans" :value="pel.nmPelanggan" :key="pel.id">
+                            {{pel.nmPelanggan}}
+                        </option>
+                    </select>
+                    <input type="hidden" class="form-control" v-model="pelanggan" placeholder="Customer">
                   </div>
                 
                 <p class="text-muted text-center">
@@ -573,6 +578,7 @@
                 note:  '',
                 sisaStok: '',
                 noNota: '',
+                pelanggans: {},
                 pelanggan: 'Cash',
                 noMeja: '',
                 total: '',
@@ -609,13 +615,14 @@
             this.axios.get(uri).then((response) => {
                 this.post = response.data.data;
             });
-            this.loadMejaKosong()
-            this.loadTotal()
-            this.loadNota()
-            this.loadDataMenu()
-            this.loadDataTransaksi()
-            this.loadWaiter()
+            this.loadMejaKosong();
+            this.loadTotal();
+            this.loadNota();
+            this.loadDataMenu();
+            this.loadDataTransaksi();
+            this.loadWaiter();
             this.ListOrder();
+            this.loadPelanggan();
             
             
         },
@@ -700,6 +707,13 @@
                 let uri = '/api/menu';
                 this.axios.get(uri).then(response => {
                 this.menus = response.data.data;
+                
+            });
+            },
+            loadPelanggan:function(){
+                let uri = '/api/pelanggan';
+                this.axios.get(uri).then(response => {
+                this.pelanggans = response.data.data;
                 
             });
             },
