@@ -11,7 +11,7 @@ class Order extends Model
 
     protected $fillable = [
         'kdMenu', 'idMeja', 'wktOrder', 'waiterOrder', 'stsPrintOrder', 'qtyOrder',
-        'noteOrder'
+        'noteOrder', 'ktgMenuOrder'
 
     ];
 }

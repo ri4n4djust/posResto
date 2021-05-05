@@ -19,6 +19,7 @@ class CreateMenusTable extends Migration
             $table->string('nmMenu');
             $table->double('hargaMenu');
             $table->char('stokMenu');
+            $table->char('ktgMenu');
             $table->char('hppMenu')->nullable();
             $table->timestamps();
         });

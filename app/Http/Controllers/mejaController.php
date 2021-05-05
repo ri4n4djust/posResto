@@ -261,6 +261,7 @@ class mejaController extends Controller
             'stsPrintOrder' => '0',
             'qtyOrder'  => $request->input('qtyBarang'),
             'noteOrder'  => $request->input('note'),
+            'ktgMenuOrder'  => $request->input('ktgMenu'),
 
         ]);
         $brg = DB::table('tblTmp_TransaksiDetail')
@@ -489,6 +490,7 @@ class mejaController extends Controller
     {
         //$post = TransaksiDetail::whereId($id)->first();
         $post = TransaksiDetail::join('tblmeja', 'tbltmp_transaksidetail.noMejaTmp', '=', 'tblmeja.id')
+                               
                 ->get();
 
         if ($post) {
@@ -513,6 +515,7 @@ class mejaController extends Controller
         //$post = TransaksiDetail::whereId($id)->first();
         $post = Order::join('tblmeja', 'tblOrder.idMeja', '=', 'tblmeja.id')
                         ->join('tblMenu', 'tblOrder.kdMenu', 'tblMenu.kdMenu')
+
                 ->where('tblOrder.idMeja', $id)
                 ->where('tblOrder.stsPrintOrder', '0')
                 ->select('tblMeja.noMeja', 'tblOrder.*', 'tblMenu.nmMenu')

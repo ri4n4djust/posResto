@@ -21,6 +21,7 @@ class CreateOrdersTable extends Migration
             $table->string('waiterOrder');
             $table->string('stsPrintOrder');
             $table->string('qtyOrder');
+            $table->string('ktgMenuOrder');
             $table->timestamps();
         });
     }

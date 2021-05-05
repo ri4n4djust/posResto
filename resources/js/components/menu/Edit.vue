@@ -33,14 +33,22 @@
                                 </div>
                             </div>
                             <div class="form-group">
+                            <label>Kategori Menu:</label>
+                            <select class='form-control' v-model='post.ktgMenu' required>
+                                <option  value='M01' selected>Main Dish</option>
+                                <option value='M02' >Drink</option>
+                            </select>
+                            </div>
+
+                            <div class="form-group">
                                 <label>Hpp Menu</label>
                                 <input type="text" class="form-control" v-model="tot">
                             </div>
                             
                             <div class="form-group">
-                                <router-link :to="{ name: 'menu' }" class="btn btn-primary btn-success">KEMBALI</router-link>
-                                <button type="submit" class="btn btn-md btn-success">UPDATE</button>
-                                <button type="reset" class="btn btn-md btn-danger">RESET</button>
+                                <router-link :to="{ name: 'menu' }" class="btn btn-sm btn-success">KEMBALI</router-link>
+                                <button type="submit" class="btn btn-sm btn-success">UPDATE</button>
+                                <button @click.prevent="PostDeleteMenu(id= post.id)" class="btn btn-sm btn-danger">HAPUS</button>
                             </div>
 
                         </form>
@@ -232,6 +240,7 @@ components: { VueSingleSelect },
                       nmMenu: this.post.nmMenu,
                       hargaMenu: this.post.hargaMenu,
                       stokMenu: this.post.stokMenu,
+                      ktgMenu: this.post.ktgMenu,
                       hppMenu: this.tot,
                 }).then((response) => {
                         this.$router.push({name: 'menu'});
@@ -259,11 +268,24 @@ components: { VueSingleSelect },
             {
                 this.axios.delete(`/api/komposisi/${id}`)
                     .then(response => {
+                        //this.$router.push({ name: 'menu' });
                         alert('Berhasil Di Hapus');
                         this.loadDataKomposisi()
                     }).catch(error => {
                     
                 });
+            },
+            PostDeleteMenu(id)
+            {
+            if(confirm("Do you really want to delete?")){
+                this.axios.delete(`/api/menu/${id}`)
+                    .then(response => {
+                        //this.posts.splice(index, 1);
+                        alert('menu berhasil di hapus')
+                    }).catch(error => {
+                    alert('system error!');
+                });
+            }
             },
             PostItem() {
                 let uri = '/api/komposisi/store';

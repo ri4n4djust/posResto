@@ -6,13 +6,26 @@ use Illuminate\Http\Request;
 use App\Menu;
 use App\Komposisi;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 
 class menuController extends Controller
 {
     //
     public function index()
     {
-        $posts = Menu::latest()->get();
+        $posts = Menu::join('tblKategoriMenu', 'tblMenu.ktgMenu', 'tblKategoriMenu.kdKtgMenu')
+                    ->select('tblMenu.*', 'tblKategoriMenu.nmKtgMenu')
+                    ->latest()->get();
+        return response([
+            'success' => true,
+            'message' => 'List Semua Supplier',
+            'data' => $posts
+        ], 200);
+    }
+
+    public function ktgMenu()
+    {
+        $posts = DB::table('tblKategoriMenu')->latest()->get();
         return response([
             'success' => true,
             'message' => 'List Semua Supplier',
@@ -32,6 +45,7 @@ class menuController extends Controller
                 'kdMenu'     => $request->input('kdMenu'),
                 'nmMenu'     => $request->input('nmMenu'),
                 'hargaMenu'   => $request->input('hargaMenu'),
+                'ktgMenu'   => $request->input('ktgMenu'),
                 'stokMenu'   => 1,
             ]);
 
@@ -114,7 +128,8 @@ class menuController extends Controller
                 'nmMenu'     => $request->input('nmMenu'),
                 'hargaMenu'   => $request->input('hargaMenu'),
                 'stokMenu'   => $request->input('stokMenu'),
-                'hppMenu'   => $request->input('hppMenu')
+                'hppMenu'   => $request->input('hppMenu'),
+                'ktgMenu'   => $request->input('ktgMenu')
             ]);
 
 

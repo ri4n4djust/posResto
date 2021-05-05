@@ -102,6 +102,7 @@ Route::get('/orderlist', 'mejaController@listOrder');
 
 //========menu
 Route::get('/menu', 'menuController@index');
+Route::get('/kategorimenu', 'menuController@ktgMenu');
 Route::post('/menu/store', 'menuController@store');
 Route::get('/menu/{id?}', 'menuController@show');
 Route::get('/detailMenu/{id?}', 'menuController@detail');
@@ -124,7 +125,9 @@ Route::delete('/komposisi/{id?}', 'komposisiController@destroy');
 
 //=====Laporan Penjualan
 Route::get('/penjualan', 'penjualanController@index');
+Route::get('/penjualanbulanan', 'penjualanController@laporanBulanan');
 Route::post('/lapPenjualan', 'penjualanController@sorting');
+Route::post('/lapPenjualanBulanan', 'penjualanController@laporanBulananSorting');
 Route::get('/detailpenjualan/{id}', 'penjualanController@listDetailPenjualan');
 Route::delete('/hapuspenjualan/{id?}', 'penjualanController@destroy');
 

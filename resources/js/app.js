@@ -96,6 +96,7 @@ Vue.component('status-login', StatusLogin);
 
 
 import LaporanPenjualanComponent from './components/laporan/laporanPenjualan.vue';
+import LaporanPenjualanBulanan from './components/laporan/laporanPenjualanBulanan.vue';
 import LaporanPembelianComponent from './components/laporan/laporanPembelian.vue';
 import StokOpnameComponent from './components/laporan/laporanStokOpname.vue';
 
@@ -257,6 +258,11 @@ const routes = [
         name: 'laporanpenjualan',
         path: '/laporanpenjualan',
         component: LaporanPenjualanComponent
+    },
+    {
+        name: 'laporanpenjualanbulanan',
+        path: '/laporanpenjualanbulanan',
+        component: LaporanPenjualanBulanan
     },
     {
         name: 'laporanpembelian',

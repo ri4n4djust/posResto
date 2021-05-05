@@ -30,6 +30,49 @@ class penjualanController extends Controller
             'data' => $posts
         ], 200);
     }
+    public function laporanBulanan()
+    {
+
+        $bulan = DB::table('tblPenjualan as w')
+                ->select(array(DB::Raw('sum(w.totalNota) as total'),DB::Raw('sum(w.taxNota) as ppn'),DB::Raw('sum(w.diskonNota) as diskon'),DB::Raw('sum(w.chargeNota) as charge'),DB::Raw('w.tglNota')))
+                ->groupBy('w.tglNota')
+                ->orderBy('w.tglNota')
+                ->get();
+        return response([
+                    'success' => true,
+                    'message' => 'List Semua SPenjualan',
+                    'data' => $bulan
+                ], 200);
+    }
+    public function laporanBulananSorting(Request $request)
+    {
+
+        $startDate = $request->input('startDate');
+        $endDate = $request->input('endDate');
+
+        $bulan = DB::table('tblPenjualan as w')
+                ->select(array(DB::Raw('sum(w.totalNota) as total'),DB::Raw('sum(w.taxNota) as ppn'),DB::Raw('sum(w.diskonNota) as diskon'),DB::Raw('sum(w.chargeNota) as charge'),DB::Raw('w.tglNota')))
+                ->groupBy('w.tglNota')
+                ->orderBy('w.tglNota')
+                ->whereBetween('w.tglNota', [$startDate, $endDate])
+                ->get();
+                $NotalTOtal = Penjualan::whereBetween('tglNota', [$startDate, $endDate])->sum('totalNota');
+                $pajakSum = Penjualan::whereBetween('tglNota', [$startDate, $endDate])->sum('taxNota');
+                $diskonSum = Penjualan::whereBetween('tglNota', [$startDate, $endDate])->sum('diskonNota');
+                $chargeSum = Penjualan::whereBetween('tglNota', [$startDate, $endDate])->sum('chargeNota');
+
+        return response([
+                    'success' => true,
+                    'message' => 'List Semua SPenjualan',
+                    'startDate' => $startDate,
+                    'endDate' => $endDate,
+                    'notaSum' => $NotalTOtal,
+                    'pajakSum' => $pajakSum,
+                    'diskonSum' => $diskonSum,
+                    'chargeSum' => $chargeSum,
+                    'data' => $bulan
+                ], 200);
+    }
     public function sorting(Request $request)
     {
         //$from = date('2021/02/01');

@@ -32,6 +32,14 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <div class="form-group">
+                            <label>Kategori Menu:</label>
+                            <select class='form-control' v-model='post.ktgMenu' required>
+                                <option  value='M01' selected>Main Dish</option>
+                                <option value='M02' >Drink</option>
+                            </select>
+                            </div>
                             
 
                             <div class="form-group">
@@ -76,9 +84,7 @@
                 let uri = '/api/menu/store';
                 this.axios.post(uri, this.post)
                     .then((response) => {
-                        this.$router.push({
-                            name: 'menu'
-                        });
+                        this.$router.push({ name: 'menu' });
                         this.loadKdMenu()
                     }).catch(error => {
                     this.validation = error.response.data.data;
@@ -88,6 +94,13 @@
                 let uri = '/api/kodeMenu/';
                 this.axios.get(uri).then(response => {
                 this.post.kdMenu = response.data.kdMenu;
+                
+            });
+            },
+            loadKdMenu:function(){
+                let uri = '/api/kategorimenu/';
+                this.axios.get(uri).then(response => {
+                this.ktgmenus= response.data.data;
                 
             });
             },

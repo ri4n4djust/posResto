@@ -70,7 +70,8 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="{{url('/laporanpenjualan')}}"><i class="fa fa-circle-o"></i>Laporan Penjualan</a></li>
+            <li><a href="{{url('/laporanpenjualan')}}"><i class="fa fa-circle-o"></i>Laporan Penjualan Harian</a></li>
+            <li><a href="{{url('/laporanpenjualanbulanan')}}"><i class="fa fa-circle-o"></i>Laporan Penjualan Bulanan</a></li>
             <li><a href="{{url('/laporanpembelian')}}"><i class="fa fa-circle-o"></i>Laporan Pembelian</a></li>
             <li><a href="{{url('/laporanstokopname')}}"><i class="fa fa-circle-o"></i>Laporan Stok Opname</a></li>
           </ul>

@@ -50,6 +50,11 @@ Vue.component("data-table", DataTable);
                             sortable: false,
                         },
                         {
+                            key: "nmKtgMenu",
+                            title: "Kategori",
+                            sortable: false,
+                        },
+                        {
                             key: 'hppMenu',
                             title: "Harga Pokok",
                             sortable: false,

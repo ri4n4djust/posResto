@@ -90,7 +90,11 @@
                 <router-link :to="{ name: 'meja' }" class="btn btn-primary btn-success">KEMBALI</router-link>
                 <div id="printMe1" class="printMe1"></div>
                 <div id="lastOrder" class="lastOrder">
-                <div class="col-xs-12 table-responsive">
+                  
+
+                <div v-for="order, key in orders" :key="order.id">
+                <div v-if="order.ktgMenuOrder === 'M01'">
+                
                   <h3>Meja No: {{ post.noMeja }}</h3>
                   <table class="table table-striped">
                   <tr>
@@ -99,7 +103,7 @@
                     <td>Qty</td>
                     <td>Jam</td>
                   </tr>
-                  <tr v-for="order, key in orders" :key="order.id">
+                  <tr >
                     <td>{{ key + 1}}</td>
                     <td>{{ order.nmMenu }}<br>
                         {{order.noteOrder }}</td>
@@ -108,7 +112,29 @@
                   </tr>
                 </table>
                 </div>
+                
+                <div v-else-if="order.ktgMenuOrder === 'M02'">
+                  <h3>Meja No: {{ post.noMeja }}</h3>
+                  <table class="table table-striped">
+                  <tr>
+                    <td>No.</td>
+                    <td>Menu</td>
+                    <td>Qty</td>
+                    <td>Jam</td>
+                  </tr>
+                  <tr >
+                    <td>{{ key + 1}}</td>
+                    <td>{{ order.nmMenu }}<br>
+                        {{order.noteOrder }}</td>
+                    <td>{{ order.qtyOrder }}</td>
+                    <td>{{ order.wktOrder }} </td>
+                  </tr>
+                </table>
+                </div>
+               
               </div>
+              </div>
+              
                   
                
 
@@ -244,6 +270,7 @@
                       <input type="hidden" v-model="noNota" placeholder="No nota">
                       <input type="hidden" v-model="post2.id">
                       <input type="hidden" v-model="post2.kdMenu">
+                      <input type="text" v-model="post2.ktgMenu">
                       <input type="hidden" class="form-control" v-model="post2.nmMenu">
                     </div>
                     <div class="form-group">
@@ -780,6 +807,7 @@
                     tglNota: this.tglNota,
                     waiterOrder: this.post.name,
                     note: this.note,
+                    ktgMenu: this.post2.ktgMenu
                 })
                     .then((response) => {
                         //alert('sukses donkkkkkkkk');

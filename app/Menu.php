@@ -10,7 +10,7 @@ class Menu extends Model
     protected $table = 'tblMenu';
 
     protected $fillable = [
-        'kdMenu', 'nmMenu', 'hargaMenu', 'stokMenu', 'hppMenu'
+        'kdMenu', 'nmMenu', 'hargaMenu', 'stokMenu', 'hppMenu', 'ktgMenu'
 
     ];
 }
