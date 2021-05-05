@@ -10820,7 +10820,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue2_datepicker_index_css__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vue2-datepicker/index.css */ "./node_modules/vue2-datepicker/index.css");
 /* harmony import */ var vue2_datepicker_index_css__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(vue2_datepicker_index_css__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var vue_single_select__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! vue-single-select */ "./node_modules/vue-single-select/dist/index.js");
-/* harmony import */ var _componentAksiPembelianBulanan_vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./componentAksiPembelianBulanan.vue */ "./resources/js/components/laporan/componentAksiPembelianBulanan.vue");
+/* harmony import */ var _componentAksiPembelianBulanan_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./componentAksiPembelianBulanan.vue */ "./resources/js/components/laporan/componentAksiPembelianBulanan.vue");
 //
 //
 //
@@ -11005,7 +11005,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component("data-table", _andresouzaab
 
           /* this will make this column appear to the right of the table
           since its index is greater than others*/
-          component: _componentAksiPembelianBulanan_vue__WEBPACK_IMPORTED_MODULE_7__["default"],
+          component: _componentAksiPembelianBulanan_vue__WEBPACK_IMPORTED_MODULE_6__["default"],
           index: 100
         }],
         data: this.posts
@@ -12546,14 +12546,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -12570,6 +12562,7 @@ __webpack_require__.r(__webpack_exports__);
       waiters: {},
       statusMeja: {},
       orders: {},
+      orders1: {},
       move1: null,
       post1: null,
       post2: null,
@@ -12635,6 +12628,7 @@ __webpack_require__.r(__webpack_exports__);
     this.loadDataTransaksi();
     this.loadWaiter();
     this.ListOrder();
+    this.ListOrder1();
     this.loadPelanggan();
   },
   watch: {
@@ -12691,62 +12685,74 @@ __webpack_require__.r(__webpack_exports__);
         alert('ada yang error');
       });
     },
-    PostUpdate: function PostUpdate() {
+    ListOrder1: function ListOrder1() {
       var _this4 = this;
+
+      var uri = "/api/orderprint1/".concat(this.$route.params.id);
+      this.axios.post(uri, this.post).then(function (response) {
+        //this.$router.push({name: 'posts'});
+        _this4.orders1 = response.data.data;
+      })["catch"](function (error) {
+        //this.validation = error.response.data.data;
+        alert('ada yang error');
+      });
+    },
+    PostUpdate: function PostUpdate() {
+      var _this5 = this;
 
       var uri = "/api/posts/update/".concat(this.$route.params.id);
       this.axios.post(uri, this.post).then(function (response) {
-        _this4.$router.push({
+        _this5.$router.push({
           name: 'posts'
         });
       })["catch"](function (error) {
-        _this4.validation = error.response.data.data;
+        _this5.validation = error.response.data.data;
       });
     },
     loadTotal: function loadTotal() {
-      var _this5 = this;
+      var _this6 = this;
 
       var uri = "/api/totalTrx/".concat(this.$route.params.id);
       this.axios.post(uri).then(function (response) {
-        _this5.subtotal = response.data.subTotal;
+        _this6.subtotal = response.data.subTotal;
       })["catch"](function (error) {
         console.log(error.response);
       });
     },
     loadNota: function loadNota() {
-      var _this6 = this;
+      var _this7 = this;
 
       var uri = "/api/noNota/".concat(this.$route.params.id);
       this.axios.post(uri).then(function (response) {
-        _this6.noNota = response.data.noNota;
+        _this7.noNota = response.data.noNota;
       });
     },
     loadDataMenu: function loadDataMenu() {
-      var _this7 = this;
+      var _this8 = this;
 
       var uri = '/api/menu';
       this.axios.get(uri).then(function (response) {
-        _this7.menus = response.data.data;
+        _this8.menus = response.data.data;
       });
     },
     loadPelanggan: function loadPelanggan() {
-      var _this8 = this;
+      var _this9 = this;
 
       var uri = '/api/pelanggan';
       this.axios.get(uri).then(function (response) {
-        _this8.pelanggans = response.data.data;
+        _this9.pelanggans = response.data.data;
       });
     },
     loadDataTransaksi: function loadDataTransaksi() {
-      var _this9 = this;
+      var _this10 = this;
 
       var uri = "/api/transaksi/".concat(this.$route.params.id);
       this.axios.post(uri).then(function (response) {
-        _this9.trxs = response.data.data;
+        _this10.trxs = response.data.data;
       });
     },
     PostMove: function PostMove() {
-      var _this10 = this;
+      var _this11 = this;
 
       var uri = '/api/meja/pindah';
       this.axios.post(uri, {
@@ -12754,21 +12760,21 @@ __webpack_require__.r(__webpack_exports__);
         noMejaBaru: this.move1.id,
         waiterMeja: this.post.waiterMeja
       }).then(function (response) {
-        _this10.$router.push({
+        _this11.$router.push({
           name: 'meja'
         });
       })["catch"](function (error) {
-        _this10.$router.push({
+        _this11.$router.push({
           name: 'meja'
         });
       });
     },
     loadMejaKosong: function loadMejaKosong() {
-      var _this11 = this;
+      var _this12 = this;
 
       var uri = '/api/mejakosong/';
       this.axios.get(uri).then(function (response) {
-        _this11.mejaKosong = response.data.data;
+        _this12.mejaKosong = response.data.data;
       });
     },
     loadWaiter: function loadWaiter() {
@@ -12777,20 +12783,20 @@ __webpack_require__.r(__webpack_exports__);
       }.bind(this));
     },
     PostDeleteTrx: function PostDeleteTrx(id) {
-      var _this12 = this;
+      var _this13 = this;
 
       this.axios["delete"]("/api/orderDelete/".concat(id)).then(function (response) {
         alert('Berhasil Di Hapus');
 
-        _this12.loadDataTransaksi();
+        _this13.loadDataTransaksi();
 
-        _this12.loadTotal();
+        _this13.loadTotal();
 
-        _this12.ListOrder();
+        _this13.ListOrder();
       })["catch"](function (error) {});
     },
     PostMenu: function PostMenu() {
-      var _this13 = this;
+      var _this14 = this;
 
       var uri = '/api/addMenu/store';
       this.axios.post(uri, {
@@ -12810,14 +12816,16 @@ __webpack_require__.r(__webpack_exports__);
         //alert('sukses donkkkkkkkk');
         alert('sukses ditambahkan');
 
-        _this13.loadDataTransaksi();
+        _this14.loadDataTransaksi();
 
-        _this13.loadTotal();
+        _this14.loadTotal();
 
-        _this13.ListOrder(); //this.cekStatusMeja()
+        _this14.ListOrder();
+
+        _this14.ListOrder1(); //this.cekStatusMeja()
 
 
-        _this13.showModalMenu = false;
+        _this14.showModalMenu = false;
       });
     },
     PostTransaksi: function PostTransaksi() {
@@ -12849,10 +12857,10 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     intervalFetchData: function intervalFetchData() {
-      var _this14 = this;
+      var _this15 = this;
 
       this.mytimer = setInterval(function () {
-        _this14.ListOrder();
+        _this15.ListOrder();
       }, 3000);
     }
   },
@@ -65330,82 +65338,83 @@ var render = function() {
                     _c(
                       "div",
                       { staticClass: "lastOrder", attrs: { id: "lastOrder" } },
-                      _vm._l(_vm.orders, function(order, key) {
-                        return _c("div", { key: order.id }, [
-                          order.ktgMenuOrder === "M01"
-                            ? _c("div", [
-                                _c("h3", [
-                                  _vm._v("Meja No: " + _vm._s(_vm.post.noMeja))
+                      [
+                        _c("h3", [
+                          _vm._v("Meja No: " + _vm._s(_vm.post.noMeja))
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "table",
+                          { staticClass: "table table-striped" },
+                          [
+                            _vm._m(2),
+                            _vm._v(" "),
+                            _vm._l(_vm.orders, function(order, key) {
+                              return _c("tr", { key: order.id }, [
+                                _c("td", [
+                                  _vm._v(
+                                    _vm._s(key + 1) +
+                                      " " +
+                                      _vm._s(order.ktgMenuOrder)
+                                  )
                                 ]),
                                 _vm._v(" "),
-                                _c(
-                                  "table",
-                                  { staticClass: "table table-striped" },
-                                  [
-                                    _vm._m(2, true),
-                                    _vm._v(" "),
-                                    _c("tr", [
-                                      _c("td", [_vm._v(_vm._s(key + 1))]),
-                                      _vm._v(" "),
-                                      _c("td", [
-                                        _vm._v(_vm._s(order.nmMenu)),
-                                        _c("br"),
-                                        _vm._v(
-                                          "\n                        " +
-                                            _vm._s(order.noteOrder)
-                                        )
-                                      ]),
-                                      _vm._v(" "),
-                                      _c("td", [
-                                        _vm._v(_vm._s(order.qtyOrder))
-                                      ]),
-                                      _vm._v(" "),
-                                      _c("td", [
-                                        _vm._v(_vm._s(order.wktOrder) + " ")
-                                      ])
-                                    ])
-                                  ]
-                                )
-                              ])
-                            : order.ktgMenuOrder === "M02"
-                            ? _c("div", [
-                                _c("h3", [
-                                  _vm._v("Meja No: " + _vm._s(_vm.post.noMeja))
+                                _c("td", [
+                                  _vm._v(_vm._s(order.nmMenu)),
+                                  _c("br"),
+                                  _vm._v(
+                                    "\n                        " +
+                                      _vm._s(order.noteOrder)
+                                  )
                                 ]),
                                 _vm._v(" "),
-                                _c(
-                                  "table",
-                                  { staticClass: "table table-striped" },
-                                  [
-                                    _vm._m(3, true),
-                                    _vm._v(" "),
-                                    _c("tr", [
-                                      _c("td", [_vm._v(_vm._s(key + 1))]),
-                                      _vm._v(" "),
-                                      _c("td", [
-                                        _vm._v(_vm._s(order.nmMenu)),
-                                        _c("br"),
-                                        _vm._v(
-                                          "\n                        " +
-                                            _vm._s(order.noteOrder)
-                                        )
-                                      ]),
-                                      _vm._v(" "),
-                                      _c("td", [
-                                        _vm._v(_vm._s(order.qtyOrder))
-                                      ]),
-                                      _vm._v(" "),
-                                      _c("td", [
-                                        _vm._v(_vm._s(order.wktOrder) + " ")
-                                      ])
-                                    ])
-                                  ]
-                                )
+                                _c("td", [_vm._v(_vm._s(order.qtyOrder))]),
+                                _vm._v(" "),
+                                _c("td", [_vm._v(_vm._s(order.wktOrder) + " ")])
                               ])
-                            : _vm._e()
-                        ])
-                      }),
-                      0
+                            })
+                          ],
+                          2
+                        ),
+                        _vm._v(" "),
+                        _c("h3", [
+                          _vm._v("Meja No: " + _vm._s(_vm.post.noMeja))
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "table",
+                          { staticClass: "table table-striped" },
+                          [
+                            _vm._m(3),
+                            _vm._v(" "),
+                            _vm._l(_vm.orders1, function(order, key) {
+                              return _c("tr", { key: order.id }, [
+                                _c("td", [
+                                  _vm._v(
+                                    _vm._s(key + 1) +
+                                      " " +
+                                      _vm._s(order.ktgMenuOrder)
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("td", [
+                                  _vm._v(_vm._s(order.nmMenu)),
+                                  _c("br"),
+                                  _vm._v(
+                                    "\n                        " +
+                                      _vm._s(order.noteOrder)
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("td", [_vm._v(_vm._s(order.qtyOrder))]),
+                                _vm._v(" "),
+                                _c("td", [_vm._v(_vm._s(order.wktOrder) + " ")])
+                              ])
+                            })
+                          ],
+                          2
+                        )
+                      ]
                     ),
                     _vm._v(" "),
                     _c(

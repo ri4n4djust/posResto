@@ -90,12 +90,25 @@
                 <router-link :to="{ name: 'meja' }" class="btn btn-primary btn-success">KEMBALI</router-link>
                 <div id="printMe1" class="printMe1"></div>
                 <div id="lastOrder" class="lastOrder">
-                  
+                
+                  <h3>Meja No: {{ post.noMeja }}</h3>
+                  <table class="table table-striped">
+                  <tr>
+                    <td>No.</td>
+                    <td>Menu</td>
+                    <td>Qty</td>
+                    <td>Jam</td>
+                  </tr>
+                  <tr v-for="order, key in orders" :key="order.id">
+                    <td>{{ key + 1}} {{order.ktgMenuOrder}}</td>
+                    <td>{{ order.nmMenu }}<br>
+                        {{order.noteOrder }}</td>
+                    <td>{{ order.qtyOrder }}</td>
+                    <td>{{ order.wktOrder }} </td>
+                  </tr>
+                </table>       
 
-                <div v-for="order, key in orders" :key="order.id">
-                <div v-if="order.ktgMenuOrder === 'M01'">
-                
-                  <h3>Meja No: {{ post.noMeja }}</h3>
+                <h3>Meja No: {{ post.noMeja }}</h3>
                   <table class="table table-striped">
                   <tr>
                     <td>No.</td>
@@ -103,36 +116,15 @@
                     <td>Qty</td>
                     <td>Jam</td>
                   </tr>
-                  <tr >
-                    <td>{{ key + 1}}</td>
+                  <tr v-for="order, key in orders1" :key="order.id">
+                    <td>{{ key + 1}} {{order.ktgMenuOrder}}</td>
                     <td>{{ order.nmMenu }}<br>
                         {{order.noteOrder }}</td>
                     <td>{{ order.qtyOrder }}</td>
                     <td>{{ order.wktOrder }} </td>
                   </tr>
-                </table>
-                </div>
-                
-                <div v-else-if="order.ktgMenuOrder === 'M02'">
-                  <h3>Meja No: {{ post.noMeja }}</h3>
-                  <table class="table table-striped">
-                  <tr>
-                    <td>No.</td>
-                    <td>Menu</td>
-                    <td>Qty</td>
-                    <td>Jam</td>
-                  </tr>
-                  <tr >
-                    <td>{{ key + 1}}</td>
-                    <td>{{ order.nmMenu }}<br>
-                        {{order.noteOrder }}</td>
-                    <td>{{ order.qtyOrder }}</td>
-                    <td>{{ order.wktOrder }} </td>
-                  </tr>
-                </table>
-                </div>
+                </table>                
                
-              </div>
               </div>
               
                   
@@ -585,6 +577,7 @@
                 waiters: {},
                 statusMeja:{},
                 orders:{},
+                orders1:{},
                 move1: null,
                 post1: null,
                 post2: null,
@@ -649,6 +642,7 @@
             this.loadDataTransaksi();
             this.loadWaiter();
             this.ListOrder();
+            this.ListOrder1();
             this.loadPelanggan();
             
             
@@ -701,6 +695,17 @@
                     .then((response) => {
                         //this.$router.push({name: 'posts'});
                         this.orders = response.data.data;
+                    }).catch(error => {
+                    //this.validation = error.response.data.data;
+                      alert('ada yang error');
+                });
+            },
+            ListOrder1(){
+              let uri = `/api/orderprint1/${this.$route.params.id}`;
+                this.axios.post(uri, this.post)
+                    .then((response) => {
+                        //this.$router.push({name: 'posts'});
+                        this.orders1 = response.data.data;
                     }).catch(error => {
                     //this.validation = error.response.data.data;
                       alert('ada yang error');
@@ -815,6 +820,7 @@
                         this.loadDataTransaksi();
                         this.loadTotal();
                         this.ListOrder();
+                        this.ListOrder1();
                         //this.cekStatusMeja()
                         this.showModalMenu = false
                     });

@@ -517,6 +517,27 @@ class mejaController extends Controller
                         ->join('tblMenu', 'tblOrder.kdMenu', 'tblMenu.kdMenu')
 
                 ->where('tblOrder.idMeja', $id)
+                ->where('tblOrder.ktgMenuOrder', 'M01')
+                ->where('tblOrder.stsPrintOrder', '0')
+                ->select('tblMeja.noMeja', 'tblOrder.*', 'tblMenu.nmMenu')
+                ->orderBy('tblOrder.id', 'ASC')
+                ->get();
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Detail Post!',
+                    'data'    => $post,
+                    'ada'   => '1'
+                ], 200);
+        
+    }
+    public function printOrder1($id)
+    {
+        //$post = TransaksiDetail::whereId($id)->first();
+        $post = Order::join('tblmeja', 'tblOrder.idMeja', '=', 'tblmeja.id')
+                        ->join('tblMenu', 'tblOrder.kdMenu', 'tblMenu.kdMenu')
+
+                ->where('tblOrder.idMeja', $id)
+                ->where('tblOrder.ktgMenuOrder', 'M02')
                 ->where('tblOrder.stsPrintOrder', '0')
                 ->select('tblMeja.noMeja', 'tblOrder.*', 'tblMenu.nmMenu')
                 ->orderBy('tblOrder.id', 'ASC')
