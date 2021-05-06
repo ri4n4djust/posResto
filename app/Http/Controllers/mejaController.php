@@ -280,6 +280,7 @@ class mejaController extends Controller
             'typeTmp'     => $request->input('type'),
             'nmBarangTmp'     => $request->input('nmBarang'),
             'note'  => $request->input('note'),
+            'ktgMenu'  => $request->input('ktgMenu'),
         ]);
 
         
@@ -469,7 +470,9 @@ class mejaController extends Controller
     {
         //$post = TransaksiDetail::whereId($id)->first();
         $post = DB::table('tblTmp_TransaksiDetail')
-                    ->where('noMejaTmp',$id)->get();
+                    ->where('noMejaTmp',$id)
+                    ->orderBy('ktgMenu', 'ASC')
+                    ->get();
 
         if ($post) {
             return response()->json([

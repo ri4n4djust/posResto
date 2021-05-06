@@ -11,6 +11,6 @@ class TransaksiDetail extends Model
 
     protected $fillable = [
         'noNotaTmp', 'noMejaTmp', 'kdBarangTmp', 'hrgJualTmp', 'qtyTmp', 'totalTmp',
-         'typeTmp', 'nmBarangTmp', 'note'
+         'typeTmp', 'nmBarangTmp', 'note', 'ktgMenu'
     ];
 }
