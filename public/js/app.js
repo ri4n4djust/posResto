@@ -12546,6 +12546,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 
 
@@ -12793,6 +12795,8 @@ __webpack_require__.r(__webpack_exports__);
         _this13.loadTotal();
 
         _this13.ListOrder();
+
+        _this13.ListOrder1();
       })["catch"](function (error) {});
     },
     PostMenu: function PostMenu() {
@@ -21904,7 +21908,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n#printMe { display: none;\n}\n@media print\n{\n@page{\n    margin: 0;\n}\nbody * {\n    visibility: hidden;\n}\n#printMe, #printMe * {\n    visibility: visible;\n    font-size: 8pt;\n}\n.lastOrder, .lastOrder * {\n    visibility: visible;\n}\n.printMe1, .printMe1 * {\n    visibility: visible;\n    font-size: 8pt;\n}\n#printMe {\n    position: absolute;\n    left: 0;\n    top: 0;\n    font-size: 8pt;\n    width: 100%;\n}\n.printMe1 {\n    position: absolute;\n    left: 0;\n    top: 0;\n    font-size: 8pt;\n    width: 100%;\n}\n.lastOrder {\n    position: absolute;\n    left: 0;\n    top: 0;\n    font-size: 8pt;\n    width: 100%;\n}\n}\n", ""]);
+exports.push([module.i, "\n#printMe { display: none;\n}\n@media print\n{\n@page{\n    margin: 0;\n}\nbody * {\n    visibility: hidden;\n}\n#printMe, #printMe * {\n    visibility: visible;\n    font-size: 8pt;\n}\n.lastOrder, .lastOrder * {\n    visibility: visible;\n}\n.printMe1, .printMe1 * {\n    visibility: visible;\n    font-size: 8pt;\n}\n#printMe {\n    position: absolute;\n    left: 0;\n    top: 0;\n    font-size: 8pt;\n    width: 100%;\n    height: 100%;\n}\n.printMe1 {\n    position: absolute;\n    left: 0;\n    top: 0;\n    font-size: 8pt;\n    width: 100%;\n    height: 100%;\n}\n.lastOrder {\n    position: absolute;\n    left: 0;\n    top: 0;\n    font-size: 8pt;\n    width: 100%;\n}\n}\n", ""]);
 
 // exports
 
@@ -65290,7 +65294,7 @@ var render = function() {
                       [_c("b", [_vm._v("Pindah Meja")])]
                     ),
                     _vm._v(" "),
-                    _vm.orders.length == 0
+                    _vm.orders.length == 0 && _vm.orders1.length == 0
                       ? _c("span", [
                           _c(
                             "a",
@@ -65330,98 +65334,11 @@ var render = function() {
                       [_vm._v("KEMBALI")]
                     ),
                     _vm._v(" "),
-                    _c("div", {
-                      staticClass: "printMe1",
-                      attrs: { id: "printMe1" }
-                    }),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      { staticClass: "lastOrder", attrs: { id: "lastOrder" } },
-                      [
-                        _c("h3", [
-                          _vm._v("Meja No: " + _vm._s(_vm.post.noMeja))
-                        ]),
-                        _vm._v(" "),
-                        _c(
-                          "table",
-                          { staticClass: "table table-striped" },
-                          [
-                            _vm._m(2),
-                            _vm._v(" "),
-                            _vm._l(_vm.orders, function(order, key) {
-                              return _c("tr", { key: order.id }, [
-                                _c("td", [
-                                  _vm._v(
-                                    _vm._s(key + 1) +
-                                      " " +
-                                      _vm._s(order.ktgMenuOrder)
-                                  )
-                                ]),
-                                _vm._v(" "),
-                                _c("td", [
-                                  _vm._v(_vm._s(order.nmMenu)),
-                                  _c("br"),
-                                  _vm._v(
-                                    "\n                        " +
-                                      _vm._s(order.noteOrder)
-                                  )
-                                ]),
-                                _vm._v(" "),
-                                _c("td", [_vm._v(_vm._s(order.qtyOrder))]),
-                                _vm._v(" "),
-                                _c("td", [_vm._v(_vm._s(order.wktOrder) + " ")])
-                              ])
-                            })
-                          ],
-                          2
-                        ),
-                        _vm._v(" "),
-                        _c("h3", [
-                          _vm._v("Meja No: " + _vm._s(_vm.post.noMeja))
-                        ]),
-                        _vm._v(" "),
-                        _c(
-                          "table",
-                          { staticClass: "table table-striped" },
-                          [
-                            _vm._m(3),
-                            _vm._v(" "),
-                            _vm._l(_vm.orders1, function(order, key) {
-                              return _c("tr", { key: order.id }, [
-                                _c("td", [
-                                  _vm._v(
-                                    _vm._s(key + 1) +
-                                      " " +
-                                      _vm._s(order.ktgMenuOrder)
-                                  )
-                                ]),
-                                _vm._v(" "),
-                                _c("td", [
-                                  _vm._v(_vm._s(order.nmMenu)),
-                                  _c("br"),
-                                  _vm._v(
-                                    "\n                        " +
-                                      _vm._s(order.noteOrder)
-                                  )
-                                ]),
-                                _vm._v(" "),
-                                _c("td", [_vm._v(_vm._s(order.qtyOrder))]),
-                                _vm._v(" "),
-                                _c("td", [_vm._v(_vm._s(order.wktOrder) + " ")])
-                              ])
-                            })
-                          ],
-                          2
-                        )
-                      ]
-                    ),
-                    _vm._v(" "),
                     _c(
                       "table",
                       { staticClass: "table table-hover table-bordered" },
                       [
-                        _vm._m(4),
+                        _vm._m(2),
                         _vm._v(" "),
                         _c(
                           "tbody",
@@ -65459,6 +65376,131 @@ var render = function() {
                             ])
                           }),
                           0
+                        )
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "printMe1", attrs: { id: "printMe1" } },
+                      [
+                        _c(
+                          "div",
+                          {
+                            staticClass: "lastOrder",
+                            attrs: { id: "lastOrder" }
+                          },
+                          [
+                            _vm.orders.length != 0
+                              ? _c("span", [
+                                  _c(
+                                    "h3",
+                                    {
+                                      staticClass:
+                                        "profile-username text-center"
+                                    },
+                                    [
+                                      _vm._v(
+                                        "Meja No: " + _vm._s(_vm.post.noMeja)
+                                      )
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "table",
+                                    { staticClass: "table table-striped" },
+                                    [
+                                      _vm._m(3),
+                                      _vm._v(" "),
+                                      _vm._l(_vm.orders, function(order, key) {
+                                        return _c("tr", { key: order.id }, [
+                                          _c("td", [
+                                            _vm._v(
+                                              _vm._s(key + 1) +
+                                                " " +
+                                                _vm._s(order.ktgMenuOrder)
+                                            )
+                                          ]),
+                                          _vm._v(" "),
+                                          _c("td", [
+                                            _vm._v(_vm._s(order.nmMenu)),
+                                            _c("br"),
+                                            _vm._v(
+                                              "\n                        " +
+                                                _vm._s(order.noteOrder)
+                                            )
+                                          ]),
+                                          _vm._v(" "),
+                                          _c("td", [
+                                            _vm._v(_vm._s(order.qtyOrder))
+                                          ]),
+                                          _vm._v(" "),
+                                          _c("td", [
+                                            _vm._v(_vm._s(order.wktOrder) + " ")
+                                          ])
+                                        ])
+                                      })
+                                    ],
+                                    2
+                                  )
+                                ])
+                              : _vm._e(),
+                            _vm._v(" "),
+                            _vm.orders1.length != 0
+                              ? _c("span", [
+                                  _c(
+                                    "h3",
+                                    {
+                                      staticClass:
+                                        "profile-username text-center"
+                                    },
+                                    [
+                                      _vm._v(
+                                        "Meja No: " + _vm._s(_vm.post.noMeja)
+                                      )
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "table",
+                                    { staticClass: "table table-striped" },
+                                    [
+                                      _vm._m(4),
+                                      _vm._v(" "),
+                                      _vm._l(_vm.orders1, function(order, key) {
+                                        return _c("tr", { key: order.id }, [
+                                          _c("td", [
+                                            _vm._v(
+                                              _vm._s(key + 1) +
+                                                " " +
+                                                _vm._s(order.ktgMenuOrder)
+                                            )
+                                          ]),
+                                          _vm._v(" "),
+                                          _c("td", [
+                                            _vm._v(_vm._s(order.nmMenu)),
+                                            _c("br"),
+                                            _vm._v(
+                                              "\n                        " +
+                                                _vm._s(order.noteOrder)
+                                            )
+                                          ]),
+                                          _vm._v(" "),
+                                          _c("td", [
+                                            _vm._v(_vm._s(order.qtyOrder))
+                                          ]),
+                                          _vm._v(" "),
+                                          _c("td", [
+                                            _vm._v(_vm._s(order.wktOrder) + " ")
+                                          ])
+                                        ])
+                                      })
+                                    ],
+                                    2
+                                  )
+                                ])
+                              : _vm._e()
+                          ]
                         )
                       ]
                     )
@@ -67090,34 +67132,6 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("tr", [
-      _c("td", [_vm._v("No.")]),
-      _vm._v(" "),
-      _c("td", [_vm._v("Menu")]),
-      _vm._v(" "),
-      _c("td", [_vm._v("Qty")]),
-      _vm._v(" "),
-      _c("td", [_vm._v("Jam")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("tr", [
-      _c("td", [_vm._v("No.")]),
-      _vm._v(" "),
-      _c("td", [_vm._v("Menu")]),
-      _vm._v(" "),
-      _c("td", [_vm._v("Qty")]),
-      _vm._v(" "),
-      _c("td", [_vm._v("Jam")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
     return _c("thead", [
       _c("tr", [
         _c("th", [_vm._v("Nama ")]),
@@ -67130,6 +67144,34 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", [_vm._v("AKSI")])
       ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("tr", [
+      _c("td", [_vm._v("No.")]),
+      _vm._v(" "),
+      _c("td", [_vm._v("Menu")]),
+      _vm._v(" "),
+      _c("td", [_vm._v("Qty")]),
+      _vm._v(" "),
+      _c("td", [_vm._v("Jam")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("tr", [
+      _c("td", [_vm._v("No.")]),
+      _vm._v(" "),
+      _c("td", [_vm._v("Menu")]),
+      _vm._v(" "),
+      _c("td", [_vm._v("Qty")]),
+      _vm._v(" "),
+      _c("td", [_vm._v("Jam")])
     ])
   }
 ]

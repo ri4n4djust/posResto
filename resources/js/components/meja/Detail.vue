@@ -85,57 +85,12 @@
                 <a href="#"  @click="showModalMenu = true" class="btn btn-md btn-success"><b>Add Menu</b></a>
                 <a href="#"  @click="showModalMove = true" class="btn btn-md btn-success"><b>Pindah Meja</b></a>
                 
-               <span v-if=" orders.length == 0 "><a href="#"  class="btn btn-md btn-success disabled" role="button" aria-disabled="true">Print Order</a></span>
+               <span v-if=" orders.length == 0 && orders1.length == 0"><a href="#"  class="btn btn-md btn-success disabled" role="button" aria-disabled="true">Print Order</a></span>
                <span v-else><a href="#"  @click="printOrder(id= post.id)" class="btn btn-md btn-success" >Print Order</a></span>
                 <router-link :to="{ name: 'meja' }" class="btn btn-primary btn-success">KEMBALI</router-link>
-                <div id="printMe1" class="printMe1"></div>
-                <div id="lastOrder" class="lastOrder">
                 
-                  <h3>Meja No: {{ post.noMeja }}</h3>
-                  <table class="table table-striped">
-                  <tr>
-                    <td>No.</td>
-                    <td>Menu</td>
-                    <td>Qty</td>
-                    <td>Jam</td>
-                  </tr>
-                  <tr v-for="order, key in orders" :key="order.id">
-                    <td>{{ key + 1}} {{order.ktgMenuOrder}}</td>
-                    <td>{{ order.nmMenu }}<br>
-                        {{order.noteOrder }}</td>
-                    <td>{{ order.qtyOrder }}</td>
-                    <td>{{ order.wktOrder }} </td>
-                  </tr>
-                </table>       
-
-                <h3>Meja No: {{ post.noMeja }}</h3>
-                  <table class="table table-striped">
-                  <tr>
-                    <td>No.</td>
-                    <td>Menu</td>
-                    <td>Qty</td>
-                    <td>Jam</td>
-                  </tr>
-                  <tr v-for="order, key in orders1" :key="order.id">
-                    <td>{{ key + 1}} {{order.ktgMenuOrder}}</td>
-                    <td>{{ order.nmMenu }}<br>
-                        {{order.noteOrder }}</td>
-                    <td>{{ order.qtyOrder }}</td>
-                    <td>{{ order.wktOrder }} </td>
-                  </tr>
-                </table>                
-               
-              </div>
-              
-                  
-               
-
-                
-                
-                
-
                 <!-- /.post -->
-                <table class="table table-hover table-bordered">
+                            <table class="table table-hover table-bordered">
                                 <thead>
                                 <tr>
                                     <th>Nama </th>
@@ -157,6 +112,52 @@
                                 </tr>
                                 </tbody>
                             </table>
+
+                
+                <div id="printMe1" class="printMe1">
+                  
+                <div id="lastOrder" class="lastOrder">
+                <span v-if=" orders.length != 0 ">
+                  <h3 class="profile-username text-center">Meja No: {{ post.noMeja }}</h3>
+                  <table class="table table-striped">
+                  <tr>
+                    <td>No.</td>
+                    <td>Menu</td>
+                    <td>Qty</td>
+                    <td>Jam</td>
+                  </tr>
+                  <tr v-for="order, key in orders" :key="order.id">
+                    <td>{{ key + 1}} {{order.ktgMenuOrder}}</td>
+                    <td>{{ order.nmMenu }}<br>
+                        {{order.noteOrder }}</td>
+                    <td>{{ order.qtyOrder }}</td>
+                    <td>{{ order.wktOrder }} </td>
+                  </tr>
+                </table>       
+                </span>
+                <span v-if=" orders1.length != 0 ">
+                <h3 class="profile-username text-center">Meja No: {{ post.noMeja }}</h3>
+                  <table class="table table-striped">
+                  <tr>
+                    <td>No.</td>
+                    <td>Menu</td>
+                    <td>Qty</td>
+                    <td>Jam</td>
+                  </tr>
+                  <tr v-for="order, key in orders1" :key="order.id">
+                    <td>{{ key + 1}} {{order.ktgMenuOrder}}</td>
+                    <td>{{ order.nmMenu }}<br>
+                        {{order.noteOrder }}</td>
+                    <td>{{ order.qtyOrder }}</td>
+                    <td>{{ order.wktOrder }} </td>
+                  </tr>
+                </table>                
+                </span>
+              </div>
+                </div>
+                
+
+
               </div>
               <!-- /.tab-pane -->
               <div class="tab-pane" id="timeline">
@@ -425,7 +426,6 @@
                 </div>
 
                 <!-- /.col -->
-
               <!-- /.row -->
 
                 <div class="col-xs-12 table-responsive">
@@ -542,6 +542,7 @@
         top: 0;
         font-size: 8pt;
         width: 100%;
+        height: 100%;
       }
       .printMe1 {
         position: absolute;
@@ -549,6 +550,7 @@
         top: 0;
         font-size: 8pt;
         width: 100%;
+        height: 100%;
       }
       .lastOrder {
         position: absolute;
@@ -792,6 +794,7 @@
                         this.loadDataTransaksi();
                         this.loadTotal();
                         this.ListOrder();
+                        this.ListOrder1();
                     }).catch(error => {
                     
                 });
