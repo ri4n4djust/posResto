@@ -127,7 +127,7 @@
                     <td>Jam</td>
                   </tr>
                   <tr v-for="order, key in orders" :key="order.id">
-                    <td>{{ key + 1}} {{order.ktgMenuOrder}}</td>
+                    <td>{{ key + 1}} </td>
                     <td>{{ order.nmMenu }}<br>
                         {{order.noteOrder }}</td>
                     <td>{{ order.qtyOrder }}</td>
@@ -145,7 +145,7 @@
                     <td>Jam</td>
                   </tr>
                   <tr v-for="order, key in orders1" :key="order.id">
-                    <td>{{ key + 1}} {{order.ktgMenuOrder}}</td>
+                    <td>{{ key + 1}} </td>
                     <td>{{ order.nmMenu }}<br>
                         {{order.noteOrder }}</td>
                     <td>{{ order.qtyOrder }}</td>
@@ -263,7 +263,7 @@
                       <input type="hidden" v-model="noNota" placeholder="No nota">
                       <input type="hidden" v-model="post2.id">
                       <input type="hidden" v-model="post2.kdMenu">
-                      <input type="text" v-model="post2.ktgMenu">
+                      <input type="hidden" v-model="post2.ktgMenu">
                       <input type="hidden" class="form-control" v-model="post2.nmMenu">
                     </div>
                     <div class="form-group">
@@ -674,7 +674,7 @@
                 this.brg = this.post1 - this.qtyBarang;
             },
             printBill() {
-              alert('print bill');
+              //alert('print bill');
                 window.print(printMe1);
                 //this.showModalBayar = false
             },

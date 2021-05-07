@@ -21,7 +21,40 @@
                                     </div>
                                     <div class="modal-body">
 
-                                        detal tgl
+                                        {{data.tglNota}}
+                                        <table class="table table-hover table-bordered">
+                                    <thead>
+                                    <tr>
+                                        <th>No Nota</th>
+                                        <th>Customer</th>
+                                        <th>Tgl</th>
+                                        <th>PPn</th>
+                                        <th>Diskon</th>
+                                        <th>Total</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr v-for="post1 in posts1" :key="post1.id">
+                                        <td>{{ post1.noNota }}</td>
+                                        <td>{{ post1.pelangganNota }}</td>
+                                        <td>{{ post1.tglNota }}</td>
+                                        <td>{{ post1.taxNota | currency }}</td>
+                                        <td>{{ post1.diskonNota | currency }}</td>
+                                        <td>{{ post1.totalNota | currency}}</td>
+                                    </tr>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th>{{pajakS | currency}}</th>
+                                            <th>{{diskonS | currency}}</th>
+                                            <th>{{totalS | currency}}</th>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+
 
                                     </div>
                                     </div>
@@ -64,11 +97,15 @@ export default {
     data() {
             return {
                 posts: [],
+                posts1: {},
                 pem: [],
                 showModalPenjualan: false,
                 np: this.data.noNota,
                 sukses: '',
                 adminuser: '',
+                pajakS: '',
+                diskonS: '',
+                totalS: '',
                 
             }
 
@@ -118,11 +155,21 @@ export default {
             },
             loadDetailPenjualan:function(){
                 this.showModalPenjualan = true;
-                let uri = '/api/detailpenjualan/'+ this.data.noNota;
-                this.axios.get(uri).then(response => {
-                    this.pem = response.data.data;
-                   // alert('no nota '+ this.data.noNota);
-            });
+                let uri = '/api/lapPenjualan';
+                this.axios.post(uri, 
+                {
+                    startDate: this.data.tglNota,
+                    endDate: this.data.tglNota,
+                })
+                    .then((response) => {
+                        this.posts1 = response.data.data;
+                        this.totalS = response.data.notaSum;
+                        this.pajakS = response.data.pajakSum;
+                        this.diskonS = response.data.diskonSum;
+                        //alert('Data Ditampilkan');
+                        //this.loadDataSorting()
+                        //this.loadTotal()
+                    });
             },
             intervalFetchData: function () {
             setInterval(() => {    
