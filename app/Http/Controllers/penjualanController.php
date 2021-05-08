@@ -79,11 +79,37 @@ class penjualanController extends Controller
         //$to = date('2021/02/02');
         $startDate = $request->input('startDate');
         $endDate = $request->input('endDate');
-
-        $posts = Penjualan::whereBetween('tglNota', [$startDate, $endDate])->get();
-        $NotalTOtal = Penjualan::whereBetween('tglNota', [$startDate, $endDate])->sum('totalNota');
-        $pajakSum = Penjualan::whereBetween('tglNota', [$startDate, $endDate])->sum('taxNota');
-        $diskonSum = Penjualan::whereBetween('tglNota', [$startDate, $endDate])->sum('diskonNota');
+        $cr = $request->input('typeNotaCari');
+        if($cr == 0){
+            $posts = Penjualan::whereBetween('tglNota', [$startDate, $endDate])->get();
+            $NotalTOtal = Penjualan::whereBetween('tglNota', [$startDate, $endDate])->sum('totalNota');
+            $pajakSum = Penjualan::whereBetween('tglNota', [$startDate, $endDate])->sum('taxNota');
+            $diskonSum = Penjualan::whereBetween('tglNota', [$startDate, $endDate])->sum('diskonNota'); 
+            
+            //$posts = Penjualan::latest()->get();
+        return response([
+            'success' => true,
+            'message' => 'List Semua SPenjualan',
+            'startDate' => $startDate,
+            'endDate' => $endDate,
+            'notaSum' => $NotalTOtal,
+            'pajakSum' => $pajakSum,
+            'diskonSum' => $diskonSum,
+            'data' => $posts
+        ], 200);
+        }else{
+            $posts = Penjualan::whereBetween('tglNota', [$startDate, $endDate])
+                                ->where('typeNota', $cr)
+                                ->get();
+            $NotalTOtal = Penjualan::whereBetween('tglNota', [$startDate, $endDate])
+                                ->where('typeNota', $cr)
+                                ->sum('totalNota');
+            $pajakSum = Penjualan::whereBetween('tglNota', [$startDate, $endDate])
+                                ->where('typeNota', $cr)
+                                ->sum('taxNota');
+            $diskonSum = Penjualan::whereBetween('tglNota', [$startDate, $endDate])
+                                ->where('typeNota', $cr)
+                                ->sum('diskonNota');
 
         //$posts = Penjualan::latest()->get();
         return response([
@@ -96,7 +122,7 @@ class penjualanController extends Controller
             'diskonSum' => $diskonSum,
             'data' => $posts
         ], 200);
-
+        }
     }
     public function listDetailPenjualan($id)
     {

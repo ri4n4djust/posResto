@@ -102,7 +102,7 @@
                             <div class="form-group">
                                 <label>Stok Inventori</label>
                                 <input type="text" class="form-control" v-model="post1.qty"
-                                       placeholder="Stok" >
+                                       placeholder="Stok" required >
                             </div>
                             
                             <div class="form-group">
@@ -239,6 +239,7 @@ Vue.component("data-table", DataTable);
                         this.loadData();
                         document.getElementById("anyName").reset();
                         //this.$router.push({name: 'kategori'});
+                        this.ModalInputInventori = false;
                     }).catch(error => {
                     //this.validation = error.response.data.data;
                     alert('ada yang error');
@@ -270,7 +271,7 @@ Vue.component("data-table", DataTable);
         },
 
         beforeDestroy () {
-            clearInterval(this.posts)
+            //clearInterval(this.posts)
         },
         
     }

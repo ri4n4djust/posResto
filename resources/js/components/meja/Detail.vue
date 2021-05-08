@@ -85,8 +85,11 @@
                 <a href="#"  @click="showModalMenu = true" class="btn btn-md btn-success"><b>Add Menu</b></a>
                 <a href="#"  @click="showModalMove = true" class="btn btn-md btn-success"><b>Pindah Meja</b></a>
                 
-               <span v-if=" orders.length == 0 && orders1.length == 0"><a href="#"  class="btn btn-md btn-success disabled" role="button" aria-disabled="true">Print Order</a></span>
-               <span v-else><a href="#"  @click="printOrder(id= post.id)" class="btn btn-md btn-success" >Print Order</a></span>
+                <span v-if="adminuser === 'Admin'">
+                  <span v-if=" orders.length == 0 && orders1.length == 0"><a href="#"  class="btn btn-md btn-success disabled" role="button" aria-disabled="true">Print Order</a></span>
+                  <span v-else><a href="#"  @click="printOrder(id= post.id)" class="btn btn-md btn-success" >Print Order</a></span>
+                </span>
+
                 <router-link :to="{ name: 'meja' }" class="btn btn-primary btn-success">KEMBALI</router-link>
                 
                 <!-- /.post -->
@@ -117,15 +120,20 @@
                 <div id="printMe1" class="printMe1">
                   
                 <div id="lastOrder" class="lastOrder">
+
                 <span v-if=" orders.length != 0 ">
                   <h3 class="profile-username text-center">Meja No: {{ post.noMeja }}</h3>
+                 
                   <table class="table table-striped">
+                    <thead>
                   <tr>
-                    <td>No.</td>
-                    <td>Menu</td>
-                    <td>Qty</td>
-                    <td>Jam</td>
+                    <th>No.</th>
+                    <th>Menu</th>
+                    <th>Qty</th>
+                    <th>Jam</th>
                   </tr>
+                    </thead>
+                    <tbody>
                   <tr v-for="order, key in orders" :key="order.id">
                     <td>{{ key + 1}} </td>
                     <td>{{ order.nmMenu }}<br>
@@ -133,17 +141,25 @@
                     <td>{{ order.qtyOrder }}</td>
                     <td>{{ order.wktOrder }} </td>
                   </tr>
-                </table>       
+                    </tbody>
+                </table>
                 </span>
+                <br>
+                <br>
+                <br>
+
                 <span v-if=" orders1.length != 0 ">
                 <h3 class="profile-username text-center">Meja No: {{ post.noMeja }}</h3>
                   <table class="table table-striped">
+                    <thead>
                   <tr>
-                    <td>No.</td>
-                    <td>Menu</td>
-                    <td>Qty</td>
-                    <td>Jam</td>
+                    <th>No.</th>
+                    <th>Menu</th>
+                    <th>Qty</th>
+                    <th>Jam</th>
                   </tr>
+                    </thead>
+                  <tbody>
                   <tr v-for="order, key in orders1" :key="order.id">
                     <td>{{ key + 1}} </td>
                     <td>{{ order.nmMenu }}<br>
@@ -151,6 +167,7 @@
                     <td>{{ order.qtyOrder }}</td>
                     <td>{{ order.wktOrder }} </td>
                   </tr>
+                  </tbody>
                 </table>                
                 </span>
               </div>
@@ -388,12 +405,14 @@
                 <p class="text-muted text-center">
                 <img :src="'/image/logoNota.png'" >
                 </p>
-               <address>
+                <p class="text-bold text-center">
+               
                     Phone / Wa: 081 239 099 998<br>
                     Email: warungdaladesa@gmail.com<br>
                     FB : warungdaladesa<br>
                     IG : warung.daladesa.sangeh
-                  </address>
+                  
+                </p>
               <div class="row invoice-info">
                 <div class="col-xs-6">
                   <p class="text-muted" style="margin-top: 2px;">
@@ -487,13 +506,12 @@
                                     <tr v-else-if="pembayaran === '2'">
                                     </tr>
 
-                                    <tr>
-                                        <th colspan="5">Terima Kasih <br>Belanja Anda Hal Baik Bagi Dunia</th>
-                                    </tr>
-                                    <tr>
-                                        <th colspan="5">Tidak enak Kasi Tau Kami, ENAK kasi tau temanmu</th>
-                                    </tr>
                             </table>
+                            <p class="text-bold text-center">
+                                Terima Kasih <br>
+                                Belanja Anda Hal Baik Bagi Dunia<br>
+                                Tidak enak Kasi Tau Kami, ENAK kasi tau temanmu<br>                              
+                            </p>
                 </div>
               </div>
                 </section>
@@ -518,6 +536,7 @@
 </template>
 
 <style type="text/css">
+
 
     #printMe { display: none; }
 
@@ -625,6 +644,7 @@
                 pembayaran: '1',
                 pajakKartu:'',
                 mytimer: 0,
+                adminuser: '',
                 //printMe: '',
                 //waitername : this.waiter.name,
                 //optionLabel: users.nmBarang,
@@ -651,6 +671,7 @@
             this.ListOrder();
             this.ListOrder1();
             this.loadPelanggan();
+            this.adminuser = this.$session.get('roleID');
             
             
         },

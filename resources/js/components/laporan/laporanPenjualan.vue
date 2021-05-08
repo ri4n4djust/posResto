@@ -23,20 +23,40 @@
                             <!-- /.tab-pane -->
                             <div class="tab-pane" id="timeline">
                                 <!-- The timeline -->
+                            <div>
+
                                 <form  @submit.prevent="lapPenjualan" >
+                                
+                                    <div class="box-body">
+                                        <div class="input-group">
+                                        <div class="col-md-6">
+                                        <label class="control-label" ><i class="fa fa-check"></i>Start Date</label>
+                                        <date-picker v-model="startDate" value-type="format" format="YYYY/MM/DD" :required="true"></date-picker>
+                                        </div>
+                                        </div>
+                                        <div class="input-group">
+                                        <div class="col-md-6">
+                                        <label class="control-label" ><i class="fa fa-check"></i>End Date</label>
+                                        <date-picker v-model="endDate" value-type="format" format="YYYY/MM/DD" :required="true"></date-picker>
+                                        </div>
+                                        </div>
+                                        <div class="input-group">
+                                        <div class="col-md-6">
+                                        <label class="control-label" ><i class="fa fa-check"></i>Jenis Pembayaran</label>
+                                        <select class='form-control' v-model='typeNotaCari' required>
+                                            <option  value='0' selected>Semua</option>
+                                            <option value='1' >Cash</option>
+                                            <option value='2' >Debit</option>
+                                        </select>
+                                        </div>
+                                        </div>
+                                        <br>
+                                        <div class="col-xs-2">
+                                        <button type="submit" class="btn btn-md btn-success">View Data</button> 
+                                        </div>
                                     
-                                        <p class="text-muted text-left">
-                                        <label>Start Date</label>
-                                    <date-picker v-model="startDate" value-type="format" format="YYYY/MM/DD" :required="true"></date-picker>
-                                        </p>
-                                        <p class="text-muted text-left">
-                                        <label>End Date</label>
-                                    <date-picker v-model="endDate" value-type="format" format="YYYY/MM/DD" :required="true"></date-picker>
-                                        </p>
-                                        <p class="text-muted text-left">
-                                    <button type="submit" class="btn btn-md btn-success">View Data</button> 
-                                        </p>                       
-                                    
+                                    </div>
+                                                                   
                                 </form>
                                   
                                 <table class="table table-hover table-bordered">
@@ -44,6 +64,7 @@
                                     <tr>
                                         <th>No Nota</th>
                                         <th>Customer</th>
+                                        <th>Type Pembayaran</th>
                                         <th>Tgl</th>
                                         <th>PPn</th>
                                         <th>Diskon</th>
@@ -54,6 +75,17 @@
                                     <tr v-for="post1 in posts1" :key="post1.id">
                                         <td>{{ post1.noNota }}</td>
                                         <td>{{ post1.pelangganNota }}</td>
+                                        <td>
+                                            <span v-if="post1.typeNota === '1'">
+                                                Cash
+                                            </span>
+                                            <span v-else-if="post1.typeNota === '2'">
+                                                Debit
+                                            </span>
+                                            <span v-else-if="post1.typeNota === '3'">
+                                                E-Money
+                                            </span>
+                                        </td>
                                         <td>{{ post1.tglNota }}</td>
                                         <td>{{ post1.taxNota | currency }}</td>
                                         <td>{{ post1.diskonNota | currency }}</td>
@@ -62,6 +94,7 @@
                                     </tbody>
                                     <tfoot>
                                         <tr>
+                                            <th></th>
                                             <th></th>
                                             <th></th>
                                             <th></th>
@@ -80,6 +113,7 @@
                                     <tr>
                                         <th>No Nota</th>
                                         <th>Customer</th>
+                                        <th>Type Pembayaran</th>
                                         <th>Tgl</th>
                                         <th>Meja</th>
                                         <th>Total</th>
@@ -89,12 +123,24 @@
                                     <tr v-for="post1 in posts1" :key="post1.id">
                                         <td>{{ post1.noNota }}</td>
                                         <td>{{ post1.pelangganNota }}</td>
+                                        <td>
+                                            <span v-if="post1.typeNota === '1'">
+                                                Cash
+                                            </span>
+                                            <span v-else-if="post1.typeNota === '2'">
+                                                Debit
+                                            </span>
+                                            <span v-else-if="post1.typeNota === '3'">
+                                                E-Money
+                                            </span>
+                                        </td>
                                         <td>{{ post1.tglNota }}</td>
                                         <td>{{ post1.noMeja}}</td>
                                         <td>{{ post1.totalNota | currency}}</td>
                                     </tr>
                                     
                                         <tr>
+                                            <th></th>
                                             <th></th>
                                             <th></th>
                                             <th></th>
@@ -110,6 +156,7 @@
                                 <!-- OUTPUT -->
                                 <button type="button" class="btn btn-primary" @click="print('printMu')">Print</button>
 
+                            </div>
                             </div>
                             <!-- /.tab-pane -->
 
@@ -186,6 +233,7 @@ Vue.component("data-table", DataTable);
                 posts1: [],
                 startDate: '',
                 endDate: '',
+                typeNotaCari: '0',
                 ActionButtons: null,
                 validation: null,
                 //actionTriggered: null,
@@ -305,6 +353,7 @@ Vue.component("data-table", DataTable);
                 {
                     startDate: this.startDate,
                     endDate: this.endDate,
+                    typeNotaCari: this.typeNotaCari,
                 })
                     .then((response) => {
                         this.posts1 = response.data.data;

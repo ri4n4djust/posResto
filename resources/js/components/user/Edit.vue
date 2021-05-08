@@ -10,44 +10,24 @@
                             <div class="form-group">
                                 <label>Username </label>
                                 <input type="text" class="form-control" v-model="post.username" @keydown.space.prevent >
-                                <div v-if="validation.username">
-                                    <div class="alert alert-danger mt-1" role="alert">
-                                        {{ validation.username[0] }}
-                                    </div>
-                                </div>
                             </div>
 
                             <div class="form-group">
                                 <label>Nama </label>
                                 <input type="text" class="form-control" v-model="post.name"
                                        placeholder="Masukkan Nama">
-                                <div v-if="validation.name">
-                                    <div class="alert alert-danger mt-1" role="alert">
-                                        {{ validation.name[0] }}
-                                    </div>
-                                </div>
                             </div>
 
                             <div class="form-group">
                                 <label>Email</label>
                                 <input type="text" class="form-control" v-model="post.email"
                                        placeholder="Harga">
-                                <div v-if="validation.email">
-                                    <div class="alert alert-danger mt-1" role="alert">
-                                        {{ validation.email[0] }}
-                                    </div>
-                                </div>
                             </div>
 
                             <div class="form-group">
                                 <label>Password</label>
                                 <input type="text" class="form-control" v-model="post.password"
-                                       placeholder="Stok">
-                                <div v-if="validation.password">
-                                    <div class="alert alert-danger mt-1" role="alert">
-                                        {{ validation.password[0] }}
-                                    </div>
-                                </div>
+                                       placeholder="Stok" required>
                             </div>
 
                             <div class="form-group">
@@ -132,7 +112,7 @@ components: { VueSingleSelect },
                 let uri = `/api/user/update/${this.$route.params.id}`;
                 this.axios.post(uri, this.post)
                     .then((response) => {
-                        this.$router.push({name: 'menu'});
+                        this.$router.push({name: 'user'});
                     }).catch(error => {
                     this.validation = error.response.data.data;
                 });

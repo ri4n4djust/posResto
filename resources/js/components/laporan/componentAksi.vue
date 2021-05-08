@@ -82,12 +82,14 @@
                 <p class="text-muted text-center">
                 <img :src="'/image/logoNota.png'" >
                 </p>
-               <address>
+               <p class="text-bold text-center">
+               
                     Phone / Wa: 081 239 099 998<br>
                     Email: warungdaladesa@gmail.com<br>
                     FB : warungdaladesa<br>
                     IG : warung.daladesa.sangeh
-                  </address>
+                  
+                </p>
               <div class="row invoice-info">
                   <!-- accepted payments column -->
                     <div class="col-xs-6">
@@ -160,12 +162,13 @@
                                         <th colspan="3">Kembalian :</th>
                                         <th>{{ data.kembalianNota | currency }}</th>
                                     </tr>
-<tr>
-                                        <th colspan="5">Terima Kasih <br>Belanja Anda Hal Baik Bagi Dunia</th>
-                                    </tr>
-                                    <tr>
-                                        <th colspan="5">Tidak enak Kasi Tau Kami, ENAK kasi tau temanmu</th>
-                                    </tr>                            </table>
+                                </table>
+                                <p class="text-bold text-center">
+                                Terima Kasih <br>
+                                Belanja Anda Hal Baik Bagi Dunia<br>
+                                Tidak enak Kasi Tau Kami, ENAK kasi tau temanmu<br>                              
+                            </p>
+
                 </div>
                 
               </div>

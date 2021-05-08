@@ -168,26 +168,8 @@ class loginController extends Controller
 
     public function update(Request $request)
     {
-        //validate data
-        $validator = Validator::make($request->all(), [
-            'username'     => 'required'
-        ],
-            [
-                'username.required' => 'Masukkan Nama Menu !',
-            ]
-        );
 
-        if($validator->fails()) {
-
-            return response()->json([
-                'success' => false,
-                'message' => 'Silahkan Isi Bidang Yang Kosong',
-                'data'    => $validator->errors()
-            ],400);
-
-        } else {
-
-            $post = Menu::whereId($request->input('id'))->update([
+            $post = User::whereId($request->input('id'))->update([
                 'name'     => $request->input('name'),
                 'email'   => $request->input('email'),
                 'password'   => Hash::Make($request->input('password')),
@@ -195,20 +177,12 @@ class loginController extends Controller
             ]);
 
 
-            if ($post) {
+           
                 return response()->json([
                     'success' => true,
                     'message' => 'Post Berhasil Diupdate!',
                 ], 200);
-            } else {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Post Gagal Diupdate!',
-                ], 500);
-            }
-
-        }
-
+            
     }
 
     public function destroy($id)

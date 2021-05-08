@@ -36,7 +36,7 @@
                             <div class="form-group">
                             <label>Kategori Menu:</label>
                             <select class='form-control' v-model='post.ktgMenu' required>
-                                <option  value='M01' selected>Main Dish</option>
+                                <option  value='M01' selected>Food</option>
                                 <option value='M02' >Drink</option>
                             </select>
                             </div>
@@ -97,13 +97,7 @@
                 
             });
             },
-            loadKdMenu:function(){
-                let uri = '/api/kategorimenu/';
-                this.axios.get(uri).then(response => {
-                this.ktgmenus= response.data.data;
-                
-            });
-            },
+            
         },
         
     }

@@ -9934,6 +9934,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "ActionButtons",
   data: function data() {
@@ -11298,6 +11301,53 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -11323,6 +11373,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component("data-table", _andresouzaab
       posts1: [],
       startDate: '',
       endDate: '',
+      typeNotaCari: '0',
       ActionButtons: null,
       validation: null,
       //actionTriggered: null,
@@ -11427,7 +11478,8 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component("data-table", _andresouzaab
       var uri = '/api/lapPenjualan';
       this.axios.post(uri, {
         startDate: this.startDate,
-        endDate: this.endDate
+        endDate: this.endDate,
+        typeNotaCari: this.typeNotaCari
       }).then(function (response) {
         _this2.posts1 = response.data.data;
         _this2.totalS = response.data.notaSum;
@@ -12598,6 +12650,25 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -12655,6 +12726,7 @@ __webpack_require__.r(__webpack_exports__);
       pembayaran: '1',
       pajakKartu: '',
       mytimer: 0,
+      adminuser: '',
       //printMe: '',
       //waitername : this.waiter.name,
       //optionLabel: users.nmBarang,
@@ -12682,6 +12754,7 @@ __webpack_require__.r(__webpack_exports__);
     this.ListOrder();
     this.ListOrder1();
     this.loadPelanggan();
+    this.adminuser = this.$session.get('roleID');
   },
   watch: {
     post: function post() {
@@ -13255,8 +13328,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 //
 //
 //
@@ -13336,7 +13407,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   created: function created() {
     this.loadKdMenu();
   },
-  methods: _defineProperty({
+  methods: {
     PostStore: function PostStore() {
       var _this = this;
 
@@ -13359,14 +13430,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         _this2.post.kdMenu = response.data.kdMenu;
       });
     }
-  }, "loadKdMenu", function loadKdMenu() {
-    var _this3 = this;
-
-    var uri = '/api/kategorimenu/';
-    this.axios.get(uri).then(function (response) {
-      _this3.ktgmenus = response.data.data;
-    });
-  })
+  }
 });
 
 /***/ }),
@@ -15132,6 +15196,8 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component("data-table", _andresouzaab
         _this.loadData();
 
         document.getElementById("anyName").reset(); //this.$router.push({name: 'kategori'});
+
+        _this.ModalInputInventori = false;
       })["catch"](function (error) {
         //this.validation = error.response.data.data;
         alert('ada yang error');
@@ -15163,8 +15229,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component("data-table", _andresouzaab
     //this.bindings()
     this.loadData();
   },
-  beforeDestroy: function beforeDestroy() {
-    clearInterval(this.posts);
+  beforeDestroy: function beforeDestroy() {//clearInterval(this.posts)
   }
 });
 
@@ -16791,26 +16856,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
@@ -16858,7 +16903,7 @@ __webpack_require__.r(__webpack_exports__);
       var uri = "/api/user/update/".concat(this.$route.params.id);
       this.axios.post(uri, this.post).then(function (response) {
         _this2.$router.push({
-          name: 'menu'
+          name: 'user'
         });
       })["catch"](function (error) {
         _this2.validation = error.response.data.data;
@@ -62669,19 +62714,19 @@ var render = function() {
                                 _vm.data.typePembayaran === "1"
                                   ? _c("span", [
                                       _vm._v(
-                                        "\n                                                    Cash\n                                                "
+                                        "\n                                                Cash\n                                            "
                                       )
                                     ])
                                   : _vm.data.typePembayaran === "2"
                                   ? _c("span", [
                                       _vm._v(
-                                        "\n                                                    Debit\n                                                "
+                                        "\n                                                Debit\n                                            "
                                       )
                                     ])
                                   : _vm.data.typePembayaran === "3"
                                   ? _c("span", [
                                       _vm._v(
-                                        "\n                                                    E-Money\n                                                "
+                                        "\n                                                E-Money\n                                            "
                                       )
                                     ])
                                   : _vm._e(),
@@ -62720,7 +62765,7 @@ var render = function() {
                           [
                             _c("label", [_vm._v("Total : ")]),
                             _vm._v(
-                              "\n                                            " +
+                              "\n                                        " +
                                 _vm._s(
                                   _vm._f("currency")(_vm.data.totalNota || 0)
                                 )
@@ -62807,21 +62852,19 @@ var render = function() {
                               })
                             ]),
                             _vm._v(" "),
-                            _c("address", [
+                            _c("p", { staticClass: "text-bold text-center" }, [
                               _vm._v(
-                                "\n                    Phone / Wa: 081 239 099 998"
+                                "\n           \n                Phone / Wa: 081 239 099 998"
                               ),
                               _c("br"),
                               _vm._v(
-                                "\n                    Email: warungdaladesa@gmail.com"
+                                "\n                Email: warungdaladesa@gmail.com"
                               ),
                               _c("br"),
-                              _vm._v(
-                                "\n                    FB : warungdaladesa"
-                              ),
+                              _vm._v("\n                FB : warungdaladesa"),
                               _c("br"),
                               _vm._v(
-                                "\n                    IG : warung.daladesa.sangeh\n                  "
+                                "\n                IG : warung.daladesa.sangeh\n              \n            "
                               )
                             ]),
                             _vm._v(" "),
@@ -62876,19 +62919,19 @@ var render = function() {
                                     _vm.data.typePembayaran === "1"
                                       ? _c("span", [
                                           _vm._v(
-                                            "\n                            Cash\n                        "
+                                            "\n                        Cash\n                    "
                                           )
                                         ])
                                       : _vm.data.typePembayaran === "2"
                                       ? _c("span", [
                                           _vm._v(
-                                            "\n                            Debit\n                        "
+                                            "\n                        Debit\n                    "
                                           )
                                         ])
                                       : _vm.data.typePembayaran === "3"
                                       ? _c("span", [
                                           _vm._v(
-                                            "\n                            E-Money\n                        "
+                                            "\n                        E-Money\n                    "
                                           )
                                         ])
                                       : _vm._e()
@@ -63044,25 +63087,26 @@ var render = function() {
                                             )
                                           )
                                         ])
-                                      ]),
-                                      _vm._v(" "),
-                                      _c("tr", [
-                                        _c("th", { attrs: { colspan: "5" } }, [
-                                          _vm._v("Terima Kasih "),
-                                          _c("br"),
-                                          _vm._v(
-                                            "Belanja Anda Hal Baik Bagi Dunia"
-                                          )
-                                        ])
-                                      ]),
-                                      _vm._v(" "),
-                                      _c("tr", [
-                                        _c("th", { attrs: { colspan: "5" } }, [
-                                          _vm._v(
-                                            "Tidak enak Kasi Tau Kami, ENAK kasi tau temanmu"
-                                          )
-                                        ])
                                       ])
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "p",
+                                    { staticClass: "text-bold text-center" },
+                                    [
+                                      _vm._v(
+                                        "\n                            Terima Kasih "
+                                      ),
+                                      _c("br"),
+                                      _vm._v(
+                                        "\n                            Belanja Anda Hal Baik Bagi Dunia"
+                                      ),
+                                      _c("br"),
+                                      _vm._v(
+                                        "\n                            Tidak enak Kasi Tau Kami, ENAK kasi tau temanmu"
+                                      ),
+                                      _c("br")
                                     ]
                                   )
                                 ]
@@ -64315,181 +64359,302 @@ var render = function() {
             ),
             _vm._v(" "),
             _c("div", { staticClass: "tab-pane", attrs: { id: "timeline" } }, [
-              _c(
-                "form",
-                {
-                  on: {
-                    submit: function($event) {
-                      $event.preventDefault()
-                      return _vm.lapPenjualan($event)
-                    }
-                  }
-                },
-                [
-                  _c(
-                    "p",
-                    { staticClass: "text-muted text-left" },
-                    [
-                      _c("label", [_vm._v("Start Date")]),
-                      _vm._v(" "),
-                      _c("date-picker", {
-                        attrs: {
-                          "value-type": "format",
-                          format: "YYYY/MM/DD",
-                          required: true
-                        },
-                        model: {
-                          value: _vm.startDate,
-                          callback: function($$v) {
-                            _vm.startDate = $$v
-                          },
-                          expression: "startDate"
-                        }
-                      })
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "p",
-                    { staticClass: "text-muted text-left" },
-                    [
-                      _c("label", [_vm._v("End Date")]),
-                      _vm._v(" "),
-                      _c("date-picker", {
-                        attrs: {
-                          "value-type": "format",
-                          format: "YYYY/MM/DD",
-                          required: true
-                        },
-                        model: {
-                          value: _vm.endDate,
-                          callback: function($$v) {
-                            _vm.endDate = $$v
-                          },
-                          expression: "endDate"
-                        }
-                      })
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _vm._m(1)
-                ]
-              ),
-              _vm._v(" "),
-              _c("table", { staticClass: "table table-hover table-bordered" }, [
-                _vm._m(2),
-                _vm._v(" "),
+              _c("div", [
                 _c(
-                  "tbody",
-                  _vm._l(_vm.posts1, function(post1) {
-                    return _c("tr", { key: post1.id }, [
-                      _c("td", [_vm._v(_vm._s(post1.noNota))]),
-                      _vm._v(" "),
-                      _c("td", [_vm._v(_vm._s(post1.pelangganNota))]),
-                      _vm._v(" "),
-                      _c("td", [_vm._v(_vm._s(post1.tglNota))]),
-                      _vm._v(" "),
-                      _c("td", [
-                        _vm._v(_vm._s(_vm._f("currency")(post1.taxNota)))
+                  "form",
+                  {
+                    on: {
+                      submit: function($event) {
+                        $event.preventDefault()
+                        return _vm.lapPenjualan($event)
+                      }
+                    }
+                  },
+                  [
+                    _c("div", { staticClass: "box-body" }, [
+                      _c("div", { staticClass: "input-group" }, [
+                        _c(
+                          "div",
+                          { staticClass: "col-md-6" },
+                          [
+                            _vm._m(1),
+                            _vm._v(" "),
+                            _c("date-picker", {
+                              attrs: {
+                                "value-type": "format",
+                                format: "YYYY/MM/DD",
+                                required: true
+                              },
+                              model: {
+                                value: _vm.startDate,
+                                callback: function($$v) {
+                                  _vm.startDate = $$v
+                                },
+                                expression: "startDate"
+                              }
+                            })
+                          ],
+                          1
+                        )
                       ]),
                       _vm._v(" "),
-                      _c("td", [
-                        _vm._v(_vm._s(_vm._f("currency")(post1.diskonNota)))
+                      _c("div", { staticClass: "input-group" }, [
+                        _c(
+                          "div",
+                          { staticClass: "col-md-6" },
+                          [
+                            _vm._m(2),
+                            _vm._v(" "),
+                            _c("date-picker", {
+                              attrs: {
+                                "value-type": "format",
+                                format: "YYYY/MM/DD",
+                                required: true
+                              },
+                              model: {
+                                value: _vm.endDate,
+                                callback: function($$v) {
+                                  _vm.endDate = $$v
+                                },
+                                expression: "endDate"
+                              }
+                            })
+                          ],
+                          1
+                        )
                       ]),
                       _vm._v(" "),
-                      _c("td", [
-                        _vm._v(_vm._s(_vm._f("currency")(post1.totalNota)))
-                      ])
+                      _c("div", { staticClass: "input-group" }, [
+                        _c("div", { staticClass: "col-md-6" }, [
+                          _vm._m(3),
+                          _vm._v(" "),
+                          _c(
+                            "select",
+                            {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.typeNotaCari,
+                                  expression: "typeNotaCari"
+                                }
+                              ],
+                              staticClass: "form-control",
+                              attrs: { required: "" },
+                              on: {
+                                change: function($event) {
+                                  var $$selectedVal = Array.prototype.filter
+                                    .call($event.target.options, function(o) {
+                                      return o.selected
+                                    })
+                                    .map(function(o) {
+                                      var val =
+                                        "_value" in o ? o._value : o.value
+                                      return val
+                                    })
+                                  _vm.typeNotaCari = $event.target.multiple
+                                    ? $$selectedVal
+                                    : $$selectedVal[0]
+                                }
+                              }
+                            },
+                            [
+                              _c(
+                                "option",
+                                { attrs: { value: "0", selected: "" } },
+                                [_vm._v("Semua")]
+                              ),
+                              _vm._v(" "),
+                              _c("option", { attrs: { value: "1" } }, [
+                                _vm._v("Cash")
+                              ]),
+                              _vm._v(" "),
+                              _c("option", { attrs: { value: "2" } }, [
+                                _vm._v("Debit")
+                              ])
+                            ]
+                          )
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("br"),
+                      _vm._v(" "),
+                      _vm._m(4)
                     ])
-                  }),
-                  0
+                  ]
                 ),
                 _vm._v(" "),
-                _c("tfoot", [
-                  _c("tr", [
-                    _c("th"),
-                    _vm._v(" "),
-                    _c("th"),
-                    _vm._v(" "),
-                    _c("th"),
-                    _vm._v(" "),
-                    _c("th", [_vm._v(_vm._s(_vm._f("currency")(_vm.pajakS)))]),
-                    _vm._v(" "),
-                    _c("th", [_vm._v(_vm._s(_vm._f("currency")(_vm.diskonS)))]),
-                    _vm._v(" "),
-                    _c("th", [_vm._v(_vm._s(_vm._f("currency")(_vm.totalS)))])
-                  ])
-                ])
-              ]),
-              _vm._v(" "),
-              _c("div", { attrs: { id: "printMe", hidden: "" } }, [
-                _c("div", { staticClass: "row invoice-info" }, [
-                  _vm._v(
-                    "\n                Laporan penjualan Tgl " +
-                      _vm._s(_vm.startDate) +
-                      " sd " +
-                      _vm._s(_vm.endDate) +
-                      "\n            "
-                  ),
-                  _c("table", { staticClass: "table table-striped" }, [
-                    _vm._m(3),
+                _c(
+                  "table",
+                  { staticClass: "table table-hover table-bordered" },
+                  [
+                    _vm._m(5),
                     _vm._v(" "),
                     _c(
                       "tbody",
-                      [
-                        _vm._l(_vm.posts1, function(post1) {
-                          return _c("tr", { key: post1.id }, [
-                            _c("td", [_vm._v(_vm._s(post1.noNota))]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(post1.pelangganNota))]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(post1.tglNota))]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(post1.noMeja))]),
-                            _vm._v(" "),
-                            _c("td", [
-                              _vm._v(
-                                _vm._s(_vm._f("currency")(post1.totalNota))
-                              )
-                            ])
-                          ])
-                        }),
-                        _vm._v(" "),
-                        _c("tr", [
-                          _c("th"),
+                      _vm._l(_vm.posts1, function(post1) {
+                        return _c("tr", { key: post1.id }, [
+                          _c("td", [_vm._v(_vm._s(post1.noNota))]),
                           _vm._v(" "),
-                          _c("th"),
+                          _c("td", [_vm._v(_vm._s(post1.pelangganNota))]),
                           _vm._v(" "),
-                          _c("th"),
+                          _c("td", [
+                            post1.typeNota === "1"
+                              ? _c("span", [
+                                  _vm._v(
+                                    "\n                            Cash\n                        "
+                                  )
+                                ])
+                              : post1.typeNota === "2"
+                              ? _c("span", [
+                                  _vm._v(
+                                    "\n                            Debit\n                        "
+                                  )
+                                ])
+                              : post1.typeNota === "3"
+                              ? _c("span", [
+                                  _vm._v(
+                                    "\n                            E-Money\n                        "
+                                  )
+                                ])
+                              : _vm._e()
+                          ]),
                           _vm._v(" "),
-                          _c("th"),
+                          _c("td", [_vm._v(_vm._s(post1.tglNota))]),
                           _vm._v(" "),
-                          _c("th", [
-                            _vm._v(_vm._s(_vm._f("currency")(_vm.totalS)))
+                          _c("td", [
+                            _vm._v(_vm._s(_vm._f("currency")(post1.taxNota)))
+                          ]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _vm._v(_vm._s(_vm._f("currency")(post1.diskonNota)))
+                          ]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _vm._v(_vm._s(_vm._f("currency")(post1.totalNota)))
                           ])
                         ])
-                      ],
-                      2
-                    )
+                      }),
+                      0
+                    ),
+                    _vm._v(" "),
+                    _c("tfoot", [
+                      _c("tr", [
+                        _c("th"),
+                        _vm._v(" "),
+                        _c("th"),
+                        _vm._v(" "),
+                        _c("th"),
+                        _vm._v(" "),
+                        _c("th"),
+                        _vm._v(" "),
+                        _c("th", [
+                          _vm._v(_vm._s(_vm._f("currency")(_vm.pajakS)))
+                        ]),
+                        _vm._v(" "),
+                        _c("th", [
+                          _vm._v(_vm._s(_vm._f("currency")(_vm.diskonS)))
+                        ]),
+                        _vm._v(" "),
+                        _c("th", [
+                          _vm._v(_vm._s(_vm._f("currency")(_vm.totalS)))
+                        ])
+                      ])
+                    ])
+                  ]
+                ),
+                _vm._v(" "),
+                _c("div", { attrs: { id: "printMe", hidden: "" } }, [
+                  _c("div", { staticClass: "row invoice-info" }, [
+                    _vm._v(
+                      "\n                Laporan penjualan Tgl " +
+                        _vm._s(_vm.startDate) +
+                        " sd " +
+                        _vm._s(_vm.endDate) +
+                        "\n            "
+                    ),
+                    _c("table", { staticClass: "table table-striped" }, [
+                      _vm._m(6),
+                      _vm._v(" "),
+                      _c(
+                        "tbody",
+                        [
+                          _vm._l(_vm.posts1, function(post1) {
+                            return _c("tr", { key: post1.id }, [
+                              _c("td", [_vm._v(_vm._s(post1.noNota))]),
+                              _vm._v(" "),
+                              _c("td", [_vm._v(_vm._s(post1.pelangganNota))]),
+                              _vm._v(" "),
+                              _c("td", [
+                                post1.typeNota === "1"
+                                  ? _c("span", [
+                                      _vm._v(
+                                        "\n                            Cash\n                        "
+                                      )
+                                    ])
+                                  : post1.typeNota === "2"
+                                  ? _c("span", [
+                                      _vm._v(
+                                        "\n                            Debit\n                        "
+                                      )
+                                    ])
+                                  : post1.typeNota === "3"
+                                  ? _c("span", [
+                                      _vm._v(
+                                        "\n                            E-Money\n                        "
+                                      )
+                                    ])
+                                  : _vm._e()
+                              ]),
+                              _vm._v(" "),
+                              _c("td", [_vm._v(_vm._s(post1.tglNota))]),
+                              _vm._v(" "),
+                              _c("td", [_vm._v(_vm._s(post1.noMeja))]),
+                              _vm._v(" "),
+                              _c("td", [
+                                _vm._v(
+                                  _vm._s(_vm._f("currency")(post1.totalNota))
+                                )
+                              ])
+                            ])
+                          }),
+                          _vm._v(" "),
+                          _c("tr", [
+                            _c("th"),
+                            _vm._v(" "),
+                            _c("th"),
+                            _vm._v(" "),
+                            _c("th"),
+                            _vm._v(" "),
+                            _c("th"),
+                            _vm._v(" "),
+                            _c("th"),
+                            _vm._v(" "),
+                            _c("th", [
+                              _vm._v(_vm._s(_vm._f("currency")(_vm.totalS)))
+                            ])
+                          ])
+                        ],
+                        2
+                      )
+                    ])
                   ])
-                ])
-              ]),
-              _vm._v(" "),
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-primary",
-                  attrs: { type: "button" },
-                  on: {
-                    click: function($event) {
-                      return _vm.print("printMu")
+                ]),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-primary",
+                    attrs: { type: "button" },
+                    on: {
+                      click: function($event) {
+                        return _vm.print("printMu")
+                      }
                     }
-                  }
-                },
-                [_vm._v("Print")]
-              )
+                  },
+                  [_vm._v("Print")]
+                )
+              ])
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "tab-pane", attrs: { id: "settings" } })
@@ -64529,7 +64694,34 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("p", { staticClass: "text-muted text-left" }, [
+    return _c("label", { staticClass: "control-label" }, [
+      _c("i", { staticClass: "fa fa-check" }),
+      _vm._v("Start Date")
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { staticClass: "control-label" }, [
+      _c("i", { staticClass: "fa fa-check" }),
+      _vm._v("End Date")
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { staticClass: "control-label" }, [
+      _c("i", { staticClass: "fa fa-check" }),
+      _vm._v("Jenis Pembayaran")
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-xs-2" }, [
       _c(
         "button",
         { staticClass: "btn btn-md btn-success", attrs: { type: "submit" } },
@@ -64546,6 +64738,8 @@ var staticRenderFns = [
         _c("th", [_vm._v("No Nota")]),
         _vm._v(" "),
         _c("th", [_vm._v("Customer")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Type Pembayaran")]),
         _vm._v(" "),
         _c("th", [_vm._v("Tgl")]),
         _vm._v(" "),
@@ -64566,6 +64760,8 @@ var staticRenderFns = [
         _c("th", [_vm._v("No Nota")]),
         _vm._v(" "),
         _c("th", [_vm._v("Customer")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Type Pembayaran")]),
         _vm._v(" "),
         _c("th", [_vm._v("Tgl")]),
         _vm._v(" "),
@@ -65429,36 +65625,43 @@ var render = function() {
                       [_c("b", [_vm._v("Pindah Meja")])]
                     ),
                     _vm._v(" "),
-                    _vm.orders.length == 0 && _vm.orders1.length == 0
+                    _vm.adminuser === "Admin"
                       ? _c("span", [
-                          _c(
-                            "a",
-                            {
-                              staticClass: "btn btn-md btn-success disabled",
-                              attrs: {
-                                href: "#",
-                                role: "button",
-                                "aria-disabled": "true"
-                              }
-                            },
-                            [_vm._v("Print Order")]
-                          )
+                          _vm.orders.length == 0 && _vm.orders1.length == 0
+                            ? _c("span", [
+                                _c(
+                                  "a",
+                                  {
+                                    staticClass:
+                                      "btn btn-md btn-success disabled",
+                                    attrs: {
+                                      href: "#",
+                                      role: "button",
+                                      "aria-disabled": "true"
+                                    }
+                                  },
+                                  [_vm._v("Print Order")]
+                                )
+                              ])
+                            : _c("span", [
+                                _c(
+                                  "a",
+                                  {
+                                    staticClass: "btn btn-md btn-success",
+                                    attrs: { href: "#" },
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.printOrder(
+                                          (_vm.id = _vm.post.id)
+                                        )
+                                      }
+                                    }
+                                  },
+                                  [_vm._v("Print Order")]
+                                )
+                              ])
                         ])
-                      : _c("span", [
-                          _c(
-                            "a",
-                            {
-                              staticClass: "btn btn-md btn-success",
-                              attrs: { href: "#" },
-                              on: {
-                                click: function($event) {
-                                  return _vm.printOrder((_vm.id = _vm.post.id))
-                                }
-                              }
-                            },
-                            [_vm._v("Print Order")]
-                          )
-                        ]),
+                      : _vm._e(),
                     _vm._v(" "),
                     _c(
                       "router-link",
@@ -65547,35 +65750,49 @@ var render = function() {
                                     [
                                       _vm._m(3),
                                       _vm._v(" "),
-                                      _vm._l(_vm.orders, function(order, key) {
-                                        return _c("tr", { key: order.id }, [
-                                          _c("td", [
-                                            _vm._v(_vm._s(key + 1) + " ")
-                                          ]),
-                                          _vm._v(" "),
-                                          _c("td", [
-                                            _vm._v(_vm._s(order.nmMenu)),
-                                            _c("br"),
-                                            _vm._v(
-                                              "\n                        " +
-                                                _vm._s(order.noteOrder)
-                                            )
-                                          ]),
-                                          _vm._v(" "),
-                                          _c("td", [
-                                            _vm._v(_vm._s(order.qtyOrder))
-                                          ]),
-                                          _vm._v(" "),
-                                          _c("td", [
-                                            _vm._v(_vm._s(order.wktOrder) + " ")
+                                      _c(
+                                        "tbody",
+                                        _vm._l(_vm.orders, function(
+                                          order,
+                                          key
+                                        ) {
+                                          return _c("tr", { key: order.id }, [
+                                            _c("td", [
+                                              _vm._v(_vm._s(key + 1) + " ")
+                                            ]),
+                                            _vm._v(" "),
+                                            _c("td", [
+                                              _vm._v(_vm._s(order.nmMenu)),
+                                              _c("br"),
+                                              _vm._v(
+                                                "\n                        " +
+                                                  _vm._s(order.noteOrder)
+                                              )
+                                            ]),
+                                            _vm._v(" "),
+                                            _c("td", [
+                                              _vm._v(_vm._s(order.qtyOrder))
+                                            ]),
+                                            _vm._v(" "),
+                                            _c("td", [
+                                              _vm._v(
+                                                _vm._s(order.wktOrder) + " "
+                                              )
+                                            ])
                                           ])
-                                        ])
-                                      })
-                                    ],
-                                    2
+                                        }),
+                                        0
+                                      )
+                                    ]
                                   )
                                 ])
                               : _vm._e(),
+                            _vm._v(" "),
+                            _c("br"),
+                            _vm._v(" "),
+                            _c("br"),
+                            _vm._v(" "),
+                            _c("br"),
                             _vm._v(" "),
                             _vm.orders1.length != 0
                               ? _c("span", [
@@ -65598,32 +65815,40 @@ var render = function() {
                                     [
                                       _vm._m(4),
                                       _vm._v(" "),
-                                      _vm._l(_vm.orders1, function(order, key) {
-                                        return _c("tr", { key: order.id }, [
-                                          _c("td", [
-                                            _vm._v(_vm._s(key + 1) + " ")
-                                          ]),
-                                          _vm._v(" "),
-                                          _c("td", [
-                                            _vm._v(_vm._s(order.nmMenu)),
-                                            _c("br"),
-                                            _vm._v(
-                                              "\n                        " +
-                                                _vm._s(order.noteOrder)
-                                            )
-                                          ]),
-                                          _vm._v(" "),
-                                          _c("td", [
-                                            _vm._v(_vm._s(order.qtyOrder))
-                                          ]),
-                                          _vm._v(" "),
-                                          _c("td", [
-                                            _vm._v(_vm._s(order.wktOrder) + " ")
+                                      _c(
+                                        "tbody",
+                                        _vm._l(_vm.orders1, function(
+                                          order,
+                                          key
+                                        ) {
+                                          return _c("tr", { key: order.id }, [
+                                            _c("td", [
+                                              _vm._v(_vm._s(key + 1) + " ")
+                                            ]),
+                                            _vm._v(" "),
+                                            _c("td", [
+                                              _vm._v(_vm._s(order.nmMenu)),
+                                              _c("br"),
+                                              _vm._v(
+                                                "\n                        " +
+                                                  _vm._s(order.noteOrder)
+                                              )
+                                            ]),
+                                            _vm._v(" "),
+                                            _c("td", [
+                                              _vm._v(_vm._s(order.qtyOrder))
+                                            ]),
+                                            _vm._v(" "),
+                                            _c("td", [
+                                              _vm._v(
+                                                _vm._s(order.wktOrder) + " "
+                                              )
+                                            ])
                                           ])
-                                        ])
-                                      })
-                                    ],
-                                    2
+                                        }),
+                                        0
+                                      )
+                                    ]
                                   )
                                 ])
                               : _vm._e()
@@ -66842,23 +67067,27 @@ var render = function() {
                                 ]
                               ),
                               _vm._v(" "),
-                              _c("address", [
-                                _vm._v(
-                                  "\n                    Phone / Wa: 081 239 099 998"
-                                ),
-                                _c("br"),
-                                _vm._v(
-                                  "\n                    Email: warungdaladesa@gmail.com"
-                                ),
-                                _c("br"),
-                                _vm._v(
-                                  "\n                    FB : warungdaladesa"
-                                ),
-                                _c("br"),
-                                _vm._v(
-                                  "\n                    IG : warung.daladesa.sangeh\n                  "
-                                )
-                              ]),
+                              _c(
+                                "p",
+                                { staticClass: "text-bold text-center" },
+                                [
+                                  _vm._v(
+                                    "\n               \n                    Phone / Wa: 081 239 099 998"
+                                  ),
+                                  _c("br"),
+                                  _vm._v(
+                                    "\n                    Email: warungdaladesa@gmail.com"
+                                  ),
+                                  _c("br"),
+                                  _vm._v(
+                                    "\n                    FB : warungdaladesa"
+                                  ),
+                                  _c("br"),
+                                  _vm._v(
+                                    "\n                    IG : warung.daladesa.sangeh\n                  \n                "
+                                  )
+                                ]
+                              ),
                               _vm._v(" "),
                               _c("div", { staticClass: "row invoice-info" }, [
                                 _c("div", { staticClass: "col-xs-6" }, [
@@ -67174,33 +67403,26 @@ var render = function() {
                                             ])
                                           : _vm.pembayaran === "2"
                                           ? _c("tr")
-                                          : _vm._e(),
-                                        _vm._v(" "),
-                                        _c("tr", [
-                                          _c(
-                                            "th",
-                                            { attrs: { colspan: "5" } },
-                                            [
-                                              _vm._v("Terima Kasih "),
-                                              _c("br"),
-                                              _vm._v(
-                                                "Belanja Anda Hal Baik Bagi Dunia"
-                                              )
-                                            ]
-                                          )
-                                        ]),
-                                        _vm._v(" "),
-                                        _c("tr", [
-                                          _c(
-                                            "th",
-                                            { attrs: { colspan: "5" } },
-                                            [
-                                              _vm._v(
-                                                "Tidak enak Kasi Tau Kami, ENAK kasi tau temanmu"
-                                              )
-                                            ]
-                                          )
-                                        ])
+                                          : _vm._e()
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "p",
+                                      { staticClass: "text-bold text-center" },
+                                      [
+                                        _vm._v(
+                                          "\n                                Terima Kasih "
+                                        ),
+                                        _c("br"),
+                                        _vm._v(
+                                          "\n                                Belanja Anda Hal Baik Bagi Dunia"
+                                        ),
+                                        _c("br"),
+                                        _vm._v(
+                                          "\n                                Tidak enak Kasi Tau Kami, ENAK kasi tau temanmu"
+                                        ),
+                                        _c("br")
                                       ]
                                     )
                                   ]
@@ -67277,28 +67499,32 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("tr", [
-      _c("td", [_vm._v("No.")]),
-      _vm._v(" "),
-      _c("td", [_vm._v("Menu")]),
-      _vm._v(" "),
-      _c("td", [_vm._v("Qty")]),
-      _vm._v(" "),
-      _c("td", [_vm._v("Jam")])
+    return _c("thead", [
+      _c("tr", [
+        _c("th", [_vm._v("No.")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Menu")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Qty")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Jam")])
+      ])
     ])
   },
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("tr", [
-      _c("td", [_vm._v("No.")]),
-      _vm._v(" "),
-      _c("td", [_vm._v("Menu")]),
-      _vm._v(" "),
-      _c("td", [_vm._v("Qty")]),
-      _vm._v(" "),
-      _c("td", [_vm._v("Jam")])
+    return _c("thead", [
+      _c("tr", [
+        _c("th", [_vm._v("No.")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Menu")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Qty")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Jam")])
+      ])
     ])
   }
 ]
@@ -67980,7 +68206,7 @@ var render = function() {
                 },
                 [
                   _c("option", { attrs: { value: "M01", selected: "" } }, [
-                    _vm._v("Main Dish")
+                    _vm._v("Food")
                   ]),
                   _vm._v(" "),
                   _c("option", { attrs: { value: "M02" } }, [_vm._v("Drink")])
@@ -70554,7 +70780,11 @@ var render = function() {
                                     }
                                   ],
                                   staticClass: "form-control",
-                                  attrs: { type: "text", placeholder: "Stok" },
+                                  attrs: {
+                                    type: "text",
+                                    placeholder: "Stok",
+                                    required: ""
+                                  },
                                   domProps: { value: _vm.post1.qty },
                                   on: {
                                     input: function($event) {
@@ -73057,26 +73287,7 @@ var render = function() {
                       _vm.$set(_vm.post, "username", $event.target.value)
                     }
                   }
-                }),
-                _vm._v(" "),
-                _vm.validation.username
-                  ? _c("div", [
-                      _c(
-                        "div",
-                        {
-                          staticClass: "alert alert-danger mt-1",
-                          attrs: { role: "alert" }
-                        },
-                        [
-                          _vm._v(
-                            "\n                                        " +
-                              _vm._s(_vm.validation.username[0]) +
-                              "\n                                    "
-                          )
-                        ]
-                      )
-                    ])
-                  : _vm._e()
+                })
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "form-group" }, [
@@ -73102,26 +73313,7 @@ var render = function() {
                       _vm.$set(_vm.post, "name", $event.target.value)
                     }
                   }
-                }),
-                _vm._v(" "),
-                _vm.validation.name
-                  ? _c("div", [
-                      _c(
-                        "div",
-                        {
-                          staticClass: "alert alert-danger mt-1",
-                          attrs: { role: "alert" }
-                        },
-                        [
-                          _vm._v(
-                            "\n                                        " +
-                              _vm._s(_vm.validation.name[0]) +
-                              "\n                                    "
-                          )
-                        ]
-                      )
-                    ])
-                  : _vm._e()
+                })
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "form-group" }, [
@@ -73147,26 +73339,7 @@ var render = function() {
                       _vm.$set(_vm.post, "email", $event.target.value)
                     }
                   }
-                }),
-                _vm._v(" "),
-                _vm.validation.email
-                  ? _c("div", [
-                      _c(
-                        "div",
-                        {
-                          staticClass: "alert alert-danger mt-1",
-                          attrs: { role: "alert" }
-                        },
-                        [
-                          _vm._v(
-                            "\n                                        " +
-                              _vm._s(_vm.validation.email[0]) +
-                              "\n                                    "
-                          )
-                        ]
-                      )
-                    ])
-                  : _vm._e()
+                })
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "form-group" }, [
@@ -73182,7 +73355,7 @@ var render = function() {
                     }
                   ],
                   staticClass: "form-control",
-                  attrs: { type: "text", placeholder: "Stok" },
+                  attrs: { type: "text", placeholder: "Stok", required: "" },
                   domProps: { value: _vm.post.password },
                   on: {
                     input: function($event) {
@@ -73192,26 +73365,7 @@ var render = function() {
                       _vm.$set(_vm.post, "password", $event.target.value)
                     }
                   }
-                }),
-                _vm._v(" "),
-                _vm.validation.password
-                  ? _c("div", [
-                      _c(
-                        "div",
-                        {
-                          staticClass: "alert alert-danger mt-1",
-                          attrs: { role: "alert" }
-                        },
-                        [
-                          _vm._v(
-                            "\n                                        " +
-                              _vm._s(_vm.validation.password[0]) +
-                              "\n                                    "
-                          )
-                        ]
-                      )
-                    ])
-                  : _vm._e()
+                })
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "form-group" }, [
