@@ -342,12 +342,12 @@
                 <div class="row input-group">
                 <div class="col-xs-4">
                   <span class="input-group-addon">Tax in %</span>
-                  <input type="number" class="form-control " v-model="pajak" placeholder="Tax">
+                  <input type="number" step=".01" class="form-control " v-model="pajak" placeholder="Tax">
                   <input type="hidden" class="form-control" :value="(subtotal * pajak / 100 + subtotal)" :name="totalTransaksipjk" >
                 </div>
                 <div class="col-xs-4">
                   <span class="input-group-addon">Disc in %</span>
-                  <input type="number" class="form-control" v-model="diskon" placeholder="Diskon">
+                  <input type="number" step=".01" class="form-control" v-model="diskon" placeholder="Diskon">
                   <input type="hidden" class="form-control" :value="((subtotal * pajak / 100 + subtotal) * diskon / 100)" :name="diskon1" >
                 </div>
               </div>
