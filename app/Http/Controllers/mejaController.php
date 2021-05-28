@@ -406,6 +406,27 @@ class mejaController extends Controller
 
     public function addTransaksi(Request $request)
     {
+        if (Penjualan::where('noNota', $request->input('noNota'))->exists()) {
+           // $count = Penjualan::all()->last();
+           // $terakhir = substr($count->noNota, 11);
+           // $kodeBaru = $terakhir + 1  ;
+           // $tahun = date('Y');
+
+           // $newid =  strlen($request->input('noMeja'));
+           //     if($newid === 1){
+           //         $id = '0'.$request->input('noMeja');
+           //     }elseif($newid === 2){
+           //         $id = $request->input('noMeja');
+           //     }
+           // $noNota = 'INV'.$tahun.'0'.$id.'0'.$kodeBaru;
+           return response()->json([
+            'success' => true,
+            'message' => 'Transaksi Sudah Tersimpan',
+            ], 200);
+        }else{
+           // $noNota = $request->input('noNota');
+
+        
         $post = Penjualan::create([
             'noNota'     => $request->input('noNota'),
             'noMeja'     => $request->input('noMeja'),
@@ -463,7 +484,7 @@ class mejaController extends Controller
                     'message' => 'Post Gagal Disimpan!',
                 ], 400);
             }
-        
+        }
     }
 
     public function listTransaksi($id)
