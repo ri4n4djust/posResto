@@ -85,7 +85,10 @@ Vue.component("data-table", DataTable);
             }
         },
         created() {
-            this.loadData();
+            let uri = '/api/menu';
+            this.axios.get(uri).then(response => {
+                this.posts = response.data.data;
+            });
         },
         beforeCreate: function () {
             if (!this.$session.exists()) {
@@ -94,13 +97,7 @@ Vue.component("data-table", DataTable);
         },
         methods: {
 
-            loadData:function() {
-            let uri = '/api/menu';
-            this.axios.get(uri).then(response => {
-                this.posts = response.data.data;
-            });
-            },
-
+           
             PostDelete(id, index)
             {
             if(confirm("Do you really want to delete?")){

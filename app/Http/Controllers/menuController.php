@@ -23,6 +23,13 @@ class menuController extends Controller
         ], 200);
     }
 
+    public function cariMenu(Request $request){
+        $menuss = Menu::where('nmMenu','LIKE',''.$request->menu.'%')->get();
+        return response([
+            'data' => $menuss
+        ]);
+    }
+
     public function ktgMenu()
     {
         $posts = DB::table('tblKategoriMenu')->latest()->get();
@@ -46,6 +53,7 @@ class menuController extends Controller
                 'nmMenu'     => $request->input('nmMenu'),
                 'hargaMenu'   => $request->input('hargaMenu'),
                 'ktgMenu'   => $request->input('ktgMenu'),
+                'promoMenu'   => $request->input('promo'),
                 'stokMenu'   => 1,
             ]);
 
@@ -129,7 +137,8 @@ class menuController extends Controller
                 'hargaMenu'   => $request->input('hargaMenu'),
                 'stokMenu'   => $request->input('stokMenu'),
                 'hppMenu'   => $request->input('hppMenu'),
-                'ktgMenu'   => $request->input('ktgMenu')
+                'ktgMenu'   => $request->input('ktgMenu'),
+                'promoMenu'   => $request->input('promoMenu')
             ]);
 
 

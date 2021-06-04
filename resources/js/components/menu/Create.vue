@@ -40,6 +40,11 @@
                                 <option value='M02' >Drink</option>
                             </select>
                             </div>
+
+                            <div class="form-group">
+                                <input type="checkbox" id="promo" v-model="post.promo">
+                                <label for="promo">Promo</label>
+                            </div>
                             
 
                             <div class="form-group">

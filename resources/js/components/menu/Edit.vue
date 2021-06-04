@@ -44,6 +44,13 @@
                                 <label>Hpp Menu</label>
                                 <input type="text" class="form-control" v-model="tot">
                             </div>
+
+                            <div class="form-group">
+                                
+                                <input type="checkbox" id="promo" v-model="post.promoMenu">
+
+                                <label for="promo">Promo</label>
+                            </div>
                             
                             <div class="form-group">
                                 <router-link :to="{ name: 'menu' }" class="btn btn-sm btn-success">KEMBALI</router-link>
@@ -241,6 +248,7 @@ components: { VueSingleSelect },
                       hargaMenu: this.post.hargaMenu,
                       stokMenu: this.post.stokMenu,
                       ktgMenu: this.post.ktgMenu,
+                      promoMenu: this.post.promoMenu,
                       hppMenu: this.tot,
                 }).then((response) => {
                         this.$router.push({name: 'menu'});

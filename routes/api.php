@@ -76,6 +76,7 @@ Route::post('/afterorderprint/{id}', 'mejaController@afterPrintOrder');
 
 //=========total
 Route::post('/totalTrx/{id}', 'mejaController@totalTrx');
+Route::post('/totalTrxTnpPromo/{id}', 'mejaController@totalTrxTnpPromo');
 
 
 
@@ -100,6 +101,8 @@ Route::post('/addPembelian/store', 'pembelianController@addTransaksiPembelian');
 
 //=======live Order
 Route::get('/orderlist', 'mejaController@listOrder');
+//=======carimenu
+Route::get('/carimenu', 'menuController@cariMenu');
 
 //========menu
 Route::get('/menu', 'menuController@index');

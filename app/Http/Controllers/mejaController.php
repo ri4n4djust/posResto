@@ -281,6 +281,7 @@ class mejaController extends Controller
             'nmBarangTmp'     => $request->input('nmBarang'),
             'note'  => $request->input('note'),
             'ktgMenu'  => $request->input('ktgMenu'),
+            'promoMenu'  => $request->input('promoMenu'),
         ]);
 
         
@@ -610,6 +611,28 @@ class mejaController extends Controller
             ->sum('totalTmp');
 
         if ($totalNota) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Detail Post!',
+                'subTotal'    => $totalNota
+            ], 200);
+        }
+    }
+
+    public function totalTrxTnpPromo($id)
+    {
+        $totalNota = DB::table('tblTmp_TransaksiDetail')
+            ->where('noMejaTmp', '=', $id)
+            ->where('promoMenu', '=', 'NULL')
+            ->sum('totalTmp');
+
+        if ($totalNota == NULL) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Detail Post!',
+                'subTotal'    => 0
+            ], 200);
+        }else{
             return response()->json([
                 'success' => true,
                 'message' => 'Detail Post!',

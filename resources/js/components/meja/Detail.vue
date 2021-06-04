@@ -55,7 +55,7 @@
 
 
                 <input type="hidden" class="form-control" :value="subtotal" :name="totalTransaksi" >
-                <h3 class="profile-username text-center">Total {{ Math.floor(subtotal)  || 0 | currency }}</h3>
+                <h3 class="profile-username text-center">Total {{ Math.floor(subtotal + subtotaltp)  || 0 | currency }}</h3>
                 
                 <p class="text-muted text-center">
                 <a href="#" @click="showModalBayar = true" class="btn btn-primary btn-block"><b>Payment</b></a>
@@ -265,22 +265,36 @@
                 <h4 class="modal-title">Add Menu</h4>
               </div>
               <div class="modal-body">
-                
-                <vue-single-select
-                            v-model="post2"
-                            :options="menus"
-                            :required="true"
-                            optionLabel="nmMenu" 
-                ></vue-single-select>
 
+                <!------Tes Select menu ----->
+                <label>Menu cari:</label>
+                  <input type="text" v-model="menu" v-on:keyup="get_menu" class="col-xl-6 form-control ">
+                    
+                      <span v-if="menuss.lenght === 0">
+                      </span>
+                      <span v-else>
+                        <ul class="list-group">
+                          <li v-for="(menu, id) in menuss" @click="select_menu(menu)" :key="menu.id" class="list-group-item autocomplete-box-li">
+                              {{ id+1 }}
+                              {{ menu.nmMenu }}
+                          </li>
+                        </ul>
+                      </span>
+                    
+
+                <!------End Tes ----->
+                
+           
                 <div v-if="post2">
                   <form  @submit.prevent="PostMenu" >
                     <div class="form-group">
+                      
                       <input type="hidden" v-model="post.noMeja">
                       <input type="hidden" v-model="noNota" placeholder="No nota">
                       <input type="hidden" v-model="post2.id">
                       <input type="hidden" v-model="post2.kdMenu">
                       <input type="hidden" v-model="post2.ktgMenu">
+                      <input type="hidden" v-model="post2.promoMenu">
                       <input type="hidden" class="form-control" v-model="post2.nmMenu">
                     </div>
                     <div class="form-group">
@@ -334,9 +348,11 @@
                 <input type="hidden" class="form-control" v-model="subtotal">
                 <input type="hidden" class="form-control" v-model="post.waiterMeja">
 
+                <input type="text" class="form-control" v-model="subtotaltp">
+{{subtotaltp}}
                 <p class="text-muted text-center">
-                <input type="hidden" class="form-control" :value="((subtotal * pajak / 100 + subtotal) - ((subtotal * pajak / 100 + subtotal) * diskon / 100))  || 0 " :name="totalTransaksiBayar"  >
-                <h3 class="profile-username ">Total {{ Math.floor(((subtotal * pajak / 100 + subtotal) - ((subtotal * pajak / 100 + subtotal) * diskon / 100)) + ((subtotal * pajak / 100 + subtotal) - ((subtotal * pajak / 100 + subtotal) * diskon / 100)) * taxDebit / 100)  || 0 | currency }}</h3>
+                <input type="hidden" class="form-control" :value="((subtotal * pajak / 100 + subtotal) - (subtotaltp * diskon / 100))  || 0 " :name="totalTransaksiBayar"  >
+                <h3 class="profile-username ">Total {{ Math.floor(((subtotal * pajak / 100 + subtotal) - (subtotaltp * diskon / 100)) + ((subtotal * pajak / 100 + subtotal) - (subtotaltp * diskon / 100)) * taxDebit / 100)  || 0 | currency }}</h3>
 
 
                 <div class="row input-group">
@@ -348,7 +364,7 @@
                 <div class="col-xs-4">
                   <span class="input-group-addon">Disc in %</span>
                   <input type="number" step=".01" class="form-control" v-model="diskon" placeholder="Diskon">
-                  <input type="hidden" class="form-control" :value="((subtotal * pajak / 100 + subtotal) * diskon / 100)" :name="diskon1" >
+                  <input type="hidden" class="form-control" :value="subtotaltp * diskon / 100" :name="diskon1" >
                 </div>
               </div>
               <br>
@@ -364,7 +380,7 @@
                                     <input type="number" class="form-control" v-model="totalBayar" placeholder="Bayar" required>
                                   </div>
                                   
-                                  <h3 class="profile-username ">Kembali : {{ Math.floor(totalBayar - ((subtotal * pajak / 100 + subtotal) - ((subtotal * pajak / 100 + subtotal) * diskon / 100)))  || 0 | currency  }}</h3>
+                                  <h3 class="profile-username ">Kembali : {{ Math.floor(totalBayar - ((subtotal * pajak / 100 + subtotal) - (subtotaltp * diskon / 100)))  || 0 | currency  }}</h3>
                                   <p class="text-muted text-center">
                                   <button type="submit"  class="btn btn-md btn-success" >Bayar</button> 
                                   <a href="#"  @click="printBill(printMe)" class="btn btn-md btn-success" >Print Bill</a>               
@@ -480,18 +496,18 @@
                                     </tr>
                                     <tr>
                                         <th colspan="3">Discount : {{ diskon }} %</th>
-                                        <th>{{ Math.floor((subtotal * pajak / 100 + subtotal) * diskon / 100) | currency}}</th>
+                                        <th>{{ Math.floor(subtotaltp * diskon / 100) | currency}}</th>
                                     </tr>
                                     <tr>
                                         <th colspan="3">subTotal :</th>
-                                        <th>{{ Math.floor((subtotal * pajak / 100 + subtotal) - ((subtotal * pajak / 100 + subtotal) * diskon / 100))  || 0 | currency }}</th>
+                                        <th>{{ Math.floor((subtotal * pajak / 100 + subtotal) - (subtotaltp * diskon / 100))  || 0 | currency }}</th>
                                     </tr>
 
                                     <tr v-if="pembayaran === '1'">
                                     </tr>
                                     <tr v-else-if="pembayaran === '2'">
                                         <th colspan="3">Card Charge : {{ taxDebit }} %</th>
-                                        <th>{{ Math.floor((subtotal * pajak / 100 + subtotal) - ((subtotal * pajak / 100 + subtotal) * diskon / 100)) * taxDebit / 100 | currency }}</th>
+                                        <th>{{ Math.floor((subtotal * pajak / 100 + subtotal) - (subtotaltp * diskon / 100)) * taxDebit / 100 | currency }}</th>
                                     </tr>
 
                                     <tr>
@@ -501,7 +517,7 @@
 
                                     <tr v-if="pembayaran === '1'">
                                         <th colspan="3">Kembalian :</th>
-                                        <th>{{ Math.floor(totalBayar - ((subtotal * pajak / 100 + subtotal) - ((subtotal * pajak / 100 + subtotal) * diskon / 100)))  || 0 | currency }}</th>
+                                        <th>{{ Math.floor(totalBayar - ((subtotal * pajak / 100 + subtotal) - (subtotaltp * diskon / 100)))  || 0 | currency }}</th>
                                     </tr>
                                     <tr v-else-if="pembayaran === '2'">
                                     </tr>
@@ -536,7 +552,13 @@
 </template>
 
 <style type="text/css">
-
+.autocomplete-box-li:hover {
+  background-color: #f2f2f2;
+}
+.autocomplete-box{
+  position: absolute;
+  z-index: 1;
+}
 
     #printMe { display: none; }
 
@@ -606,10 +628,12 @@
                 orders1:{},
                 move1: null,
                 post1: null,
-                post2: null,
+                post2: [],
                 waiter: {},
                 users: {},
                 menus: {},
+                menu:'',
+                menuss: [],
                 trxs: {},
                 mejaKosong: {},
                 validation: [],
@@ -628,7 +652,8 @@
                 pelanggan: 'Cash',
                 noMeja: '',
                 total: '',
-                subtotal: '',
+                subtotal: '0',
+                subtotaltp: '0',
                 pajak: '0',
                 diskon: '0',
                 diskon1: '',
@@ -645,6 +670,8 @@
                 pajakKartu:'',
                 mytimer: 0,
                 adminuser: '',
+                nmMenu1: '',
+                kdMenu1: '',
                 //printMe: '',
                 //waitername : this.waiter.name,
                 //optionLabel: users.nmBarang,
@@ -664,6 +691,7 @@
             });
             this.loadMejaKosong();
             this.loadTotal();
+            this.loadTotalTnpPromo();
             this.loadNota();
             this.loadDataMenu();
             this.loadDataTransaksi();
@@ -684,6 +712,26 @@
         props: ['optionLabel', 'value'],        
 
         methods: {
+          select_menu(menu){
+                this.post2.id = menu.id
+                this.post2.nmMenu = menu.nmMenu
+                this.post2.kdMenu = menu.kdMenu
+                this.post2.ktgMenu = menu.ktgMenu
+                this.post2.promoMenu = menu.promoMenu
+                this.post2.hargaMenu = menu.hargaMenu
+                this.menu = menu.nmMenu
+                this.menuss = [];
+            },
+          get_menu(){
+                if(this.menu.length == 0){
+                    this.menuss = [];
+                }
+                if(this.menu.length > 0){
+                    axios.get('/api/carimenu',{params: {menu: this.menu}}).then(response => {
+                        this.menuss = response.data.data;
+                    });
+                }
+            },
           onlyNumber ($event) {
                 //console.log($event.keyCode); //keyCodes value
                 let keyCode = ($event.keyCode ? $event.keyCode : $event.which);
@@ -752,6 +800,14 @@
                 let uri = `/api/totalTrx/${this.$route.params.id}`;
                 this.axios.post(uri).then(response => {
                   this.subtotal = response.data.subTotal;
+                }).catch(error => {
+                    console.log(error.response)
+                });
+            },
+            loadTotalTnpPromo:function(){
+                let uri = `/api/totalTrxTnpPromo/${this.$route.params.id}`;
+                this.axios.post(uri).then(response => {
+                  this.subtotaltp = response.data.subTotal;
                 }).catch(error => {
                     console.log(error.response)
                 });
@@ -841,21 +897,27 @@
                     tglNota: this.tglNota,
                     waiterOrder: this.post.name,
                     note: this.note,
-                    ktgMenu: this.post2.ktgMenu
+                    ktgMenu: this.post2.ktgMenu,
+                    promoMenu: this.post2.promoMenu
                 })
                     .then((response) => {
                         //alert('sukses donkkkkkkkk');
                         alert('sukses ditambahkan');
                         this.loadDataTransaksi();
                         this.loadTotal();
+                        this.loadTotalTnpPromo();
                         this.ListOrder();
                         this.ListOrder1();
+                        this.menu= '';
+                        this.note= '';
+                        this.qtyBarang= '';
                         //this.cekStatusMeja()
                         this.showModalMenu = false
                     });
                 
             },
             PostTransaksi() {
+              
                 let uri = '/api/addTransaksi/store';
                 this.axios.post(uri, 
                 {
@@ -864,9 +926,9 @@
                     pelanggan: this.pelanggan,
                     tglNota: this.tglNota,
                     taxNota: Math.floor(this.subtotal * this.pajak / 100),
-                    chargeNota: Math.floor((this.subtotal * this.pajak / 100 + this.subtotal) - ((this.subtotal * this.pajak / 100 + this.subtotal) * this.diskon / 100)) * this.taxDebit / 100,
-                    diskonNota: Math.floor((this.subtotal * this.pajak / 100 + this.subtotal) * this.diskon / 100),
-                    totalNota: Math.floor((this.subtotal * this.pajak / 100 + this.subtotal) - ((this.subtotal * this.pajak / 100 + this.subtotal) * this.diskon / 100)) + ((this.subtotal * this.pajak / 100 + this.subtotal) - ((this.subtotal * this.pajak / 100 + this.subtotal) * this.diskon / 100)) * this.taxDebit / 100,
+                    chargeNota: Math.floor((this.subtotal * this.pajak / 100 + this.subtotal) - (this.subtotaltp * this.diskon / 100)) * this.taxDebit / 100,
+                    diskonNota: Math.floor(this.subtotaltp * this.diskon / 100),
+                    totalNota: Math.floor((this.subtotal * this.pajak / 100 + this.subtotal) - (this.subtotaltp * this.diskon / 100)) + ((this.subtotal * this.pajak / 100 + this.subtotal) - (this.subtotaltp * this.diskon / 100)) * this.taxDebit / 100,
                     bayarNota: this.totalBayar,
                     userNota: this.$session.get('userId'),
                     waiterNota: this.post.name,
@@ -877,7 +939,7 @@
                     chargePembayaran: this.taxDebit,
                     noKartuPembayaran: this.noDebit,
                     
-                    kembalianNota: Math.floor(this.totalBayar - (((this.subtotal * this.pajak / 100 + this.subtotal) - ((this.subtotal * this.pajak / 100 + this.subtotal) * this.diskon / 100)) + ((this.subtotal * this.pajak / 100 + this.subtotal) - ((this.subtotal * this.pajak / 100 + this.subtotal) * this.diskon / 100)) * this.taxDebit / 100)),
+                    kembalianNota: Math.floor(this.totalBayar - (((this.subtotal * this.pajak / 100 + this.subtotal) - (this.subtotaltp * this.diskon / 100)) + ((this.subtotal * this.pajak / 100 + this.subtotal) - (this.subtotal * this.diskon / 100)) * this.taxDebit / 100)),
                     
                 })
                     .then((response) => {
@@ -900,7 +962,7 @@
             //this.intervalFetchData();
             //this.bindings()
             //loadData.call(this)
-            //this.loadData()
+            this.loadTotalTnpPromo()
         },
 
         beforeDestroy () {
