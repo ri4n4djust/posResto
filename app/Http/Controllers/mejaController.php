@@ -623,7 +623,7 @@ class mejaController extends Controller
     {
         $totalNota = DB::table('tblTmp_TransaksiDetail')
             ->where('noMejaTmp', '=', $id)
-            ->where('promoMenu', '=', 'NULL')
+            ->where('promoMenu', '=', NULL)
             ->sum('totalTmp');
 
         if ($totalNota == NULL) {

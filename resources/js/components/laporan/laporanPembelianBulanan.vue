@@ -157,7 +157,7 @@ Vue.component("data-table", DataTable);
                 totalP: [],
                 startDate: '',
                 endDate: '',
-                ActionButtons: null,
+                ActionButtons: '',
                 validation: null,
                 index: ''
                 //actionTriggered: null,

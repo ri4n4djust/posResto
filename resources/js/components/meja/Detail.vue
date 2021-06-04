@@ -349,7 +349,7 @@
                 <input type="hidden" class="form-control" v-model="post.waiterMeja">
 
                 <input type="text" class="form-control" v-model="subtotaltp">
-{{subtotaltp}}
+
                 <p class="text-muted text-center">
                 <input type="hidden" class="form-control" :value="((subtotal * pajak / 100 + subtotal) - (subtotaltp * diskon / 100))  || 0 " :name="totalTransaksiBayar"  >
                 <h3 class="profile-username ">Total {{ Math.floor(((subtotal * pajak / 100 + subtotal) - (subtotaltp * diskon / 100)) + ((subtotal * pajak / 100 + subtotal) - (subtotaltp * diskon / 100)) * taxDebit / 100)  || 0 | currency }}</h3>

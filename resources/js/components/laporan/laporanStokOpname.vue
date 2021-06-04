@@ -63,7 +63,7 @@ Vue.component("data-table", DataTable);
         data() {
             return {
                 posts: [],
-                ActionButtons: null,
+                ActionButtons: '',
                 actionTriggered: {},
                 //showModal: false,
             }

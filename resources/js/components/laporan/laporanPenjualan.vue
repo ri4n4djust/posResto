@@ -234,7 +234,7 @@ Vue.component("data-table", DataTable);
                 startDate: '',
                 endDate: '',
                 typeNotaCari: '0',
-                ActionButtons: null,
+                ActionButtons: '',
                 validation: null,
                 //actionTriggered: null,
                 totalS: [],

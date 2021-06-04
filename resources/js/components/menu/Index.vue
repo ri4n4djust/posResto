@@ -32,7 +32,8 @@ Vue.component("data-table", DataTable);
     export default {
         data() {
             return {
-                posts: []
+                posts: [],
+                ActionButtons: '',
             }
         },
         computed: {
