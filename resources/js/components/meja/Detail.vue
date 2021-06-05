@@ -55,72 +55,12 @@
 
 
                 <input type="hidden" class="form-control" :value="subtotal" :name="totalTransaksi" >
-                <h3 class="profile-username text-center">Total {{ Math.floor(subtotal + subtotaltp)  || 0 | currency }}</h3>
+                <h3 class="profile-username text-center">Total {{ Math.floor(subtotal)  || 0 | currency }}</h3>
                 
                 <p class="text-muted text-center">
                 <a href="#" @click="showModalBayar = true" class="btn btn-primary btn-block"><b>Payment</b></a>
                 </p>
-              
 
-            </div>
-            <!-- /.box-body -->
-          </div>
-          <!-- /.box -->
-        </div>
-
-
-
-        <!-- /.col -->
-        <div class="col-md-9">
-          <div class="nav-tabs-custom">
-            <ul class="nav nav-tabs">
-              <li class="active"><a href="#activity" data-toggle="tab">Activity</a></li>
-              <li><a href="#timeline" data-toggle="tab">Timeline</a></li>
-              <li><a href="#settings" data-toggle="tab">Settings</a></li>
-            </ul>
-            <div class="tab-content">
-              <div class="active tab-pane" id="activity">
-
-                <!-- Post -->
-                
-                <a href="#"  @click="showModalMenu()" class="btn btn-md btn-success"><b>Add Menu</b></a>
-                
-                <a href="#"  @click="showModalMove = true" class="btn btn-md btn-success"><b>Pindah Meja</b></a>
-                
-                
-                <span v-if="adminuser === 'Admin'">
-                  <span v-if=" orders.length == 0 && orders1.length == 0"><a href="#"  class="btn btn-md btn-success disabled" role="button" aria-disabled="true">Print Order</a></span>
-                  <span v-else><a href="#"  @click="printOrder(id= post.id)" class="btn btn-md btn-success" >Print Order</a></span>
-                </span>
-                
-                
-                <router-link :to="{ name: 'meja' }" class="btn btn-md btn-success">KEMBALI</router-link>
-                
-                <!-- /.post -->
-                            <table class="table table-hover table-bordered">
-                                <thead>
-                                <tr>
-                                    <th>Nama </th>
-                                    <th>Qty</th>
-                                    <th>Harga</th>
-                                    <th>Total</th>
-                                    <th>AKSI</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr v-for="trx in trxs" :key="trx.id">
-                                    <td>{{ trx.nmBarangTmp }} </td>
-                                    <td>{{ trx.qtyTmp}}</td>
-                                    <td>{{ trx.hrgJualTmp | currency }}</td>
-                                    <td>{{ trx.totalTmp | currency }}</td>
-                                    <td class="text-center">
-                                        <button @click.prevent="PostDeleteTrx(trx.id)" class="btn btn-sm btn-danger">HAPUS</button>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-
-                
                 <div id="printMe1" class="printMe1">
                   
                 <div id="lastOrder" class="lastOrder">
@@ -176,6 +116,69 @@
                 </span>
               </div>
                 </div>
+              
+
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+        </div>
+
+
+
+
+        <!-- /.col -->
+        <div class="col-md-9">
+          <div class="nav-tabs-custom">
+            <ul class="nav nav-tabs">
+              <li class="active"><a href="#activity" data-toggle="tab">Activity</a></li>
+              <li><a href="#timeline" data-toggle="tab">Timeline</a></li>
+              <li><a href="#settings" data-toggle="tab">Settings</a></li>
+            </ul>
+            <div class="tab-content">
+              <div class="active tab-pane" id="activity">
+
+                <!-- Post -->
+                
+                <a href="#"  @click="showModalMenu = true" class="btn btn-md btn-success"><b>Add Menu</b></a>
+                
+                <a href="#"  @click="showModalMove = true" class="btn btn-md btn-success"><b>Pindah Meja</b></a>
+                
+                
+                <span v-if="adminuser === 'Admin'">
+                  <span v-if=" orders.length == 0 && orders1.length == 0"><a href="#"  class="btn btn-md btn-success disabled" role="button" aria-disabled="true">Print Order</a></span>
+                  <span v-else><a href="#"  @click="printOrder(id= post.id)" class="btn btn-md btn-success" >Print Order</a></span>
+                </span>
+                
+                
+                <router-link :to="{ name: 'meja' }" class="btn btn-md btn-success">KEMBALI</router-link>
+                
+                <!-- /.post -->
+                            <table class="table table-hover table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>Nama </th>
+                                    <th>Qty</th>
+                                    <th>Harga</th>
+                                    <th>Total</th>
+                                    <th>AKSI</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr v-for="trx in trxs" :key="trx.id">
+                                    <td>{{ trx.nmBarangTmp }} </td>
+                                    <td>{{ trx.qtyTmp}}</td>
+                                    <td>{{ trx.hrgJualTmp | currency }}</td>
+                                    <td>{{ trx.totalTmp | currency }}</td>
+                                    <td class="text-center">
+                                        <button @click.prevent="PostDeleteTrx(trx.id)" class="btn btn-sm btn-danger">HAPUS</button>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+
+                
+                
                 
 
 
@@ -656,8 +659,8 @@
                 pelanggan: 'Cash',
                 noMeja: '',
                 total: '',
-                subtotal: '0',
-                subtotaltp: '0',
+                subtotal: '',
+                subtotaltp: '',
                 pajak: '0',
                 diskon: '0',
                 diskon1: '',
