@@ -12691,6 +12691,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 
 
@@ -12827,6 +12831,14 @@ __webpack_require__.r(__webpack_exports__);
         // 46 is dot
         $event.preventDefault();
       }
+    },
+    showModalMenu: function showModalMenu() {
+      alert('tess');
+      this.showModalMenu = true; // auto focus
+
+      this.$nextTick(function () {
+        this.$refs.menu.focus();
+      });
     },
     cekStok: function cekStok() {
       this.brg = this.post1 - this.qtyBarang;
@@ -65691,7 +65703,7 @@ var render = function() {
                         attrs: { href: "#" },
                         on: {
                           click: function($event) {
-                            _vm.showModalMenu = true
+                            return _vm.showModalMenu()
                           }
                         }
                       },
@@ -65753,7 +65765,7 @@ var render = function() {
                     _c(
                       "router-link",
                       {
-                        staticClass: "btn btn-primary btn-success",
+                        staticClass: "btn btn-md btn-success",
                         attrs: { to: { name: "meja" } }
                       },
                       [_vm._v("KEMBALI")]
@@ -66207,7 +66219,8 @@ var render = function() {
                                 expression: "menu"
                               }
                             ],
-                            staticClass: "col-xl-6 form-control ",
+                            ref: "menu",
+                            staticClass: "form-control ",
                             attrs: { type: "text" },
                             domProps: { value: _vm.menu },
                             on: {
@@ -66751,7 +66764,7 @@ var render = function() {
                                   }
                                 ],
                                 staticClass: "form-control",
-                                attrs: { type: "text" },
+                                attrs: { type: "hidden" },
                                 domProps: { value: _vm.subtotaltp },
                                 on: {
                                   input: function($event) {

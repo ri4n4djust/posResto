@@ -24,7 +24,9 @@ class menuController extends Controller
     }
 
     public function cariMenu(Request $request){
-        $menuss = Menu::where('nmMenu','LIKE',''.$request->menu.'%')->get();
+        $menuss = Menu::where('nmMenu','LIKE',''.$request->menu.'%')
+                        ->take(5)
+                        ->get();
         return response([
             'data' => $menuss
         ]);

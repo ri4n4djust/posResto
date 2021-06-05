@@ -82,15 +82,19 @@
               <div class="active tab-pane" id="activity">
 
                 <!-- Post -->
-                <a href="#"  @click="showModalMenu = true" class="btn btn-md btn-success"><b>Add Menu</b></a>
+                
+                <a href="#"  @click="showModalMenu()" class="btn btn-md btn-success"><b>Add Menu</b></a>
+                
                 <a href="#"  @click="showModalMove = true" class="btn btn-md btn-success"><b>Pindah Meja</b></a>
+                
                 
                 <span v-if="adminuser === 'Admin'">
                   <span v-if=" orders.length == 0 && orders1.length == 0"><a href="#"  class="btn btn-md btn-success disabled" role="button" aria-disabled="true">Print Order</a></span>
                   <span v-else><a href="#"  @click="printOrder(id= post.id)" class="btn btn-md btn-success" >Print Order</a></span>
                 </span>
-
-                <router-link :to="{ name: 'meja' }" class="btn btn-primary btn-success">KEMBALI</router-link>
+                
+                
+                <router-link :to="{ name: 'meja' }" class="btn btn-md btn-success">KEMBALI</router-link>
                 
                 <!-- /.post -->
                             <table class="table table-hover table-bordered">
@@ -268,7 +272,7 @@
 
                 <!------Tes Select menu ----->
                 <label>Menu cari:</label>
-                  <input type="text" v-model="menu" v-on:keyup="get_menu" class="col-xl-6 form-control ">
+                  <input type="text" ref="menu" v-model="menu" v-on:keyup="get_menu" class="form-control " >
                     
                       <span v-if="menuss.lenght === 0">
                       </span>
@@ -348,7 +352,7 @@
                 <input type="hidden" class="form-control" v-model="subtotal">
                 <input type="hidden" class="form-control" v-model="post.waiterMeja">
 
-                <input type="text" class="form-control" v-model="subtotaltp">
+                <input type="hidden" class="form-control" v-model="subtotaltp">
 
                 <p class="text-muted text-center">
                 <input type="hidden" class="form-control" :value="((subtotal * pajak / 100 + subtotal) - (subtotaltp * diskon / 100))  || 0 " :name="totalTransaksiBayar"  >
@@ -738,6 +742,15 @@
                 if ((keyCode < 48 || keyCode > 57) && keyCode !== 46) { // 46 is dot
                     $event.preventDefault();
                 }   
+            },
+
+            showModalMenu() {
+                alert('tess');
+                this.showModalMenu = true;
+                // auto focus
+                this.$nextTick(function () {
+                    this.$refs.menu.focus()
+                })
             },
             cekStok() {
                 this.brg = this.post1 - this.qtyBarang;
