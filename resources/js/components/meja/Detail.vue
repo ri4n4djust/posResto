@@ -305,9 +305,11 @@
                       <input type="hidden" class="form-control" v-model="post2.nmMenu">
                     </div>
                     <div class="form-group">
-                      <input type="hidden" class="form-control" v-model="post2.hargaMenu">
                       <textarea class="form-control" v-model="note" rows="2"
                                           placeholder="Note"></textarea>
+                    </div>
+                    <div class="form-group">
+                      <input type="number" class="form-control" v-model="post2.hargaMenu">
                     </div>
                     <div class="form-group">
                       <input type="number" class="form-control" v-model="qtyBarang" placeholder="Qty" @keypress="onlyNumber" required>
@@ -780,6 +782,7 @@
                         //alert('ada yang error stelah print');
                   });
                 }, 10000); 
+                setTimeout(() => this.$router.push({name: 'meja'}), 2000);
             },
             ListOrder(){
               let uri = `/api/orderprint/${this.$route.params.id}`;
