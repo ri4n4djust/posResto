@@ -309,7 +309,7 @@
                                           placeholder="Note"></textarea>
                     </div>
                     <div class="form-group">
-                      <input type="number" class="form-control" v-model="post2.hargaMenu">
+                      <input type="number" class="form-control" v-model="post2.hargaMenu" placeholder="Harga" @keypress="onlyNumber" required>
                     </div>
                     <div class="form-group">
                       <input type="number" class="form-control" v-model="qtyBarang" placeholder="Qty" @keypress="onlyNumber" required>
@@ -930,8 +930,9 @@
                         this.menu= '';
                         this.note= '';
                         this.qtyBarang= '';
+                        this.post2.hargaMenu= '';
                         //this.cekStatusMeja()
-                        this.showModalMenu = false
+                        //this.showModalMenu = false
                     });
                 
             },
