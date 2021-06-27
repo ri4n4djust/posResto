@@ -918,8 +918,7 @@
                     note: this.note,
                     ktgMenu: this.post2.ktgMenu,
                     promoMenu: this.post2.promoMenu
-                })
-                    .then((response) => {
+                }).then((response) => {
                         //alert('sukses donkkkkkkkk');
                         alert('sukses ditambahkan');
                         this.loadDataTransaksi();
@@ -959,10 +958,9 @@
                     chargePembayaran: this.taxDebit,
                     noKartuPembayaran: this.noDebit,
                     
-                    kembalianNota: Math.floor(this.totalBayar - (((this.subtotal * this.pajak / 100 + this.subtotal) - (this.subtotaltp * this.diskon / 100)) + ((this.subtotal * this.pajak / 100 + this.subtotal) - (this.subtotal * this.diskon / 100)) * this.taxDebit / 100)),
+                    kembalianNota: Math.abs(this.totalBayar - (((this.subtotal * this.pajak / 100 + this.subtotal) - (this.subtotaltp * this.diskon / 100)) + ((this.subtotal * this.pajak / 100 + this.subtotal) - (this.subtotal * this.diskon / 100)) * this.taxDebit / 100)),
                     
-                })
-                    .then((response) => {
+                }).then((response) => {
                         //this.$print(printMe);
                         window.print(printMe)
                         setTimeout(function(){
