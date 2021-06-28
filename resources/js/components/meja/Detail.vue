@@ -483,17 +483,12 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                 
                                 <tr v-for="trx in trxs" :key="trx.id">
-                                  
                                     <td >{{ trx.nmBarangTmp }} </td>
                                     <td >{{ trx.qtyTmp}}</td>
                                     <td >{{ trx.hrgJualTmp | currency }}</td>
                                     <td >{{ trx.totalTmp | currency }}</td>
-                                  
-                                    
                                 </tr>
-                                 
                                 </tbody>
                                     <tr>
                                         <th colspan="3">subTotal :</th>

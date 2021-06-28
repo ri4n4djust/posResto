@@ -143,24 +143,34 @@
                                         <th>{{data.totalNota | currency}}</th>
                                     </tr>
                                     <tr>
-                                        <th colspan="3">Tax & Service :</th>
+                                        <th colspan="3">Tax & Service : {{ data.pajakPembayaran }} %</th>
                                         <th>{{ data.taxNota | currency}}</th>
                                     </tr>
                                     <tr>
-                                        <th colspan="3">Discount</th>
+                                        <th colspan="3">Discount {{ data.diskonPembayaran }} %</th>
                                         <th>{{ data.diskonNota | currency}}</th>
                                     </tr>
                                     <tr>
                                         <th colspan="3">subTotal :</th>
                                         <th>{{ data.totalNota | currency }}</th>
                                     </tr>
+                                    <tr v-if="data.typePembayaran === '1'">
+                                    </tr>
+                                    <tr v-else-if="data.typePembayaran === '2'">
+                                        <th colspan="3">Card Charge : {{ data.chargePembayaran }} %</th>
+                                        <th>{{ data.chargeNota | currency }}</th>
+                                    </tr>
+
                                     <tr>
                                         <th colspan="3">Payment :</th>
-                                        <th>{{data.bayarNota | currency}}</th>
+                                        <th>{{ data.bayarNota | currency }}</th>
                                     </tr>
-                                    <tr>
+
+                                    <tr v-if="data.typePembayaran === '1'">
                                         <th colspan="3">Kembalian :</th>
                                         <th>{{ data.kembalianNota | currency }}</th>
+                                    </tr>
+                                    <tr v-else-if="data.typePembayaran === '2'">
                                     </tr>
                                 </table>
                                 <p class="text-bold text-center">
