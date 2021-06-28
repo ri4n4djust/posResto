@@ -129,12 +129,15 @@ class penjualanController extends Controller
         //$post = TransaksiDetail::whereId($id)->first();
         $post = DB::table('tblPenjualanDetail')
                     ->where('noNota', $id)->get();
+        $total = DB::table('tblPenjualanDetail')
+                    ->where('noNota', $id)->sum('total');
 
         if ($post) {
             return response()->json([
                 'success' => true,
                 'message' => 'Detail Post!',
-                'data'    => $post
+                'data'    => $post,
+                'total' => $total
             ], 200);
         } else {
             return response()->json([

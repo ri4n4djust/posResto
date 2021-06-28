@@ -209,6 +209,7 @@ components: { VueSingleSelect },
                 qtyBarang: '',
                 tot: '',
                 totalStok: '',
+                promo: null,
             }
         },
         beforeCreate: function () {
@@ -241,6 +242,11 @@ components: { VueSingleSelect },
 
         methods: {
             PostUpdate() {
+                if(this.post.promoMenu == true){
+                  this.promo = 1
+                }else {
+                 this.promo = null
+                }
                 let uri = `/api/menu/update/${this.$route.params.id}`;
                 this.axios.post(uri, {
                       id: this.post.id,
@@ -248,7 +254,7 @@ components: { VueSingleSelect },
                       hargaMenu: this.post.hargaMenu,
                       stokMenu: this.post.stokMenu,
                       ktgMenu: this.post.ktgMenu,
-                      promoMenu: this.post.promoMenu,
+                      promoMenu: this.promo,
                       hppMenu: this.tot,
                 }).then((response) => {
                         this.$router.push({name: 'menu'});

@@ -140,7 +140,7 @@
                                 
                                     <tr>
                                         <th colspan="3">subTotal :</th>
-                                        <th>{{data.totalNota | currency}}</th>
+                                        <th>{{ totalJ | currency}}</th>
                                     </tr>
                                     <tr>
                                         <th colspan="3">Tax & Service : {{ data.pajakPembayaran }} %</th>
@@ -310,6 +310,7 @@ export default {
                 let uri = '/api/detailpenjualan/'+ this.data.noNota;
                 this.axios.get(uri).then(response => {
                     this.pem = response.data.data;
+                    this.totalJ = response.data.total;
                    // alert('no nota '+ this.data.noNota);
             });
             },
