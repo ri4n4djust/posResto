@@ -149,11 +149,15 @@
                   <span v-if=" orders.length == 0 && orders1.length == 0"><a href="#"  class="btn btn-md btn-success disabled" role="button" aria-disabled="true">Print Order</a></span>
                   <span v-else><a href="#"  @click="printOrder(id= post.id)" class="btn btn-md btn-success" >Print Order</a></span>
                 </span>
-                
-                
                 <router-link :to="{ name: 'meja' }" class="btn btn-md btn-success">KEMBALI</router-link>
-                
                 <!-- /.post -->
+                <!-- /.tes print div -->
+                <div id="printableArea">
+                      <h1>Print me</h1>
+                </div>
+                <input type="button" @click="printDiv(printableArea)" value="print a div!" />
+                <!-- /.endtes print div -->
+
                             <table class="table table-hover table-bordered">
                                 <thead>
                                 <tr>
@@ -620,6 +624,7 @@
 
   import Print from 'vue-print-plugin';
  
+
   
     export default {
       components: { DatePicker, VueSingleSelect, Print },
@@ -676,6 +681,7 @@
                 adminuser: '',
                 nmMenu1: '',
                 kdMenu1: '',
+             
                 //printMe: '',
                 //waitername : this.waiter.name,
                 //optionLabel: users.nmBarang,
@@ -705,7 +711,7 @@
             this.loadPelanggan();
             this.adminuser = this.$session.get('roleID');
             
-            
+            printableArea = this.$refs["printableArea"];
         },
         watch: {
           post: function() {
@@ -713,9 +719,17 @@
           }
         },
         //props: ['value'],
-        props: ['optionLabel', 'value'],        
-
+        props: ['optionLabel', 'value'],  
+              
         methods: {
+          printDiv(printableArea) {
+            
+            var printContents = $('#printableArea').innerHTML;
+            var originalContents = document.body.innerHTML;
+            document.body.innerHTML = printContents;
+            window.print();
+            document.body.innerHTML = originalContents;
+          },
           select_menu(menu){
                 this.post2.id = menu.id
                 this.post2.nmMenu = menu.nmMenu

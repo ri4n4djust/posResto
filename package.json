@@ -35,6 +35,7 @@
         "laravel-vue-datatable": "^0.6.0",
         "moment": "^2.29.1",
         "nprogress": "^0.2.0",
+        "print-js": "^1.6.0",
         "recta": "^1.0.0",
         "v-img": "^0.2.0",
         "vue-axios": "^3.2.0",

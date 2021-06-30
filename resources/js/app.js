@@ -40,6 +40,8 @@ import VueImg from 'v-img';
     
     Vue.use(VueImg);
 
+import printJS from 'print-js'
+//Vue.use(printJS);
 
 import VueHtmlToPaper from 'vue-html-to-paper';
 const options = {
