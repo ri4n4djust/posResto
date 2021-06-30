@@ -61,7 +61,6 @@
                 <a href="#" @click="showModalBayar = true" class="btn btn-primary btn-block"><b>Payment</b></a>
                 </p>
 
-                <div id="printMe1" class="printMe1">
                   
                 <div id="lastOrder" class="lastOrder">
 
@@ -115,7 +114,7 @@
                 </table>                
                 </span>
               </div>
-                </div>
+             
               
 
             </div>
@@ -151,12 +150,6 @@
                 </span>
                 <router-link :to="{ name: 'meja' }" class="btn btn-md btn-success">KEMBALI</router-link>
                 <!-- /.post -->
-                <!-- /.tes print div -->
-                <div id="printableArea">
-                      <h1>Print me</h1>
-                </div>
-                <input type="button" @click="printDiv(printableArea)" value="print a div!" />
-                <!-- /.endtes print div -->
 
                             <table class="table table-hover table-bordered">
                                 <thead>
@@ -583,13 +576,10 @@
         visibility: visible;
         font-size: 8pt;
       }
-      .lastOrder, .lastOrder * {
+      #lastOrder, #lastOrder * {
         visibility: visible;
       }
-      .printMe1, .printMe1 * {
-        visibility: visible;
-        font-size: 8pt;
-      }
+
       #printMe {
         position: absolute;
         left: 0;
@@ -598,15 +588,8 @@
         width: 100%;
         height: 100%;
       }
-      .printMe1 {
-        position: absolute;
-        left: 0;
-        top: 0;
-        font-size: 8pt;
-        width: 100%;
-        height: 100%;
-      }
-      .lastOrder {
+
+      #lastOrder {
         position: absolute;
         left: 0;
         top: 0;
@@ -682,7 +665,7 @@
                 nmMenu1: '',
                 kdMenu1: '',
              
-                //printMe: '',
+                printMe: '',
                 //waitername : this.waiter.name,
                 //optionLabel: users.nmBarang,
                 tglNota: new Date().toJSON().slice(0,10).replace(/-/g,'/'),
@@ -711,7 +694,6 @@
             this.loadPelanggan();
             this.adminuser = this.$session.get('roleID');
             
-            printableArea = this.$refs["printableArea"];
         },
         watch: {
           post: function() {
@@ -722,14 +704,6 @@
         props: ['optionLabel', 'value'],  
               
         methods: {
-          printDiv(printableArea) {
-            
-            var printContents = $('#printableArea').innerHTML;
-            var originalContents = document.body.innerHTML;
-            document.body.innerHTML = printContents;
-            window.print();
-            document.body.innerHTML = originalContents;
-          },
           select_menu(menu){
                 this.post2.id = menu.id
                 this.post2.nmMenu = menu.nmMenu
@@ -758,20 +732,12 @@
                 }   
             },
 
-            showModalMenu() {
-                alert('tess');
-                this.showModalMenu = true;
-                // auto focus
-                this.$nextTick(function () {
-                    this.$refs.menu.focus()
-                })
-            },
             cekStok() {
                 this.brg = this.post1 - this.qtyBarang;
             },
             printBill() {
               //alert('print bill');
-                window.print(printMe1);
+                window.print(printMe);
                 //this.showModalBayar = false
             },
             printOrder(id) {
