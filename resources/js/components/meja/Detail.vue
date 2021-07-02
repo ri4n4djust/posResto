@@ -749,7 +749,8 @@
                       .then((response) => {
                           //this.$router.push({name: 'posts'});
                           this.orders = response.data.data;
-                          //this.ListOrder();
+                          this.ListOrder();
+                          this.ListOrder1();
                           //this.intervalFetchData();
                       }).catch(error => {
                         this.ListOrder();
@@ -757,7 +758,7 @@
                         //alert('ada yang error stelah print');
                   });
                 }, 10000); 
-                setTimeout(() => this.$router.push({name: 'meja'}), 2000);
+                setTimeout(() => this.$router.push({name: 'meja'}), 10000);
             },
             ListOrder(){
               let uri = `/api/orderprint/${this.$route.params.id}`;
