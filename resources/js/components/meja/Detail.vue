@@ -513,7 +513,7 @@
 
                                     <tr>
                                         <th colspan="3">Payment :</th>
-                                        <th>{{ Math.floor(totalBayar) | currency }}</th>
+                                        <th>{{ Math.floor(((subtotal * pajak / 100 + subtotal) - (subtotaltp * diskon / 100)) + ((subtotal * pajak / 100 + subtotal) - (subtotaltp * diskon / 100)) * taxDebit / 100)  || 0 | currency }}</th>
                                     </tr>
 
                                     <tr v-if="pembayaran === '1'">
@@ -757,8 +757,8 @@
                       //this.validation = error.response.data.data;
                         //alert('ada yang error stelah print');
                   });
-                }, 10000); 
-                setTimeout(() => this.$router.push({name: 'meja'}), 10000);
+                }, 12000); 
+                setTimeout(() => this.$router.push({name: 'meja'}), 12000);
             },
             ListOrder(){
               let uri = `/api/orderprint/${this.$route.params.id}`;
@@ -941,7 +941,7 @@
                         window.print(printMe)
                         setTimeout(function(){
                             window.location.href = '/meja';
-                        }, 10000);           
+                        }, 12000);           
                     });
                 
             },
