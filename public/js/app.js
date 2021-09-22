@@ -8954,13 +8954,28 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      username: '',
-      password: '',
-      post: {},
-      image_src: '/image/logo.png'
+      tglToday: new Date().toJSON().slice(0, 10).replace(/-/g, '/'),
+      image_src: '/image/logo.png',
+      akupansimeja: '',
+      notaToday: ''
     };
   },
-  methods: {}
+  created: function created() {
+    this.loadAwal();
+  },
+  methods: {
+    loadAwal: function loadAwal() {
+      var _this = this;
+
+      var uri = '/api/awaldashboard';
+      this.axios.get(uri).then(function (response) {
+        _this.akupansimeja = response.data.akupansimeja;
+        _this.notaToday = response.data.notaToday;
+      })["catch"](function (error) {
+        alert('ada yang error');
+      });
+    }
+  }
 });
 
 /***/ }),
@@ -22113,7 +22128,7 @@ exports = module.exports = __webpack_require__(/*! ../css-loader/lib/css-base.js
 
 
 // module
-exports.push([module.i, ".mx-icon-left:before,.mx-icon-right:before,.mx-icon-double-left:before,.mx-icon-double-right:before,.mx-icon-double-left:after,.mx-icon-double-right:after{content:\"\";position:relative;top:-1px;display:inline-block;width:10px;height:10px;vertical-align:middle;border-style:solid;border-color:currentColor;border-width:2px 0 0 2px;border-radius:1px;-webkit-box-sizing:border-box;box-sizing:border-box;-webkit-transform-origin:center;transform-origin:center;-webkit-transform:rotate(-45deg) scale(0.7);transform:rotate(-45deg) scale(0.7)}.mx-icon-double-left:after{left:-4px}.mx-icon-double-right:before{left:4px}.mx-icon-right:before,.mx-icon-double-right:before,.mx-icon-double-right:after{-webkit-transform:rotate(135deg) scale(0.7);transform:rotate(135deg) scale(0.7)}.mx-btn{-webkit-box-sizing:border-box;box-sizing:border-box;line-height:1;font-size:14px;font-weight:500;padding:7px 15px;margin:0;cursor:pointer;background-color:transparent;outline:none;border:1px solid rgba(0,0,0,.1);border-radius:4px;color:#73879c;white-space:nowrap}.mx-btn:hover{border-color:#1284e7;color:#1284e7}.mx-btn-text{border:0;padding:0 4px;text-align:left;line-height:inherit}.mx-scrollbar{height:100%}.mx-scrollbar:hover .mx-scrollbar-track{opacity:1}.mx-scrollbar-wrap{height:100%;overflow-x:hidden;overflow-y:auto}.mx-scrollbar-track{position:absolute;top:2px;right:2px;bottom:2px;width:6px;z-index:1;border-radius:4px;opacity:0;-webkit-transition:opacity .24s ease-out;transition:opacity .24s ease-out}.mx-scrollbar-track .mx-scrollbar-thumb{position:absolute;width:100%;height:0;cursor:pointer;border-radius:inherit;background-color:rgba(144,147,153,.3);-webkit-transition:background-color .3s;transition:background-color .3s}.mx-zoom-in-down-enter-active,.mx-zoom-in-down-leave-active{opacity:1;-webkit-transform:scaleY(1);transform:scaleY(1);-webkit-transition:opacity .3s cubic-bezier(0.23, 1, 0.32, 1),-webkit-transform .3s cubic-bezier(0.23, 1, 0.32, 1);transition:opacity .3s cubic-bezier(0.23, 1, 0.32, 1),-webkit-transform .3s cubic-bezier(0.23, 1, 0.32, 1);transition:transform .3s cubic-bezier(0.23, 1, 0.32, 1),opacity .3s cubic-bezier(0.23, 1, 0.32, 1);transition:transform .3s cubic-bezier(0.23, 1, 0.32, 1),opacity .3s cubic-bezier(0.23, 1, 0.32, 1),-webkit-transform .3s cubic-bezier(0.23, 1, 0.32, 1);-webkit-transform-origin:center top;transform-origin:center top}.mx-zoom-in-down-enter,.mx-zoom-in-down-leave-to{opacity:0;-webkit-transform:scaleY(0);transform:scaleY(0)}.mx-datepicker{position:relative;display:inline-block;width:210px}.mx-datepicker svg{width:1em;height:1em;vertical-align:-0.15em;fill:currentColor;overflow:hidden}.mx-datepicker-range{width:320px}.mx-datepicker-inline{width:auto}.mx-input-wrapper{position:relative}.mx-input-wrapper .mx-icon-clear{display:none}.mx-input-wrapper:hover .mx-icon-clear{display:block}.mx-input-wrapper:hover .mx-icon-clear+.mx-icon-calendar{display:none}.mx-input{display:inline-block;-webkit-box-sizing:border-box;box-sizing:border-box;width:100%;height:34px;padding:6px 30px;padding-left:10px;font-size:14px;line-height:1.4;color:#555;background-color:#fff;border:1px solid #ccc;border-radius:4px;-webkit-box-shadow:inset 0 1px 1px rgba(0,0,0,.075);box-shadow:inset 0 1px 1px rgba(0,0,0,.075)}.mx-input:hover,.mx-input:focus{border-color:#409aff}.mx-input:disabled,.mx-input.disabled{color:#ccc;background-color:#f3f3f3;border-color:#ccc;cursor:not-allowed}.mx-input:focus{outline:none}.mx-input::-ms-clear{display:none}.mx-icon-calendar,.mx-icon-clear{position:absolute;top:50%;right:8px;-webkit-transform:translateY(-50%);transform:translateY(-50%);font-size:16px;line-height:1;color:rgba(0,0,0,.5);vertical-align:middle}.mx-icon-clear{cursor:pointer}.mx-icon-clear:hover{color:rgba(0,0,0,.8)}.mx-datepicker-main{font:14px/1.5 \"Helvetica Neue\",Helvetica,Arial,\"Microsoft Yahei\",sans-serif;color:#73879c;background-color:#fff;border:1px solid #e8e8e8}.mx-datepicker-popup{position:absolute;margin-top:1px;margin-bottom:1px;-webkit-box-shadow:0 6px 12px rgba(0,0,0,.175);box-shadow:0 6px 12px rgba(0,0,0,.175);z-index:2001}.mx-datepicker-sidebar{float:left;-webkit-box-sizing:border-box;box-sizing:border-box;width:100px;padding:6px;overflow:auto}.mx-datepicker-sidebar+.mx-datepicker-content{margin-left:100px;border-left:1px solid #e8e8e8}.mx-datepicker-body{position:relative;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.mx-btn-shortcut{display:block;padding:0 6px;line-height:24px}.mx-range-wrapper{display:-webkit-box;display:-ms-flexbox;display:flex}@media(max-width: 750px){.mx-range-wrapper{-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-direction:column;flex-direction:column}}.mx-datepicker-header{padding:6px 8px;border-bottom:1px solid #e8e8e8}.mx-datepicker-footer{padding:6px 8px;text-align:right;border-top:1px solid #e8e8e8}.mx-calendar{-webkit-box-sizing:border-box;box-sizing:border-box;width:248px;padding:6px 12px}.mx-calendar+.mx-calendar{border-left:1px solid #e8e8e8}.mx-calendar-header,.mx-time-header{-webkit-box-sizing:border-box;box-sizing:border-box;height:34px;line-height:34px;text-align:center;overflow:hidden}.mx-btn-icon-left,.mx-btn-icon-double-left{float:left}.mx-btn-icon-right,.mx-btn-icon-double-right{float:right}.mx-calendar-header-label{font-size:14px}.mx-calendar-decade-separator{margin:0 2px}.mx-calendar-decade-separator:after{content:\"~\"}.mx-calendar-content{position:relative;height:224px;-webkit-box-sizing:border-box;box-sizing:border-box}.mx-calendar-content .cell{cursor:pointer}.mx-calendar-content .cell:hover{color:#73879c;background-color:#f3f9fe}.mx-calendar-content .cell.active{color:#fff;background-color:#1284e7}.mx-calendar-content .cell.in-range,.mx-calendar-content .cell.hover-in-range{color:#73879c;background-color:#dbedfb}.mx-calendar-content .cell.disabled{cursor:not-allowed;color:#ccc;background-color:#f3f3f3}.mx-calendar-week-mode .mx-date-row{cursor:pointer}.mx-calendar-week-mode .mx-date-row:hover{background-color:#f3f9fe}.mx-calendar-week-mode .mx-date-row.mx-active-week{background-color:#dbedfb}.mx-calendar-week-mode .mx-date-row .cell:hover{color:inherit;background-color:transparent}.mx-calendar-week-mode .mx-date-row .cell.active{color:inherit;background-color:transparent}.mx-week-number{opacity:.5}.mx-table{table-layout:fixed;border-collapse:separate;border-spacing:0;width:100%;height:100%;-webkit-box-sizing:border-box;box-sizing:border-box;text-align:center;vertical-align:middle}.mx-table th{padding:0;font-weight:500}.mx-table td{padding:0}.mx-table-date td,.mx-table-date th{height:32px;font-size:12px}.mx-table-date .today{color:#2a90e9}.mx-table-date .cell.not-current-month{color:#ccc;background:none}.mx-time{-webkit-box-flex:1;-ms-flex:1;flex:1;width:224px;background:#fff}.mx-time+.mx-time{border-left:1px solid #e8e8e8}.mx-calendar-time{position:absolute;top:0;left:0;width:100%;height:100%}.mx-time-header{border-bottom:1px solid #e8e8e8}.mx-time-content{height:224px;-webkit-box-sizing:border-box;box-sizing:border-box;overflow:hidden}.mx-time-columns{display:-webkit-box;display:-ms-flexbox;display:flex;width:100%;height:100%;overflow:hidden}.mx-time-column{-webkit-box-flex:1;-ms-flex:1;flex:1;position:relative;border-left:1px solid #e8e8e8;text-align:center}.mx-time-column:first-child{border-left:0}.mx-time-column .mx-time-list{margin:0;padding:0;list-style:none}.mx-time-column .mx-time-list::after{content:\"\";display:block;height:192px}.mx-time-column .mx-time-item{cursor:pointer;font-size:12px;height:32px;line-height:32px}.mx-time-column .mx-time-item:hover{color:#73879c;background-color:#f3f9fe}.mx-time-column .mx-time-item.active{color:#1284e7;background-color:transparent;font-weight:700}.mx-time-column .mx-time-item.disabled{cursor:not-allowed;color:#ccc;background-color:#f3f3f3}.mx-time-option{cursor:pointer;padding:8px 10px;font-size:14px;line-height:20px}.mx-time-option:hover{color:#73879c;background-color:#f3f9fe}.mx-time-option.active{color:#1284e7;background-color:transparent;font-weight:700}.mx-time-option.disabled{cursor:not-allowed;color:#ccc;background-color:#f3f3f3}\r\n", ""]);
+exports.push([module.i, ".mx-icon-left:before,.mx-icon-right:before,.mx-icon-double-left:before,.mx-icon-double-right:before,.mx-icon-double-left:after,.mx-icon-double-right:after{content:\"\";position:relative;top:-1px;display:inline-block;width:10px;height:10px;vertical-align:middle;border-style:solid;border-color:currentColor;border-width:2px 0 0 2px;border-radius:1px;-webkit-box-sizing:border-box;box-sizing:border-box;-webkit-transform-origin:center;transform-origin:center;-webkit-transform:rotate(-45deg) scale(0.7);transform:rotate(-45deg) scale(0.7)}.mx-icon-double-left:after{left:-4px}.mx-icon-double-right:before{left:4px}.mx-icon-right:before,.mx-icon-double-right:before,.mx-icon-double-right:after{-webkit-transform:rotate(135deg) scale(0.7);transform:rotate(135deg) scale(0.7)}.mx-btn{-webkit-box-sizing:border-box;box-sizing:border-box;line-height:1;font-size:14px;font-weight:500;padding:7px 15px;margin:0;cursor:pointer;background-color:transparent;outline:none;border:1px solid rgba(0,0,0,.1);border-radius:4px;color:#73879c;white-space:nowrap}.mx-btn:hover{border-color:#1284e7;color:#1284e7}.mx-btn-text{border:0;padding:0 4px;text-align:left;line-height:inherit}.mx-scrollbar{height:100%}.mx-scrollbar:hover .mx-scrollbar-track{opacity:1}.mx-scrollbar-wrap{height:100%;overflow-x:hidden;overflow-y:auto}.mx-scrollbar-track{position:absolute;top:2px;right:2px;bottom:2px;width:6px;z-index:1;border-radius:4px;opacity:0;-webkit-transition:opacity .24s ease-out;transition:opacity .24s ease-out}.mx-scrollbar-track .mx-scrollbar-thumb{position:absolute;width:100%;height:0;cursor:pointer;border-radius:inherit;background-color:rgba(144,147,153,.3);-webkit-transition:background-color .3s;transition:background-color .3s}.mx-zoom-in-down-enter-active,.mx-zoom-in-down-leave-active{opacity:1;-webkit-transform:scaleY(1);transform:scaleY(1);-webkit-transition:opacity .3s cubic-bezier(0.23, 1, 0.32, 1),-webkit-transform .3s cubic-bezier(0.23, 1, 0.32, 1);transition:opacity .3s cubic-bezier(0.23, 1, 0.32, 1),-webkit-transform .3s cubic-bezier(0.23, 1, 0.32, 1);transition:transform .3s cubic-bezier(0.23, 1, 0.32, 1),opacity .3s cubic-bezier(0.23, 1, 0.32, 1);transition:transform .3s cubic-bezier(0.23, 1, 0.32, 1),opacity .3s cubic-bezier(0.23, 1, 0.32, 1),-webkit-transform .3s cubic-bezier(0.23, 1, 0.32, 1);-webkit-transform-origin:center top;transform-origin:center top}.mx-zoom-in-down-enter,.mx-zoom-in-down-leave-to{opacity:0;-webkit-transform:scaleY(0);transform:scaleY(0)}.mx-datepicker{position:relative;display:inline-block;width:210px}.mx-datepicker svg{width:1em;height:1em;vertical-align:-0.15em;fill:currentColor;overflow:hidden}.mx-datepicker-range{width:320px}.mx-datepicker-inline{width:auto}.mx-input-wrapper{position:relative}.mx-input-wrapper .mx-icon-clear{display:none}.mx-input-wrapper:hover .mx-icon-clear{display:block}.mx-input-wrapper:hover .mx-icon-clear+.mx-icon-calendar{display:none}.mx-input{display:inline-block;-webkit-box-sizing:border-box;box-sizing:border-box;width:100%;height:34px;padding:6px 30px;padding-left:10px;font-size:14px;line-height:1.4;color:#555;background-color:#fff;border:1px solid #ccc;border-radius:4px;-webkit-box-shadow:inset 0 1px 1px rgba(0,0,0,.075);box-shadow:inset 0 1px 1px rgba(0,0,0,.075)}.mx-input:hover,.mx-input:focus{border-color:#409aff}.mx-input:disabled,.mx-input.disabled{color:#ccc;background-color:#f3f3f3;border-color:#ccc;cursor:not-allowed}.mx-input:focus{outline:none}.mx-input::-ms-clear{display:none}.mx-icon-calendar,.mx-icon-clear{position:absolute;top:50%;right:8px;-webkit-transform:translateY(-50%);transform:translateY(-50%);font-size:16px;line-height:1;color:rgba(0,0,0,.5);vertical-align:middle}.mx-icon-clear{cursor:pointer}.mx-icon-clear:hover{color:rgba(0,0,0,.8)}.mx-datepicker-main{font:14px/1.5 \"Helvetica Neue\",Helvetica,Arial,\"Microsoft Yahei\",sans-serif;color:#73879c;background-color:#fff;border:1px solid #e8e8e8}.mx-datepicker-popup{position:absolute;margin-top:1px;margin-bottom:1px;-webkit-box-shadow:0 6px 12px rgba(0,0,0,.175);box-shadow:0 6px 12px rgba(0,0,0,.175);z-index:2001}.mx-datepicker-sidebar{float:left;-webkit-box-sizing:border-box;box-sizing:border-box;width:100px;padding:6px;overflow:auto}.mx-datepicker-sidebar+.mx-datepicker-content{margin-left:100px;border-left:1px solid #e8e8e8}.mx-datepicker-body{position:relative;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.mx-btn-shortcut{display:block;padding:0 6px;line-height:24px}.mx-range-wrapper{display:-webkit-box;display:-ms-flexbox;display:flex}@media(max-width: 750px){.mx-range-wrapper{-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-direction:column;flex-direction:column}}.mx-datepicker-header{padding:6px 8px;border-bottom:1px solid #e8e8e8}.mx-datepicker-footer{padding:6px 8px;text-align:right;border-top:1px solid #e8e8e8}.mx-calendar{-webkit-box-sizing:border-box;box-sizing:border-box;width:248px;padding:6px 12px}.mx-calendar+.mx-calendar{border-left:1px solid #e8e8e8}.mx-calendar-header,.mx-time-header{-webkit-box-sizing:border-box;box-sizing:border-box;height:34px;line-height:34px;text-align:center;overflow:hidden}.mx-btn-icon-left,.mx-btn-icon-double-left{float:left}.mx-btn-icon-right,.mx-btn-icon-double-right{float:right}.mx-calendar-header-label{font-size:14px}.mx-calendar-decade-separator{margin:0 2px}.mx-calendar-decade-separator:after{content:\"~\"}.mx-calendar-content{position:relative;height:224px;-webkit-box-sizing:border-box;box-sizing:border-box}.mx-calendar-content .cell{cursor:pointer}.mx-calendar-content .cell:hover{color:#73879c;background-color:#f3f9fe}.mx-calendar-content .cell.active{color:#fff;background-color:#1284e7}.mx-calendar-content .cell.in-range,.mx-calendar-content .cell.hover-in-range{color:#73879c;background-color:#dbedfb}.mx-calendar-content .cell.disabled{cursor:not-allowed;color:#ccc;background-color:#f3f3f3}.mx-calendar-week-mode .mx-date-row{cursor:pointer}.mx-calendar-week-mode .mx-date-row:hover{background-color:#f3f9fe}.mx-calendar-week-mode .mx-date-row.mx-active-week{background-color:#dbedfb}.mx-calendar-week-mode .mx-date-row .cell:hover{color:inherit;background-color:transparent}.mx-calendar-week-mode .mx-date-row .cell.active{color:inherit;background-color:transparent}.mx-week-number{opacity:.5}.mx-table{table-layout:fixed;border-collapse:separate;border-spacing:0;width:100%;height:100%;-webkit-box-sizing:border-box;box-sizing:border-box;text-align:center;vertical-align:middle}.mx-table th{padding:0;font-weight:500}.mx-table td{padding:0}.mx-table-date td,.mx-table-date th{height:32px;font-size:12px}.mx-table-date .today{color:#2a90e9}.mx-table-date .cell.not-current-month{color:#ccc;background:none}.mx-time{-webkit-box-flex:1;-ms-flex:1;flex:1;width:224px;background:#fff}.mx-time+.mx-time{border-left:1px solid #e8e8e8}.mx-calendar-time{position:absolute;top:0;left:0;width:100%;height:100%}.mx-time-header{border-bottom:1px solid #e8e8e8}.mx-time-content{height:224px;-webkit-box-sizing:border-box;box-sizing:border-box;overflow:hidden}.mx-time-columns{display:-webkit-box;display:-ms-flexbox;display:flex;width:100%;height:100%;overflow:hidden}.mx-time-column{-webkit-box-flex:1;-ms-flex:1;flex:1;position:relative;border-left:1px solid #e8e8e8;text-align:center}.mx-time-column:first-child{border-left:0}.mx-time-column .mx-time-list{margin:0;padding:0;list-style:none}.mx-time-column .mx-time-list::after{content:\"\";display:block;height:192px}.mx-time-column .mx-time-item{cursor:pointer;font-size:12px;height:32px;line-height:32px}.mx-time-column .mx-time-item:hover{color:#73879c;background-color:#f3f9fe}.mx-time-column .mx-time-item.active{color:#1284e7;background-color:transparent;font-weight:700}.mx-time-column .mx-time-item.disabled{cursor:not-allowed;color:#ccc;background-color:#f3f3f3}.mx-time-option{cursor:pointer;padding:8px 10px;font-size:14px;line-height:20px}.mx-time-option:hover{color:#73879c;background-color:#f3f9fe}.mx-time-option.active{color:#1284e7;background-color:transparent;font-weight:700}.mx-time-option.disabled{cursor:not-allowed;color:#ccc;background-color:#f3f3f3}\n", ""]);
 
 // exports
 
@@ -22512,7 +22527,7 @@ exports = module.exports = __webpack_require__(/*! ../../css-loader/lib/css-base
 
 
 // module
-exports.push([module.i, "\n.w-full[data-v-27213e1d] {\r\n  width: 100%;\n}\n.inline-block[data-v-27213e1d] {\r\n  display: inline-block;\n}\n.block[data-v-27213e1d] {\r\n  display: block;\n}\n.flex[data-v-27213e1d] {\r\n  display: flex;\n}\n.border[data-v-27213e1d] {\r\n  border-width: thin;\r\n  border-style: solid;\n}\n.rounded[data-v-27213e1d] {\r\n  border-radius: 0.25em;\n}\n.text-black[data-v-27213e1d] {\r\n  color: #22292f;\n}\n.border-grey-lighter[data-v-27213e1d] {\r\n  border-color: #ced4da;\n}\n.bg-grey-lighter[data-v-27213e1d] {\r\n  background-color: #606f7b;\n}\n.bg-grey-light[data-v-27213e1d] {\r\n  background-color: #dae1e7;\n}\n.bg-grey-dark[data-v-27213e1d] {\r\n  background-color: #8795a1;\n}\n.bg-white[data-v-27213e1d] {\r\n  background-color: #fff;\n}\n.pin-r[data-v-27213e1d] {\r\n  right: 0;\n}\n.pin-y[data-v-27213e1d] {\r\n  top: 0;\r\n  bottom: 0;\n}\n.absolute[data-v-27213e1d] {\r\n  position: absolute;\n}\n.relative[data-v-27213e1d] {\r\n  position: relative;\n}\n.items-center[data-v-27213e1d] {\r\n  align-items: center;\n}\n.p-0[data-v-27213e1d] {\r\n  padding: 0;\n}\n.p-1[data-v-27213e1d] {\r\n  padding: 0.25em;\n}\n.px-1[data-v-27213e1d] {\r\n  padding-left: 0.25em;\r\n  padding-right: 0.25em;\n}\n.py-2[data-v-27213e1d] {\r\n  padding-top: 0.5em;\r\n  padding-bottom: 0.5em;\n}\n.px-2[data-v-27213e1d] {\r\n  padding-left: 0.5em;\r\n  padding-right: 0.5em;\n}\n.mt-px[data-v-27213e1d] {\r\n  margin-top: 1px;\n}\n.leading-tight[data-v-27213e1d] {\r\n  line-height: 1.25;\n}\n.leading-normal[data-v-27213e1d] {\r\n  line-height: 1.5;\n}\n.text-left[data-v-27213e1d] {\r\n  text-align: left;\n}\n.w-full[data-v-27213e1d] {\r\n  width: 100%;\n}\n.shadow[data-v-27213e1d] {\r\n  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);\n}\n.list-reset[data-v-27213e1d] {\r\n  list-style: none;\r\n  padding: 0;\n}\n.overflow-auto[data-v-27213e1d] {\r\n  overflow: auto;\n}\n.appearance-none[data-v-27213e1d] {\r\n  -webkit-appearance: none;\r\n  -moz-appearance: none;\r\n  appearance: none;\n}\n.w-1[data-v-27213e1d] {\r\n  width: 0.25em;\n}\n.w-2[data-v-27213e1d] {\r\n  width: 0.5em;\n}\n.w-3[data-v-27213e1d] {\r\n  width: 0.75em;\n}\n.w-4[data-v-27213e1d] {\r\n  width: 1em;\n}\n.h-4[data-v-27213e1d] {\r\n  height: 1em;\n}\n.h-1[data-v-27213e1d] {\r\n  height: 0.25em;\n}\n.h-2[data-v-27213e1d] {\r\n  height: 0.5em;\n}\n.h-3[data-v-27213e1d] {\r\n  height: 0.75em;\n}\n.fill-current[data-v-27213e1d] {\r\n  fill: currentColor;\n}\n.no-underline[data-v-27213e1d] {\r\n  text-decoration: none;\n}\n.hover\\:no-underline[data-v-27213e1d]:hover {\r\n  text-decoration: none;\n}\n.outline-none[data-v-27213e1d] {\r\n  outline: 0;\n}\n.hover\\:outline-none[data-v-27213e1d] {\r\n  outline: 0;\n}\n.hover\\:bg-grey-light[data-v-27213e1d]:hover {\r\n  background-color: #dae1e7;\n}\n.shadow-md[data-v-27213e1d] {\r\n  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.12), 0 2px 4px 0 rgba(0, 0, 0, 0.08);\n}\n.search-input[data-v-27213e1d] {\r\n  display: block;\r\n  width: 100%;\r\n  padding: 0.375em 0.75em;\r\n  font-size: 1em;\r\n  line-height: 1.5;\r\n  color: #495057;\r\n  background-color: #fff;\r\n  background-clip: padding-box;\r\n  border: 1px solid #ced4da;\r\n  border-radius: 0.25em;\r\n  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;\r\n  box-sizing: border-box;\n}\n.icons[data-v-27213e1d] {\r\n  padding: 0 1em;\r\n  right: 0;\r\n  top: 0;\r\n  bottom: 0;\r\n  fill: #606f7b;\n}\n.icons svg[data-v-27213e1d] {\r\n  width: 0.75em;\r\n  height: 0.75em;\n}\n.single-select-wrapper[data-v-27213e1d] {\r\n  position: relative;\r\n  margin-bottom: 0.5em;\n}\n.required[data-v-27213e1d] {\r\n  _color: #721c24;\r\n  _background-color: #f8d7da;\r\n  border-color: #f5c6cb;\n}\n.cursor-pointer[data-v-27213e1d] {\r\n  cursor: pointer;\n}\n.dropdown[data-v-27213e1d] {\r\n  -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.12),\r\n    0 2px 4px 0 rgba(0, 0, 0, 0.08);\r\n  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.12), 0 2px 4px 0 rgba(0, 0, 0, 0.08);\r\n  background-color: #fff;\r\n  color: #606f7b;\r\n  border-radius: 0.25em;\r\n  line-height: 1.25;\r\n  text-align: left;\n}\n.dropdown > li[data-v-27213e1d] {\r\n  padding: 0.5em 0.75em;\n}\n.active[data-v-27213e1d] {\r\n  background: #dae1e7;\n}\r\n", ""]);
+exports.push([module.i, "\n.w-full[data-v-27213e1d] {\n  width: 100%;\n}\n.inline-block[data-v-27213e1d] {\n  display: inline-block;\n}\n.block[data-v-27213e1d] {\n  display: block;\n}\n.flex[data-v-27213e1d] {\n  display: flex;\n}\n.border[data-v-27213e1d] {\n  border-width: thin;\n  border-style: solid;\n}\n.rounded[data-v-27213e1d] {\n  border-radius: 0.25em;\n}\n.text-black[data-v-27213e1d] {\n  color: #22292f;\n}\n.border-grey-lighter[data-v-27213e1d] {\n  border-color: #ced4da;\n}\n.bg-grey-lighter[data-v-27213e1d] {\n  background-color: #606f7b;\n}\n.bg-grey-light[data-v-27213e1d] {\n  background-color: #dae1e7;\n}\n.bg-grey-dark[data-v-27213e1d] {\n  background-color: #8795a1;\n}\n.bg-white[data-v-27213e1d] {\n  background-color: #fff;\n}\n.pin-r[data-v-27213e1d] {\n  right: 0;\n}\n.pin-y[data-v-27213e1d] {\n  top: 0;\n  bottom: 0;\n}\n.absolute[data-v-27213e1d] {\n  position: absolute;\n}\n.relative[data-v-27213e1d] {\n  position: relative;\n}\n.items-center[data-v-27213e1d] {\n  align-items: center;\n}\n.p-0[data-v-27213e1d] {\n  padding: 0;\n}\n.p-1[data-v-27213e1d] {\n  padding: 0.25em;\n}\n.px-1[data-v-27213e1d] {\n  padding-left: 0.25em;\n  padding-right: 0.25em;\n}\n.py-2[data-v-27213e1d] {\n  padding-top: 0.5em;\n  padding-bottom: 0.5em;\n}\n.px-2[data-v-27213e1d] {\n  padding-left: 0.5em;\n  padding-right: 0.5em;\n}\n.mt-px[data-v-27213e1d] {\n  margin-top: 1px;\n}\n.leading-tight[data-v-27213e1d] {\n  line-height: 1.25;\n}\n.leading-normal[data-v-27213e1d] {\n  line-height: 1.5;\n}\n.text-left[data-v-27213e1d] {\n  text-align: left;\n}\n.w-full[data-v-27213e1d] {\n  width: 100%;\n}\n.shadow[data-v-27213e1d] {\n  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);\n}\n.list-reset[data-v-27213e1d] {\n  list-style: none;\n  padding: 0;\n}\n.overflow-auto[data-v-27213e1d] {\n  overflow: auto;\n}\n.appearance-none[data-v-27213e1d] {\n  -webkit-appearance: none;\n  -moz-appearance: none;\n  appearance: none;\n}\n.w-1[data-v-27213e1d] {\n  width: 0.25em;\n}\n.w-2[data-v-27213e1d] {\n  width: 0.5em;\n}\n.w-3[data-v-27213e1d] {\n  width: 0.75em;\n}\n.w-4[data-v-27213e1d] {\n  width: 1em;\n}\n.h-4[data-v-27213e1d] {\n  height: 1em;\n}\n.h-1[data-v-27213e1d] {\n  height: 0.25em;\n}\n.h-2[data-v-27213e1d] {\n  height: 0.5em;\n}\n.h-3[data-v-27213e1d] {\n  height: 0.75em;\n}\n.fill-current[data-v-27213e1d] {\n  fill: currentColor;\n}\n.no-underline[data-v-27213e1d] {\n  text-decoration: none;\n}\n.hover\\:no-underline[data-v-27213e1d]:hover {\n  text-decoration: none;\n}\n.outline-none[data-v-27213e1d] {\n  outline: 0;\n}\n.hover\\:outline-none[data-v-27213e1d] {\n  outline: 0;\n}\n.hover\\:bg-grey-light[data-v-27213e1d]:hover {\n  background-color: #dae1e7;\n}\n.shadow-md[data-v-27213e1d] {\n  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.12), 0 2px 4px 0 rgba(0, 0, 0, 0.08);\n}\n.search-input[data-v-27213e1d] {\n  display: block;\n  width: 100%;\n  padding: 0.375em 0.75em;\n  font-size: 1em;\n  line-height: 1.5;\n  color: #495057;\n  background-color: #fff;\n  background-clip: padding-box;\n  border: 1px solid #ced4da;\n  border-radius: 0.25em;\n  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;\n  box-sizing: border-box;\n}\n.icons[data-v-27213e1d] {\n  padding: 0 1em;\n  right: 0;\n  top: 0;\n  bottom: 0;\n  fill: #606f7b;\n}\n.icons svg[data-v-27213e1d] {\n  width: 0.75em;\n  height: 0.75em;\n}\n.single-select-wrapper[data-v-27213e1d] {\n  position: relative;\n  margin-bottom: 0.5em;\n}\n.required[data-v-27213e1d] {\n  _color: #721c24;\n  _background-color: #f8d7da;\n  border-color: #f5c6cb;\n}\n.cursor-pointer[data-v-27213e1d] {\n  cursor: pointer;\n}\n.dropdown[data-v-27213e1d] {\n  -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.12),\n    0 2px 4px 0 rgba(0, 0, 0, 0.08);\n  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.12), 0 2px 4px 0 rgba(0, 0, 0, 0.08);\n  background-color: #fff;\n  color: #606f7b;\n  border-radius: 0.25em;\n  line-height: 1.25;\n  text-align: left;\n}\n.dropdown > li[data-v-27213e1d] {\n  padding: 0.5em 0.75em;\n}\n.active[data-v-27213e1d] {\n  background: #dae1e7;\n}\n", ""]);
 
 // exports
 
@@ -22626,7 +22641,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.data-table {\r\n\tdisplay: grid;\r\n\twidth: 100%;\r\n\theight: 100%;\n}\r\n", ""]);
+exports.push([module.i, "\n.data-table {\n\tdisplay: grid;\n\twidth: 100%;\n\theight: 100%;\n}\n", ""]);
 
 // exports
 
@@ -22645,7 +22660,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.autocomplete-box-li:hover {\r\n  background-color: #f2f2f2;\n}\n.autocomplete-box{\r\n  position: absolute;\r\n  z-index: 1;\n}\n#printMe { display: none;\n}\n@media print\r\n    {\n@page{\r\n        margin: 0;\n}\nbody * {\r\n        visibility: hidden;\n}\n#printMe, #printMe * {\r\n        visibility: visible;\r\n        font-size: 8pt;\n}\n#lastOrder, #lastOrder * {\r\n        visibility: visible;\n}\n#printMe {\r\n        position: absolute;\r\n        left: 0;\r\n        top: 0;\r\n        font-size: 8pt;\r\n        width: 100%;\r\n        height: 100%;\n}\n#lastOrder {\r\n        position: absolute;\r\n        left: 0;\r\n        top: 0;\r\n        font-size: 8pt;\r\n        width: 100%;\n}\n}\r\n    ", ""]);
+exports.push([module.i, "\n.autocomplete-box-li:hover {\n  background-color: #f2f2f2;\n}\n.autocomplete-box{\n  position: absolute;\n  z-index: 1;\n}\n#printMe { display: none;\n}\n@media print\n    {\n@page{\n        margin: 0;\n}\nbody * {\n        visibility: hidden;\n}\n#printMe, #printMe * {\n        visibility: visible;\n        font-size: 8pt;\n}\n#lastOrder, #lastOrder * {\n        visibility: visible;\n}\n#printMe {\n        position: absolute;\n        left: 0;\n        top: 0;\n        font-size: 8pt;\n        width: 100%;\n        height: 100%;\n}\n#lastOrder {\n        position: absolute;\n        left: 0;\n        top: 0;\n        font-size: 8pt;\n        width: 100%;\n}\n}\n    ", ""]);
 
 // exports
 
@@ -22664,7 +22679,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.data-table {\r\n\tdisplay: grid;\r\n\twidth: 100%;\r\n\theight: 100%;\n}\r\n", ""]);
+exports.push([module.i, "\n.data-table {\n\tdisplay: grid;\n\twidth: 100%;\n\theight: 100%;\n}\n", ""]);
 
 // exports
 
@@ -22683,7 +22698,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.data-table {\r\n\tdisplay: grid;\r\n\twidth: 100%;\r\n\theight: 100%;\n}\r\n", ""]);
+exports.push([module.i, "\n.data-table {\n\tdisplay: grid;\n\twidth: 100%;\n\theight: 100%;\n}\n", ""]);
 
 // exports
 
@@ -22702,7 +22717,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.data-table {\r\n\tdisplay: grid;\r\n\twidth: 100%;\r\n\theight: 100%;\n}\r\n", ""]);
+exports.push([module.i, "\n.data-table {\n\tdisplay: grid;\n\twidth: 100%;\n\theight: 100%;\n}\n", ""]);
 
 // exports
 
@@ -22721,7 +22736,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.data-table {\r\n\tdisplay: grid;\r\n\twidth: 100%;\r\n\theight: 100%;\n}\r\n", ""]);
+exports.push([module.i, "\n.data-table {\n\tdisplay: grid;\n\twidth: 100%;\n\theight: 100%;\n}\n", ""]);
 
 // exports
 
@@ -62347,7 +62362,71 @@ var render = function() {
   return _c(
     "div",
     { staticClass: "card-body" },
-    [_c("status-login"), _vm._v(" "), _vm._m(0), _vm._v(" "), _vm._m(1)],
+    [
+      _c("status-login"),
+      _vm._v(" "),
+      _vm._m(0),
+      _vm._v(" "),
+      _c("section", { staticClass: "content" }, [
+        _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "col-md-3 col-sm-6 col-xs-12" }, [
+            _c("div", { staticClass: "info-box" }, [
+              _vm._m(1),
+              _vm._v(" "),
+              _c("div", { staticClass: "info-box-content" }, [
+                _c("span", { staticClass: "info-box-text" }, [
+                  _vm._v("Today ")
+                ]),
+                _vm._v(" "),
+                _c("span", { staticClass: "info-box-number" }, [
+                  _vm._v(_vm._s(_vm.tglToday))
+                ])
+              ])
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-md-3 col-sm-6 col-xs-12" }, [
+            _c("div", { staticClass: "info-box" }, [
+              _vm._m(2),
+              _vm._v(" "),
+              _c("div", { staticClass: "info-box-content" }, [
+                _c("span", { staticClass: "info-box-text" }, [
+                  _vm._v("Meja Terisi")
+                ]),
+                _vm._v(" "),
+                _c("span", { staticClass: "info-box-number" }, [
+                  _vm._v(_vm._s(_vm.akupansimeja))
+                ])
+              ])
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "clearfix visible-sm-block" }),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-md-3 col-sm-6 col-xs-12" }, [
+            _c("div", { staticClass: "info-box" }, [
+              _vm._m(3),
+              _vm._v(" "),
+              _c("div", { staticClass: "info-box-content" }, [
+                _c("span", { staticClass: "info-box-text" }, [
+                  _vm._v("Penjualan Hari Ini")
+                ]),
+                _vm._v(" "),
+                _c("span", { staticClass: "info-box-number" }, [
+                  _vm._v(_vm._s(_vm.notaToday))
+                ])
+              ])
+            ])
+          ]),
+          _vm._v(" "),
+          _vm._m(4)
+        ]),
+        _vm._v(" "),
+        _vm._m(5),
+        _vm._v(" "),
+        _vm._m(6)
+      ])
+    ],
     1
   )
 }
@@ -62364,425 +62443,375 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("section", { staticClass: "content" }, [
-      _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-md-3 col-sm-6 col-xs-12" }, [
-          _c("div", { staticClass: "info-box" }, [
-            _c("span", { staticClass: "info-box-icon bg-aqua" }, [
-              _c("i", { staticClass: "fa fa-calendar-check-o" })
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "info-box-content" }, [
-              _c("span", { staticClass: "info-box-text" }, [_vm._v("Today ")]),
-              _vm._v(" "),
-              _c("span", { staticClass: "info-box-number" }, [
-                _vm._v("90"),
-                _c("small", [_vm._v("%")])
-              ])
-            ])
-          ])
+    return _c("span", { staticClass: "info-box-icon bg-aqua" }, [
+      _c("i", { staticClass: "fa fa-calendar-check-o" })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", { staticClass: "info-box-icon bg-red" }, [
+      _c("i", { staticClass: "fa fa-th-list" })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", { staticClass: "info-box-icon bg-green" }, [
+      _c("i", { staticClass: "ion ion-ios-cart-outline" })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-md-3 col-sm-6 col-xs-12" }, [
+      _c("div", { staticClass: "info-box" }, [
+        _c("span", { staticClass: "info-box-icon bg-yellow" }, [
+          _c("i", { staticClass: "ion ion-ios-people-outline" })
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "col-md-3 col-sm-6 col-xs-12" }, [
-          _c("div", { staticClass: "info-box" }, [
-            _c("span", { staticClass: "info-box-icon bg-red" }, [
-              _c("i", { staticClass: "fa fa-th-list" })
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "info-box-content" }, [
-              _c("span", { staticClass: "info-box-text" }, [
-                _vm._v("Meja Terisi")
-              ]),
-              _vm._v(" "),
-              _c("span", { staticClass: "info-box-number" }, [_vm._v("41,410")])
-            ])
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "clearfix visible-sm-block" }),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-md-3 col-sm-6 col-xs-12" }, [
-          _c("div", { staticClass: "info-box" }, [
-            _c("span", { staticClass: "info-box-icon bg-green" }, [
-              _c("i", { staticClass: "ion ion-ios-cart-outline" })
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "info-box-content" }, [
-              _c("span", { staticClass: "info-box-text" }, [
-                _vm._v("Penjualan")
-              ]),
-              _vm._v(" "),
-              _c("span", { staticClass: "info-box-number" }, [_vm._v("760")])
-            ])
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-md-3 col-sm-6 col-xs-12" }, [
-          _c("div", { staticClass: "info-box" }, [
-            _c("span", { staticClass: "info-box-icon bg-yellow" }, [
-              _c("i", { staticClass: "ion ion-ios-people-outline" })
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "info-box-content" }, [
-              _c("span", { staticClass: "info-box-text" }, [_vm._v("User")]),
-              _vm._v(" "),
-              _c("span", { staticClass: "info-box-number" }, [_vm._v("2,000")])
-            ])
-          ])
+        _c("div", { staticClass: "info-box-content" }, [
+          _c("span", { staticClass: "info-box-text" }, [_vm._v("User")]),
+          _vm._v(" "),
+          _c("span", { staticClass: "info-box-number" }, [_vm._v("2,000")])
         ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-md-12" }, [
-          _c("div", { staticClass: "box" }, [
-            _c("div", { staticClass: "box-header with-border" }, [
-              _c("h3", { staticClass: "box-title" }, [
-                _vm._v("Monthly Recap Report")
-              ]),
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-md-12" }, [
+        _c("div", { staticClass: "box" }, [
+          _c("div", { staticClass: "box-header with-border" }, [
+            _c("h3", { staticClass: "box-title" }, [
+              _vm._v("Monthly Recap Report")
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "box-tools pull-right" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-box-tool",
+                  attrs: { type: "button", "data-widget": "collapse" }
+                },
+                [_c("i", { staticClass: "fa fa-minus" })]
+              ),
               _vm._v(" "),
-              _c("div", { staticClass: "box-tools pull-right" }, [
+              _c("div", { staticClass: "btn-group" }, [
                 _c(
                   "button",
                   {
-                    staticClass: "btn btn-box-tool",
-                    attrs: { type: "button", "data-widget": "collapse" }
+                    staticClass: "btn btn-box-tool dropdown-toggle",
+                    attrs: { type: "button", "data-toggle": "dropdown" }
                   },
-                  [_c("i", { staticClass: "fa fa-minus" })]
+                  [_c("i", { staticClass: "fa fa-wrench" })]
                 ),
                 _vm._v(" "),
-                _c("div", { staticClass: "btn-group" }, [
+                _c(
+                  "ul",
+                  { staticClass: "dropdown-menu", attrs: { role: "menu" } },
+                  [
+                    _c("li", [
+                      _c("a", { attrs: { href: "#" } }, [_vm._v("Action")])
+                    ]),
+                    _vm._v(" "),
+                    _c("li", [
+                      _c("a", { attrs: { href: "#" } }, [
+                        _vm._v("Another action")
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("li", [
+                      _c("a", { attrs: { href: "#" } }, [
+                        _vm._v("Something else here")
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("li", { staticClass: "divider" }),
+                    _vm._v(" "),
+                    _c("li", [
+                      _c("a", { attrs: { href: "#" } }, [
+                        _vm._v("Separated link")
+                      ])
+                    ])
+                  ]
+                )
+              ]),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-box-tool",
+                  attrs: { type: "button", "data-widget": "remove" }
+                },
+                [_c("i", { staticClass: "fa fa-times" })]
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "box-body" }, [
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-md-8" }, [
+                _c("p", { staticClass: "text-center" }, [
+                  _c("strong", [_vm._v("Sales: 1 Jan, 2014 - 30 Jul, 2014")])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "chart" }, [
+                  _c("canvas", {
+                    staticStyle: { height: "180px" },
+                    attrs: { id: "salesChart" }
+                  })
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-4" }, [
+                _c("p", { staticClass: "text-center" }, [
+                  _c("strong", [_vm._v("Goal Completion")])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "progress-group" }, [
+                  _c("span", { staticClass: "progress-text" }, [
+                    _vm._v("Add Products to Cart")
+                  ]),
+                  _vm._v(" "),
+                  _c("span", { staticClass: "progress-number" }, [
+                    _c("b", [_vm._v("160")]),
+                    _vm._v("/200")
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "progress sm" }, [
+                    _c("div", {
+                      staticClass: "progress-bar progress-bar-aqua",
+                      staticStyle: { width: "80%" }
+                    })
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "progress-group" }, [
+                  _c("span", { staticClass: "progress-text" }, [
+                    _vm._v("Complete Purchase")
+                  ]),
+                  _vm._v(" "),
+                  _c("span", { staticClass: "progress-number" }, [
+                    _c("b", [_vm._v("310")]),
+                    _vm._v("/400")
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "progress sm" }, [
+                    _c("div", {
+                      staticClass: "progress-bar progress-bar-red",
+                      staticStyle: { width: "80%" }
+                    })
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "progress-group" }, [
+                  _c("span", { staticClass: "progress-text" }, [
+                    _vm._v("Visit Premium Page")
+                  ]),
+                  _vm._v(" "),
+                  _c("span", { staticClass: "progress-number" }, [
+                    _c("b", [_vm._v("480")]),
+                    _vm._v("/800")
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "progress sm" }, [
+                    _c("div", {
+                      staticClass: "progress-bar progress-bar-green",
+                      staticStyle: { width: "80%" }
+                    })
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "progress-group" }, [
+                  _c("span", { staticClass: "progress-text" }, [
+                    _vm._v("Send Inquiries")
+                  ]),
+                  _vm._v(" "),
+                  _c("span", { staticClass: "progress-number" }, [
+                    _c("b", [_vm._v("250")]),
+                    _vm._v("/500")
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "progress sm" }, [
+                    _c("div", {
+                      staticClass: "progress-bar progress-bar-yellow",
+                      staticStyle: { width: "80%" }
+                    })
+                  ])
+                ])
+              ])
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "box-footer" }, [
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-sm-3 col-xs-6" }, [
+                _c("div", { staticClass: "description-block border-right" }, [
                   _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-box-tool dropdown-toggle",
-                      attrs: { type: "button", "data-toggle": "dropdown" }
-                    },
-                    [_c("i", { staticClass: "fa fa-wrench" })]
+                    "span",
+                    { staticClass: "description-percentage text-green" },
+                    [_c("i", { staticClass: "fa fa-caret-up" }), _vm._v(" 17%")]
                   ),
                   _vm._v(" "),
-                  _c(
-                    "ul",
-                    { staticClass: "dropdown-menu", attrs: { role: "menu" } },
-                    [
-                      _c("li", [
-                        _c("a", { attrs: { href: "#" } }, [_vm._v("Action")])
-                      ]),
-                      _vm._v(" "),
-                      _c("li", [
-                        _c("a", { attrs: { href: "#" } }, [
-                          _vm._v("Another action")
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("li", [
-                        _c("a", { attrs: { href: "#" } }, [
-                          _vm._v("Something else here")
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("li", { staticClass: "divider" }),
-                      _vm._v(" "),
-                      _c("li", [
-                        _c("a", { attrs: { href: "#" } }, [
-                          _vm._v("Separated link")
-                        ])
-                      ])
-                    ]
-                  )
-                ]),
-                _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-box-tool",
-                    attrs: { type: "button", "data-widget": "remove" }
-                  },
-                  [_c("i", { staticClass: "fa fa-times" })]
-                )
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "box-body" }, [
-              _c("div", { staticClass: "row" }, [
-                _c("div", { staticClass: "col-md-8" }, [
-                  _c("p", { staticClass: "text-center" }, [
-                    _c("strong", [_vm._v("Sales: 1 Jan, 2014 - 30 Jul, 2014")])
+                  _c("h5", { staticClass: "description-header" }, [
+                    _vm._v("$35,210.43")
                   ]),
                   _vm._v(" "),
-                  _c("div", { staticClass: "chart" }, [
-                    _c("canvas", {
-                      staticStyle: { height: "180px" },
-                      attrs: { id: "salesChart" }
-                    })
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-md-4" }, [
-                  _c("p", { staticClass: "text-center" }, [
-                    _c("strong", [_vm._v("Goal Completion")])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "progress-group" }, [
-                    _c("span", { staticClass: "progress-text" }, [
-                      _vm._v("Add Products to Cart")
-                    ]),
-                    _vm._v(" "),
-                    _c("span", { staticClass: "progress-number" }, [
-                      _c("b", [_vm._v("160")]),
-                      _vm._v("/200")
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "progress sm" }, [
-                      _c("div", {
-                        staticClass: "progress-bar progress-bar-aqua",
-                        staticStyle: { width: "80%" }
-                      })
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "progress-group" }, [
-                    _c("span", { staticClass: "progress-text" }, [
-                      _vm._v("Complete Purchase")
-                    ]),
-                    _vm._v(" "),
-                    _c("span", { staticClass: "progress-number" }, [
-                      _c("b", [_vm._v("310")]),
-                      _vm._v("/400")
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "progress sm" }, [
-                      _c("div", {
-                        staticClass: "progress-bar progress-bar-red",
-                        staticStyle: { width: "80%" }
-                      })
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "progress-group" }, [
-                    _c("span", { staticClass: "progress-text" }, [
-                      _vm._v("Visit Premium Page")
-                    ]),
-                    _vm._v(" "),
-                    _c("span", { staticClass: "progress-number" }, [
-                      _c("b", [_vm._v("480")]),
-                      _vm._v("/800")
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "progress sm" }, [
-                      _c("div", {
-                        staticClass: "progress-bar progress-bar-green",
-                        staticStyle: { width: "80%" }
-                      })
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "progress-group" }, [
-                    _c("span", { staticClass: "progress-text" }, [
-                      _vm._v("Send Inquiries")
-                    ]),
-                    _vm._v(" "),
-                    _c("span", { staticClass: "progress-number" }, [
-                      _c("b", [_vm._v("250")]),
-                      _vm._v("/500")
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "progress sm" }, [
-                      _c("div", {
-                        staticClass: "progress-bar progress-bar-yellow",
-                        staticStyle: { width: "80%" }
-                      })
-                    ])
+                  _c("span", { staticClass: "description-text" }, [
+                    _vm._v("TOTAL REVENUE")
                   ])
                 ])
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "box-footer" }, [
-              _c("div", { staticClass: "row" }, [
-                _c("div", { staticClass: "col-sm-3 col-xs-6" }, [
-                  _c("div", { staticClass: "description-block border-right" }, [
-                    _c(
-                      "span",
-                      { staticClass: "description-percentage text-green" },
-                      [
-                        _c("i", { staticClass: "fa fa-caret-up" }),
-                        _vm._v(" 17%")
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c("h5", { staticClass: "description-header" }, [
-                      _vm._v("$35,210.43")
-                    ]),
-                    _vm._v(" "),
-                    _c("span", { staticClass: "description-text" }, [
-                      _vm._v("TOTAL REVENUE")
-                    ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-sm-3 col-xs-6" }, [
+                _c("div", { staticClass: "description-block border-right" }, [
+                  _c(
+                    "span",
+                    { staticClass: "description-percentage text-yellow" },
+                    [
+                      _c("i", { staticClass: "fa fa-caret-left" }),
+                      _vm._v(" 0%")
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c("h5", { staticClass: "description-header" }, [
+                    _vm._v("$10,390.90")
+                  ]),
+                  _vm._v(" "),
+                  _c("span", { staticClass: "description-text" }, [
+                    _vm._v("TOTAL COST")
                   ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-sm-3 col-xs-6" }, [
-                  _c("div", { staticClass: "description-block border-right" }, [
-                    _c(
-                      "span",
-                      { staticClass: "description-percentage text-yellow" },
-                      [
-                        _c("i", { staticClass: "fa fa-caret-left" }),
-                        _vm._v(" 0%")
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c("h5", { staticClass: "description-header" }, [
-                      _vm._v("$10,390.90")
-                    ]),
-                    _vm._v(" "),
-                    _c("span", { staticClass: "description-text" }, [
-                      _vm._v("TOTAL COST")
-                    ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-sm-3 col-xs-6" }, [
+                _c("div", { staticClass: "description-block border-right" }, [
+                  _c(
+                    "span",
+                    { staticClass: "description-percentage text-green" },
+                    [_c("i", { staticClass: "fa fa-caret-up" }), _vm._v(" 20%")]
+                  ),
+                  _vm._v(" "),
+                  _c("h5", { staticClass: "description-header" }, [
+                    _vm._v("$24,813.53")
+                  ]),
+                  _vm._v(" "),
+                  _c("span", { staticClass: "description-text" }, [
+                    _vm._v("TOTAL PROFIT")
                   ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-sm-3 col-xs-6" }, [
-                  _c("div", { staticClass: "description-block border-right" }, [
-                    _c(
-                      "span",
-                      { staticClass: "description-percentage text-green" },
-                      [
-                        _c("i", { staticClass: "fa fa-caret-up" }),
-                        _vm._v(" 20%")
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c("h5", { staticClass: "description-header" }, [
-                      _vm._v("$24,813.53")
-                    ]),
-                    _vm._v(" "),
-                    _c("span", { staticClass: "description-text" }, [
-                      _vm._v("TOTAL PROFIT")
-                    ])
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-sm-3 col-xs-6" }, [
-                  _c("div", { staticClass: "description-block" }, [
-                    _c(
-                      "span",
-                      { staticClass: "description-percentage text-red" },
-                      [
-                        _c("i", { staticClass: "fa fa-caret-down" }),
-                        _vm._v(" 18%")
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c("h5", { staticClass: "description-header" }, [
-                      _vm._v("1200")
-                    ]),
-                    _vm._v(" "),
-                    _c("span", { staticClass: "description-text" }, [
-                      _vm._v("GOAL COMPLETIONS")
-                    ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-sm-3 col-xs-6" }, [
+                _c("div", { staticClass: "description-block" }, [
+                  _c(
+                    "span",
+                    { staticClass: "description-percentage text-red" },
+                    [
+                      _c("i", { staticClass: "fa fa-caret-down" }),
+                      _vm._v(" 18%")
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c("h5", { staticClass: "description-header" }, [
+                    _vm._v("1200")
+                  ]),
+                  _vm._v(" "),
+                  _c("span", { staticClass: "description-text" }, [
+                    _vm._v("GOAL COMPLETIONS")
                   ])
                 ])
               ])
             ])
           ])
         ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-md-8" }, [
-          _c("div", { staticClass: "box box-success" }, [
-            _c("div", { staticClass: "box-header with-border" }, [
-              _c("h3", { staticClass: "box-title" }, [
-                _vm._v("Visitors Report")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-md-8" }, [
+        _c("div", { staticClass: "box box-success" }, [
+          _c("div", { staticClass: "box-header with-border" }, [
+            _c("h3", { staticClass: "box-title" }, [_vm._v("Visitors Report")]),
+            _vm._v(" "),
+            _c("div", { staticClass: "box-tools pull-right" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-box-tool",
+                  attrs: { type: "button", "data-widget": "collapse" }
+                },
+                [_c("i", { staticClass: "fa fa-minus" })]
+              ),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-box-tool",
+                  attrs: { type: "button", "data-widget": "remove" }
+                },
+                [_c("i", { staticClass: "fa fa-times" })]
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "box-body no-padding" }, [
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-md-9 col-sm-8" }, [
+                _c("div", { staticClass: "pad" }, [
+                  _c("div", {
+                    staticStyle: { height: "325px" },
+                    attrs: { id: "world-map-markers" }
+                  })
+                ])
               ]),
               _vm._v(" "),
-              _c("div", { staticClass: "box-tools pull-right" }, [
+              _c("div", { staticClass: "col-md-3 col-sm-4" }, [
                 _c(
-                  "button",
+                  "div",
                   {
-                    staticClass: "btn btn-box-tool",
-                    attrs: { type: "button", "data-widget": "collapse" }
+                    staticClass: "pad box-pane-right bg-green",
+                    staticStyle: { "min-height": "280px" }
                   },
-                  [_c("i", { staticClass: "fa fa-minus" })]
-                ),
-                _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-box-tool",
-                    attrs: { type: "button", "data-widget": "remove" }
-                  },
-                  [_c("i", { staticClass: "fa fa-times" })]
-                )
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "box-body no-padding" }, [
-              _c("div", { staticClass: "row" }, [
-                _c("div", { staticClass: "col-md-9 col-sm-8" }, [
-                  _c("div", { staticClass: "pad" }, [
-                    _c("div", {
-                      staticStyle: { height: "325px" },
-                      attrs: { id: "world-map-markers" }
-                    })
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-md-3 col-sm-4" }, [
-                  _c(
-                    "div",
-                    {
-                      staticClass: "pad box-pane-right bg-green",
-                      staticStyle: { "min-height": "280px" }
-                    },
-                    [
-                      _c(
-                        "div",
-                        { staticClass: "description-block margin-bottom" },
-                        [
-                          _c(
-                            "div",
-                            {
-                              staticClass: "sparkbar pad",
-                              attrs: { "data-color": "#fff" }
-                            },
-                            [_vm._v("90,70,90,70,75,80,70")]
-                          ),
-                          _vm._v(" "),
-                          _c("h5", { staticClass: "description-header" }, [
-                            _vm._v("8390")
-                          ]),
-                          _vm._v(" "),
-                          _c("span", { staticClass: "description-text" }, [
-                            _vm._v("Visits")
-                          ])
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "div",
-                        { staticClass: "description-block margin-bottom" },
-                        [
-                          _c(
-                            "div",
-                            {
-                              staticClass: "sparkbar pad",
-                              attrs: { "data-color": "#fff" }
-                            },
-                            [_vm._v("90,50,90,70,61,83,63")]
-                          ),
-                          _vm._v(" "),
-                          _c("h5", { staticClass: "description-header" }, [
-                            _vm._v("30%")
-                          ]),
-                          _vm._v(" "),
-                          _c("span", { staticClass: "description-text" }, [
-                            _vm._v("Referrals")
-                          ])
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "description-block" }, [
+                  [
+                    _c(
+                      "div",
+                      { staticClass: "description-block margin-bottom" },
+                      [
+                        _c(
+                          "div",
+                          {
+                            staticClass: "sparkbar pad",
+                            attrs: { "data-color": "#fff" }
+                          },
+                          [_vm._v("90,70,90,70,75,80,70")]
+                        ),
+                        _vm._v(" "),
+                        _c("h5", { staticClass: "description-header" }, [
+                          _vm._v("8390")
+                        ]),
+                        _vm._v(" "),
+                        _c("span", { staticClass: "description-text" }, [
+                          _vm._v("Visits")
+                        ])
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "description-block margin-bottom" },
+                      [
                         _c(
                           "div",
                           {
@@ -62793,607 +62822,614 @@ var staticRenderFns = [
                         ),
                         _vm._v(" "),
                         _c("h5", { staticClass: "description-header" }, [
-                          _vm._v("70%")
+                          _vm._v("30%")
                         ]),
                         _vm._v(" "),
                         _c("span", { staticClass: "description-text" }, [
-                          _vm._v("Organic")
+                          _vm._v("Referrals")
                         ])
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "description-block" }, [
+                      _c(
+                        "div",
+                        {
+                          staticClass: "sparkbar pad",
+                          attrs: { "data-color": "#fff" }
+                        },
+                        [_vm._v("90,50,90,70,61,83,63")]
+                      ),
+                      _vm._v(" "),
+                      _c("h5", { staticClass: "description-header" }, [
+                        _vm._v("70%")
+                      ]),
+                      _vm._v(" "),
+                      _c("span", { staticClass: "description-text" }, [
+                        _vm._v("Organic")
                       ])
-                    ]
-                  )
+                    ])
+                  ]
+                )
+              ])
+            ])
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "box box-info" }, [
+          _c("div", { staticClass: "box-header with-border" }, [
+            _c("h3", { staticClass: "box-title" }, [_vm._v("Latest Orders")]),
+            _vm._v(" "),
+            _c("div", { staticClass: "box-tools pull-right" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-box-tool",
+                  attrs: { type: "button", "data-widget": "collapse" }
+                },
+                [_c("i", { staticClass: "fa fa-minus" })]
+              ),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-box-tool",
+                  attrs: { type: "button", "data-widget": "remove" }
+                },
+                [_c("i", { staticClass: "fa fa-times" })]
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "box-body" }, [
+            _c("div", { staticClass: "table-responsive" }, [
+              _c("table", { staticClass: "table no-margin" }, [
+                _c("thead", [
+                  _c("tr", [
+                    _c("th", [_vm._v("Order ID")]),
+                    _vm._v(" "),
+                    _c("th", [_vm._v("Item")]),
+                    _vm._v(" "),
+                    _c("th", [_vm._v("Status")]),
+                    _vm._v(" "),
+                    _c("th", [_vm._v("Popularity")])
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("tbody", [
+                  _c("tr", [
+                    _c("td", [
+                      _c(
+                        "a",
+                        { attrs: { href: "pages/examples/invoice.html" } },
+                        [_vm._v("OR9842")]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v("Call of Duty IV")]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _c("span", { staticClass: "label label-success" }, [
+                        _vm._v("Shipped")
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _c(
+                        "div",
+                        {
+                          staticClass: "sparkbar",
+                          attrs: {
+                            "data-color": "#00a65a",
+                            "data-height": "20"
+                          }
+                        },
+                        [_vm._v("90,80,90,-70,61,-83,63")]
+                      )
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("tr", [
+                    _c("td", [
+                      _c(
+                        "a",
+                        { attrs: { href: "pages/examples/invoice.html" } },
+                        [_vm._v("OR1848")]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v("Samsung Smart TV")]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _c("span", { staticClass: "label label-warning" }, [
+                        _vm._v("Pending")
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _c(
+                        "div",
+                        {
+                          staticClass: "sparkbar",
+                          attrs: {
+                            "data-color": "#f39c12",
+                            "data-height": "20"
+                          }
+                        },
+                        [_vm._v("90,80,-90,70,61,-83,68")]
+                      )
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("tr", [
+                    _c("td", [
+                      _c(
+                        "a",
+                        { attrs: { href: "pages/examples/invoice.html" } },
+                        [_vm._v("OR7429")]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v("iPhone 6 Plus")]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _c("span", { staticClass: "label label-danger" }, [
+                        _vm._v("Delivered")
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _c(
+                        "div",
+                        {
+                          staticClass: "sparkbar",
+                          attrs: {
+                            "data-color": "#f56954",
+                            "data-height": "20"
+                          }
+                        },
+                        [_vm._v("90,-80,90,70,-61,83,63")]
+                      )
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("tr", [
+                    _c("td", [
+                      _c(
+                        "a",
+                        { attrs: { href: "pages/examples/invoice.html" } },
+                        [_vm._v("OR7429")]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v("Samsung Smart TV")]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _c("span", { staticClass: "label label-info" }, [
+                        _vm._v("Processing")
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _c(
+                        "div",
+                        {
+                          staticClass: "sparkbar",
+                          attrs: {
+                            "data-color": "#00c0ef",
+                            "data-height": "20"
+                          }
+                        },
+                        [_vm._v("90,80,-90,70,-61,83,63")]
+                      )
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("tr", [
+                    _c("td", [
+                      _c(
+                        "a",
+                        { attrs: { href: "pages/examples/invoice.html" } },
+                        [_vm._v("OR1848")]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v("Samsung Smart TV")]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _c("span", { staticClass: "label label-warning" }, [
+                        _vm._v("Pending")
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _c(
+                        "div",
+                        {
+                          staticClass: "sparkbar",
+                          attrs: {
+                            "data-color": "#f39c12",
+                            "data-height": "20"
+                          }
+                        },
+                        [_vm._v("90,80,-90,70,61,-83,68")]
+                      )
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("tr", [
+                    _c("td", [
+                      _c(
+                        "a",
+                        { attrs: { href: "pages/examples/invoice.html" } },
+                        [_vm._v("OR7429")]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v("iPhone 6 Plus")]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _c("span", { staticClass: "label label-danger" }, [
+                        _vm._v("Delivered")
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _c(
+                        "div",
+                        {
+                          staticClass: "sparkbar",
+                          attrs: {
+                            "data-color": "#f56954",
+                            "data-height": "20"
+                          }
+                        },
+                        [_vm._v("90,-80,90,70,-61,83,63")]
+                      )
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("tr", [
+                    _c("td", [
+                      _c(
+                        "a",
+                        { attrs: { href: "pages/examples/invoice.html" } },
+                        [_vm._v("OR9842")]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v("Call of Duty IV")]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _c("span", { staticClass: "label label-success" }, [
+                        _vm._v("Shipped")
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _c(
+                        "div",
+                        {
+                          staticClass: "sparkbar",
+                          attrs: {
+                            "data-color": "#00a65a",
+                            "data-height": "20"
+                          }
+                        },
+                        [_vm._v("90,80,90,-70,61,-83,63")]
+                      )
+                    ])
+                  ])
                 ])
               ])
             ])
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "box box-info" }, [
-            _c("div", { staticClass: "box-header with-border" }, [
-              _c("h3", { staticClass: "box-title" }, [_vm._v("Latest Orders")]),
-              _vm._v(" "),
-              _c("div", { staticClass: "box-tools pull-right" }, [
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-box-tool",
-                    attrs: { type: "button", "data-widget": "collapse" }
-                  },
-                  [_c("i", { staticClass: "fa fa-minus" })]
-                ),
-                _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-box-tool",
-                    attrs: { type: "button", "data-widget": "remove" }
-                  },
-                  [_c("i", { staticClass: "fa fa-times" })]
-                )
-              ])
+          _c("div", { staticClass: "box-footer clearfix" }, [
+            _c(
+              "a",
+              {
+                staticClass: "btn btn-sm btn-info btn-flat pull-left",
+                attrs: { href: "javascript:void(0)" }
+              },
+              [_vm._v("Place New Order")]
+            ),
+            _vm._v(" "),
+            _c(
+              "a",
+              {
+                staticClass: "btn btn-sm btn-default btn-flat pull-right",
+                attrs: { href: "javascript:void(0)" }
+              },
+              [_vm._v("View All Orders")]
+            )
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-md-4" }, [
+        _c("div", { staticClass: "info-box bg-yellow" }, [
+          _c("span", { staticClass: "info-box-icon" }, [
+            _c("i", { staticClass: "ion ion-ios-pricetag-outline" })
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "info-box-content" }, [
+            _c("span", { staticClass: "info-box-text" }, [_vm._v("Inventory")]),
+            _vm._v(" "),
+            _c("span", { staticClass: "info-box-number" }, [_vm._v("5,200")]),
+            _vm._v(" "),
+            _c("div", { staticClass: "progress" }, [
+              _c("div", {
+                staticClass: "progress-bar",
+                staticStyle: { width: "50%" }
+              })
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "box-body" }, [
-              _c("div", { staticClass: "table-responsive" }, [
-                _c("table", { staticClass: "table no-margin" }, [
-                  _c("thead", [
-                    _c("tr", [
-                      _c("th", [_vm._v("Order ID")]),
-                      _vm._v(" "),
-                      _c("th", [_vm._v("Item")]),
-                      _vm._v(" "),
-                      _c("th", [_vm._v("Status")]),
-                      _vm._v(" "),
-                      _c("th", [_vm._v("Popularity")])
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("tbody", [
-                    _c("tr", [
-                      _c("td", [
-                        _c(
-                          "a",
-                          { attrs: { href: "pages/examples/invoice.html" } },
-                          [_vm._v("OR9842")]
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("td", [_vm._v("Call of Duty IV")]),
-                      _vm._v(" "),
-                      _c("td", [
-                        _c("span", { staticClass: "label label-success" }, [
-                          _vm._v("Shipped")
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("td", [
-                        _c(
-                          "div",
-                          {
-                            staticClass: "sparkbar",
-                            attrs: {
-                              "data-color": "#00a65a",
-                              "data-height": "20"
-                            }
-                          },
-                          [_vm._v("90,80,90,-70,61,-83,63")]
-                        )
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("tr", [
-                      _c("td", [
-                        _c(
-                          "a",
-                          { attrs: { href: "pages/examples/invoice.html" } },
-                          [_vm._v("OR1848")]
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("td", [_vm._v("Samsung Smart TV")]),
-                      _vm._v(" "),
-                      _c("td", [
-                        _c("span", { staticClass: "label label-warning" }, [
-                          _vm._v("Pending")
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("td", [
-                        _c(
-                          "div",
-                          {
-                            staticClass: "sparkbar",
-                            attrs: {
-                              "data-color": "#f39c12",
-                              "data-height": "20"
-                            }
-                          },
-                          [_vm._v("90,80,-90,70,61,-83,68")]
-                        )
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("tr", [
-                      _c("td", [
-                        _c(
-                          "a",
-                          { attrs: { href: "pages/examples/invoice.html" } },
-                          [_vm._v("OR7429")]
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("td", [_vm._v("iPhone 6 Plus")]),
-                      _vm._v(" "),
-                      _c("td", [
-                        _c("span", { staticClass: "label label-danger" }, [
-                          _vm._v("Delivered")
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("td", [
-                        _c(
-                          "div",
-                          {
-                            staticClass: "sparkbar",
-                            attrs: {
-                              "data-color": "#f56954",
-                              "data-height": "20"
-                            }
-                          },
-                          [_vm._v("90,-80,90,70,-61,83,63")]
-                        )
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("tr", [
-                      _c("td", [
-                        _c(
-                          "a",
-                          { attrs: { href: "pages/examples/invoice.html" } },
-                          [_vm._v("OR7429")]
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("td", [_vm._v("Samsung Smart TV")]),
-                      _vm._v(" "),
-                      _c("td", [
-                        _c("span", { staticClass: "label label-info" }, [
-                          _vm._v("Processing")
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("td", [
-                        _c(
-                          "div",
-                          {
-                            staticClass: "sparkbar",
-                            attrs: {
-                              "data-color": "#00c0ef",
-                              "data-height": "20"
-                            }
-                          },
-                          [_vm._v("90,80,-90,70,-61,83,63")]
-                        )
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("tr", [
-                      _c("td", [
-                        _c(
-                          "a",
-                          { attrs: { href: "pages/examples/invoice.html" } },
-                          [_vm._v("OR1848")]
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("td", [_vm._v("Samsung Smart TV")]),
-                      _vm._v(" "),
-                      _c("td", [
-                        _c("span", { staticClass: "label label-warning" }, [
-                          _vm._v("Pending")
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("td", [
-                        _c(
-                          "div",
-                          {
-                            staticClass: "sparkbar",
-                            attrs: {
-                              "data-color": "#f39c12",
-                              "data-height": "20"
-                            }
-                          },
-                          [_vm._v("90,80,-90,70,61,-83,68")]
-                        )
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("tr", [
-                      _c("td", [
-                        _c(
-                          "a",
-                          { attrs: { href: "pages/examples/invoice.html" } },
-                          [_vm._v("OR7429")]
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("td", [_vm._v("iPhone 6 Plus")]),
-                      _vm._v(" "),
-                      _c("td", [
-                        _c("span", { staticClass: "label label-danger" }, [
-                          _vm._v("Delivered")
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("td", [
-                        _c(
-                          "div",
-                          {
-                            staticClass: "sparkbar",
-                            attrs: {
-                              "data-color": "#f56954",
-                              "data-height": "20"
-                            }
-                          },
-                          [_vm._v("90,-80,90,70,-61,83,63")]
-                        )
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("tr", [
-                      _c("td", [
-                        _c(
-                          "a",
-                          { attrs: { href: "pages/examples/invoice.html" } },
-                          [_vm._v("OR9842")]
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("td", [_vm._v("Call of Duty IV")]),
-                      _vm._v(" "),
-                      _c("td", [
-                        _c("span", { staticClass: "label label-success" }, [
-                          _vm._v("Shipped")
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("td", [
-                        _c(
-                          "div",
-                          {
-                            staticClass: "sparkbar",
-                            attrs: {
-                              "data-color": "#00a65a",
-                              "data-height": "20"
-                            }
-                          },
-                          [_vm._v("90,80,90,-70,61,-83,63")]
-                        )
-                      ])
-                    ])
-                  ])
-                ])
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "box-footer clearfix" }, [
-              _c(
-                "a",
-                {
-                  staticClass: "btn btn-sm btn-info btn-flat pull-left",
-                  attrs: { href: "javascript:void(0)" }
-                },
-                [_vm._v("Place New Order")]
-              ),
-              _vm._v(" "),
-              _c(
-                "a",
-                {
-                  staticClass: "btn btn-sm btn-default btn-flat pull-right",
-                  attrs: { href: "javascript:void(0)" }
-                },
-                [_vm._v("View All Orders")]
+            _c("span", { staticClass: "progress-description" }, [
+              _vm._v(
+                "\n                50% Increase in 30 Days\n              "
               )
             ])
           ])
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "col-md-4" }, [
-          _c("div", { staticClass: "info-box bg-yellow" }, [
-            _c("span", { staticClass: "info-box-icon" }, [
-              _c("i", { staticClass: "ion ion-ios-pricetag-outline" })
+        _c("div", { staticClass: "info-box bg-green" }, [
+          _c("span", { staticClass: "info-box-icon" }, [
+            _c("i", { staticClass: "ion ion-ios-heart-outline" })
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "info-box-content" }, [
+            _c("span", { staticClass: "info-box-text" }, [_vm._v("Mentions")]),
+            _vm._v(" "),
+            _c("span", { staticClass: "info-box-number" }, [_vm._v("92,050")]),
+            _vm._v(" "),
+            _c("div", { staticClass: "progress" }, [
+              _c("div", {
+                staticClass: "progress-bar",
+                staticStyle: { width: "20%" }
+              })
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "info-box-content" }, [
-              _c("span", { staticClass: "info-box-text" }, [
-                _vm._v("Inventory")
-              ]),
+            _c("span", { staticClass: "progress-description" }, [
+              _vm._v(
+                "\n                20% Increase in 30 Days\n              "
+              )
+            ])
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "info-box bg-red" }, [
+          _c("span", { staticClass: "info-box-icon" }, [
+            _c("i", { staticClass: "ion ion-ios-cloud-download-outline" })
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "info-box-content" }, [
+            _c("span", { staticClass: "info-box-text" }, [_vm._v("Downloads")]),
+            _vm._v(" "),
+            _c("span", { staticClass: "info-box-number" }, [_vm._v("114,381")]),
+            _vm._v(" "),
+            _c("div", { staticClass: "progress" }, [
+              _c("div", {
+                staticClass: "progress-bar",
+                staticStyle: { width: "70%" }
+              })
+            ]),
+            _vm._v(" "),
+            _c("span", { staticClass: "progress-description" }, [
+              _vm._v(
+                "\n                70% Increase in 30 Days\n              "
+              )
+            ])
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "info-box bg-aqua" }, [
+          _c("span", { staticClass: "info-box-icon" }, [
+            _c("i", { staticClass: "ion-ios-chatbubble-outline" })
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "info-box-content" }, [
+            _c("span", { staticClass: "info-box-text" }, [
+              _vm._v("Direct Messages")
+            ]),
+            _vm._v(" "),
+            _c("span", { staticClass: "info-box-number" }, [_vm._v("163,921")]),
+            _vm._v(" "),
+            _c("div", { staticClass: "progress" }, [
+              _c("div", {
+                staticClass: "progress-bar",
+                staticStyle: { width: "40%" }
+              })
+            ]),
+            _vm._v(" "),
+            _c("span", { staticClass: "progress-description" }, [
+              _vm._v(
+                "\n                40% Increase in 30 Days\n              "
+              )
+            ])
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "box box-primary" }, [
+          _c("div", { staticClass: "box-header with-border" }, [
+            _c("h3", { staticClass: "box-title" }, [
+              _vm._v("Recently Added Products")
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "box-tools pull-right" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-box-tool",
+                  attrs: { type: "button", "data-widget": "collapse" }
+                },
+                [_c("i", { staticClass: "fa fa-minus" })]
+              ),
               _vm._v(" "),
-              _c("span", { staticClass: "info-box-number" }, [_vm._v("5,200")]),
-              _vm._v(" "),
-              _c("div", { staticClass: "progress" }, [
-                _c("div", {
-                  staticClass: "progress-bar",
-                  staticStyle: { width: "50%" }
-                })
-              ]),
-              _vm._v(" "),
-              _c("span", { staticClass: "progress-description" }, [
-                _vm._v(
-                  "\n                50% Increase in 30 Days\n              "
-                )
-              ])
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-box-tool",
+                  attrs: { type: "button", "data-widget": "remove" }
+                },
+                [_c("i", { staticClass: "fa fa-times" })]
+              )
             ])
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "info-box bg-green" }, [
-            _c("span", { staticClass: "info-box-icon" }, [
-              _c("i", { staticClass: "ion ion-ios-heart-outline" })
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "info-box-content" }, [
-              _c("span", { staticClass: "info-box-text" }, [
-                _vm._v("Mentions")
-              ]),
-              _vm._v(" "),
-              _c("span", { staticClass: "info-box-number" }, [
-                _vm._v("92,050")
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "progress" }, [
-                _c("div", {
-                  staticClass: "progress-bar",
-                  staticStyle: { width: "20%" }
-                })
-              ]),
-              _vm._v(" "),
-              _c("span", { staticClass: "progress-description" }, [
-                _vm._v(
-                  "\n                20% Increase in 30 Days\n              "
-                )
-              ])
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "info-box bg-red" }, [
-            _c("span", { staticClass: "info-box-icon" }, [
-              _c("i", { staticClass: "ion ion-ios-cloud-download-outline" })
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "info-box-content" }, [
-              _c("span", { staticClass: "info-box-text" }, [
-                _vm._v("Downloads")
-              ]),
-              _vm._v(" "),
-              _c("span", { staticClass: "info-box-number" }, [
-                _vm._v("114,381")
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "progress" }, [
-                _c("div", {
-                  staticClass: "progress-bar",
-                  staticStyle: { width: "70%" }
-                })
-              ]),
-              _vm._v(" "),
-              _c("span", { staticClass: "progress-description" }, [
-                _vm._v(
-                  "\n                70% Increase in 30 Days\n              "
-                )
-              ])
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "info-box bg-aqua" }, [
-            _c("span", { staticClass: "info-box-icon" }, [
-              _c("i", { staticClass: "ion-ios-chatbubble-outline" })
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "info-box-content" }, [
-              _c("span", { staticClass: "info-box-text" }, [
-                _vm._v("Direct Messages")
-              ]),
-              _vm._v(" "),
-              _c("span", { staticClass: "info-box-number" }, [
-                _vm._v("163,921")
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "progress" }, [
-                _c("div", {
-                  staticClass: "progress-bar",
-                  staticStyle: { width: "40%" }
-                })
-              ]),
-              _vm._v(" "),
-              _c("span", { staticClass: "progress-description" }, [
-                _vm._v(
-                  "\n                40% Increase in 30 Days\n              "
-                )
-              ])
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "box box-primary" }, [
-            _c("div", { staticClass: "box-header with-border" }, [
-              _c("h3", { staticClass: "box-title" }, [
-                _vm._v("Recently Added Products")
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "box-tools pull-right" }, [
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-box-tool",
-                    attrs: { type: "button", "data-widget": "collapse" }
-                  },
-                  [_c("i", { staticClass: "fa fa-minus" })]
-                ),
-                _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-box-tool",
-                    attrs: { type: "button", "data-widget": "remove" }
-                  },
-                  [_c("i", { staticClass: "fa fa-times" })]
-                )
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "box-body" }, [
-              _c("ul", { staticClass: "products-list product-list-in-box" }, [
-                _c("li", { staticClass: "item" }, [
-                  _c("div", { staticClass: "product-img" }, [
-                    _c("img", {
-                      attrs: {
-                        src: "dist/img/default-50x50.gif",
-                        alt: "Product Image"
-                      }
-                    })
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "product-info" }, [
-                    _c(
-                      "a",
-                      {
-                        staticClass: "product-title",
-                        attrs: { href: "javascript:void(0)" }
-                      },
-                      [
-                        _vm._v("Samsung TV\n                  "),
-                        _c(
-                          "span",
-                          { staticClass: "label label-warning pull-right" },
-                          [_vm._v("$1800")]
-                        )
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c("span", { staticClass: "product-description" }, [
-                      _vm._v(
-                        '\n                      Samsung 32" 1080p 60Hz LED Smart HDTV.\n                    '
-                      )
-                    ])
-                  ])
+          _c("div", { staticClass: "box-body" }, [
+            _c("ul", { staticClass: "products-list product-list-in-box" }, [
+              _c("li", { staticClass: "item" }, [
+                _c("div", { staticClass: "product-img" }, [
+                  _c("img", {
+                    attrs: {
+                      src: "dist/img/default-50x50.gif",
+                      alt: "Product Image"
+                    }
+                  })
                 ]),
                 _vm._v(" "),
-                _c("li", { staticClass: "item" }, [
-                  _c("div", { staticClass: "product-img" }, [
-                    _c("img", {
-                      attrs: {
-                        src: "dist/img/default-50x50.gif",
-                        alt: "Product Image"
-                      }
-                    })
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "product-info" }, [
-                    _c(
-                      "a",
-                      {
-                        staticClass: "product-title",
-                        attrs: { href: "javascript:void(0)" }
-                      },
-                      [
-                        _vm._v("Bicycle\n                  "),
-                        _c(
-                          "span",
-                          { staticClass: "label label-info pull-right" },
-                          [_vm._v("$700")]
-                        )
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c("span", { staticClass: "product-description" }, [
-                      _vm._v(
-                        "\n                      26\" Mongoose Dolomite Men's 7-speed, Navy Blue.\n                    "
+                _c("div", { staticClass: "product-info" }, [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "product-title",
+                      attrs: { href: "javascript:void(0)" }
+                    },
+                    [
+                      _vm._v("Samsung TV\n                  "),
+                      _c(
+                        "span",
+                        { staticClass: "label label-warning pull-right" },
+                        [_vm._v("$1800")]
                       )
-                    ])
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c("span", { staticClass: "product-description" }, [
+                    _vm._v(
+                      '\n                      Samsung 32" 1080p 60Hz LED Smart HDTV.\n                    '
+                    )
                   ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("li", { staticClass: "item" }, [
+                _c("div", { staticClass: "product-img" }, [
+                  _c("img", {
+                    attrs: {
+                      src: "dist/img/default-50x50.gif",
+                      alt: "Product Image"
+                    }
+                  })
                 ]),
                 _vm._v(" "),
-                _c("li", { staticClass: "item" }, [
-                  _c("div", { staticClass: "product-img" }, [
-                    _c("img", {
-                      attrs: {
-                        src: "dist/img/default-50x50.gif",
-                        alt: "Product Image"
-                      }
-                    })
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "product-info" }, [
-                    _c(
-                      "a",
-                      {
-                        staticClass: "product-title",
-                        attrs: { href: "javascript:void(0)" }
-                      },
-                      [
-                        _vm._v("Xbox One "),
-                        _c(
-                          "span",
-                          { staticClass: "label label-danger pull-right" },
-                          [_vm._v("$350")]
-                        )
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c("span", { staticClass: "product-description" }, [
-                      _vm._v(
-                        "\n                      Xbox One Console Bundle with Halo Master Chief Collection.\n                    "
+                _c("div", { staticClass: "product-info" }, [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "product-title",
+                      attrs: { href: "javascript:void(0)" }
+                    },
+                    [
+                      _vm._v("Bicycle\n                  "),
+                      _c(
+                        "span",
+                        { staticClass: "label label-info pull-right" },
+                        [_vm._v("$700")]
                       )
-                    ])
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c("span", { staticClass: "product-description" }, [
+                    _vm._v(
+                      "\n                      26\" Mongoose Dolomite Men's 7-speed, Navy Blue.\n                    "
+                    )
                   ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("li", { staticClass: "item" }, [
+                _c("div", { staticClass: "product-img" }, [
+                  _c("img", {
+                    attrs: {
+                      src: "dist/img/default-50x50.gif",
+                      alt: "Product Image"
+                    }
+                  })
                 ]),
                 _vm._v(" "),
-                _c("li", { staticClass: "item" }, [
-                  _c("div", { staticClass: "product-img" }, [
-                    _c("img", {
-                      attrs: {
-                        src: "dist/img/default-50x50.gif",
-                        alt: "Product Image"
-                      }
-                    })
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "product-info" }, [
-                    _c(
-                      "a",
-                      {
-                        staticClass: "product-title",
-                        attrs: { href: "javascript:void(0)" }
-                      },
-                      [
-                        _vm._v("PlayStation 4\n                  "),
-                        _c(
-                          "span",
-                          { staticClass: "label label-success pull-right" },
-                          [_vm._v("$399")]
-                        )
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c("span", { staticClass: "product-description" }, [
-                      _vm._v(
-                        "\n                      PlayStation 4 500GB Console (PS4)\n                    "
+                _c("div", { staticClass: "product-info" }, [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "product-title",
+                      attrs: { href: "javascript:void(0)" }
+                    },
+                    [
+                      _vm._v("Xbox One "),
+                      _c(
+                        "span",
+                        { staticClass: "label label-danger pull-right" },
+                        [_vm._v("$350")]
                       )
-                    ])
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c("span", { staticClass: "product-description" }, [
+                    _vm._v(
+                      "\n                      Xbox One Console Bundle with Halo Master Chief Collection.\n                    "
+                    )
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("li", { staticClass: "item" }, [
+                _c("div", { staticClass: "product-img" }, [
+                  _c("img", {
+                    attrs: {
+                      src: "dist/img/default-50x50.gif",
+                      alt: "Product Image"
+                    }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "product-info" }, [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "product-title",
+                      attrs: { href: "javascript:void(0)" }
+                    },
+                    [
+                      _vm._v("PlayStation 4\n                  "),
+                      _c(
+                        "span",
+                        { staticClass: "label label-success pull-right" },
+                        [_vm._v("$399")]
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c("span", { staticClass: "product-description" }, [
+                    _vm._v(
+                      "\n                      PlayStation 4 500GB Console (PS4)\n                    "
+                    )
                   ])
                 ])
               ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "box-footer text-center" }, [
-              _c(
-                "a",
-                {
-                  staticClass: "uppercase",
-                  attrs: { href: "javascript:void(0)" }
-                },
-                [_vm._v("View All Products")]
-              )
             ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "box-footer text-center" }, [
+            _c(
+              "a",
+              {
+                staticClass: "uppercase",
+                attrs: { href: "javascript:void(0)" }
+              },
+              [_vm._v("View All Products")]
+            )
           ])
         ])
       ])
@@ -102487,7 +102523,7 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Users\WinMax\Documents\GitHub\posResto\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /Users/max/Documents/Web/posResto/resources/js/app.js */"./resources/js/app.js");
 
 
 /***/ })

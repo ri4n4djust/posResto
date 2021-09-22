@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\User;
 use App\Meja;
+use App\Penjualan;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -38,6 +39,21 @@ class loginController extends Controller
             'data' => $posts
         ], 200);
     }
+
+    public function dashboard()
+    {
+        $jumlahmeja = Meja::count();
+        $mejaterisi = Meja::where('status', '1')->count();
+        $ldate = date('Y-m-d');
+        $notatoday = Penjualan::where('tglNota', $ldate)->count();
+        return response([
+            'success' => true,
+            //'message' => 'List Semua User',
+            'akupansimeja' => $mejaterisi.'/'.$jumlahmeja,
+            'notaToday' => $notatoday
+        ], 200);
+    }
+
     
     public function login(Request $request)
 

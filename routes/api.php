@@ -19,6 +19,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::post('/login', 'loginController@login');
+//====dashboard
+Route::get('/awaldashboard', 'loginController@dashboard');
 
 //======barang
 Route::get('/posts', 'salesController@index');

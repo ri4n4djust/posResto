@@ -15,7 +15,7 @@
 
             <div class="info-box-content">
               <span class="info-box-text">Today </span>
-              <span class="info-box-number">90<small>%</small></span>
+              <span class="info-box-number">{{tglToday}}</span>
             </div>
             <!-- /.info-box-content -->
           </div>
@@ -28,7 +28,7 @@
 
             <div class="info-box-content">
               <span class="info-box-text">Meja Terisi</span>
-              <span class="info-box-number">41,410</span>
+              <span class="info-box-number">{{akupansimeja}}</span>
             </div>
             <!-- /.info-box-content -->
           </div>
@@ -44,8 +44,8 @@
             <span class="info-box-icon bg-green"><i class="ion ion-ios-cart-outline"></i></span>
 
             <div class="info-box-content">
-              <span class="info-box-text">Penjualan</span>
-              <span class="info-box-number">760</span>
+              <span class="info-box-text">Penjualan Hari Ini</span>
+              <span class="info-box-number">{{notaToday}}</span>
             </div>
             <!-- /.info-box-content -->
           </div>
@@ -518,19 +518,26 @@
   export default {
         data() {
             return {
-                username: '',
-                password: '',
-                post: {},
+                tglToday: new Date().toJSON().slice(0,10).replace(/-/g,'/'),
                 image_src: '/image/logo.png',
+                akupansimeja: '',
+                notaToday: '',
 
             }
         },
-
-      
-
+        created(){
+          this.loadAwal();
+        },
         methods: {
-            
-            
+           loadAwal(){
+              let uri = '/api/awaldashboard';
+                this.axios.get(uri).then((response) => {
+                        this.akupansimeja = response.data.akupansimeja;
+                        this.notaToday = response.data.notaToday;
+                    }).catch(error => {
+                      alert('ada yang error');
+                });
+            },
         },
         
     }
