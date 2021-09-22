@@ -43,31 +43,22 @@ class loginController extends Controller
 
     {
         $username = $request->username;
-        
         $users = User::where(['email'=>$username])
                         ->orWhere(['username'=>$username])
                         ->first();
-
-
         if($users==''){
-
             return response([
                 'success' => false,
                 'message' => 'Gagal Login',
                 //'data' => $users->password
             ], 200);
-
         } else 
-       
         if(Hash::check($request->password, $users->password)){
-            
            return response([
             'success' => true,
             'message' => 'Berhasil Login',
             'data' => $users
         ], 200);
-        
-
         } else {
              
             return response([
