@@ -93,6 +93,7 @@ import CreatePembelian from './components/PembelianCreate.vue';
 import liveorder from './components/LiveOrder.vue';
 
 import homeComponent from './components/Home.vue';
+import Dashboard from './components/Dashboard.vue';
 import StatusLogin from './components/Status.vue';
 Vue.component('status-login', StatusLogin);
 
@@ -126,6 +127,11 @@ const routes = [
         name: 'posts',
         path: '/barang',
         component: IndexComponent
+    },
+    {
+        name: 'dashboard',
+        path: '/dashboard',
+        component: Dashboard
     },
     {
         name: 'barangmentah',

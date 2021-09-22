@@ -78,7 +78,7 @@
                       //router.push({ name: 'barang' });
                       //window.location.href = "/barang"
                     //}
-                    window.location.href = "/barang"
+                    window.location.href = "/dashboard"
                   } else {
                     alert('username Atau Password Salah')
                   }
