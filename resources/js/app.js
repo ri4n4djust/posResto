@@ -28,6 +28,7 @@ import axios from 'axios';
 
 import App from './app.vue';
 Vue.use(VueAxios, axios);
+//axios.defaults.baseURL = 'http://35.184.16.20/api/';
 
 import VueSession from 'vue-session';
 Vue.use(VueSession);
