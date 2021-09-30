@@ -19,7 +19,7 @@ class penjualanController extends Controller
         $posts = Penjualan::join('tblMeja', 'tblPenjualan.noMeja', 'tblMeja.id')
                 ->join('tblPembayaran', 'tblPenjualan.noNota', 'tblPembayaran.notaPembayaran')
                 ->join('users', 'tblPenjualan.userNota', 'users.id')
-                ->select('tblpenjualan.*', 'tblMeja.noMeja', 'users.name', 
+                ->select('tblPenjualan.*', 'tblMeja.noMeja', 'users.name', 
                 'tblPembayaran.pajakPembayaran', 'tblPembayaran.diskonPembayaran',
                 'tblPembayaran.typePembayaran', 'tblPembayaran.chargePembayaran', 'tblPembayaran.noKartuPembayaran')
                 ->orderBy('tblPenjualan.id', 'DESC')
