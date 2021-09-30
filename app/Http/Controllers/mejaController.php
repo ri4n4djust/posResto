@@ -514,7 +514,7 @@ class mejaController extends Controller
     public function listOrder()
     {
         //$post = TransaksiDetail::whereId($id)->first();
-        $post = TransaksiDetail::join('tblmeja', 'tbltmp_transaksidetail.noMejaTmp', '=', 'tblmeja.id')
+        $post = TransaksiDetail::join('tblMeja', 'tbltmp_transaksidetail.noMejaTmp', '=', 'tblMeja.id')
                                
                 ->get();
 
@@ -538,7 +538,7 @@ class mejaController extends Controller
     public function printOrder($id)
     {
         //$post = TransaksiDetail::whereId($id)->first();
-        $post = Order::join('tblmeja', 'tblOrder.idMeja', '=', 'tblmeja.id')
+        $post = Order::join('tblMeja', 'tblOrder.idMeja', '=', 'tblMeja.id')
                         ->join('tblMenu', 'tblOrder.kdMenu', 'tblMenu.kdMenu')
 
                 ->where('tblOrder.idMeja', $id)
@@ -558,7 +558,7 @@ class mejaController extends Controller
     public function printOrder1($id)
     {
         //$post = TransaksiDetail::whereId($id)->first();
-        $post = Order::join('tblmeja', 'tblOrder.idMeja', '=', 'tblmeja.id')
+        $post = Order::join('tblMeja', 'tblOrder.idMeja', '=', 'tblMeja.id')
                         ->join('tblMenu', 'tblOrder.kdMenu', 'tblMenu.kdMenu')
 
                 ->where('tblOrder.idMeja', $id)
@@ -582,7 +582,7 @@ class mejaController extends Controller
         Order::where('idMeja', $id)->update([
             'stsPrintOrder'     => '1',
         ]);
-        $post = Order::join('tblmeja', 'tblOrder.idMeja', '=', 'tblmeja.id')
+        $post = Order::join('tblMeja', 'tblOrder.idMeja', '=', 'tblMeja.id')
                         ->join('tblMenu', 'tblOrder.kdMenu', 'tblMenu.kdMenu')
                 ->where('tblOrder.idMeja', $id)
                 ->where('tblOrder.stsPrintOrder', '0')
