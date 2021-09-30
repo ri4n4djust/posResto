@@ -514,7 +514,7 @@ class mejaController extends Controller
     public function listOrder()
     {
         //$post = TransaksiDetail::whereId($id)->first();
-        $post = TransaksiDetail::join('tblMeja', 'tbltmp_transaksidetail.noMejaTmp', '=', 'tblMeja.id')
+        $post = TransaksiDetail::join('tblMeja', 'tblTmp_TransaksiDetail.noMejaTmp', '=', 'tblMeja.id')
                                
                 ->get();
 
