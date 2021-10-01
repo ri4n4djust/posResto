@@ -144,6 +144,23 @@ class mejaController extends Controller
             ], 404);
         }
     }
+    public function showedit($id)
+    {
+        $post = Meja::where('tblMeja.id', $id)->first();
+        if ($post) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Detail Post!',
+                'data'    => $post
+            ], 200);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Post Tidak Ditemukan!',
+                'data'    => ''
+            ], 404);
+        }
+    }
 
     public function detail($id)
     {

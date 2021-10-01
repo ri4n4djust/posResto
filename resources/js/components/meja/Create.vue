@@ -1,7 +1,7 @@
 <template>
     <div class="mt-3">
         <status-login></status-login>
-                    <div class="card-header">TAMBAH SUPPLIER</div>
+                    <div class="card-header">TAMBAH MEJA</div>
 
                     <div class="card-body">
 
@@ -10,7 +10,7 @@
                             <div class="form-group">
                                 <label>No. Meja</label>
                                 <input type="text" class="form-control" v-model="post.noMeja"
-                                       placeholder="No Meja">
+                                       placeholder="No Meja" required>
                                 <div v-if="validation.noMeja">
                                     <div class="alert alert-danger mt-1" role="alert">
                                         {{ validation.noMeja[0] }}

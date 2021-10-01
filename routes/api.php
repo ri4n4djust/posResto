@@ -60,6 +60,7 @@ Route::post('/meja/pindah', 'mejaController@pindah');
 Route::post('/meja/store', 'mejaController@store');
 Route::post('/meja/duduk', 'mejaController@duduk');
 Route::get('/meja/{id?}', 'mejaController@show');
+Route::get('/meja/edit/{id?}', 'mejaController@showedit');
 Route::get('/detail/{id?}', 'mejaController@detail');
 Route::post('/meja/update/{id?}', 'mejaController@update');
 Route::post('/meja/cekin/{id?}', 'mejaController@cekin');

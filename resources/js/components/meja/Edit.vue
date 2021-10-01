@@ -57,7 +57,7 @@
             }
         },
         created() {
-            let uri = `/api/meja/${this.$route.params.id}`;
+            let uri = `/api/meja/edit/${this.$route.params.id}`;
             this.axios.get(uri).then((response) => {
                 this.post = response.data.data;
             });
