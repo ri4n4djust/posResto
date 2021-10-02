@@ -361,7 +361,7 @@ class mejaController extends Controller
                 $qtyB = $brng->qtyTmp ;
                 $totalB = $brng->totalTmp ;
 
-                DB::table('tblTmp_transaksiDetail')
+                DB::table('tblTmp_TransaksiDetail')
                     ->where('kdBarangTmp', $request->input('idBarang'))
                     ->where('noMejaTmp', $request->input('noMeja'))
                     ->update([
