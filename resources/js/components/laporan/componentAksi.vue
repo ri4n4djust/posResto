@@ -67,7 +67,7 @@
                                         
                                         <div v-if="adminuser === 'Admin'">
                                             <a href="#"  @click="rePrint()" class="btn btn-md btn-success"><b>Re-Print</b></a>
-                                            <a href="#"   @click.prevent="DeletePenjualan(id = data.id)" class="btn btn-md btn-success"><b>Delete</b></a>
+                                            <!-- <a href="#"   @click.prevent="DeletePenjualan(id = data.id)" class="btn btn-md btn-success"><b>Delete</b></a> -->
                                         </div>
                                         <div v-else-if="adminuser === 'Operator'">
                                             <a href="#"  @click="rePrint()" class="btn btn-md btn-success"><b>Re-Print</b></a>
@@ -258,7 +258,7 @@ export default {
                 np: this.data.noNota,
                 sukses: '',
                 adminuser: '',
-                
+                totalJ:'',
             }
 
         },

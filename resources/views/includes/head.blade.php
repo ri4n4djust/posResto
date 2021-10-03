@@ -19,7 +19,15 @@
   <link rel="stylesheet" href="{{asset('assets/dist/css/skins/_all-skins.min.css')}}">
  
  
+<!-- jvectormap -->
+<link rel="stylesheet" href="{{asset('assets/bower_components/jvectormap/jquery-jvectormap.css')}}">
+  <!-- bootstrap wysihtml5 - text editor -->
+  <link rel="stylesheet" href="{{asset('assets/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css')}}">
 
+  
+
+  <!-- Google Font -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 
   <style>
     .modal-mask {
