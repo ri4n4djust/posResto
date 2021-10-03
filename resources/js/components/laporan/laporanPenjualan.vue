@@ -50,6 +50,17 @@
                                         </select>
                                         </div>
                                         </div>
+                                        <div class="input-group">
+                                        <div class="col-md-6">
+                                        <label class="control-label" ><i class="fa fa-check"></i>Pelanggan</label>
+                                        <select class='form-control' v-model='typeNotaCari' required>
+                                            <option  value='0' selected>Semua</option>
+                                            <option value='1' >Cash</option>
+                                            <option value='2' >Member</option>
+                                            <option value='3' >Kompliment</option>
+                                        </select>
+                                        </div>
+                                        </div>
                                         <br>
                                         <div class="col-xs-2">
                                         <button type="submit" class="btn btn-md btn-success">View Data</button> 
