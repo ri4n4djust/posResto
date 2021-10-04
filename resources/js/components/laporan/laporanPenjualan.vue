@@ -43,22 +43,22 @@
                                         <div class="input-group">
                                         <div class="col-md-6">
                                         <label class="control-label" ><i class="fa fa-check"></i>Jenis Pembayaran</label>
-                                        <select class='form-control' v-model='typeNotaCari' required>
+                                            <select class='form-control' v-model='typeNotaCari' required>
                                             <option  value='0' selected>Semua</option>
                                             <option value='1' >Cash</option>
                                             <option value='2' >Debit</option>
                                         </select>
+                                            
                                         </div>
                                         </div>
                                         <div class="input-group">
                                         <div class="col-md-6">
                                         <label class="control-label" ><i class="fa fa-check"></i>Pelanggan</label>
-                                        <select class='form-control' v-model='typeNotaCari' required>
-                                            <option  value='0' selected>Semua</option>
-                                            <option value='1' >Cash</option>
-                                            <option value='2' >Member</option>
-                                            <option value='3' >Kompliment</option>
-                                        </select>
+                                            <select v-model="typePelangganCari" class="form-control">
+                                                <option v-for="pel in pelanggans" :value="pel.nmPelanggan" :key="pel.id">
+                                                    {{pel.nmPelanggan}}
+                                                </option>
+                                            </select>
                                         </div>
                                         </div>
                                         <br>
@@ -245,6 +245,7 @@ Vue.component("data-table", DataTable);
                 startDate: '',
                 endDate: '',
                 typeNotaCari: '0',
+                typePelangganCari: 'Cash',
                 ActionButtons: '',
                 validation: null,
                 //actionTriggered: null,
@@ -336,6 +337,7 @@ Vue.component("data-table", DataTable);
         },
         created() {
             this.loadData();
+            this.loadPelanggan();
         },
         mounted () {
             //this.intervalFetchData1();
@@ -357,7 +359,13 @@ Vue.component("data-table", DataTable);
                         
             });
             },
-            
+            loadPelanggan:function(){
+                let uri = '/api/pelanggan';
+                this.axios.get(uri).then(response => {
+                this.pelanggans = response.data.data;
+                
+            });
+            },
             lapPenjualan() {
                 let uri = '/api/lapPenjualan';
                 this.axios.post(uri, 
@@ -365,6 +373,7 @@ Vue.component("data-table", DataTable);
                     startDate: this.startDate,
                     endDate: this.endDate,
                     typeNotaCari: this.typeNotaCari,
+                    typePelangganCari: this.typePelangganCari,
                 })
                     .then((response) => {
                         this.posts1 = response.data.data;

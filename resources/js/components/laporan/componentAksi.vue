@@ -20,7 +20,7 @@
                                         <h4 class="modal-title">Detail Penjualan</h4>
                                     </div>
                                     <div class="modal-body">
-
+                                        
                                         <div class="row invoice-info">
                                         <!-- accepted payments column -->
                                             <div class="col-xs-6">
@@ -64,11 +64,11 @@
                                         <p class="text-muted text-center">
                                         </p>
                                         
-                                        
                                         <div v-if="adminuser === 'Admin'">
                                             <a href="#"  @click="rePrint()" class="btn btn-md btn-success"><b>Re-Print</b></a>
                                             <!-- <a href="#"   @click.prevent="DeletePenjualan(id = data.id)" class="btn btn-md btn-success"><b>Delete</b></a> -->
                                         </div>
+                                        <span v-if="load">Loading...</span>
                                         <div v-else-if="adminuser === 'Operator'">
                                             <a href="#"  @click="rePrint()" class="btn btn-md btn-success"><b>Re-Print</b></a>
                                         </div>
@@ -118,8 +118,9 @@
                     </p>
                     </div>
                     <!-- /.col -->
-
+                    
                     <div class="col-xs-12 table-responsive">
+                        
                   <table class="table table-striped">
                                 <thead>
                                 <tr>
@@ -259,6 +260,7 @@ export default {
                 sukses: '',
                 adminuser: '',
                 totalJ:'',
+                load: false,
             }
 
         },
@@ -306,11 +308,13 @@ export default {
             });
             },
             loadDetailPenjualan:function(){
+                this.load = true;
                 this.showModalPenjualan = true;
                 let uri = '/api/detailpenjualan/'+ this.data.noNota;
                 this.axios.get(uri).then(response => {
                     this.pem = response.data.data;
                     this.totalJ = response.data.total;
+                    this.load = false;
                    // alert('no nota '+ this.data.noNota);
             });
             },

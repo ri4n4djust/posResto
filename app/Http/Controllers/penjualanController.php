@@ -80,7 +80,8 @@ class penjualanController extends Controller
         $startDate = $request->input('startDate');
         $endDate = $request->input('endDate');
         $cr = $request->input('typeNotaCari');
-        if($cr == 0){
+        $crpel = $request->input('typePelangganCari');
+        if($cr == 0 && $crpel == 'Cash'){
             $posts = Penjualan::whereBetween('tglNota', [$startDate, $endDate])->get();
             $NotalTOtal = Penjualan::whereBetween('tglNota', [$startDate, $endDate])->sum('totalNota');
             $pajakSum = Penjualan::whereBetween('tglNota', [$startDate, $endDate])->sum('taxNota');
@@ -100,15 +101,19 @@ class penjualanController extends Controller
         }else{
             $posts = Penjualan::whereBetween('tglNota', [$startDate, $endDate])
                                 ->where('typeNota', $cr)
+                                ->where('pelangganNota', $crpel)
                                 ->get();
             $NotalTOtal = Penjualan::whereBetween('tglNota', [$startDate, $endDate])
                                 ->where('typeNota', $cr)
+                                ->where('pelangganNota', $crpel)
                                 ->sum('totalNota');
             $pajakSum = Penjualan::whereBetween('tglNota', [$startDate, $endDate])
                                 ->where('typeNota', $cr)
+                                ->where('pelangganNota', $crpel)
                                 ->sum('taxNota');
             $diskonSum = Penjualan::whereBetween('tglNota', [$startDate, $endDate])
                                 ->where('typeNota', $cr)
+                                ->where('pelangganNota', $crpel)
                                 ->sum('diskonNota');
 
         //$posts = Penjualan::latest()->get();
