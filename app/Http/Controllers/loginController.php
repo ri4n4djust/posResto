@@ -43,14 +43,16 @@ class loginController extends Controller
     public function dashboard()
     {
         $jumlahmeja = Meja::count();
+        $jumlahuser = User::count();
         $mejaterisi = Meja::where('status', '1')->count();
-        $ldate = date('Y-m-d');
+        $ldate = date('Y/m/d');
         $notatoday = Penjualan::where('tglNota', $ldate)->count();
         return response([
             'success' => true,
             //'message' => 'List Semua User',
             'akupansimeja' => $mejaterisi.'/'.$jumlahmeja,
-            'notaToday' => $notatoday
+            'notaToday' => $notatoday,
+            'jumlahuser' => $jumlahuser
         ], 200);
     }
 
