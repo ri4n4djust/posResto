@@ -758,7 +758,7 @@
                         //alert('ada yang error stelah print');
                   });
                 }, 12000); 
-                setTimeout(() => this.$router.push({name: 'meja'}), 12000);
+                setTimeout(() => this.$router.push({name: 'meja'}), 13000);
             },
             ListOrder(){
               let uri = `/api/orderprint/${this.$route.params.id}`;
@@ -941,7 +941,7 @@
                         window.print(printMe)
                         setTimeout(function(){
                             window.location.href = '/meja';
-                        }, 12000);           
+                        }, 13000);           
                     });
                 
             },
