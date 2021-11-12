@@ -77,8 +77,8 @@
                   </tr>
                     </thead>
                     <tbody>
-                  <tr v-for="order, key in orders" :key="order.id">
-                    <td>{{ key + 1}} </td>
+                  <tr v-for="order in orders" :key="order.id">
+                    <td>*</td>
                     <td>{{ order.nmMenu }}<br>
                         {{order.noteOrder }}</td>
                     <td>{{ order.qtyOrder }}</td>
@@ -103,8 +103,8 @@
                   </tr>
                     </thead>
                   <tbody>
-                  <tr v-for="order, key in orders1" :key="order.id">
-                    <td>{{ key + 1}} </td>
+                  <tr v-for="order in orders1" :key="order.id">
+                    <td>* </td>
                     <td>{{ order.nmMenu }}<br>
                         {{order.noteOrder }}</td>
                     <td>{{ order.qtyOrder }}</td>
