@@ -485,13 +485,13 @@ class mejaController extends Controller
                 'nmBarang' =>$s->nmBarangTmp, 
             ];
         }
-        DB::table('tblPenjualanDetail')->insert($dataSet);
-        DB::table('tblMeja')->where('id', $request->input('noMeja'))->update(['status'   => '0' ,]);
-        DB::table('tblTmp_TransaksiDetail')->where('noMejaTmp', $request->input('noMeja'))->delete();
-        DB::table('tblOrder')->where('idMeja', $request->input('noMeja'))->delete();
+        $detpost = DB::table('tblPenjualanDetail')->insert($dataSet);
 
+            if ($post && $detpost) {
+                DB::table('tblMeja')->where('id', $request->input('noMeja'))->update(['status'   => '0' ,]);
+                DB::table('tblTmp_TransaksiDetail')->where('noMejaTmp', $request->input('noMeja'))->delete();
+                DB::table('tblOrder')->where('idMeja', $request->input('noMeja'))->delete();
 
-            if ($post) {
                 return response()->json([
                     'success' => true,
                     'message' => 'Post Berhasil Disimpan!',
