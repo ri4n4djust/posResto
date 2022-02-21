@@ -430,13 +430,6 @@ class mejaController extends Controller
            // $kodeBaru = $terakhir + 1  ;
            // $tahun = date('Y');
 
-           // $newid =  strlen($request->input('noMeja'));
-           //     if($newid === 1){
-           //         $id = '0'.$request->input('noMeja');
-           //     }elseif($newid === 2){
-           //         $id = $request->input('noMeja');
-           //     }
-           // $noNota = 'INV'.$tahun.'0'.$id.'0'.$kodeBaru;
            return response()->json([
             'success' => true,
             'message' => 'Transaksi Sudah Tersimpan',
@@ -444,64 +437,78 @@ class mejaController extends Controller
         }else{
            // $noNota = $request->input('noNota');
 
+           try {
+            $exception = DB::transaction(function() use ($request){ 
+                $post = Penjualan::insert([
+                    'noNota'     => $request->input('noNota'),
+                    'noMeja'     => $request->input('noMeja'),
+                    'tglNota'     => $request->input('tglNota'),
+                    'totalNota'     => $request->input('totalNota'),
+                    'taxNota'     => $request->input('taxNota'),
+                    'diskonNota'     => $request->input('diskonNota'),
+                    'bayarNota'     => $request->input('bayarNota'),
+                    'kembalianNota'     => $request->input('kembalianNota'),
+                    'pelangganNota'     => $request->input('pelanggan'),
+                    'userNota'     => $request->input('userNota'),
+                    'waiterNota'     => $request->input('waiterNota'),
+                    'typeNota'  => $request->input('typeNota'),
+                    'chargeNota'  => $request->input('chargeNota'),
+                ]);
         
-        $post = Penjualan::create([
-            'noNota'     => $request->input('noNota'),
-            'noMeja'     => $request->input('noMeja'),
-            'tglNota'     => $request->input('tglNota'),
-            'totalNota'     => $request->input('totalNota'),
-            'taxNota'     => $request->input('taxNota'),
-            'diskonNota'     => $request->input('diskonNota'),
-            'bayarNota'     => $request->input('bayarNota'),
-            'kembalianNota'     => $request->input('kembalianNota'),
-            'pelangganNota'     => $request->input('pelanggan'),
-            'userNota'     => $request->input('userNota'),
-            'waiterNota'     => $request->input('waiterNota'),
-            'typeNota'  => $request->input('typeNota'),
-            'chargeNota'  => $request->input('chargeNota'),
-        ]);
-
-        Pembayara::insert([
-            'notaPembayaran'     => $request->input('noNota'),
-            'diskonPembayaran'     => $request->input('diskonPembayaran'),
-            'pajakPembayaran'     => $request->input('pajakPembayaran'),
-            'typePembayaran'     => $request->input('typeNota'),
-            'chargePembayaran'     => $request->input('chargePembayaran'),
-            'noKartuPembayaran'     => $request->input('noKartuPembayaran'),
-        ]);
-
+                $pembayaran = Pembayara::insert([
+                    'notaPembayaran'     => $request->input('noNota'),
+                    'diskonPembayaran'     => $request->input('diskonPembayaran'),
+                    'pajakPembayaran'     => $request->input('pajakPembayaran'),
+                    'typePembayaran'     => $request->input('typeNota'),
+                    'chargePembayaran'     => $request->input('chargePembayaran'),
+                    'noKartuPembayaran'     => $request->input('noKartuPembayaran'),
+                ]);
         
-        $tmpTrx = DB::table('tblTmp_TransaksiDetail')->where('noMejaTmp', $request->input('noMeja'))->get();
-        $dataSet = [];
-        foreach ($tmpTrx as $s) {
-            $dataSet[] = [
-                'noNota'  => $request->input('noNota'),
-                'noMeja'    => $s->noMejaTmp,
-                'kdBarang'       => $s->kdBarangTmp,
-                'hrgJual' => $s->hrgJualTmp,
-                'qty' => $s->qtyTmp,
-                'total' => $s->totalTmp,
-                'type' => $s->typeTmp,
-                'nmBarang' =>$s->nmBarangTmp, 
-            ];
-        }
-        $detpost = DB::table('tblPenjualanDetail')->insert($dataSet);
-
-            if ($post && $detpost) {
-                DB::table('tblMeja')->where('id', $request->input('noMeja'))->update(['status'   => '0' ,]);
-                DB::table('tblTmp_TransaksiDetail')->where('noMejaTmp', $request->input('noMeja'))->delete();
-                DB::table('tblOrder')->where('idMeja', $request->input('noMeja'))->delete();
-
+                
+                $tmpTrx = DB::table('tblTmp_TransaksiDetail')->where('noMejaTmp', $request->input('noMeja'))->get();
+                $dataSet = [];
+                foreach ($tmpTrx as $s) {
+                    $dataSet[] = [
+                        'noNota'  => $request->input('noNota'),
+                        'noMeja'    => $s->noMejaTmp,
+                        'kdBarang'       => $s->kdBarangTmp,
+                        'hrgJual' => $s->hrgJualTmp,
+                        'qty' => $s->qtyTmp,
+                        'total' => $s->totalTmp,
+                        'type' => $s->typeTmp,
+                        'nmBarang' =>$s->nmBarangTmp, 
+                    ];
+                }
+                $detpost = DB::table('tblPenjualanDetail')->insert($dataSet);
+        
+                        // DB::table('tblMeja')->where('id', $request->input('noMeja'))->update(['status'   => '0' ,]);
+                        DB::table('tblTmp_TransaksiDetail')->where('noMejaTmp', $request->input('noMeja'))->delete();
+                        DB::table('tblOrder')->where('idMeja', $request->input('noMeja'))->delete();
+                        DB::update('update tblMeja set statusa = ? where id = ?', ["0" , $request->input('noMeja')]);
+                    
+                DB::commit();
+            });
+            if(is_null($exception)) {
                 return response()->json([
                     'success' => true,
                     'message' => 'Post Berhasil Disimpan!',
                 ], 200);
-            } else {
+            } else {                    
+                DB::rollback();
                 return response()->json([
                     'success' => false,
-                    'message' => 'Post Gagal Disimpan!',
-                ], 400);
+                    'message' => 'Post Tidak Berhasil Disimpan!',
+                ], 200);
             }
+               // all good
+           } catch (\Exception $e) {
+               //DB::rollback();
+               // something went wrong
+               return response()->json([
+                'success' => false,
+                'message' => 'exception'.$e,
+            ], 200);
+           }
         }
     }
 
