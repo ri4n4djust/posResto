@@ -69,7 +69,7 @@
                                     </div>
                                                                    
                                 </form>
-                                  
+                                <span v-if="load">Loading...</span>  
                                 <table class="table table-hover table-bordered">
                                     <thead>
                                     <tr>
@@ -248,11 +248,12 @@ Vue.component("data-table", DataTable);
                 typePelangganCari: 'Cash',
                 ActionButtons: '',
                 validation: null,
-                //actionTriggered: null,
+                pelanggans: [],
                 totalS: [],
                 pajakS: [],
                 diskonS: [],
                 //totalSum: '',
+                load: false,
             }
 
         },
@@ -367,6 +368,7 @@ Vue.component("data-table", DataTable);
             });
             },
             lapPenjualan() {
+                this.load = true;
                 let uri = '/api/lapPenjualan';
                 this.axios.post(uri, 
                 {
@@ -383,6 +385,7 @@ Vue.component("data-table", DataTable);
                         //alert('Data Ditampilkan');
                         //this.loadDataSorting()
                         //this.loadTotal()
+                        this.load = false;
                     });
                 
             },
