@@ -483,8 +483,9 @@ class mejaController extends Controller
         
                         // DB::table('tblMeja')->where('id', $request->input('noMeja'))->update(['status'   => '0' ,]);
                         DB::table('tblTmp_TransaksiDetail')->where('noMejaTmp', $request->input('noMeja'))->delete();
-                        DB::table('tblOrder')->where('idMeja', $request->input('noMeja'))->delete();
-                        DB::update('update tblMeja set statusa = ? where id = ?', ["0" , $request->input('noMeja')]);
+                        //DB::table('tblOrder')->where('idMeja', $request->input('noMeja'))->delete();
+                        DB::delete('delete from tblOrder where idMeja = ?', [$request->input('noMeja')]);
+                        DB::update('update tblMeja set status = ? where id = ?', ["0" , $request->input('noMeja')]);
                     
                 DB::commit();
             });
@@ -507,7 +508,7 @@ class mejaController extends Controller
                return response()->json([
                 'success' => false,
                 'message' => 'exception'.$e,
-            ], 200);
+            ], 400);
            }
         }
     }

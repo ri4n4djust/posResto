@@ -942,7 +942,10 @@
                         setTimeout(function(){
                             window.location.href = '/meja';
                         }, 13000);           
-                    });
+                }).catch(error => {
+                    alert('error! bro');
+                    //console.log(error.response.message)
+                });
                 
             },
             intervalFetchData: function () {
