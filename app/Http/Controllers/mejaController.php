@@ -482,8 +482,8 @@ class mejaController extends Controller
                 $detpost = DB::table('tblPenjualanDetail')->insert($dataSet);
         
                         // DB::table('tblMeja')->where('id', $request->input('noMeja'))->update(['status'   => '0' ,]);
-                        DB::table('tblTmp_TransaksiDetail')->where('noMejaTmp', $request->input('noMeja'))->delete();
-                        //DB::table('tblOrder')->where('idMeja', $request->input('noMeja'))->delete();
+                        //DB::table('tblTmp_TransaksiDetail')->where('noMejaTmp', $request->input('noMeja'))->delete();
+                        DB::delete('delete from tblTmp_TransaksiDetail where noMejaTmp = ?', [$request->input('noMeja')]);
                         DB::delete('delete from tblOrder where idMeja = ?', [$request->input('noMeja')]);
                         DB::update('update tblMeja set status = ? where id = ?', ["0" , $request->input('noMeja')]);
                     
