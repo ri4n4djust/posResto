@@ -60,6 +60,9 @@
                 <p class="text-muted text-center">
                 <a href="#" @click="showModalBayar = true" class="btn btn-primary btn-block"><b>Payment</b></a>
                 </p>
+                <p class="text-muted text-center">
+                <a href="#" @click="showModalBayar = true" class="btn btn-primary btn-block"><b>Split Payment</b></a>
+                </p>
 
                   
                 <div id="lastOrder" class="lastOrder">
@@ -173,11 +176,6 @@
                                 </tr>
                                 </tbody>
                             </table>
-
-                
-                
-                
-
 
               </div>
               <!-- /.tab-pane -->

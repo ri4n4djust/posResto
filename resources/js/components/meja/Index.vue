@@ -33,12 +33,6 @@
                                     <div class="icon">
                                     <i class="ion ion-bag"></i>
                                     </div>
-                                    
-                                   
-                                    
-                              
-
-                                        
                                 </div>
                             </div>
                         </div>
@@ -57,19 +51,26 @@
                 <h4 class="modal-title">Waiter</h4>
               </div>
               <div class="modal-body">
-
-                
-                
                 <div v-if="waiter">
                   <form  @submit.prevent="PostCekIn" >
-                    <select v-model='waiter' class="form-control" required>
-                      <option v-for='waiter in waiters' v-bind:value='waiter' :key="waiter.id">{{waiter.name}}</option>
-                    </select>
-                    <div class="form-group">
+                    <p class="text-muted text-center">
+                      <div class="input-group">
+                        <span class="input-group-addon">Waiter Name</span>
+                      <select v-model='waiter' class="form-control" required>
+                        <option v-for='waiter in waiters' v-bind:value='waiter' :key="waiter.id">{{waiter.name}}</option>
+                      </select>
+                      </div>
+                    <div class="input-group">
                       <input type="hidden" class="form-control" v-model="waiter.id">
                       <input type="hidden" name="noTable" :value="showModalCekin">
                     </div>
-                    <div class="form-group">
+                    <p class="text-muted text-center">
+                    <div class="input-group">
+                      <span class="input-group-addon">Pax</span>
+                      <input type="text" class="form-control" v-model="post.paxMeja" @keypress="onlyNumber">
+                    </div>
+                    <p class="text-muted text-center">
+                    <div class="input-group">
                     <button type="submit" class="btn btn-md btn-success">Cek In</button>
                     </div>
                   </form>
@@ -134,7 +135,13 @@
                 this.waiters = response.data.data;
             });
             },
-
+            onlyNumber ($event) {
+                //console.log($event.keyCode); //keyCodes value
+                let keyCode = ($event.keyCode ? $event.keyCode : $event.which);
+                if ((keyCode < 48 || keyCode > 57) && keyCode !== 46) { // 46 is dot
+                    $event.preventDefault();
+                }   
+            },
             PostCekIn() {
                 let uri = '/api/meja/cekin/';
                 this.axios.post(uri, {
