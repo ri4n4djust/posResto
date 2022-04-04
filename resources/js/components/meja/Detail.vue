@@ -2,7 +2,6 @@
     <div class="card-body">
       <status-login></status-login>
     <section class="content">
-
       <div class="row">
         <div class="col-md-3">
 
@@ -61,7 +60,7 @@
                 <a href="#" @click="showModalBayar = true" class="btn btn-primary btn-block"><b>Payment</b></a>
                 </p>
                 <p class="text-muted text-center">
-                <a href="#" @click="showModalBayar = true" class="btn btn-primary btn-block"><b>Split Payment</b></a>
+                <a href="#" @click="showModalSplit = true" class="btn btn-primary btn-block"><b>Split Payment</b></a>
                 </p>
 
                   
@@ -330,6 +329,216 @@
     </transition>
   </div>
 
+<div v-if="showModalSplit">
+    <transition name="modal">
+      <div class="modal-mask">
+        <div class="modal-wrapper">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" @click="showModalSplit=false">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Split Payment</h4>
+              </div>
+              <div class="modal-body">
+                <form  @submit.prevent="PostTransaksi" >
+                  <input type="hidden" class="form-control" v-model="tglNota" >
+                <input type="hidden" class="form-control" v-model="pelanggan" placeholder="Customer">
+                <input type="hidden" class="form-control" v-model="noNota" placeholder="No nota">
+                <input type="hidden" class="form-control" v-model="subtotal">
+                <input type="hidden" class="form-control" v-model="post.waiterMeja">
+
+                <input type="hidden" class="form-control" v-model="subtotaltp">
+
+                <p class="text-muted text-center">
+                <input type="hidden" class="form-control" :value="((subtotal * pajak / 100 + subtotal) - (subtotaltp * diskon / 100))  || 0 " :name="totalTransaksiBayar"  >
+                <h3 class="profile-username ">Total {{ Math.floor(((subtotal * pajak / 100 + subtotal) - (subtotaltp * diskon / 100)) + ((subtotal * pajak / 100 + subtotal) - (subtotaltp * diskon / 100)) * taxDebit / 100)  || 0 | currency }}</h3>
+
+
+                <div class="row input-group">
+                <div class="col-xs-4">
+                  <span class="input-group-addon">Tax in %</span>
+                  <input type="number" step=".01" class="form-control " v-model="pajak" placeholder="Tax">
+                  <input type="hidden" class="form-control" :value="(subtotal * pajak / 100 + subtotal)" :name="totalTransaksipjk" >
+                </div>
+                <div class="col-xs-4">
+                  <span class="input-group-addon">Disc in %</span>
+                  <input type="number" step=".01" class="form-control" v-model="diskon" placeholder="Diskon">
+                  <input type="hidden" class="form-control" :value="subtotaltp * diskon / 100" :name="diskon1" >
+                </div>
+              </div>
+              <br>
+                            <select class='form-control' v-model='pembayaran' >
+                                <option value='1' selected>Cash</option>
+                                <option value='2'>Debit</option>
+                                <option value='3'>E-Money</option>
+                            </select>
+                            <br>
+                            <div v-if="pembayaran === '1'">
+                              <div class="input-group">
+                                    <span class="input-group-addon">Rp.</span>
+                                    <input type="number" class="form-control" v-model="totalBayar" placeholder="Bayar" required>
+                                  </div>
+                                  
+                                  <h3 class="profile-username ">Kembali : {{ Math.floor(totalBayar - ((subtotal * pajak / 100 + subtotal) - (subtotaltp * diskon / 100)))  || 0 | currency  }}</h3>
+                                  <p class="text-muted text-center">
+                                  <button type="submit"  class="btn btn-md btn-success" >Bayar</button> 
+                                  <a href="#"  @click="printBill(printMe)" class="btn btn-md btn-success" >Print Bill</a>               
+                                  </p>
+                            </div>
+                            <div v-else-if="pembayaran === '2'">
+                              <div class="input-group">
+                                    <span class="input-group-addon">Card Carge %</span>
+                                    <input type="number" step=".01" class="form-control" v-model="taxDebit" placeholder="0" >
+                                    <input type="hidden" class="form-control" :value="((subtotal * pajak / 100 + subtotal) - ((subtotal * pajak / 100 + subtotal) * diskon / 100)) * taxDebit / 100 " :name="pajakKartu" >
+                                  </div>
+                                  <p>
+                                  <div class="input-group">
+                                    <span class="input-group-addon">Card No.</span>
+                                    <input type="number" class="form-control" v-model="noDebit" placeholder="No Kartu" >
+                                  </div>
+                                  <p>
+                                  <div class="input-group">
+                                    <span class="input-group-addon">Rp.</span>
+                                    <input type="number" class="form-control" v-model="totalBayar" placeholder="Bayar" required>
+                                  </div>
+                                  <br>
+                                  <p class="text-muted text-center">
+                                  <button type="submit"  class="btn btn-md btn-success" >Bayar</button>       
+                                  <a href="#"  @click="printBill(printMe)" class="btn btn-md btn-success" >Print Bill</a>         
+                                  </p>
+                            </div>
+                            <div v-else-if="pembayaran === '3'">
+                              Emoney
+                            </div>
+
+               
+              </form>
+
+              <div id="printMe">
+                <section class="invoice">
+                <!-- info row -->
+                <p class="text-muted text-center">
+                <img :src="'/image/logoNota.png'" >
+                </p>
+                <p class="text-bold text-center">
+               
+                    Phone / Wa: 081 239 099 998<br>
+                    Email: warungdaladesa@gmail.com<br>
+                    FB : warungdaladesa<br>
+                    IG : warung.daladesa.sangeh
+                  
+                </p>
+              <div class="row invoice-info">
+                <div class="col-xs-6">
+                  <p class="text-muted" style="margin-top: 2px;">
+                  <address>
+                    <strong>Customer :</strong> {{pelanggan}}<br>
+                    <b> Tgl : </b>{{tglNota}}<br>
+                    <b> Meja No : </b>{{post.noMeja}}<br>
+                    <b>Waiter : </b>{{post.name}}<br>
+                  </address>
+                  
+                </div>
+                <!-- /.col -->
+                <div class="col-xs-6">
+                  <p class="text-muted" style="margin-top: 2px;">
+                  <address>
+                  <b>No Inv: </b>{{noNota}}<br>
+                  <b>Kasir : </b>{{$session.get('user')}}<br>
+                  <b>Type : </b>
+                  <span v-if="pembayaran === '1'">
+                    Cash
+                  </span>
+                  <span v-else-if="pembayaran === '2'">
+                    Debit
+                  </span>
+                  <span v-else-if="pembayaran === '3'">
+                    E-Money
+                  </span>
+                  </address>
+                  
+                </div>
+
+                <!-- /.col -->
+              <!-- /.row -->
+
+                <div class="col-xs-12 table-responsive">
+                  <table class="table table-striped">
+                                <thead>
+                                <tr>
+                                    <th>Nama </th>
+                                    <th>Qty</th>
+                                    <th>Harga</th>
+                                    <th>Total</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr v-for="trx in trxs" :key="trx.id">
+                                    <td >{{ trx.nmBarangTmp }} </td>
+                                    <td >{{ trx.qtyTmp}}</td>
+                                    <td >{{ trx.hrgJualTmp | currency }}</td>
+                                    <td >{{ trx.totalTmp | currency }}</td>
+                                </tr>
+                                </tbody>
+                                    <tr>
+                                        <th colspan="3">subTotal :</th>
+                                        <th>{{subtotal | currency}}</th>
+                                    </tr>
+                                    <tr>
+                                        <th colspan="3">Tax & Service : {{ pajak }} %</th>
+                                        <th>{{ Math.floor(subtotal * pajak / 100 ) | currency}}</th>
+                                    </tr>
+                                    <tr>
+                                        <th colspan="3">Discount : {{ diskon }} %</th>
+                                        <th>{{ Math.floor(subtotaltp * diskon / 100) | currency}}</th>
+                                    </tr>
+                                    <tr>
+                                        <th colspan="3">subTotal :</th>
+                                        <th>{{ Math.floor((subtotal * pajak / 100 + subtotal) - (subtotaltp * diskon / 100))  || 0 | currency }}</th>
+                                    </tr>
+
+                                    <tr v-if="pembayaran === '1'">
+                                    </tr>
+                                    <tr v-else-if="pembayaran === '2'">
+                                        <th colspan="3">Card Charge : {{ taxDebit }} %</th>
+                                        <th>{{ Math.floor((subtotal * pajak / 100 + subtotal) - (subtotaltp * diskon / 100)) * taxDebit / 100 | currency }}</th>
+                                    </tr>
+
+                                    <tr>
+                                        <th colspan="3">Payment :</th>
+                                        <th>{{ Math.floor(((subtotal * pajak / 100 + subtotal) - (subtotaltp * diskon / 100)) + ((subtotal * pajak / 100 + subtotal) - (subtotaltp * diskon / 100)) * taxDebit / 100)  || 0 | currency }}</th>
+                                    </tr>
+
+                                    <tr v-if="pembayaran === '1'">
+                                        <th colspan="3">Kembalian :</th>
+                                        <th>{{ Math.floor(totalBayar - ((subtotal * pajak / 100 + subtotal) - (subtotaltp * diskon / 100)))  || 0 | currency }}</th>
+                                    </tr>
+                                    <tr v-else-if="pembayaran === '2'">
+                                    </tr>
+
+                            </table>
+                            <p class="text-bold text-center">
+                                Terima Kasih <br>
+                                Belanja Anda Hal Baik Bagi Dunia<br>
+                                Tidak enak Kasi Tau Kami, ENAK kasi tau temanmu<br>                              
+                            </p>
+                </div>
+              </div>
+                </section>
+    </div>
+              
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </transition>
+  </div>
+<!---- Modal Bayar End ---->
   
 
   <div v-if="showModalBayar">
@@ -631,6 +840,7 @@
                 showModal: false,
                 showModalMenu: false,
                 showModalBayar: false,
+                showModalSplit: false,
                 nmBarang: '',
                 idBarang: '',
                 hargaJual: '',

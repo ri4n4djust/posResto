@@ -232,6 +232,7 @@ class mejaController extends Controller
             $post = Meja::whereId($request->input('idMeja'))->update([
                 'status'   => '1',
                 'waiterMeja' => $request->input('idWaiter'),
+                'paxMeja' => $request->input('paxMeja'),
             ]);
 
             if ($post) {

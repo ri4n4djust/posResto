@@ -67,7 +67,7 @@
                     <p class="text-muted text-center">
                     <div class="input-group">
                       <span class="input-group-addon">Pax</span>
-                      <input type="text" class="form-control" v-model="post.paxMeja" @keypress="onlyNumber">
+                      <input type="text" class="form-control" v-model="paxMeja" @keypress="onlyNumber">
                     </div>
                     <p class="text-muted text-center">
                     <div class="input-group">
@@ -148,6 +148,7 @@
                     idMeja: this.showModalCekin,
                     idWaiter: this.waiter.id,
                     status: '1',
+                    paxMeja: this.paxMeja,
                 })
                     .then((response) => {
                         this.showModalCekin = false;

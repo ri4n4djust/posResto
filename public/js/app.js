@@ -12976,6 +12976,215 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -13008,6 +13217,7 @@ __webpack_require__.r(__webpack_exports__);
       showModal: false,
       showModalMenu: false,
       showModalBayar: false,
+      showModalSplit: false,
       nmBarang: '',
       idBarang: '',
       hargaJual: '',
@@ -13641,7 +13851,8 @@ __webpack_require__.r(__webpack_exports__);
       this.axios.post(uri, {
         idMeja: this.showModalCekin,
         idWaiter: this.waiter.id,
-        status: '1'
+        status: '1',
+        paxMeja: this.paxMeja
       }).then(function (response) {
         _this2.showModalCekin = false; //alert('sukses cek in')
 
@@ -67529,7 +67740,7 @@ var render = function() {
                       attrs: { href: "#" },
                       on: {
                         click: function($event) {
-                          _vm.showModalBayar = true
+                          _vm.showModalSplit = true
                         }
                       }
                     },
@@ -68389,6 +68600,1034 @@ var render = function() {
                                   "\n                  No Selected\n                "
                                 )
                               ])
+                        ])
+                      ])
+                    ])
+                  ])
+                ])
+              ])
+            ],
+            1
+          )
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.showModalSplit
+        ? _c(
+            "div",
+            [
+              _c("transition", { attrs: { name: "modal" } }, [
+                _c("div", { staticClass: "modal-mask" }, [
+                  _c("div", { staticClass: "modal-wrapper" }, [
+                    _c("div", { staticClass: "modal-dialog" }, [
+                      _c("div", { staticClass: "modal-content" }, [
+                        _c("div", { staticClass: "modal-header" }, [
+                          _c(
+                            "button",
+                            {
+                              staticClass: "close",
+                              attrs: { type: "button" },
+                              on: {
+                                click: function($event) {
+                                  _vm.showModalSplit = false
+                                }
+                              }
+                            },
+                            [
+                              _c("span", { attrs: { "aria-hidden": "true" } }, [
+                                _vm._v("×")
+                              ])
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c("h4", { staticClass: "modal-title" }, [
+                            _vm._v("Split Payment")
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "modal-body" }, [
+                          _c(
+                            "form",
+                            {
+                              on: {
+                                submit: function($event) {
+                                  $event.preventDefault()
+                                  return _vm.PostTransaksi($event)
+                                }
+                              }
+                            },
+                            [
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.tglNota,
+                                    expression: "tglNota"
+                                  }
+                                ],
+                                staticClass: "form-control",
+                                attrs: { type: "hidden" },
+                                domProps: { value: _vm.tglNota },
+                                on: {
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.tglNota = $event.target.value
+                                  }
+                                }
+                              }),
+                              _vm._v(" "),
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.pelanggan,
+                                    expression: "pelanggan"
+                                  }
+                                ],
+                                staticClass: "form-control",
+                                attrs: {
+                                  type: "hidden",
+                                  placeholder: "Customer"
+                                },
+                                domProps: { value: _vm.pelanggan },
+                                on: {
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.pelanggan = $event.target.value
+                                  }
+                                }
+                              }),
+                              _vm._v(" "),
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.noNota,
+                                    expression: "noNota"
+                                  }
+                                ],
+                                staticClass: "form-control",
+                                attrs: {
+                                  type: "hidden",
+                                  placeholder: "No nota"
+                                },
+                                domProps: { value: _vm.noNota },
+                                on: {
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.noNota = $event.target.value
+                                  }
+                                }
+                              }),
+                              _vm._v(" "),
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.subtotal,
+                                    expression: "subtotal"
+                                  }
+                                ],
+                                staticClass: "form-control",
+                                attrs: { type: "hidden" },
+                                domProps: { value: _vm.subtotal },
+                                on: {
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.subtotal = $event.target.value
+                                  }
+                                }
+                              }),
+                              _vm._v(" "),
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.post.waiterMeja,
+                                    expression: "post.waiterMeja"
+                                  }
+                                ],
+                                staticClass: "form-control",
+                                attrs: { type: "hidden" },
+                                domProps: { value: _vm.post.waiterMeja },
+                                on: {
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.$set(
+                                      _vm.post,
+                                      "waiterMeja",
+                                      $event.target.value
+                                    )
+                                  }
+                                }
+                              }),
+                              _vm._v(" "),
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.subtotaltp,
+                                    expression: "subtotaltp"
+                                  }
+                                ],
+                                staticClass: "form-control",
+                                attrs: { type: "hidden" },
+                                domProps: { value: _vm.subtotaltp },
+                                on: {
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.subtotaltp = $event.target.value
+                                  }
+                                }
+                              }),
+                              _vm._v(" "),
+                              _c(
+                                "p",
+                                { staticClass: "text-muted text-center" },
+                                [
+                                  _c("input", {
+                                    staticClass: "form-control",
+                                    attrs: {
+                                      type: "hidden",
+                                      name: _vm.totalTransaksiBayar
+                                    },
+                                    domProps: {
+                                      value:
+                                        (_vm.subtotal * _vm.pajak) / 100 +
+                                          _vm.subtotal -
+                                          (_vm.subtotaltp * _vm.diskon) / 100 ||
+                                        0
+                                    }
+                                  })
+                                ]
+                              ),
+                              _c("h3", { staticClass: "profile-username " }, [
+                                _vm._v(
+                                  "Total " +
+                                    _vm._s(
+                                      _vm._f("currency")(
+                                        Math.floor(
+                                          (_vm.subtotal * _vm.pajak) / 100 +
+                                            _vm.subtotal -
+                                            (_vm.subtotaltp * _vm.diskon) /
+                                              100 +
+                                            (((_vm.subtotal * _vm.pajak) / 100 +
+                                              _vm.subtotal -
+                                              (_vm.subtotaltp * _vm.diskon) /
+                                                100) *
+                                              _vm.taxDebit) /
+                                              100
+                                        ) || 0
+                                      )
+                                    )
+                                )
+                              ]),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "row input-group" }, [
+                                _c("div", { staticClass: "col-xs-4" }, [
+                                  _c(
+                                    "span",
+                                    { staticClass: "input-group-addon" },
+                                    [_vm._v("Tax in %")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c("input", {
+                                    directives: [
+                                      {
+                                        name: "model",
+                                        rawName: "v-model",
+                                        value: _vm.pajak,
+                                        expression: "pajak"
+                                      }
+                                    ],
+                                    staticClass: "form-control ",
+                                    attrs: {
+                                      type: "number",
+                                      step: ".01",
+                                      placeholder: "Tax"
+                                    },
+                                    domProps: { value: _vm.pajak },
+                                    on: {
+                                      input: function($event) {
+                                        if ($event.target.composing) {
+                                          return
+                                        }
+                                        _vm.pajak = $event.target.value
+                                      }
+                                    }
+                                  }),
+                                  _vm._v(" "),
+                                  _c("input", {
+                                    staticClass: "form-control",
+                                    attrs: {
+                                      type: "hidden",
+                                      name: _vm.totalTransaksipjk
+                                    },
+                                    domProps: {
+                                      value:
+                                        (_vm.subtotal * _vm.pajak) / 100 +
+                                        _vm.subtotal
+                                    }
+                                  })
+                                ]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "col-xs-4" }, [
+                                  _c(
+                                    "span",
+                                    { staticClass: "input-group-addon" },
+                                    [_vm._v("Disc in %")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c("input", {
+                                    directives: [
+                                      {
+                                        name: "model",
+                                        rawName: "v-model",
+                                        value: _vm.diskon,
+                                        expression: "diskon"
+                                      }
+                                    ],
+                                    staticClass: "form-control",
+                                    attrs: {
+                                      type: "number",
+                                      step: ".01",
+                                      placeholder: "Diskon"
+                                    },
+                                    domProps: { value: _vm.diskon },
+                                    on: {
+                                      input: function($event) {
+                                        if ($event.target.composing) {
+                                          return
+                                        }
+                                        _vm.diskon = $event.target.value
+                                      }
+                                    }
+                                  }),
+                                  _vm._v(" "),
+                                  _c("input", {
+                                    staticClass: "form-control",
+                                    attrs: {
+                                      type: "hidden",
+                                      name: _vm.diskon1
+                                    },
+                                    domProps: {
+                                      value: (_vm.subtotaltp * _vm.diskon) / 100
+                                    }
+                                  })
+                                ])
+                              ]),
+                              _vm._v(" "),
+                              _c("br"),
+                              _vm._v(" "),
+                              _c(
+                                "select",
+                                {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.pembayaran,
+                                      expression: "pembayaran"
+                                    }
+                                  ],
+                                  staticClass: "form-control",
+                                  on: {
+                                    change: function($event) {
+                                      var $$selectedVal = Array.prototype.filter
+                                        .call($event.target.options, function(
+                                          o
+                                        ) {
+                                          return o.selected
+                                        })
+                                        .map(function(o) {
+                                          var val =
+                                            "_value" in o ? o._value : o.value
+                                          return val
+                                        })
+                                      _vm.pembayaran = $event.target.multiple
+                                        ? $$selectedVal
+                                        : $$selectedVal[0]
+                                    }
+                                  }
+                                },
+                                [
+                                  _c(
+                                    "option",
+                                    { attrs: { value: "1", selected: "" } },
+                                    [_vm._v("Cash")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c("option", { attrs: { value: "2" } }, [
+                                    _vm._v("Debit")
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("option", { attrs: { value: "3" } }, [
+                                    _vm._v("E-Money")
+                                  ])
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c("br"),
+                              _vm._v(" "),
+                              _vm.pembayaran === "1"
+                                ? _c("div", [
+                                    _c("div", { staticClass: "input-group" }, [
+                                      _c(
+                                        "span",
+                                        { staticClass: "input-group-addon" },
+                                        [_vm._v("Rp.")]
+                                      ),
+                                      _vm._v(" "),
+                                      _c("input", {
+                                        directives: [
+                                          {
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value: _vm.totalBayar,
+                                            expression: "totalBayar"
+                                          }
+                                        ],
+                                        staticClass: "form-control",
+                                        attrs: {
+                                          type: "number",
+                                          placeholder: "Bayar",
+                                          required: ""
+                                        },
+                                        domProps: { value: _vm.totalBayar },
+                                        on: {
+                                          input: function($event) {
+                                            if ($event.target.composing) {
+                                              return
+                                            }
+                                            _vm.totalBayar = $event.target.value
+                                          }
+                                        }
+                                      })
+                                    ]),
+                                    _vm._v(" "),
+                                    _c(
+                                      "h3",
+                                      { staticClass: "profile-username " },
+                                      [
+                                        _vm._v(
+                                          "Kembali : " +
+                                            _vm._s(
+                                              _vm._f("currency")(
+                                                Math.floor(
+                                                  _vm.totalBayar -
+                                                    ((_vm.subtotal *
+                                                      _vm.pajak) /
+                                                      100 +
+                                                      _vm.subtotal -
+                                                      (_vm.subtotaltp *
+                                                        _vm.diskon) /
+                                                        100)
+                                                ) || 0
+                                              )
+                                            )
+                                        )
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "p",
+                                      { staticClass: "text-muted text-center" },
+                                      [
+                                        _c(
+                                          "button",
+                                          {
+                                            staticClass:
+                                              "btn btn-md btn-success",
+                                            attrs: { type: "submit" }
+                                          },
+                                          [_vm._v("Bayar")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "a",
+                                          {
+                                            staticClass:
+                                              "btn btn-md btn-success",
+                                            attrs: { href: "#" },
+                                            on: {
+                                              click: function($event) {
+                                                return _vm.printBill(
+                                                  _vm.printMe
+                                                )
+                                              }
+                                            }
+                                          },
+                                          [_vm._v("Print Bill")]
+                                        )
+                                      ]
+                                    )
+                                  ])
+                                : _vm.pembayaran === "2"
+                                ? _c("div", [
+                                    _c("div", { staticClass: "input-group" }, [
+                                      _c(
+                                        "span",
+                                        { staticClass: "input-group-addon" },
+                                        [_vm._v("Card Carge %")]
+                                      ),
+                                      _vm._v(" "),
+                                      _c("input", {
+                                        directives: [
+                                          {
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value: _vm.taxDebit,
+                                            expression: "taxDebit"
+                                          }
+                                        ],
+                                        staticClass: "form-control",
+                                        attrs: {
+                                          type: "number",
+                                          step: ".01",
+                                          placeholder: "0"
+                                        },
+                                        domProps: { value: _vm.taxDebit },
+                                        on: {
+                                          input: function($event) {
+                                            if ($event.target.composing) {
+                                              return
+                                            }
+                                            _vm.taxDebit = $event.target.value
+                                          }
+                                        }
+                                      }),
+                                      _vm._v(" "),
+                                      _c("input", {
+                                        staticClass: "form-control",
+                                        attrs: {
+                                          type: "hidden",
+                                          name: _vm.pajakKartu
+                                        },
+                                        domProps: {
+                                          value:
+                                            (((_vm.subtotal * _vm.pajak) / 100 +
+                                              _vm.subtotal -
+                                              (((_vm.subtotal * _vm.pajak) /
+                                                100 +
+                                                _vm.subtotal) *
+                                                _vm.diskon) /
+                                                100) *
+                                              _vm.taxDebit) /
+                                            100
+                                        }
+                                      })
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("p"),
+                                    _c("div", { staticClass: "input-group" }, [
+                                      _c(
+                                        "span",
+                                        { staticClass: "input-group-addon" },
+                                        [_vm._v("Card No.")]
+                                      ),
+                                      _vm._v(" "),
+                                      _c("input", {
+                                        directives: [
+                                          {
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value: _vm.noDebit,
+                                            expression: "noDebit"
+                                          }
+                                        ],
+                                        staticClass: "form-control",
+                                        attrs: {
+                                          type: "number",
+                                          placeholder: "No Kartu"
+                                        },
+                                        domProps: { value: _vm.noDebit },
+                                        on: {
+                                          input: function($event) {
+                                            if ($event.target.composing) {
+                                              return
+                                            }
+                                            _vm.noDebit = $event.target.value
+                                          }
+                                        }
+                                      })
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("p"),
+                                    _c("div", { staticClass: "input-group" }, [
+                                      _c(
+                                        "span",
+                                        { staticClass: "input-group-addon" },
+                                        [_vm._v("Rp.")]
+                                      ),
+                                      _vm._v(" "),
+                                      _c("input", {
+                                        directives: [
+                                          {
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value: _vm.totalBayar,
+                                            expression: "totalBayar"
+                                          }
+                                        ],
+                                        staticClass: "form-control",
+                                        attrs: {
+                                          type: "number",
+                                          placeholder: "Bayar",
+                                          required: ""
+                                        },
+                                        domProps: { value: _vm.totalBayar },
+                                        on: {
+                                          input: function($event) {
+                                            if ($event.target.composing) {
+                                              return
+                                            }
+                                            _vm.totalBayar = $event.target.value
+                                          }
+                                        }
+                                      })
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("br"),
+                                    _vm._v(" "),
+                                    _c(
+                                      "p",
+                                      { staticClass: "text-muted text-center" },
+                                      [
+                                        _c(
+                                          "button",
+                                          {
+                                            staticClass:
+                                              "btn btn-md btn-success",
+                                            attrs: { type: "submit" }
+                                          },
+                                          [_vm._v("Bayar")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "a",
+                                          {
+                                            staticClass:
+                                              "btn btn-md btn-success",
+                                            attrs: { href: "#" },
+                                            on: {
+                                              click: function($event) {
+                                                return _vm.printBill(
+                                                  _vm.printMe
+                                                )
+                                              }
+                                            }
+                                          },
+                                          [_vm._v("Print Bill")]
+                                        )
+                                      ]
+                                    )
+                                  ])
+                                : _vm.pembayaran === "3"
+                                ? _c("div", [
+                                    _vm._v(
+                                      "\n                              Emoney\n                            "
+                                    )
+                                  ])
+                                : _vm._e()
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c("div", { attrs: { id: "printMe" } }, [
+                            _c("section", { staticClass: "invoice" }, [
+                              _c(
+                                "p",
+                                { staticClass: "text-muted text-center" },
+                                [
+                                  _c("img", {
+                                    attrs: { src: "/image/logoNota.png" }
+                                  })
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "p",
+                                { staticClass: "text-bold text-center" },
+                                [
+                                  _vm._v(
+                                    "\n               \n                    Phone / Wa: 081 239 099 998"
+                                  ),
+                                  _c("br"),
+                                  _vm._v(
+                                    "\n                    Email: warungdaladesa@gmail.com"
+                                  ),
+                                  _c("br"),
+                                  _vm._v(
+                                    "\n                    FB : warungdaladesa"
+                                  ),
+                                  _c("br"),
+                                  _vm._v(
+                                    "\n                    IG : warung.daladesa.sangeh\n                  \n                "
+                                  )
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "row invoice-info" }, [
+                                _c("div", { staticClass: "col-xs-6" }, [
+                                  _c("p", {
+                                    staticClass: "text-muted",
+                                    staticStyle: { "margin-top": "2px" }
+                                  }),
+                                  _c("address", [
+                                    _c("strong", [_vm._v("Customer :")]),
+                                    _vm._v(" " + _vm._s(_vm.pelanggan)),
+                                    _c("br"),
+                                    _vm._v(" "),
+                                    _c("b", [_vm._v(" Tgl : ")]),
+                                    _vm._v(_vm._s(_vm.tglNota)),
+                                    _c("br"),
+                                    _vm._v(" "),
+                                    _c("b", [_vm._v(" Meja No : ")]),
+                                    _vm._v(_vm._s(_vm.post.noMeja)),
+                                    _c("br"),
+                                    _vm._v(" "),
+                                    _c("b", [_vm._v("Waiter : ")]),
+                                    _vm._v(_vm._s(_vm.post.name)),
+                                    _c("br")
+                                  ])
+                                ]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "col-xs-6" }, [
+                                  _c("p", {
+                                    staticClass: "text-muted",
+                                    staticStyle: { "margin-top": "2px" }
+                                  }),
+                                  _c("address", [
+                                    _c("b", [_vm._v("No Inv: ")]),
+                                    _vm._v(_vm._s(_vm.noNota)),
+                                    _c("br"),
+                                    _vm._v(" "),
+                                    _c("b", [_vm._v("Kasir : ")]),
+                                    _vm._v(_vm._s(_vm.$session.get("user"))),
+                                    _c("br"),
+                                    _vm._v(" "),
+                                    _c("b", [_vm._v("Type : ")]),
+                                    _vm._v(" "),
+                                    _vm.pembayaran === "1"
+                                      ? _c("span", [
+                                          _vm._v(
+                                            "\n                    Cash\n                  "
+                                          )
+                                        ])
+                                      : _vm.pembayaran === "2"
+                                      ? _c("span", [
+                                          _vm._v(
+                                            "\n                    Debit\n                  "
+                                          )
+                                        ])
+                                      : _vm.pembayaran === "3"
+                                      ? _c("span", [
+                                          _vm._v(
+                                            "\n                    E-Money\n                  "
+                                          )
+                                        ])
+                                      : _vm._e()
+                                  ])
+                                ]),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  { staticClass: "col-xs-12 table-responsive" },
+                                  [
+                                    _c(
+                                      "table",
+                                      { staticClass: "table table-striped" },
+                                      [
+                                        _c("thead", [
+                                          _c("tr", [
+                                            _c("th", [_vm._v("Nama ")]),
+                                            _vm._v(" "),
+                                            _c("th", [_vm._v("Qty")]),
+                                            _vm._v(" "),
+                                            _c("th", [_vm._v("Harga")]),
+                                            _vm._v(" "),
+                                            _c("th", [_vm._v("Total")])
+                                          ])
+                                        ]),
+                                        _vm._v(" "),
+                                        _c(
+                                          "tbody",
+                                          _vm._l(_vm.trxs, function(trx) {
+                                            return _c("tr", { key: trx.id }, [
+                                              _c("td", [
+                                                _vm._v(
+                                                  _vm._s(trx.nmBarangTmp) + " "
+                                                )
+                                              ]),
+                                              _vm._v(" "),
+                                              _c("td", [
+                                                _vm._v(_vm._s(trx.qtyTmp))
+                                              ]),
+                                              _vm._v(" "),
+                                              _c("td", [
+                                                _vm._v(
+                                                  _vm._s(
+                                                    _vm._f("currency")(
+                                                      trx.hrgJualTmp
+                                                    )
+                                                  )
+                                                )
+                                              ]),
+                                              _vm._v(" "),
+                                              _c("td", [
+                                                _vm._v(
+                                                  _vm._s(
+                                                    _vm._f("currency")(
+                                                      trx.totalTmp
+                                                    )
+                                                  )
+                                                )
+                                              ])
+                                            ])
+                                          }),
+                                          0
+                                        ),
+                                        _vm._v(" "),
+                                        _c("tr", [
+                                          _c(
+                                            "th",
+                                            { attrs: { colspan: "3" } },
+                                            [_vm._v("subTotal :")]
+                                          ),
+                                          _vm._v(" "),
+                                          _c("th", [
+                                            _vm._v(
+                                              _vm._s(
+                                                _vm._f("currency")(_vm.subtotal)
+                                              )
+                                            )
+                                          ])
+                                        ]),
+                                        _vm._v(" "),
+                                        _c("tr", [
+                                          _c(
+                                            "th",
+                                            { attrs: { colspan: "3" } },
+                                            [
+                                              _vm._v(
+                                                "Tax & Service : " +
+                                                  _vm._s(_vm.pajak) +
+                                                  " %"
+                                              )
+                                            ]
+                                          ),
+                                          _vm._v(" "),
+                                          _c("th", [
+                                            _vm._v(
+                                              _vm._s(
+                                                _vm._f("currency")(
+                                                  Math.floor(
+                                                    (_vm.subtotal * _vm.pajak) /
+                                                      100
+                                                  )
+                                                )
+                                              )
+                                            )
+                                          ])
+                                        ]),
+                                        _vm._v(" "),
+                                        _c("tr", [
+                                          _c(
+                                            "th",
+                                            { attrs: { colspan: "3" } },
+                                            [
+                                              _vm._v(
+                                                "Discount : " +
+                                                  _vm._s(_vm.diskon) +
+                                                  " %"
+                                              )
+                                            ]
+                                          ),
+                                          _vm._v(" "),
+                                          _c("th", [
+                                            _vm._v(
+                                              _vm._s(
+                                                _vm._f("currency")(
+                                                  Math.floor(
+                                                    (_vm.subtotaltp *
+                                                      _vm.diskon) /
+                                                      100
+                                                  )
+                                                )
+                                              )
+                                            )
+                                          ])
+                                        ]),
+                                        _vm._v(" "),
+                                        _c("tr", [
+                                          _c(
+                                            "th",
+                                            { attrs: { colspan: "3" } },
+                                            [_vm._v("subTotal :")]
+                                          ),
+                                          _vm._v(" "),
+                                          _c("th", [
+                                            _vm._v(
+                                              _vm._s(
+                                                _vm._f("currency")(
+                                                  Math.floor(
+                                                    (_vm.subtotal * _vm.pajak) /
+                                                      100 +
+                                                      _vm.subtotal -
+                                                      (_vm.subtotaltp *
+                                                        _vm.diskon) /
+                                                        100
+                                                  ) || 0
+                                                )
+                                              )
+                                            )
+                                          ])
+                                        ]),
+                                        _vm._v(" "),
+                                        _vm.pembayaran === "1"
+                                          ? _c("tr")
+                                          : _vm.pembayaran === "2"
+                                          ? _c("tr", [
+                                              _c(
+                                                "th",
+                                                { attrs: { colspan: "3" } },
+                                                [
+                                                  _vm._v(
+                                                    "Card Charge : " +
+                                                      _vm._s(_vm.taxDebit) +
+                                                      " %"
+                                                  )
+                                                ]
+                                              ),
+                                              _vm._v(" "),
+                                              _c("th", [
+                                                _vm._v(
+                                                  _vm._s(
+                                                    _vm._f("currency")(
+                                                      (Math.floor(
+                                                        (_vm.subtotal *
+                                                          _vm.pajak) /
+                                                          100 +
+                                                          _vm.subtotal -
+                                                          (_vm.subtotaltp *
+                                                            _vm.diskon) /
+                                                            100
+                                                      ) *
+                                                        _vm.taxDebit) /
+                                                        100
+                                                    )
+                                                  )
+                                                )
+                                              ])
+                                            ])
+                                          : _vm._e(),
+                                        _vm._v(" "),
+                                        _c("tr", [
+                                          _c(
+                                            "th",
+                                            { attrs: { colspan: "3" } },
+                                            [_vm._v("Payment :")]
+                                          ),
+                                          _vm._v(" "),
+                                          _c("th", [
+                                            _vm._v(
+                                              _vm._s(
+                                                _vm._f("currency")(
+                                                  Math.floor(
+                                                    (_vm.subtotal * _vm.pajak) /
+                                                      100 +
+                                                      _vm.subtotal -
+                                                      (_vm.subtotaltp *
+                                                        _vm.diskon) /
+                                                        100 +
+                                                      (((_vm.subtotal *
+                                                        _vm.pajak) /
+                                                        100 +
+                                                        _vm.subtotal -
+                                                        (_vm.subtotaltp *
+                                                          _vm.diskon) /
+                                                          100) *
+                                                        _vm.taxDebit) /
+                                                        100
+                                                  ) || 0
+                                                )
+                                              )
+                                            )
+                                          ])
+                                        ]),
+                                        _vm._v(" "),
+                                        _vm.pembayaran === "1"
+                                          ? _c("tr", [
+                                              _c(
+                                                "th",
+                                                { attrs: { colspan: "3" } },
+                                                [_vm._v("Kembalian :")]
+                                              ),
+                                              _vm._v(" "),
+                                              _c("th", [
+                                                _vm._v(
+                                                  _vm._s(
+                                                    _vm._f("currency")(
+                                                      Math.floor(
+                                                        _vm.totalBayar -
+                                                          ((_vm.subtotal *
+                                                            _vm.pajak) /
+                                                            100 +
+                                                            _vm.subtotal -
+                                                            (_vm.subtotaltp *
+                                                              _vm.diskon) /
+                                                              100)
+                                                      ) || 0
+                                                    )
+                                                  )
+                                                )
+                                              ])
+                                            ])
+                                          : _vm.pembayaran === "2"
+                                          ? _c("tr")
+                                          : _vm._e()
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "p",
+                                      { staticClass: "text-bold text-center" },
+                                      [
+                                        _vm._v(
+                                          "\n                                Terima Kasih "
+                                        ),
+                                        _c("br"),
+                                        _vm._v(
+                                          "\n                                Belanja Anda Hal Baik Bagi Dunia"
+                                        ),
+                                        _c("br"),
+                                        _vm._v(
+                                          "\n                                Tidak enak Kasi Tau Kami, ENAK kasi tau temanmu"
+                                        ),
+                                        _c("br")
+                                      ]
+                                    )
+                                  ]
+                                )
+                              ])
+                            ])
+                          ])
                         ])
                       ])
                     ])
@@ -69979,24 +71218,20 @@ var render = function() {
                                           {
                                             name: "model",
                                             rawName: "v-model",
-                                            value: _vm.post.paxMeja,
-                                            expression: "post.paxMeja"
+                                            value: _vm.paxMeja,
+                                            expression: "paxMeja"
                                           }
                                         ],
                                         staticClass: "form-control",
                                         attrs: { type: "text" },
-                                        domProps: { value: _vm.post.paxMeja },
+                                        domProps: { value: _vm.paxMeja },
                                         on: {
                                           keypress: _vm.onlyNumber,
                                           input: function($event) {
                                             if ($event.target.composing) {
                                               return
                                             }
-                                            _vm.$set(
-                                              _vm.post,
-                                              "paxMeja",
-                                              $event.target.value
-                                            )
+                                            _vm.paxMeja = $event.target.value
                                           }
                                         }
                                       })
