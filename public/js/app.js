@@ -13185,6 +13185,27 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -68640,11 +68661,75 @@ var render = function() {
                           ),
                           _vm._v(" "),
                           _c("h4", { staticClass: "modal-title" }, [
-                            _vm._v("Split Payment")
+                            _vm._v("Split Bill")
                           ])
                         ]),
                         _vm._v(" "),
                         _c("div", { staticClass: "modal-body" }, [
+                          _c(
+                            "table",
+                            { staticClass: "table table-hover table-bordered" },
+                            [
+                              _c("thead", [
+                                _c("tr", [
+                                  _c("th", [_vm._v("Nama ")]),
+                                  _vm._v(" "),
+                                  _c("th", [_vm._v("Qty")]),
+                                  _vm._v(" "),
+                                  _c("th", [_vm._v("Harga")]),
+                                  _vm._v(" "),
+                                  _c("th", [_vm._v("Total")]),
+                                  _vm._v(" "),
+                                  _c("th", [_vm._v("AKSI")])
+                                ])
+                              ]),
+                              _vm._v(" "),
+                              _c(
+                                "tbody",
+                                _vm._l(_vm.trxs, function(trx) {
+                                  return _c("tr", { key: trx.id }, [
+                                    _c("td", [
+                                      _vm._v(_vm._s(trx.nmBarangTmp) + " ")
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("td", [_vm._v(_vm._s(trx.qtyTmp))]),
+                                    _vm._v(" "),
+                                    _c("td", [
+                                      _vm._v(
+                                        _vm._s(
+                                          _vm._f("currency")(trx.hrgJualTmp)
+                                        )
+                                      )
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("td", [
+                                      _vm._v(
+                                        _vm._s(_vm._f("currency")(trx.totalTmp))
+                                      )
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("td", { staticClass: "text-center" }, [
+                                      _c(
+                                        "button",
+                                        {
+                                          staticClass: "btn btn-sm btn-danger",
+                                          on: {
+                                            click: function($event) {
+                                              $event.preventDefault()
+                                              return _vm.PostDeleteTrx(trx.id)
+                                            }
+                                          }
+                                        },
+                                        [_vm._v("Tambah")]
+                                      )
+                                    ])
+                                  ])
+                                }),
+                                0
+                              )
+                            ]
+                          ),
+                          _vm._v(" "),
                           _c(
                             "form",
                             {

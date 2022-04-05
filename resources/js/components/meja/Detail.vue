@@ -339,9 +339,31 @@
                 <button type="button" class="close" @click="showModalSplit=false">
                   <span aria-hidden="true">&times;</span>
                 </button>
-                <h4 class="modal-title">Split Payment</h4>
+                <h4 class="modal-title">Split Bill</h4>
               </div>
               <div class="modal-body">
+                <table class="table table-hover table-bordered">
+                 <thead>
+                                <tr>
+                                    <th>Nama </th>
+                                    <th>Qty</th>
+                                    <th>Harga</th>
+                                    <th>Total</th>
+                                    <th>AKSI</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr v-for="trx in trxs" :key="trx.id">
+                                    <td>{{ trx.nmBarangTmp }} </td>
+                                    <td>{{ trx.qtyTmp}}</td>
+                                    <td>{{ trx.hrgJualTmp | currency }}</td>
+                                    <td>{{ trx.totalTmp | currency }}</td>
+                                    <td class="text-center">
+                                        <button @click.prevent="PostDeleteTrx(trx.id)" class="btn btn-sm btn-danger">Tambah</button>
+                                    </td>
+                                </tr>
+                                </tbody>
+                </table>               
                 <form  @submit.prevent="PostTransaksi" >
                   <input type="hidden" class="form-control" v-model="tglNota" >
                 <input type="hidden" class="form-control" v-model="pelanggan" placeholder="Customer">
@@ -354,7 +376,6 @@
                 <p class="text-muted text-center">
                 <input type="hidden" class="form-control" :value="((subtotal * pajak / 100 + subtotal) - (subtotaltp * diskon / 100))  || 0 " :name="totalTransaksiBayar"  >
                 <h3 class="profile-username ">Total {{ Math.floor(((subtotal * pajak / 100 + subtotal) - (subtotaltp * diskon / 100)) + ((subtotal * pajak / 100 + subtotal) - (subtotaltp * diskon / 100)) * taxDebit / 100)  || 0 | currency }}</h3>
-
 
                 <div class="row input-group">
                 <div class="col-xs-4">
