@@ -46,6 +46,13 @@
      display: table-cell;
      vertical-align: middle;
      }
+     .modal-dialog{
+    overflow-y: initial !important
+    }
+    .modal-body{
+        height: 80vh;
+        overflow-y: auto;
+    }
   </style>
 
   </head>

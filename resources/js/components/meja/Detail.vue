@@ -130,29 +130,14 @@
 
         <!-- /.col -->
         <div class="col-md-9">
-          <div class="nav-tabs-custom">
-            <ul class="nav nav-tabs">
-              <li class="active"><a href="#activity" data-toggle="tab">Activity</a></li>
-              <li><a href="#timeline" data-toggle="tab">Timeline</a></li>
-              <li><a href="#settings" data-toggle="tab">Settings</a></li>
-            </ul>
-            <div class="tab-content">
-              <div class="active tab-pane" id="activity">
-
-                <!-- Post -->
-                
                 <a href="#"  @click="showModalMenu = true" class="btn btn-md btn-success"><b>Add Menu</b></a>
-                
                 <a href="#"  @click="showModalMove = true" class="btn btn-md btn-success"><b>Pindah Meja</b></a>
-                
-                
                 <span v-if="adminuser === 'Admin'">
                   <span v-if=" orders.length == 0 && orders1.length == 0"><a href="#"  class="btn btn-md btn-success disabled" role="button" aria-disabled="true">Print Order</a></span>
                   <span v-else><a href="#"  @click="printOrder(id= post.id)" class="btn btn-md btn-success" >Print Order</a></span>
                 </span>
                 <router-link :to="{ name: 'meja' }" class="btn btn-md btn-success">KEMBALI</router-link>
                 <!-- /.post -->
-
                             <table class="table table-hover table-bordered">
                                 <thead>
                                 <tr>
@@ -175,27 +160,6 @@
                                 </tr>
                                 </tbody>
                             </table>
-
-              </div>
-              <!-- /.tab-pane -->
-              <div class="tab-pane" id="timeline">
-                <!-- The timeline -->
-                isi timeline
-
-              
-
-              </div>
-              <!-- /.tab-pane -->
-
-              <div class="tab-pane" id="settings">
-
-                
-              </div>
-              <!-- /.tab-pane -->
-            </div>
-            <!-- /.tab-content -->
-          </div>
-          <!-- /.nav-tabs-custom -->
         </div>
         <!-- /.col -->
       </div>
@@ -238,7 +202,7 @@
                   </form>
                 </div>
                 <div v-else>
-                  no posts
+                  no Selected
                 </div>
                 
 
@@ -299,8 +263,7 @@
                       <input type="hidden" class="form-control" v-model="post2.nmMenu">
                     </div>
                     <div class="form-group">
-                      <textarea class="form-control" v-model="note" rows="2"
-                                          placeholder="Note"></textarea>
+                      <textarea class="form-control" v-model="note" rows="2" placeholder="Note"></textarea>
                     </div>
                     <div class="form-group">
                       <input type="number" class="form-control" v-model="post2.hargaMenu" placeholder="Harga" @keypress="onlyNumber" required>
@@ -346,18 +309,18 @@
                  <thead>
                                 <tr>
                                     <th>Nama </th>
-                                    <th>Qty</th>
                                     <th>Harga</th>
+                                    <th>Qty</th>
                                     <th>Total</th>
                                     <th>AKSI</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr v-for="trx in trxs" :key="trx.id">
+                                <tr v-for="(trx, index) in trxs" :key="trx.index">
                                     <td>{{ trx.nmBarangTmp }} </td>
-                                    <td>{{ trx.qtyTmp}}</td>
                                     <td>{{ trx.hrgJualTmp | currency }}</td>
-                                    <td>{{ trx.totalTmp | currency }}</td>
+                                    <td><input type="text" v-model="qtySplit[index]" /></td>
+                                    <td>{{ trx.hrgJualTmp * qtySplit[index] | currency }}</td>
                                     <td class="text-center">
                                         <button @click.prevent="PostDeleteTrx(trx.id)" class="btn btn-sm btn-danger">Tambah</button>
                                     </td>
@@ -370,13 +333,10 @@
                 <input type="hidden" class="form-control" v-model="noNota" placeholder="No nota">
                 <input type="hidden" class="form-control" v-model="subtotal">
                 <input type="hidden" class="form-control" v-model="post.waiterMeja">
-
                 <input type="hidden" class="form-control" v-model="subtotaltp">
-
                 <p class="text-muted text-center">
                 <input type="hidden" class="form-control" :value="((subtotal * pajak / 100 + subtotal) - (subtotaltp * diskon / 100))  || 0 " :name="totalTransaksiBayar"  >
                 <h3 class="profile-username ">Total {{ Math.floor(((subtotal * pajak / 100 + subtotal) - (subtotaltp * diskon / 100)) + ((subtotal * pajak / 100 + subtotal) - (subtotaltp * diskon / 100)) * taxDebit / 100)  || 0 | currency }}</h3>
-
                 <div class="row input-group">
                 <div class="col-xs-4">
                   <span class="input-group-addon">Tax in %</span>
@@ -854,7 +814,7 @@
                 menus: {},
                 menu:'',
                 menuss: [],
-                trxs: {},
+                trxs: [],
                 mejaKosong: {},
                 validation: [],
                 showModalMove: false,
@@ -893,7 +853,7 @@
                 adminuser: '',
                 nmMenu1: '',
                 kdMenu1: '',
-             
+                qtySplit: [1],
                 printMe: '',
                 //waitername : this.waiter.name,
                 //optionLabel: users.nmBarang,
@@ -954,6 +914,13 @@
                 }
             },
           onlyNumber ($event) {
+                //console.log($event.keyCode); //keyCodes value
+                let keyCode = ($event.keyCode ? $event.keyCode : $event.which);
+                if ((keyCode < 48 || keyCode > 57) && keyCode !== 46) { // 46 is dot
+                    $event.preventDefault();
+                }   
+            },
+            qtyOnsplit () {
                 //console.log($event.keyCode); //keyCodes value
                 let keyCode = ($event.keyCode ? $event.keyCode : $event.which);
                 if ((keyCode < 48 || keyCode > 57) && keyCode !== 46) { // 46 is dot

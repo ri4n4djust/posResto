@@ -13166,46 +13166,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -13231,7 +13191,7 @@ __webpack_require__.r(__webpack_exports__);
       menus: {},
       menu: '',
       menuss: [],
-      trxs: {},
+      trxs: [],
       mejaKosong: {},
       validation: [],
       showModalMove: false,
@@ -13270,6 +13230,7 @@ __webpack_require__.r(__webpack_exports__);
       adminuser: '',
       nmMenu1: '',
       kdMenu1: '',
+      qtySplit: [1],
       printMe: '',
       //waitername : this.waiter.name,
       //optionLabel: users.nmBarang,
@@ -13336,6 +13297,15 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     onlyNumber: function onlyNumber($event) {
+      //console.log($event.keyCode); //keyCodes value
+      var keyCode = $event.keyCode ? $event.keyCode : $event.which;
+
+      if ((keyCode < 48 || keyCode > 57) && keyCode !== 46) {
+        // 46 is dot
+        $event.preventDefault();
+      }
+    },
+    qtyOnsplit: function qtyOnsplit() {
       //console.log($event.keyCode); //keyCodes value
       var keyCode = $event.keyCode ? $event.keyCode : $event.which;
 
@@ -67862,156 +67832,124 @@ var render = function() {
             ])
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "col-md-9" }, [
-            _c("div", { staticClass: "nav-tabs-custom" }, [
-              _vm._m(3),
+          _c(
+            "div",
+            { staticClass: "col-md-9" },
+            [
+              _c(
+                "a",
+                {
+                  staticClass: "btn btn-md btn-success",
+                  attrs: { href: "#" },
+                  on: {
+                    click: function($event) {
+                      _vm.showModalMenu = true
+                    }
+                  }
+                },
+                [_c("b", [_vm._v("Add Menu")])]
+              ),
               _vm._v(" "),
-              _c("div", { staticClass: "tab-content" }, [
-                _c(
-                  "div",
-                  { staticClass: "active tab-pane", attrs: { id: "activity" } },
-                  [
-                    _c(
-                      "a",
-                      {
-                        staticClass: "btn btn-md btn-success",
-                        attrs: { href: "#" },
-                        on: {
-                          click: function($event) {
-                            _vm.showModalMenu = true
-                          }
-                        }
-                      },
-                      [_c("b", [_vm._v("Add Menu")])]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "a",
-                      {
-                        staticClass: "btn btn-md btn-success",
-                        attrs: { href: "#" },
-                        on: {
-                          click: function($event) {
-                            _vm.showModalMove = true
-                          }
-                        }
-                      },
-                      [_c("b", [_vm._v("Pindah Meja")])]
-                    ),
-                    _vm._v(" "),
-                    _vm.adminuser === "Admin"
+              _c(
+                "a",
+                {
+                  staticClass: "btn btn-md btn-success",
+                  attrs: { href: "#" },
+                  on: {
+                    click: function($event) {
+                      _vm.showModalMove = true
+                    }
+                  }
+                },
+                [_c("b", [_vm._v("Pindah Meja")])]
+              ),
+              _vm._v(" "),
+              _vm.adminuser === "Admin"
+                ? _c("span", [
+                    _vm.orders.length == 0 && _vm.orders1.length == 0
                       ? _c("span", [
-                          _vm.orders.length == 0 && _vm.orders1.length == 0
-                            ? _c("span", [
-                                _c(
-                                  "a",
-                                  {
-                                    staticClass:
-                                      "btn btn-md btn-success disabled",
-                                    attrs: {
-                                      href: "#",
-                                      role: "button",
-                                      "aria-disabled": "true"
-                                    }
-                                  },
-                                  [_vm._v("Print Order")]
-                                )
-                              ])
-                            : _c("span", [
-                                _c(
-                                  "a",
-                                  {
-                                    staticClass: "btn btn-md btn-success",
-                                    attrs: { href: "#" },
-                                    on: {
-                                      click: function($event) {
-                                        return _vm.printOrder(
-                                          (_vm.id = _vm.post.id)
-                                        )
-                                      }
-                                    }
-                                  },
-                                  [_vm._v("Print Order")]
-                                )
-                              ])
+                          _c(
+                            "a",
+                            {
+                              staticClass: "btn btn-md btn-success disabled",
+                              attrs: {
+                                href: "#",
+                                role: "button",
+                                "aria-disabled": "true"
+                              }
+                            },
+                            [_vm._v("Print Order")]
+                          )
                         ])
-                      : _vm._e(),
-                    _vm._v(" "),
-                    _c(
-                      "router-link",
-                      {
-                        staticClass: "btn btn-md btn-success",
-                        attrs: { to: { name: "meja" } }
-                      },
-                      [_vm._v("KEMBALI")]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "table",
-                      { staticClass: "table table-hover table-bordered" },
-                      [
-                        _vm._m(4),
-                        _vm._v(" "),
-                        _c(
-                          "tbody",
-                          _vm._l(_vm.trxs, function(trx) {
-                            return _c("tr", { key: trx.id }, [
-                              _c("td", [_vm._v(_vm._s(trx.nmBarangTmp) + " ")]),
-                              _vm._v(" "),
-                              _c("td", [_vm._v(_vm._s(trx.qtyTmp))]),
-                              _vm._v(" "),
-                              _c("td", [
-                                _vm._v(
-                                  _vm._s(_vm._f("currency")(trx.hrgJualTmp))
-                                )
-                              ]),
-                              _vm._v(" "),
-                              _c("td", [
-                                _vm._v(_vm._s(_vm._f("currency")(trx.totalTmp)))
-                              ]),
-                              _vm._v(" "),
-                              _c("td", { staticClass: "text-center" }, [
-                                _c(
-                                  "button",
-                                  {
-                                    staticClass: "btn btn-sm btn-danger",
-                                    on: {
-                                      click: function($event) {
-                                        $event.preventDefault()
-                                        return _vm.PostDeleteTrx(trx.id)
-                                      }
-                                    }
-                                  },
-                                  [_vm._v("HAPUS")]
-                                )
-                              ])
-                            ])
-                          }),
-                          0
-                        )
-                      ]
-                    )
-                  ],
-                  1
-                ),
+                      : _c("span", [
+                          _c(
+                            "a",
+                            {
+                              staticClass: "btn btn-md btn-success",
+                              attrs: { href: "#" },
+                              on: {
+                                click: function($event) {
+                                  return _vm.printOrder((_vm.id = _vm.post.id))
+                                }
+                              }
+                            },
+                            [_vm._v("Print Order")]
+                          )
+                        ])
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
+              _c(
+                "router-link",
+                {
+                  staticClass: "btn btn-md btn-success",
+                  attrs: { to: { name: "meja" } }
+                },
+                [_vm._v("KEMBALI")]
+              ),
+              _vm._v(" "),
+              _c("table", { staticClass: "table table-hover table-bordered" }, [
+                _vm._m(3),
                 _vm._v(" "),
                 _c(
-                  "div",
-                  { staticClass: "tab-pane", attrs: { id: "timeline" } },
-                  [
-                    _vm._v(
-                      "\n                isi timeline\n\n              \n\n              "
-                    )
-                  ]
-                ),
-                _vm._v(" "),
-                _c("div", {
-                  staticClass: "tab-pane",
-                  attrs: { id: "settings" }
-                })
+                  "tbody",
+                  _vm._l(_vm.trxs, function(trx) {
+                    return _c("tr", { key: trx.id }, [
+                      _c("td", [_vm._v(_vm._s(trx.nmBarangTmp) + " ")]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(_vm._s(trx.qtyTmp))]),
+                      _vm._v(" "),
+                      _c("td", [
+                        _vm._v(_vm._s(_vm._f("currency")(trx.hrgJualTmp)))
+                      ]),
+                      _vm._v(" "),
+                      _c("td", [
+                        _vm._v(_vm._s(_vm._f("currency")(trx.totalTmp)))
+                      ]),
+                      _vm._v(" "),
+                      _c("td", { staticClass: "text-center" }, [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-sm btn-danger",
+                            on: {
+                              click: function($event) {
+                                $event.preventDefault()
+                                return _vm.PostDeleteTrx(trx.id)
+                              }
+                            }
+                          },
+                          [_vm._v("HAPUS")]
+                        )
+                      ])
+                    ])
+                  }),
+                  0
+                )
               ])
-            ])
-          ])
+            ],
+            1
+          )
         ])
       ]),
       _vm._v(" "),
@@ -68196,7 +68134,7 @@ var render = function() {
                               ])
                             : _c("div", [
                                 _vm._v(
-                                  "\n                  no posts\n                "
+                                  "\n                  no Selected\n                "
                                 )
                               ])
                         ])
@@ -68674,9 +68612,9 @@ var render = function() {
                                 _c("tr", [
                                   _c("th", [_vm._v("Nama ")]),
                                   _vm._v(" "),
-                                  _c("th", [_vm._v("Qty")]),
-                                  _vm._v(" "),
                                   _c("th", [_vm._v("Harga")]),
+                                  _vm._v(" "),
+                                  _c("th", [_vm._v("Qty")]),
                                   _vm._v(" "),
                                   _c("th", [_vm._v("Total")]),
                                   _vm._v(" "),
@@ -68686,13 +68624,11 @@ var render = function() {
                               _vm._v(" "),
                               _c(
                                 "tbody",
-                                _vm._l(_vm.trxs, function(trx) {
-                                  return _c("tr", { key: trx.id }, [
+                                _vm._l(_vm.trxs, function(trx, index) {
+                                  return _c("tr", { key: trx.index }, [
                                     _c("td", [
                                       _vm._v(_vm._s(trx.nmBarangTmp) + " ")
                                     ]),
-                                    _vm._v(" "),
-                                    _c("td", [_vm._v(_vm._s(trx.qtyTmp))]),
                                     _vm._v(" "),
                                     _c("td", [
                                       _vm._v(
@@ -68703,8 +68639,41 @@ var render = function() {
                                     ]),
                                     _vm._v(" "),
                                     _c("td", [
+                                      _c("input", {
+                                        directives: [
+                                          {
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value: _vm.qtySplit[index],
+                                            expression: "qtySplit[index]"
+                                          }
+                                        ],
+                                        attrs: { type: "text" },
+                                        domProps: {
+                                          value: _vm.qtySplit[index]
+                                        },
+                                        on: {
+                                          input: function($event) {
+                                            if ($event.target.composing) {
+                                              return
+                                            }
+                                            _vm.$set(
+                                              _vm.qtySplit,
+                                              index,
+                                              $event.target.value
+                                            )
+                                          }
+                                        }
+                                      })
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("td", [
                                       _vm._v(
-                                        _vm._s(_vm._f("currency")(trx.totalTmp))
+                                        _vm._s(
+                                          _vm._f("currency")(
+                                            trx.hrgJualTmp * _vm.qtySplit[index]
+                                          )
+                                        )
                                       )
                                     ]),
                                     _vm._v(" "),
@@ -70793,30 +70762,6 @@ var staticRenderFns = [
         _c("th", [_vm._v("Qty")]),
         _vm._v(" "),
         _c("th", [_vm._v("Jam")])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("ul", { staticClass: "nav nav-tabs" }, [
-      _c("li", { staticClass: "active" }, [
-        _c("a", { attrs: { href: "#activity", "data-toggle": "tab" } }, [
-          _vm._v("Activity")
-        ])
-      ]),
-      _vm._v(" "),
-      _c("li", [
-        _c("a", { attrs: { href: "#timeline", "data-toggle": "tab" } }, [
-          _vm._v("Timeline")
-        ])
-      ]),
-      _vm._v(" "),
-      _c("li", [
-        _c("a", { attrs: { href: "#settings", "data-toggle": "tab" } }, [
-          _vm._v("Settings")
-        ])
       ])
     ])
   },
