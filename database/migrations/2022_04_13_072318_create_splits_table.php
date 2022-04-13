@@ -13,8 +13,16 @@ class CreateSplitsTable extends Migration
      */
     public function up()
     {
-        Schema::create('splits', function (Blueprint $table) {
+        Schema::create('splitPayment', function (Blueprint $table) {
             $table->id();
+            $table->string('noNota');
+            $table->string('noMeja');
+            $table->string('groupNota');
+            $table->string('kdBarang');
+            $table->string('nmBarang');
+            $table->string('hrgBarang');
+            $table->string('qtyBarang');
+            $table->string('subTotal');
             $table->timestamps();
         });
     }

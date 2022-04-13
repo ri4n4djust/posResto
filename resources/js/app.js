@@ -18,7 +18,9 @@ window.Vue = require('vue');
 
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
+import VueNumericInput from 'vue-numeric-input';
 
+Vue.use(VueNumericInput);
 
 import VueRouter from 'vue-router';
 Vue.use(VueRouter);

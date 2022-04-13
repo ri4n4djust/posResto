@@ -60,7 +60,7 @@
                 <a href="#" @click="showModalBayar = true" class="btn btn-primary btn-block"><b>Payment</b></a>
                 </p>
                 <p class="text-muted text-center">
-                <a href="#" @click="showModalSplit = true" class="btn btn-primary btn-block"><b>Split Payment</b></a>
+                <a href="#" @click="opensplit(trxs)" class="btn btn-primary btn-block"><b>Split Payment</b></a>
                 </p>
 
                   
@@ -316,19 +316,38 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr v-for="(trx, index) in trxs" :key="trx.index">
-                                    <td>{{ trx.nmBarangTmp }} </td>
-                                    <td>{{ trx.hrgJualTmp | currency }}</td>
-                                    <td><input type="text" v-model="qtySplit[index]" /></td>
-                                    <td>{{ trx.hrgJualTmp * qtySplit[index] | currency }}</td>
-                                    <td class="text-center">
-                                        <button @click.prevent="PostDeleteTrx(trx.id)" class="btn btn-sm btn-danger">Tambah</button>
+                                <tr v-for="(trx, index) in crt" :key="trx.index" >
+                                    <td v-if="trx.qtyTmp > 0">{{ trx.nmBarangTmp }} </td>
+                                    <td v-if="trx.qtyTmp > 0">{{ trx.hrgJualTmp | currency }}</td>
+                                    <td v-if="trx.qtyTmp > 0">
+                                        <vue-numeric-input v-model="qtySplit[index]" :min="0" :max="trx.qtyTmp"></vue-numeric-input>
+                                    </td>
+                                    <td v-if="trx.qtyTmp > 0">{{ trx.hrgJualTmp * qtySplit[index] | currency }}</td>
+                                    <td v-if="trx.qtyTmp > 0" class="text-center">
+                                        <button @click.prevent="updateItem(barcode = trx.id, index, trx)" class="btn btn-sm btn-success">Tambah</button>
                                     </td>
                                 </tr>
                                 </tbody>
+                </table>
+                <table class="table table-hover table-bordered">
+                 <thead>
+                                <tr>
+                                    <th>Nama </th>
+                                    <th>Harga</th>
+                                    <th>Qty</th>
+                                    <th>Total</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr v-for="trx in splitNota" :key="trx.id">                                    <td>{{ trx.nmBarangTmp }} </td>
+                                    <td>{{ trx.hrgJualTmp | currency }}</td>
+                                    <td>{{ trx.qtyTmp }}</td>
+                                    <td>{{ trx.hrgJualTmp * trx.qtyTmp | currency }}</td>
+                                </tr>
+                  </tbody>
                 </table>               
-                <form  @submit.prevent="PostTransaksi" >
-                  <input type="hidden" class="form-control" v-model="tglNota" >
+                <form  @submit.prevent="PostSplit" >
+                <input type="hidden" class="form-control" v-model="tglNota" >
                 <input type="hidden" class="form-control" v-model="pelanggan" placeholder="Customer">
                 <input type="hidden" class="form-control" v-model="noNota" placeholder="No nota">
                 <input type="hidden" class="form-control" v-model="subtotal">
@@ -804,7 +823,7 @@
                 post: {},
                 waiters: {},
                 statusMeja:{},
-                orders:{},
+                orders:[],
                 orders1:{},
                 move1: null,
                 post1: null,
@@ -853,8 +872,10 @@
                 adminuser: '',
                 nmMenu1: '',
                 kdMenu1: '',
-                qtySplit: [1],
+                qtySplit: [0],
                 printMe: '',
+                crt: [],
+                splitNota: [],
                 //waitername : this.waiter.name,
                 //optionLabel: users.nmBarang,
                 tglNota: new Date().toJSON().slice(0,10).replace(/-/g,'/'),
@@ -893,6 +914,70 @@
         props: ['optionLabel', 'value'],  
               
         methods: {
+          opensplit(trxs){
+            this.showModalSplit = true;
+            // let cartItems = this.orders;
+            localStorage.setItem('cartItems',JSON.stringify(trxs));
+            this.getCart();
+          },
+          getCart: function() {
+                 if (this.crt === null){
+                      this.crt = localStorage.setItem('cartItems', '[]');
+                 }else{
+                      this.crt = JSON.parse(localStorage.getItem('cartItems'))
+                      this.isicart = JSON.parse(localStorage.getItem('cartItems')).length;
+                 }
+            },
+          getSplitNota: function() {
+                 if (this.splitNota === null){
+                      this.splitNota = localStorage.setItem('notaSplit', '[]');
+                 }else{
+                      this.splitNota = JSON.parse(localStorage.getItem('notaSplit'))
+                      // this.isicart = JSON.parse(localStorage.getItem('notaSplit')).length;
+                 }
+            },
+          updateItem(barcode, index, trx) {
+                const cartItems = JSON.parse(localStorage.getItem('cartItems'));
+                const objIndex = cartItems.findIndex((e => e.id === barcode));
+                const newQty = parseInt(this.qtySplit[index]) ;
+                cartItems[objIndex].qtyTmp = cartItems[objIndex].qtyTmp - parseInt(newQty);
+                localStorage.setItem('cartItems',JSON.stringify(cartItems));
+                //alert('Quantity Update')
+                this.getCart();
+                this.isicart = Object.keys(JSON.parse(localStorage.getItem('cartItems'))).length;
+
+                // notaSplit.push(trx);	
+                // localStorage.setItem('cartItems',JSON.stringify(cartItems));
+                // localStorage.setItem('notaSplit',JSON.stringify(trx));
+                  let notaSplit;
+                    if (localStorage.getItem('notaSplit')===null){
+                        notaSplit = [];
+                    }else{
+                        notaSplit = JSON.parse(localStorage.getItem('notaSplit'));
+                    }
+                        const oldItems = JSON.parse(localStorage.getItem('notaSplit')) || [];
+                        const existingItem = oldItems.find(({ id }) => id === trx.id);
+                        if (existingItem) {
+                            const objIndex = notaSplit.findIndex((e => e.id === trx.id));
+                            const oldQty = notaSplit[objIndex].qtyTmp;
+                            const newQty = parseInt(oldQty) + parseInt(this.qtySplit[index]) ;
+                            notaSplit[objIndex].qtyTmp = parseInt(newQty);
+                            localStorage.setItem('notaSplit',JSON.stringify(notaSplit));
+                            alert('Quantity Update')
+                            this.getCart();
+                            this.getSplitNota();
+                            this.isicart = Object.keys(JSON.parse(localStorage.getItem('notaSplit'))).length;
+                        }else{
+                        notaSplit.push(trx);
+                        const objIndex = notaSplit.findIndex((e => e.id === trx.id));
+                        notaSplit[objIndex].qtyTmp = parseInt(this.qtySplit[index]);	
+                        localStorage.setItem('notaSplit',JSON.stringify(notaSplit));
+                        this.getCart();
+                        this.getSplitNota();
+                        this.isicart = Object.keys(JSON.parse(localStorage.getItem('notaSplit'))).length;
+                        alert(trx.nmBarang + " berhasil disimpan")
+                        }
+            },
           select_menu(menu){
                 this.post2.id = menu.id
                 this.post2.nmMenu = menu.nmMenu
