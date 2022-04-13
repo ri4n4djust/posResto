@@ -13185,6 +13185,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -13251,6 +13263,7 @@ __webpack_require__.r(__webpack_exports__);
       kdMenu1: '',
       qtySplit: [0],
       printMe: '',
+      printMeSplit: '',
       crt: [],
       splitNota: [],
       //waitername : this.waiter.name,
@@ -13292,9 +13305,15 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     opensplit: function opensplit(trxs) {
       this.showModalSplit = true; // let cartItems = this.orders;
+      // localStorage.setItem('cartItems', '[]');
 
-      localStorage.setItem('cartItems', JSON.stringify(trxs));
-      this.getCart();
+      if (localStorage.getItem('cartItems') === null) {
+        localStorage.setItem('cartItems', JSON.stringify(trxs));
+        this.getCart(); // this.getSplitNota();
+      } else {
+        this.getCart();
+        this.getSplitNota();
+      }
     },
     getCart: function getCart() {
       if (this.crt === null) {
@@ -13366,7 +13385,7 @@ __webpack_require__.r(__webpack_exports__);
         this.getCart();
         this.getSplitNota();
         this.isicart = Object.keys(JSON.parse(localStorage.getItem('notaSplit'))).length;
-        alert(trx.nmBarang + " berhasil disimpan");
+        alert(trx.nmBarangTmp + " berhasil disimpan");
       }
     },
     select_menu: function select_menu(menu) {
@@ -13420,6 +13439,10 @@ __webpack_require__.r(__webpack_exports__);
     printBill: function printBill() {
       //alert('print bill');
       window.print(printMe); //this.showModalBayar = false
+    },
+    printBillSplit: function printBillSplit() {
+      //alert('print bill');
+      window.print(printMeSplit); //this.showModalBayar = false
     },
     printOrder: function printOrder(id) {
       var _this4 = this;
@@ -13646,6 +13669,7 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (response) {
         //this.$print(printMe);
         window.print(printMe);
+        localStorage.removeItem('cartItems');
         setTimeout(function () {
           window.location.href = '/meja';
         }, 13000);
@@ -13659,6 +13683,23 @@ __webpack_require__.r(__webpack_exports__);
       this.mytimer = setInterval(function () {
         _this18.ListOrder();
       }, 3000);
+    },
+    PostSplit: function PostSplit() {
+      // let uri = '/api/addSplit/store';
+      // this.axios.post(uri, 
+      // {
+      //     noNota: this.noNota,
+      //     noMeja: this.post.id,
+      //     pelanggan: this.pelanggan,
+      //     tglNota: this.tglNota,
+      //     taxNota: Math.floor(this.subtotal * this.pajak / 100),
+      // }).then((response) => {
+      //this.$print(printMe);
+      window.print(printMeSplit);
+      localStorage.removeItem('notaSplit'); // }).catch(error => {
+      //     alert('error! bro');
+      //     //console.log(error.response.message)
+      // });
     }
   },
   mounted: function mounted() {
@@ -13671,6 +13712,17 @@ __webpack_require__.r(__webpack_exports__);
   beforeDestroy: function beforeDestroy() {
     clearInterval(this.mytimer);
     console.log('detail bersih');
+  },
+  computed: {
+    totalItem: function totalItem() {
+      var sum = 0;
+
+      for (var i = 0; i < this.splitNota.length; i++) {
+        sum += parseFloat(this.splitNota[i].hrgJualTmp) * parseFloat(this.splitNota[i].qtyTmp);
+      }
+
+      return sum;
+    }
   }
 });
 
@@ -22703,7 +22755,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.autocomplete-box-li:hover {\r\n  background-color: #f2f2f2;\n}\n.autocomplete-box{\r\n  position: absolute;\r\n  z-index: 1;\n}\n#printMe { display: none;\n}\n@media print\r\n    {\n@page{\r\n        margin: 0;\n}\nbody * {\r\n        visibility: hidden;\n}\n#printMe, #printMe * {\r\n        visibility: visible;\r\n        font-size: 8pt;\n}\n#lastOrder, #lastOrder * {\r\n        visibility: visible;\n}\n#printMe {\r\n        position: absolute;\r\n        left: 0;\r\n        top: 0;\r\n        font-size: 8pt;\r\n        width: 100%;\r\n        height: 100%;\n}\n#lastOrder {\r\n        position: absolute;\r\n        left: 0;\r\n        top: 0;\r\n        font-size: 8pt;\r\n        width: 100%;\n}\n}\r\n    ", ""]);
+exports.push([module.i, "\n.autocomplete-box-li:hover {\r\n  background-color: #f2f2f2;\n}\n.autocomplete-box{\r\n  position: absolute;\r\n  z-index: 1;\n}\n#printMe { display: none;\n}\n#printMeSplit { display: none;\n}\n@media print\r\n    {\n@page{\r\n        margin: 0;\n}\nbody * {\r\n        visibility: hidden;\n}\n#printMe, #printMe * {\r\n        visibility: visible;\r\n        font-size: 8pt;\n}\n#printMeSplit, #printMeSplit * {\r\n        visibility: visible;\r\n        font-size: 8pt;\n}\n#lastOrder, #lastOrder * {\r\n        visibility: visible;\n}\n#printMe {\r\n        position: absolute;\r\n        left: 0;\r\n        top: 0;\r\n        font-size: 8pt;\r\n        width: 100%;\r\n        height: 100%;\n}\n#printMeSplit {\r\n        position: absolute;\r\n        left: 0;\r\n        top: 0;\r\n        font-size: 8pt;\r\n        width: 100%;\r\n        height: 100%;\n}\n#lastOrder {\r\n        position: absolute;\r\n        left: 0;\r\n        top: 0;\r\n        font-size: 8pt;\r\n        width: 100%;\n}\n}\r\n    ", ""]);
 
 // exports
 
@@ -68952,19 +69004,19 @@ var render = function() {
                                   {
                                     name: "model",
                                     rawName: "v-model",
-                                    value: _vm.subtotal,
-                                    expression: "subtotal"
+                                    value: _vm.totalItem,
+                                    expression: "totalItem"
                                   }
                                 ],
                                 staticClass: "form-control",
                                 attrs: { type: "hidden" },
-                                domProps: { value: _vm.subtotal },
+                                domProps: { value: _vm.totalItem },
                                 on: {
                                   input: function($event) {
                                     if ($event.target.composing) {
                                       return
                                     }
-                                    _vm.subtotal = $event.target.value
+                                    _vm.totalItem = $event.target.value
                                   }
                                 }
                               }),
@@ -69029,8 +69081,8 @@ var render = function() {
                                     },
                                     domProps: {
                                       value:
-                                        (_vm.subtotal * _vm.pajak) / 100 +
-                                          _vm.subtotal -
+                                        (_vm.totalItem * _vm.pajak) / 100 +
+                                          _vm.totalItem -
                                           (_vm.subtotaltp * _vm.diskon) / 100 ||
                                         0
                                     }
@@ -69043,12 +69095,13 @@ var render = function() {
                                     _vm._s(
                                       _vm._f("currency")(
                                         Math.floor(
-                                          (_vm.subtotal * _vm.pajak) / 100 +
-                                            _vm.subtotal -
+                                          (_vm.totalItem * _vm.pajak) / 100 +
+                                            _vm.totalItem -
                                             (_vm.subtotaltp * _vm.diskon) /
                                               100 +
-                                            (((_vm.subtotal * _vm.pajak) / 100 +
-                                              _vm.subtotal -
+                                            (((_vm.totalItem * _vm.pajak) /
+                                              100 +
+                                              _vm.totalItem -
                                               (_vm.subtotaltp * _vm.diskon) /
                                                 100) *
                                               _vm.taxDebit) /
@@ -69101,8 +69154,8 @@ var render = function() {
                                     },
                                     domProps: {
                                       value:
-                                        (_vm.subtotal * _vm.pajak) / 100 +
-                                        _vm.subtotal
+                                        (_vm.totalItem * _vm.pajak) / 100 +
+                                        _vm.totalItem
                                     }
                                   })
                                 ]),
@@ -69251,10 +69304,10 @@ var render = function() {
                                               _vm._f("currency")(
                                                 Math.floor(
                                                   _vm.totalBayar -
-                                                    ((_vm.subtotal *
+                                                    ((_vm.totalItem *
                                                       _vm.pajak) /
                                                       100 +
-                                                      _vm.subtotal -
+                                                      _vm.totalItem -
                                                       (_vm.subtotaltp *
                                                         _vm.diskon) /
                                                         100)
@@ -69277,23 +69330,6 @@ var render = function() {
                                             attrs: { type: "submit" }
                                           },
                                           [_vm._v("Bayar")]
-                                        ),
-                                        _vm._v(" "),
-                                        _c(
-                                          "a",
-                                          {
-                                            staticClass:
-                                              "btn btn-md btn-success",
-                                            attrs: { href: "#" },
-                                            on: {
-                                              click: function($event) {
-                                                return _vm.printBill(
-                                                  _vm.printMe
-                                                )
-                                              }
-                                            }
-                                          },
-                                          [_vm._v("Print Bill")]
                                         )
                                       ]
                                     )
@@ -69341,11 +69377,12 @@ var render = function() {
                                         },
                                         domProps: {
                                           value:
-                                            (((_vm.subtotal * _vm.pajak) / 100 +
+                                            (((_vm.totalItem * _vm.pajak) /
+                                              100 +
                                               _vm.subtotal -
-                                              (((_vm.subtotal * _vm.pajak) /
+                                              (((_vm.totalItem * _vm.pajak) /
                                                 100 +
-                                                _vm.subtotal) *
+                                                _vm.totalItem) *
                                                 _vm.diskon) /
                                                 100) *
                                               _vm.taxDebit) /
@@ -69447,8 +69484,8 @@ var render = function() {
                                             attrs: { href: "#" },
                                             on: {
                                               click: function($event) {
-                                                return _vm.printBill(
-                                                  _vm.printMe
+                                                return _vm.printBillsplit(
+                                                  _vm.printMeSplit
                                                 )
                                               }
                                             }
@@ -69468,7 +69505,7 @@ var render = function() {
                             ]
                           ),
                           _vm._v(" "),
-                          _c("div", { attrs: { id: "printMe" } }, [
+                          _c("div", { attrs: { id: "printMeSplit" } }, [
                             _c("section", { staticClass: "invoice" }, [
                               _c(
                                 "p",
@@ -69587,7 +69624,7 @@ var render = function() {
                                         _vm._v(" "),
                                         _c(
                                           "tbody",
-                                          _vm._l(_vm.trxs, function(trx) {
+                                          _vm._l(_vm.splitNota, function(trx) {
                                             return _c("tr", { key: trx.id }, [
                                               _c("td", [
                                                 _vm._v(
@@ -69633,7 +69670,9 @@ var render = function() {
                                           _c("th", [
                                             _vm._v(
                                               _vm._s(
-                                                _vm._f("currency")(_vm.subtotal)
+                                                _vm._f("currency")(
+                                                  _vm.totalItem
+                                                )
                                               )
                                             )
                                           ])
@@ -69657,7 +69696,8 @@ var render = function() {
                                               _vm._s(
                                                 _vm._f("currency")(
                                                   Math.floor(
-                                                    (_vm.subtotal * _vm.pajak) /
+                                                    (_vm.totalItem *
+                                                      _vm.pajak) /
                                                       100
                                                   )
                                                 )
@@ -69706,9 +69746,10 @@ var render = function() {
                                               _vm._s(
                                                 _vm._f("currency")(
                                                   Math.floor(
-                                                    (_vm.subtotal * _vm.pajak) /
+                                                    (_vm.totalItem *
+                                                      _vm.pajak) /
                                                       100 +
-                                                      _vm.subtotal -
+                                                      _vm.totalItem -
                                                       (_vm.subtotaltp *
                                                         _vm.diskon) /
                                                         100
@@ -69740,10 +69781,10 @@ var render = function() {
                                                   _vm._s(
                                                     _vm._f("currency")(
                                                       (Math.floor(
-                                                        (_vm.subtotal *
+                                                        (_vm.totalItem *
                                                           _vm.pajak) /
                                                           100 +
-                                                          _vm.subtotal -
+                                                          _vm.totalItem -
                                                           (_vm.subtotaltp *
                                                             _vm.diskon) /
                                                             100
@@ -69769,16 +69810,17 @@ var render = function() {
                                               _vm._s(
                                                 _vm._f("currency")(
                                                   Math.floor(
-                                                    (_vm.subtotal * _vm.pajak) /
+                                                    (_vm.totalItem *
+                                                      _vm.pajak) /
                                                       100 +
-                                                      _vm.subtotal -
+                                                      _vm.totalItem -
                                                       (_vm.subtotaltp *
                                                         _vm.diskon) /
                                                         100 +
-                                                      (((_vm.subtotal *
+                                                      (((_vm.totalItem *
                                                         _vm.pajak) /
                                                         100 +
-                                                        _vm.subtotal -
+                                                        _vm.totalItem -
                                                         (_vm.subtotaltp *
                                                           _vm.diskon) /
                                                           100) *
@@ -69805,10 +69847,10 @@ var render = function() {
                                                     _vm._f("currency")(
                                                       Math.floor(
                                                         _vm.totalBayar -
-                                                          ((_vm.subtotal *
+                                                          ((_vm.totalItem *
                                                             _vm.pajak) /
                                                             100 +
-                                                            _vm.subtotal -
+                                                            _vm.totalItem -
                                                             (_vm.subtotaltp *
                                                               _vm.diskon) /
                                                               100)

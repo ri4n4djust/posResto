@@ -345,22 +345,22 @@
                                     <td>{{ trx.hrgJualTmp * trx.qtyTmp | currency }}</td>
                                 </tr>
                   </tbody>
-                </table>               
+                </table> 
                 <form  @submit.prevent="PostSplit" >
                 <input type="hidden" class="form-control" v-model="tglNota" >
                 <input type="hidden" class="form-control" v-model="pelanggan" placeholder="Customer">
                 <input type="hidden" class="form-control" v-model="noNota" placeholder="No nota">
-                <input type="hidden" class="form-control" v-model="subtotal">
+                <input type="hidden" class="form-control" v-model="totalItem">
                 <input type="hidden" class="form-control" v-model="post.waiterMeja">
                 <input type="hidden" class="form-control" v-model="subtotaltp">
                 <p class="text-muted text-center">
-                <input type="hidden" class="form-control" :value="((subtotal * pajak / 100 + subtotal) - (subtotaltp * diskon / 100))  || 0 " :name="totalTransaksiBayar"  >
-                <h3 class="profile-username ">Total {{ Math.floor(((subtotal * pajak / 100 + subtotal) - (subtotaltp * diskon / 100)) + ((subtotal * pajak / 100 + subtotal) - (subtotaltp * diskon / 100)) * taxDebit / 100)  || 0 | currency }}</h3>
+                <input type="hidden" class="form-control" :value="((totalItem * pajak / 100 + totalItem) - (subtotaltp * diskon / 100))  || 0 " :name="totalTransaksiBayar"  >
+                <h3 class="profile-username ">Total {{ Math.floor(((totalItem * pajak / 100 + totalItem) - (subtotaltp * diskon / 100)) + ((totalItem * pajak / 100 + totalItem) - (subtotaltp * diskon / 100)) * taxDebit / 100)  || 0 | currency }}</h3>
                 <div class="row input-group">
                 <div class="col-xs-4">
                   <span class="input-group-addon">Tax in %</span>
                   <input type="number" step=".01" class="form-control " v-model="pajak" placeholder="Tax">
-                  <input type="hidden" class="form-control" :value="(subtotal * pajak / 100 + subtotal)" :name="totalTransaksipjk" >
+                  <input type="hidden" class="form-control" :value="(totalItem * pajak / 100 + totalItem)" :name="totalTransaksipjk" >
                 </div>
                 <div class="col-xs-4">
                   <span class="input-group-addon">Disc in %</span>
@@ -381,17 +381,16 @@
                                     <input type="number" class="form-control" v-model="totalBayar" placeholder="Bayar" required>
                                   </div>
                                   
-                                  <h3 class="profile-username ">Kembali : {{ Math.floor(totalBayar - ((subtotal * pajak / 100 + subtotal) - (subtotaltp * diskon / 100)))  || 0 | currency  }}</h3>
+                                  <h3 class="profile-username ">Kembali : {{ Math.floor(totalBayar - ((totalItem * pajak / 100 + totalItem) - (subtotaltp * diskon / 100)))  || 0 | currency  }}</h3>
                                   <p class="text-muted text-center">
                                   <button type="submit"  class="btn btn-md btn-success" >Bayar</button> 
-                                  <a href="#"  @click="printBill(printMe)" class="btn btn-md btn-success" >Print Bill</a>               
                                   </p>
                             </div>
                             <div v-else-if="pembayaran === '2'">
                               <div class="input-group">
                                     <span class="input-group-addon">Card Carge %</span>
                                     <input type="number" step=".01" class="form-control" v-model="taxDebit" placeholder="0" >
-                                    <input type="hidden" class="form-control" :value="((subtotal * pajak / 100 + subtotal) - ((subtotal * pajak / 100 + subtotal) * diskon / 100)) * taxDebit / 100 " :name="pajakKartu" >
+                                    <input type="hidden" class="form-control" :value="((totalItem * pajak / 100 + subtotal) - ((totalItem * pajak / 100 + totalItem) * diskon / 100)) * taxDebit / 100 " :name="pajakKartu" >
                                   </div>
                                   <p>
                                   <div class="input-group">
@@ -406,7 +405,7 @@
                                   <br>
                                   <p class="text-muted text-center">
                                   <button type="submit"  class="btn btn-md btn-success" >Bayar</button>       
-                                  <a href="#"  @click="printBill(printMe)" class="btn btn-md btn-success" >Print Bill</a>         
+                                  <a href="#"  @click="printBillsplit(printMeSplit)" class="btn btn-md btn-success" >Print Bill</a>         
                                   </p>
                             </div>
                             <div v-else-if="pembayaran === '3'">
@@ -416,7 +415,7 @@
                
               </form>
 
-              <div id="printMe">
+              <div id="printMeSplit">
                 <section class="invoice">
                 <!-- info row -->
                 <p class="text-muted text-center">
@@ -475,7 +474,7 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr v-for="trx in trxs" :key="trx.id">
+                                <tr v-for="trx in splitNota" :key="trx.id">
                                     <td >{{ trx.nmBarangTmp }} </td>
                                     <td >{{ trx.qtyTmp}}</td>
                                     <td >{{ trx.hrgJualTmp | currency }}</td>
@@ -484,11 +483,11 @@
                                 </tbody>
                                     <tr>
                                         <th colspan="3">subTotal :</th>
-                                        <th>{{subtotal | currency}}</th>
+                                        <th>{{totalItem | currency}}</th>
                                     </tr>
                                     <tr>
                                         <th colspan="3">Tax & Service : {{ pajak }} %</th>
-                                        <th>{{ Math.floor(subtotal * pajak / 100 ) | currency}}</th>
+                                        <th>{{ Math.floor(totalItem * pajak / 100 ) | currency}}</th>
                                     </tr>
                                     <tr>
                                         <th colspan="3">Discount : {{ diskon }} %</th>
@@ -496,24 +495,24 @@
                                     </tr>
                                     <tr>
                                         <th colspan="3">subTotal :</th>
-                                        <th>{{ Math.floor((subtotal * pajak / 100 + subtotal) - (subtotaltp * diskon / 100))  || 0 | currency }}</th>
+                                        <th>{{ Math.floor((totalItem * pajak / 100 + totalItem) - (subtotaltp * diskon / 100))  || 0 | currency }}</th>
                                     </tr>
 
                                     <tr v-if="pembayaran === '1'">
                                     </tr>
                                     <tr v-else-if="pembayaran === '2'">
                                         <th colspan="3">Card Charge : {{ taxDebit }} %</th>
-                                        <th>{{ Math.floor((subtotal * pajak / 100 + subtotal) - (subtotaltp * diskon / 100)) * taxDebit / 100 | currency }}</th>
+                                        <th>{{ Math.floor((totalItem * pajak / 100 + totalItem) - (subtotaltp * diskon / 100)) * taxDebit / 100 | currency }}</th>
                                     </tr>
 
                                     <tr>
                                         <th colspan="3">Payment :</th>
-                                        <th>{{ Math.floor(((subtotal * pajak / 100 + subtotal) - (subtotaltp * diskon / 100)) + ((subtotal * pajak / 100 + subtotal) - (subtotaltp * diskon / 100)) * taxDebit / 100)  || 0 | currency }}</th>
+                                        <th>{{ Math.floor(((totalItem * pajak / 100 + totalItem) - (subtotaltp * diskon / 100)) + ((totalItem * pajak / 100 + totalItem) - (subtotaltp * diskon / 100)) * taxDebit / 100)  || 0 | currency }}</th>
                                     </tr>
 
                                     <tr v-if="pembayaran === '1'">
                                         <th colspan="3">Kembalian :</th>
-                                        <th>{{ Math.floor(totalBayar - ((subtotal * pajak / 100 + subtotal) - (subtotaltp * diskon / 100)))  || 0 | currency }}</th>
+                                        <th>{{ Math.floor(totalBayar - ((totalItem * pajak / 100 + totalItem) - (subtotaltp * diskon / 100)))  || 0 | currency }}</th>
                                     </tr>
                                     <tr v-else-if="pembayaran === '2'">
                                     </tr>
@@ -769,6 +768,7 @@
 }
 
     #printMe { display: none; }
+    #printMeSplit { display: none; }
 
 
     @media print
@@ -783,11 +783,23 @@
         visibility: visible;
         font-size: 8pt;
       }
+      #printMeSplit, #printMeSplit * {
+        visibility: visible;
+        font-size: 8pt;
+      }
       #lastOrder, #lastOrder * {
         visibility: visible;
       }
 
       #printMe {
+        position: absolute;
+        left: 0;
+        top: 0;
+        font-size: 8pt;
+        width: 100%;
+        height: 100%;
+      }
+      #printMeSplit {
         position: absolute;
         left: 0;
         top: 0;
@@ -874,6 +886,7 @@
                 kdMenu1: '',
                 qtySplit: [0],
                 printMe: '',
+                printMeSplit: '',
                 crt: [],
                 splitNota: [],
                 //waitername : this.waiter.name,
@@ -917,8 +930,15 @@
           opensplit(trxs){
             this.showModalSplit = true;
             // let cartItems = this.orders;
-            localStorage.setItem('cartItems',JSON.stringify(trxs));
-            this.getCart();
+            // localStorage.setItem('cartItems', '[]');
+            if(localStorage.getItem('cartItems') === null){
+              localStorage.setItem('cartItems',JSON.stringify(trxs));
+              this.getCart();
+              // this.getSplitNota();
+            }else{
+              this.getCart();
+              this.getSplitNota();
+            }           
           },
           getCart: function() {
                  if (this.crt === null){
@@ -975,7 +995,7 @@
                         this.getCart();
                         this.getSplitNota();
                         this.isicart = Object.keys(JSON.parse(localStorage.getItem('notaSplit'))).length;
-                        alert(trx.nmBarang + " berhasil disimpan")
+                        alert(trx.nmBarangTmp + " berhasil disimpan")
                         }
             },
           select_menu(menu){
@@ -1019,6 +1039,11 @@
             printBill() {
               //alert('print bill');
                 window.print(printMe);
+                //this.showModalBayar = false
+            },
+            printBillSplit() {
+              //alert('print bill');
+                window.print(printMeSplit);
                 //this.showModalBayar = false
             },
             printOrder(id) {
@@ -1220,6 +1245,7 @@
                 }).then((response) => {
                         //this.$print(printMe);
                         window.print(printMe)
+                        localStorage.removeItem('cartItems');
                         setTimeout(function(){
                             window.location.href = '/meja';
                         }, 13000);           
@@ -1234,6 +1260,28 @@
                 this.ListOrder();
                 }, 3000);    
             },
+            PostSplit() {
+              
+                // let uri = '/api/addSplit/store';
+                // this.axios.post(uri, 
+                // {
+                //     noNota: this.noNota,
+                //     noMeja: this.post.id,
+                //     pelanggan: this.pelanggan,
+                //     tglNota: this.tglNota,
+                //     taxNota: Math.floor(this.subtotal * this.pajak / 100),
+                    
+                    
+                // }).then((response) => {
+                        //this.$print(printMe);
+                        window.print(printMeSplit);
+                        localStorage.removeItem('notaSplit');
+                // }).catch(error => {
+                //     alert('error! bro');
+                //     //console.log(error.response.message)
+                // });
+                
+            },
         },
         mounted () {
             //this.intervalFetchData1();
@@ -1247,6 +1295,17 @@
             clearInterval(this.mytimer)
             console.log('detail bersih')
         },
+
+        computed: {
+          totalItem: function(){
+              let sum = 0;
+              for(let i = 0; i < this.splitNota.length; i++){
+                sum += (parseFloat(this.splitNota[i].hrgJualTmp) * parseFloat(this.splitNota[i].qtyTmp));
+              }
+
+            return sum;
+          }
+}
         
     }
 </script>
