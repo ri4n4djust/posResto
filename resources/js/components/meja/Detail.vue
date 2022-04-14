@@ -895,6 +895,7 @@
                 printMeSplit: '',
                 crt: [],
                 splitNota: [],
+                mj: this.$route.params.id,
                 //waitername : this.waiter.name,
                 //optionLabel: users.nmBarang,
                 tglNota: new Date().toJSON().slice(0,10).replace(/-/g,'/'),
@@ -943,23 +944,35 @@
               this.getCart();
               this.getSplitNota();
             }else{
-              this.getCart();
+              var cartItems = JSON.parse(localStorage.getItem('cartItems'));
+              var $ada = cartItems.filter(d => d.noMejaTmp === this.mj);
+              if($ada != null){
+                this.getCart();
+                this.getSplitNota();
+              }else{
+                cartItems.push(trx);
+                localStorage.setItem('cartItems',JSON.stringify(cartItems));
+                this.getCart();
               this.getSplitNota();
+              }
             }           
           },
           getCart: function() {
                  if (this.crt === null){
                       this.crt = localStorage.setItem('cartItems', '[]');
                  }else{
-                      this.crt = JSON.parse(localStorage.getItem('cartItems'))
-                      this.isicart = JSON.parse(localStorage.getItem('cartItems')).length;
+                      var cartItems = JSON.parse(localStorage.getItem('cartItems'));
+                      // const objIndex = cartItems.findIndex((e => e.noMejaTmp === '15'));
+                      this.crt = cartItems.filter(d => d.noMejaTmp === this.mj);
+                      // this.isicart = JSON.parse(localStorage.getItem('cartItems')).length;
                  }
             },
           getSplitNota: function() {
                  if (this.splitNota === null){
                       this.splitNota = localStorage.setItem('notaSplit', '[]');
                  }else{
-                      this.splitNota = JSON.parse(localStorage.getItem('notaSplit'))
+                      var notaSplit = JSON.parse(localStorage.getItem('notaSplit'));
+                      this.splitNota = notaSplit.filter(d => d.noMejaTmp === this.mj);
                       // this.isicart = JSON.parse(localStorage.getItem('notaSplit')).length;
                  }
             },
