@@ -12,20 +12,25 @@ class splitController extends Controller
     //
     public function add(Request $request){
         try {
-            $request->request-set('data', json_decode($request->data));
-            foreach ($request->data as $data)
-            {
-                $exception = DB::transaction(function() use ($request){
-                $post = Split::create([
-                    'noNota'     => $data->noNota,
-                    'noNota'     => $data->noMeja,
-                    'groupNota'     => $data->groupNota,
-                    'kdBarang'     => $request->input('kdBarang'),
-                    'nmBarang'     => $request->input('nmBarang'),
-                    'hrgBarang'     => $request->input('hrgBarang'),
-                    'qtyBarng'     => $request->input('qtyBarang'),
-                    'subTotal'     => $request->input('subTotal'),
-                ]);
+            $exception = DB::transaction(function() use ($request){
+                $body1 = $request->input('data');
+                // $path = $request->path();
+                $body =json_decode($body1); 
+                    $dataSet = [];
+                    foreach ($body as $s) {
+                        $dataSet[] = [
+                            'noNota'  => $s->noNotaTmp,
+                            'noMeja'    => $s->noMejaTmp,
+                            'kdBarang'       => $s->kdBarangTmp,
+                            'qtyBarang' => $s->qtyTmp,
+                            'subTotal' => $s->totalTmp,
+                            'groupNota' => $s->typeTmp,
+                            'nmBarang' =>$s->nmBarangTmp,
+                            'hrgBarang' =>$s->hrgJualTmp,
+                        ];
+                    }
+                    DB::table('splitPayment')->insert($dataSet);
+  
                 DB::commit();
                 });
                 if(is_null($exception)) {
@@ -34,13 +39,13 @@ class splitController extends Controller
                         'message' => 'Post Berhasil Disimpan!',
                     ], 200);
                 } else {                    
-                    DB::rollback();
+                    // DB::rollback();
                     return response()->json([
                         'success' => false,
                         'message' => 'Post Tidak Berhasil Disimpan!',
                     ], 200);
                 }
-            }
+            
         } catch (\Exception $e) {
             //DB::rollback();
             // something went wrong

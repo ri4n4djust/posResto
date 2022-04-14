@@ -307,6 +307,9 @@
               <div class="modal-body">
                 <table class="table table-hover table-bordered">
                  <thead>
+                    <tr>
+                     <th colspan="5">Barang Yang Belum di bayar</th>
+                   </tr>
                                 <tr>
                                     <th>Nama </th>
                                     <th>Harga</th>
@@ -320,7 +323,7 @@
                                     <td v-if="trx.qtyTmp > 0">{{ trx.nmBarangTmp }} </td>
                                     <td v-if="trx.qtyTmp > 0">{{ trx.hrgJualTmp | currency }}</td>
                                     <td v-if="trx.qtyTmp > 0">
-                                        <vue-numeric-input v-model="qtySplit[index]" :min="0" :max="trx.qtyTmp"></vue-numeric-input>
+                                        <vue-numeric-input v-model="qtySplit[index]" :min="1" :max="trx.qtyTmp" class="form-control" required></vue-numeric-input>
                                     </td>
                                     <td v-if="trx.qtyTmp > 0">{{ trx.hrgJualTmp * qtySplit[index] | currency }}</td>
                                     <td v-if="trx.qtyTmp > 0" class="text-center">
@@ -331,6 +334,9 @@
                 </table>
                 <table class="table table-hover table-bordered">
                  <thead>
+                   <tr>
+                     <th colspan="4">Barang Yang akan di bayar</th>
+                   </tr>
                                 <tr>
                                     <th>Nama </th>
                                     <th>Harga</th>
@@ -884,7 +890,7 @@
                 adminuser: '',
                 nmMenu1: '',
                 kdMenu1: '',
-                qtySplit: [0],
+                qtySplit: [],
                 printMe: '',
                 printMeSplit: '',
                 crt: [],
@@ -924,7 +930,8 @@
           }
         },
         //props: ['value'],
-        props: ['optionLabel', 'value'],  
+        props: ['optionLabel','value',],
+
               
         methods: {
           opensplit(trxs){
@@ -934,7 +941,7 @@
             if(localStorage.getItem('cartItems') === null){
               localStorage.setItem('cartItems',JSON.stringify(trxs));
               this.getCart();
-              // this.getSplitNota();
+              this.getSplitNota();
             }else{
               this.getCart();
               this.getSplitNota();
@@ -1260,15 +1267,16 @@
                 }, 3000);    
             },
             PostSplit() {
-              let formData = localStorage.getItem('notaSplit');
-              formData.append('data', JSON.stringify(totalData));
+              var formData = new FormData();
+              formData.append('data', JSON.stringify(this.splitNota));
               
                 let uri = '/api/addSplit/store';
                 this.axios.post(uri, formData)
                 .then((response) => {
                         //this.$print(printMe);
                         window.print(printMeSplit);
-                        localStorage.removeItem('notaSplit');
+                        localStorage.setItem('notaSplit', '[]');
+                        this.getSplitNota();
                 }).catch(error => {
                     alert('error! bro');
                     //console.log(error.response.message)
