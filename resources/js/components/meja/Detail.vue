@@ -1218,7 +1218,6 @@
                 
             },
             PostTransaksi() {
-              
                 let uri = '/api/addTransaksi/store';
                 this.axios.post(uri, 
                 {
@@ -1261,25 +1260,19 @@
                 }, 3000);    
             },
             PostSplit() {
+              let formData = localStorage.getItem('notaSplit');
+              formData.append('data', JSON.stringify(totalData));
               
-                // let uri = '/api/addSplit/store';
-                // this.axios.post(uri, 
-                // {
-                //     noNota: this.noNota,
-                //     noMeja: this.post.id,
-                //     pelanggan: this.pelanggan,
-                //     tglNota: this.tglNota,
-                //     taxNota: Math.floor(this.subtotal * this.pajak / 100),
-                    
-                    
-                // }).then((response) => {
+                let uri = '/api/addSplit/store';
+                this.axios.post(uri, formData)
+                .then((response) => {
                         //this.$print(printMe);
                         window.print(printMeSplit);
                         localStorage.removeItem('notaSplit');
-                // }).catch(error => {
-                //     alert('error! bro');
-                //     //console.log(error.response.message)
-                // });
+                }).catch(error => {
+                    alert('error! bro');
+                    //console.log(error.response.message)
+                });
                 
             },
         },

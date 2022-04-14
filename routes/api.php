@@ -77,6 +77,9 @@ Route::post('/orderprint/{id}', 'mejaController@printOrder');
 Route::post('/orderprint1/{id}', 'mejaController@printOrder1');
 Route::post('/afterorderprint/{id}', 'mejaController@afterPrintOrder');
 
+//============pembayaran
+Route::post('/addSplit/store', 'splitController@add');
+
 //=========total
 Route::post('/totalTrx/{id}', 'mejaController@totalTrx');
 Route::post('/totalTrxTnpPromo/{id}', 'mejaController@totalTrxTnpPromo');
