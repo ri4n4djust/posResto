@@ -13093,7 +13093,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 
 
@@ -13202,8 +13201,6 @@ __webpack_require__.r(__webpack_exports__);
   props: ['optionLabel', 'value'],
   methods: {
     opensplit: function opensplit(trxs) {
-      var _this2 = this;
-
       this.showModalSplit = true; // let cartItems = this.orders;
       // localStorage.setItem('cartItems', '[]');
 
@@ -13212,45 +13209,35 @@ __webpack_require__.r(__webpack_exports__);
         this.getCart();
         this.getSplitNota();
       } else {
-        var cartItems = JSON.parse(localStorage.getItem('cartItems'));
-        var $ada = cartItems.filter(function (d) {
-          return d.noMejaTmp === _this2.mj;
-        });
-
-        if ($ada != null) {
-          this.getCart();
-          this.getSplitNota();
-        } else {
-          cartItems.push(trx);
-          localStorage.setItem('cartItems', JSON.stringify(cartItems));
-          this.getCart();
-          this.getSplitNota();
-        }
+        // var cartItems = JSON.parse(localStorage.getItem('cartItems'));
+        // var $ada = cartItems.filter(d => d.noMejaTmp === this.mj);
+        // if($ada != null){
+        this.getCart();
+        this.getSplitNota(); // }else{
+        //   cartItems.push(trxs);
+        //   localStorage.setItem('cartItems',JSON.stringify(cartItems));
+        //   this.getCart();
+        // this.getSplitNota();
+        // }
       }
     },
     getCart: function getCart() {
-      var _this3 = this;
-
       if (this.crt === null) {
         this.crt = localStorage.setItem('cartItems', '[]');
       } else {
-        var cartItems = JSON.parse(localStorage.getItem('cartItems')); // const objIndex = cartItems.findIndex((e => e.noMejaTmp === '15'));
-
-        this.crt = cartItems.filter(function (d) {
-          return d.noMejaTmp === _this3.mj;
-        }); // this.isicart = JSON.parse(localStorage.getItem('cartItems')).length;
+        this.crt = JSON.parse(localStorage.getItem('cartItems')); // const cartItems = JSON.parse(localStorage.getItem('cartItems'));
+        // const objIndex = cartItems.findIndex((e => e.noMejaTmp === '15'));
+        // this.crt = cartItems.filter(b => b.noMejaTmp === this.mj);
+        // this.isicart = JSON.parse(localStorage.getItem('cartItems')).length;
       }
     },
     getSplitNota: function getSplitNota() {
-      var _this4 = this;
-
       if (this.splitNota === null) {
         this.splitNota = localStorage.setItem('notaSplit', '[]');
       } else {
-        var notaSplit = JSON.parse(localStorage.getItem('notaSplit'));
-        this.splitNota = notaSplit.filter(function (d) {
-          return d.noMejaTmp === _this4.mj;
-        }); // this.isicart = JSON.parse(localStorage.getItem('notaSplit')).length;
+        this.splitNota = JSON.parse(localStorage.getItem('notaSplit')); // var notaSplit = JSON.parse(localStorage.getItem('notaSplit'));
+        // this.splitNota = notaSplit.filter(d => d.noMejaTmp === this.mj);
+        // this.isicart = JSON.parse(localStorage.getItem('notaSplit')).length;
       }
     },
     updateItem: function updateItem(barcode, index, trx) {
@@ -13322,7 +13309,7 @@ __webpack_require__.r(__webpack_exports__);
       this.menuss = [];
     },
     get_menu: function get_menu() {
-      var _this5 = this;
+      var _this2 = this;
 
       if (this.menu.length == 0) {
         this.menuss = [];
@@ -13334,7 +13321,7 @@ __webpack_require__.r(__webpack_exports__);
             menu: this.menu
           }
         }).then(function (response) {
-          _this5.menuss = response.data.data;
+          _this2.menuss = response.data.data;
         });
       }
     },
@@ -13368,124 +13355,124 @@ __webpack_require__.r(__webpack_exports__);
       window.print(printMeSplit); //this.showModalBayar = false
     },
     printOrder: function printOrder(id) {
-      var _this7 = this;
+      var _this4 = this;
 
       // alert('print last order'+ id);
       window.print(lastOrder);
       setTimeout(function () {
-        var _this6 = this;
+        var _this3 = this;
 
         var uri = '/api/afterorderprint/' + id;
         this.axios.post(uri, this.post).then(function (response) {
           //this.$router.push({name: 'posts'});
-          _this6.orders = response.data.data;
+          _this3.orders = response.data.data;
 
-          _this6.ListOrder();
+          _this3.ListOrder();
 
-          _this6.ListOrder1(); //this.intervalFetchData();
+          _this3.ListOrder1(); //this.intervalFetchData();
 
         })["catch"](function (error) {
-          _this6.ListOrder(); //this.validation = error.response.data.data;
+          _this3.ListOrder(); //this.validation = error.response.data.data;
           //alert('ada yang error stelah print');
 
         });
       }, 12000);
       setTimeout(function () {
-        return _this7.$router.push({
+        return _this4.$router.push({
           name: 'meja'
         });
       }, 13000);
     },
     ListOrder: function ListOrder() {
-      var _this8 = this;
+      var _this5 = this;
 
       var uri = "/api/orderprint/".concat(this.$route.params.id);
       this.axios.post(uri, this.post).then(function (response) {
         //this.$router.push({name: 'posts'});
-        _this8.orders = response.data.data;
+        _this5.orders = response.data.data;
       })["catch"](function (error) {
         //this.validation = error.response.data.data;
         alert('ada yang error');
       });
     },
     ListOrder1: function ListOrder1() {
-      var _this9 = this;
+      var _this6 = this;
 
       var uri = "/api/orderprint1/".concat(this.$route.params.id);
       this.axios.post(uri, this.post).then(function (response) {
         //this.$router.push({name: 'posts'});
-        _this9.orders1 = response.data.data;
+        _this6.orders1 = response.data.data;
       })["catch"](function (error) {
         //this.validation = error.response.data.data;
         alert('ada yang error');
       });
     },
     PostUpdate: function PostUpdate() {
-      var _this10 = this;
+      var _this7 = this;
 
       var uri = "/api/posts/update/".concat(this.$route.params.id);
       this.axios.post(uri, this.post).then(function (response) {
-        _this10.$router.push({
+        _this7.$router.push({
           name: 'posts'
         });
       })["catch"](function (error) {
-        _this10.validation = error.response.data.data;
+        _this7.validation = error.response.data.data;
       });
     },
     loadTotal: function loadTotal() {
-      var _this11 = this;
+      var _this8 = this;
 
       var uri = "/api/totalTrx/".concat(this.$route.params.id);
       this.axios.post(uri).then(function (response) {
-        _this11.subtotal = response.data.subTotal;
+        _this8.subtotal = response.data.subTotal;
       })["catch"](function (error) {
         console.log(error.response);
       });
     },
     loadTotalTnpPromo: function loadTotalTnpPromo() {
-      var _this12 = this;
+      var _this9 = this;
 
       var uri = "/api/totalTrxTnpPromo/".concat(this.$route.params.id);
       this.axios.post(uri).then(function (response) {
-        _this12.subtotaltp = response.data.subTotal;
+        _this9.subtotaltp = response.data.subTotal;
       })["catch"](function (error) {
         console.log(error.response);
       });
     },
     loadNota: function loadNota() {
-      var _this13 = this;
+      var _this10 = this;
 
       var uri = "/api/noNota/".concat(this.$route.params.id);
       this.axios.post(uri).then(function (response) {
-        _this13.noNota = response.data.noNota;
+        _this10.noNota = response.data.noNota;
       });
     },
     loadDataMenu: function loadDataMenu() {
-      var _this14 = this;
+      var _this11 = this;
 
       var uri = '/api/menu';
       this.axios.get(uri).then(function (response) {
-        _this14.menus = response.data.data;
+        _this11.menus = response.data.data;
       });
     },
     loadPelanggan: function loadPelanggan() {
-      var _this15 = this;
+      var _this12 = this;
 
       var uri = '/api/pelanggan';
       this.axios.get(uri).then(function (response) {
-        _this15.pelanggans = response.data.data;
+        _this12.pelanggans = response.data.data;
       });
     },
     loadDataTransaksi: function loadDataTransaksi() {
-      var _this16 = this;
+      var _this13 = this;
 
       var uri = "/api/transaksi/".concat(this.$route.params.id);
       this.axios.post(uri).then(function (response) {
-        _this16.trxs = response.data.data;
+        _this13.trxs = response.data.data;
       });
     },
     PostMove: function PostMove() {
-      var _this17 = this;
+      var _this14 = this;
 
       var uri = '/api/meja/pindah';
       this.axios.post(uri, {
@@ -13493,21 +13480,21 @@ __webpack_require__.r(__webpack_exports__);
         noMejaBaru: this.move1.id,
         waiterMeja: this.post.waiterMeja
       }).then(function (response) {
-        _this17.$router.push({
+        _this14.$router.push({
           name: 'meja'
         });
       })["catch"](function (error) {
-        _this17.$router.push({
+        _this14.$router.push({
           name: 'meja'
         });
       });
     },
     loadMejaKosong: function loadMejaKosong() {
-      var _this18 = this;
+      var _this15 = this;
 
       var uri = '/api/mejakosong/';
       this.axios.get(uri).then(function (response) {
-        _this18.mejaKosong = response.data.data;
+        _this15.mejaKosong = response.data.data;
       });
     },
     loadWaiter: function loadWaiter() {
@@ -13516,22 +13503,22 @@ __webpack_require__.r(__webpack_exports__);
       }.bind(this));
     },
     PostDeleteTrx: function PostDeleteTrx(id) {
-      var _this19 = this;
+      var _this16 = this;
 
       this.axios["delete"]("/api/orderDelete/".concat(id)).then(function (response) {
         alert('Berhasil Di Hapus');
 
-        _this19.loadDataTransaksi();
+        _this16.loadDataTransaksi();
 
-        _this19.loadTotal();
+        _this16.loadTotal();
 
-        _this19.ListOrder();
+        _this16.ListOrder();
 
-        _this19.ListOrder1();
+        _this16.ListOrder1();
       })["catch"](function (error) {});
     },
     PostMenu: function PostMenu() {
-      var _this20 = this;
+      var _this17 = this;
 
       var uri = '/api/addMenu/store';
       this.axios.post(uri, {
@@ -13552,20 +13539,20 @@ __webpack_require__.r(__webpack_exports__);
         //alert('sukses donkkkkkkkk');
         alert('sukses ditambahkan');
 
-        _this20.loadDataTransaksi();
+        _this17.loadDataTransaksi();
 
-        _this20.loadTotal();
+        _this17.loadTotal();
 
-        _this20.loadTotalTnpPromo();
+        _this17.loadTotalTnpPromo();
 
-        _this20.ListOrder();
+        _this17.ListOrder();
 
-        _this20.ListOrder1();
+        _this17.ListOrder1();
 
-        _this20.menu = '';
-        _this20.note = '';
-        _this20.qtyBarang = '';
-        _this20.post2.hargaMenu = ''; //this.cekStatusMeja()
+        _this17.menu = '';
+        _this17.note = '';
+        _this17.qtyBarang = '';
+        _this17.post2.hargaMenu = ''; //this.cekStatusMeja()
         //this.showModalMenu = false
       });
     },
@@ -13601,14 +13588,14 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     intervalFetchData: function intervalFetchData() {
-      var _this21 = this;
+      var _this18 = this;
 
       this.mytimer = setInterval(function () {
-        _this21.ListOrder();
+        _this18.ListOrder();
       }, 3000);
     },
     PostSplit: function PostSplit() {
-      var _this22 = this;
+      var _this19 = this;
 
       var formData = new FormData();
       formData.append('data', JSON.stringify(this.splitNota));
@@ -13618,7 +13605,7 @@ __webpack_require__.r(__webpack_exports__);
         window.print(printMeSplit);
         localStorage.setItem('notaSplit', '[]');
 
-        _this22.getSplitNota();
+        _this19.getSplitNota();
       })["catch"](function (error) {
         alert('error! bro'); //console.log(error.response.message)
       });
@@ -22912,7 +22899,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.autocomplete-box-li:hover {\n  background-color: #f2f2f2;\n}\n.autocomplete-box{\n  position: absolute;\n  z-index: 1;\n}\n#printMe { display: none;\n}\n#printMeSplit { display: none;\n}\n@media print\n    {\n@page{\n        margin: 0;\n}\nbody * {\n        visibility: hidden;\n}\n#printMe, #printMe * {\n        visibility: visible;\n        font-size: 8pt;\n}\n#printMeSplit, #printMeSplit * {\n        visibility: visible;\n        font-size: 8pt;\n}\n#lastOrder, #lastOrder * {\n        visibility: visible;\n}\n#printMe {\n        position: absolute;\n        left: 0;\n        top: 0;\n        font-size: 8pt;\n        width: 100%;\n        height: 100%;\n}\n#printMeSplit {\n        position: absolute;\n        left: 0;\n        top: 0;\n        font-size: 8pt;\n        width: 100%;\n        height: 100%;\n}\n#lastOrder {\n        position: absolute;\n        left: 0;\n        top: 0;\n        font-size: 8pt;\n        width: 100%;\n}\n}\n    ", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.autocomplete-box-li:hover {\n  background-color: #f2f2f2;\n}\n.autocomplete-box{\n  position: absolute;\n  z-index: 1;\n}\n#printMe { display: none;\n}\n@media print\n    {\n@page{\n        margin: 0;\n}\nbody * {\n        visibility: hidden;\n}\n#printMe, #printMe * {\n        visibility: visible;\n        font-size: 8pt;\n}\n#printMeSplit, #printMeSplit * {\n        visibility: visible;\n        font-size: 8pt;\n}\n#lastOrder, #lastOrder * {\n        visibility: visible;\n}\n#printMe {\n        position: absolute;\n        left: 0;\n        top: 0;\n        font-size: 8pt;\n        width: 100%;\n        height: 100%;\n}\n#printMeSplit {\n        position: absolute;\n        left: 0;\n        top: 0;\n        font-size: 8pt;\n        width: 100%;\n        height: 100%;\n}\n#lastOrder {\n        position: absolute;\n        left: 0;\n        top: 0;\n        font-size: 8pt;\n        width: 100%;\n}\n}\n    ", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -72312,7 +72299,6 @@ var render = function () {
                                           "td",
                                           [
                                             _c("vue-numeric-input", {
-                                              staticClass: "form-control",
                                               attrs: {
                                                 min: 1,
                                                 max: trx.qtyTmp,
@@ -72997,23 +72983,6 @@ var render = function () {
                                             attrs: { type: "submit" },
                                           },
                                           [_vm._v("Bayar")]
-                                        ),
-                                        _vm._v(" "),
-                                        _c(
-                                          "a",
-                                          {
-                                            staticClass:
-                                              "btn btn-md btn-success",
-                                            attrs: { href: "#" },
-                                            on: {
-                                              click: function ($event) {
-                                                return _vm.printBillsplit(
-                                                  _vm.printMeSplit
-                                                )
-                                              },
-                                            },
-                                          },
-                                          [_vm._v("Print Bill")]
                                         ),
                                       ]
                                     ),

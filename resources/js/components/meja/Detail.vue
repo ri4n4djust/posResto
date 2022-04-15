@@ -323,7 +323,7 @@
                                     <td v-if="trx.qtyTmp > 0">{{ trx.nmBarangTmp }} </td>
                                     <td v-if="trx.qtyTmp > 0">{{ trx.hrgJualTmp | currency }}</td>
                                     <td v-if="trx.qtyTmp > 0">
-                                        <vue-numeric-input v-model="qtySplit[index]" :min="1" :max="trx.qtyTmp" class="form-control" required></vue-numeric-input>
+                                        <vue-numeric-input v-model="qtySplit[index]" :min="1" :max="trx.qtyTmp" required></vue-numeric-input>
                                     </td>
                                     <td v-if="trx.qtyTmp > 0">{{ trx.hrgJualTmp * qtySplit[index] | currency }}</td>
                                     <td v-if="trx.qtyTmp > 0" class="text-center">
@@ -411,7 +411,7 @@
                                   <br>
                                   <p class="text-muted text-center">
                                   <button type="submit"  class="btn btn-md btn-success" >Bayar</button>       
-                                  <a href="#"  @click="printBillsplit(printMeSplit)" class="btn btn-md btn-success" >Print Bill</a>         
+                                          
                                   </p>
                             </div>
                             <div v-else-if="pembayaran === '3'">
@@ -774,7 +774,6 @@
 }
 
     #printMe { display: none; }
-    #printMeSplit { display: none; }
 
 
     @media print
@@ -944,26 +943,27 @@
               this.getCart();
               this.getSplitNota();
             }else{
-              var cartItems = JSON.parse(localStorage.getItem('cartItems'));
-              var $ada = cartItems.filter(d => d.noMejaTmp === this.mj);
-              if($ada != null){
+              // var cartItems = JSON.parse(localStorage.getItem('cartItems'));
+              // var $ada = cartItems.filter(d => d.noMejaTmp === this.mj);
+              // if($ada != null){
                 this.getCart();
                 this.getSplitNota();
-              }else{
-                cartItems.push(trx);
-                localStorage.setItem('cartItems',JSON.stringify(cartItems));
-                this.getCart();
-              this.getSplitNota();
-              }
+              // }else{
+              //   cartItems.push(trxs);
+              //   localStorage.setItem('cartItems',JSON.stringify(cartItems));
+              //   this.getCart();
+              // this.getSplitNota();
+              // }
             }           
           },
           getCart: function() {
                  if (this.crt === null){
                       this.crt = localStorage.setItem('cartItems', '[]');
                  }else{
-                      var cartItems = JSON.parse(localStorage.getItem('cartItems'));
+                   this.crt = JSON.parse(localStorage.getItem('cartItems'));
+                      // const cartItems = JSON.parse(localStorage.getItem('cartItems'));
                       // const objIndex = cartItems.findIndex((e => e.noMejaTmp === '15'));
-                      this.crt = cartItems.filter(d => d.noMejaTmp === this.mj);
+                      // this.crt = cartItems.filter(b => b.noMejaTmp === this.mj);
                       // this.isicart = JSON.parse(localStorage.getItem('cartItems')).length;
                  }
             },
@@ -971,8 +971,9 @@
                  if (this.splitNota === null){
                       this.splitNota = localStorage.setItem('notaSplit', '[]');
                  }else{
-                      var notaSplit = JSON.parse(localStorage.getItem('notaSplit'));
-                      this.splitNota = notaSplit.filter(d => d.noMejaTmp === this.mj);
+                      this.splitNota = JSON.parse(localStorage.getItem('notaSplit'));
+                      // var notaSplit = JSON.parse(localStorage.getItem('notaSplit'));
+                      // this.splitNota = notaSplit.filter(d => d.noMejaTmp === this.mj);
                       // this.isicart = JSON.parse(localStorage.getItem('notaSplit')).length;
                  }
             },
