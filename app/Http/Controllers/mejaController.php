@@ -454,6 +454,7 @@ class mejaController extends Controller
                     'waiterNota'     => $request->input('waiterNota'),
                     'typeNota'  => $request->input('typeNota'),
                     'chargeNota'  => $request->input('chargeNota'),
+                    'pax'  => $request->input('pax'),
                 ]);
         
                 $pembayaran = Pembayara::insert([

@@ -60,6 +60,7 @@ class penjualanController extends Controller
                 $pajakSum = Penjualan::whereBetween('tglNota', [$startDate, $endDate])->sum('taxNota');
                 $diskonSum = Penjualan::whereBetween('tglNota', [$startDate, $endDate])->sum('diskonNota');
                 $chargeSum = Penjualan::whereBetween('tglNota', [$startDate, $endDate])->sum('chargeNota');
+                $paxSum = Penjualan::whereBetween('tglNota', [$startDate, $endDate])->sum('pax');
 
         return response([
                     'success' => true,
@@ -70,6 +71,7 @@ class penjualanController extends Controller
                     'pajakSum' => $pajakSum,
                     'diskonSum' => $diskonSum,
                     'chargeSum' => $chargeSum,
+                    'paxSum' => $paxSum,
                     'data' => $bulan
                 ], 200);
     }
@@ -85,7 +87,8 @@ class penjualanController extends Controller
             $posts = Penjualan::whereBetween('tglNota', [$startDate, $endDate])->get();
             $NotalTOtal = Penjualan::whereBetween('tglNota', [$startDate, $endDate])->sum('totalNota');
             $pajakSum = Penjualan::whereBetween('tglNota', [$startDate, $endDate])->sum('taxNota');
-            $diskonSum = Penjualan::whereBetween('tglNota', [$startDate, $endDate])->sum('diskonNota'); 
+            $diskonSum = Penjualan::whereBetween('tglNota', [$startDate, $endDate])->sum('diskonNota');
+            $paxSum = Penjualan::whereBetween('tglNota', [$startDate, $endDate])->sum('pax'); 
             
             //$posts = Penjualan::latest()->get();
         return response([
@@ -96,6 +99,7 @@ class penjualanController extends Controller
             'notaSum' => $NotalTOtal,
             'pajakSum' => $pajakSum,
             'diskonSum' => $diskonSum,
+            'paxSum' => $paxSum,
             'data' => $posts
         ], 200);
         }else{

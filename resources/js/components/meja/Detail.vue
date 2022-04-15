@@ -323,7 +323,7 @@
                                     <td v-if="trx.qtyTmp > 0">{{ trx.nmBarangTmp }} </td>
                                     <td v-if="trx.qtyTmp > 0">{{ trx.hrgJualTmp | currency }}</td>
                                     <td v-if="trx.qtyTmp > 0">
-                                        <vue-numeric-input v-model="qtySplit[index]" :min="1" :max="trx.qtyTmp" :value="1" required></vue-numeric-input>
+                                        <vue-numeric-input v-model="qtySplit[index]" :min="0" :max="trx.qtyTmp" :value="1" required></vue-numeric-input>
                                     </td>
                                     <td v-if="trx.qtyTmp > 0">{{ trx.hrgJualTmp * qtySplit[index] | currency }}</td>
                                     <td v-if="trx.qtyTmp > 0" class="text-center">
@@ -664,6 +664,7 @@
                   <address>
                   <b>No Inv: </b>{{noNota}}<br>
                   <b>Kasir : </b>{{$session.get('user')}}<br>
+                  <b>Pax: </b>{{post.paxMeja}}<br>
                   <b>Type : </b>
                   <span v-if="pembayaran === '1'">
                     Cash
@@ -1261,7 +1262,7 @@
                     userNota: this.$session.get('userId'),
                     waiterNota: this.post.name,
                     typeNota: this.pembayaran,
-
+                    pax: this.post.paxMeja,
                     pajakPembayaran: this.pajak,
                     diskonPembayaran: this.diskon,
                     chargePembayaran: this.taxDebit,

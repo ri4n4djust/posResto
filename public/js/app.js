@@ -11517,6 +11517,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 
 
@@ -11550,6 +11553,7 @@ vue__WEBPACK_IMPORTED_MODULE_6__["default"].component("data-table", (_andresouza
       totalS: [],
       pajakS: [],
       diskonS: [],
+      pax: [],
       //totalSum: '',
       load: false
     };
@@ -11666,7 +11670,8 @@ vue__WEBPACK_IMPORTED_MODULE_6__["default"].component("data-table", (_andresouza
         _this3.posts1 = response.data.data;
         _this3.totalS = response.data.notaSum;
         _this3.pajakS = response.data.pajakSum;
-        _this3.diskonS = response.data.diskonSum; //alert('Data Ditampilkan');
+        _this3.diskonS = response.data.diskonSum;
+        _this3.pax = response.data.paxSum; //alert('Data Ditampilkan');
         //this.loadDataSorting()
         //this.loadTotal()
 
@@ -11868,6 +11873,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 
 
@@ -11899,7 +11908,8 @@ vue__WEBPACK_IMPORTED_MODULE_6__["default"].component("data-table", (_andresouza
       totalS: [],
       pajakS: [],
       diskonS: [],
-      chargeS: [] //totalSum: '',
+      chargeS: [],
+      pax: [] //totalSum: '',
 
     };
   },
@@ -11985,7 +11995,8 @@ vue__WEBPACK_IMPORTED_MODULE_6__["default"].component("data-table", (_andresouza
         _this2.totalS = response.data.notaSum;
         _this2.pajakS = response.data.pajakSum;
         _this2.diskonS = response.data.diskonSum;
-        _this2.chargeS = response.data.chargeSum; //alert('Data Ditampilkan');
+        _this2.chargeS = response.data.chargeSum;
+        _this2.pax = response.data.paxSum; //alert('Data Ditampilkan');
         //this.loadDataSorting()
         //this.loadTotal()
       });
@@ -12267,6 +12278,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_single_select__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue-single-select */ "./node_modules/vue-single-select/dist/index.js");
 /* harmony import */ var vue_print_plugin__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue-print-plugin */ "./node_modules/vue-print-plugin/dist/vue-print-plugin.common.js");
 /* harmony import */ var vue_print_plugin__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(vue_print_plugin__WEBPACK_IMPORTED_MODULE_3__);
+//
 //
 //
 //
@@ -13580,6 +13592,7 @@ __webpack_require__.r(__webpack_exports__);
         userNota: this.$session.get('userId'),
         waiterNota: this.post.name,
         typeNota: this.pembayaran,
+        pax: this.post.paxMeja,
         pajakPembayaran: this.pajak,
         diskonPembayaran: this.diskon,
         chargePembayaran: this.taxDebit,
@@ -70298,6 +70311,8 @@ var render = function () {
                           _vm._v(" "),
                           _c("td", [_vm._v(_vm._s(post1.tglNota))]),
                           _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(post1.pax))]),
+                          _vm._v(" "),
                           _c("td", [
                             _vm._v(_vm._s(_vm._f("currency")(post1.taxNota))),
                           ]),
@@ -70325,6 +70340,8 @@ var render = function () {
                         _c("th"),
                         _vm._v(" "),
                         _c("th"),
+                        _vm._v(" "),
+                        _c("th", [_vm._v(_vm._s(_vm.pax))]),
                         _vm._v(" "),
                         _c("th", [
                           _vm._v(_vm._s(_vm._f("currency")(_vm.pajakS))),
@@ -70530,6 +70547,8 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", [_vm._v("Tgl")]),
         _vm._v(" "),
+        _c("th", [_vm._v("Pax")]),
+        _vm._v(" "),
         _c("th", [_vm._v("PPn")]),
         _vm._v(" "),
         _c("th", [_vm._v("Diskon")]),
@@ -70691,6 +70710,8 @@ var render = function () {
                       _vm._v(" "),
                       _c("td", [_vm._v(_vm._s(post1.tglNota))]),
                       _vm._v(" "),
+                      _c("td", [_vm._v(_vm._s(post1.pax))]),
+                      _vm._v(" "),
                       _c("td", [_vm._v(_vm._s(_vm._f("currency")(post1.ppn)))]),
                       _vm._v(" "),
                       _c("td", [
@@ -70714,6 +70735,8 @@ var render = function () {
                     _c("th"),
                     _vm._v(" "),
                     _c("th"),
+                    _vm._v(" "),
+                    _c("th", [_vm._v(_vm._s(_vm.pax))]),
                     _vm._v(" "),
                     _c("th", [_vm._v(_vm._s(_vm._f("currency")(_vm.pajakS)))]),
                     _vm._v(" "),
@@ -70748,6 +70771,8 @@ var render = function () {
                             _c("td", [_vm._v(_vm._s(key + 1))]),
                             _vm._v(" "),
                             _c("td", [_vm._v(_vm._s(post1.tglNota))]),
+                            _vm._v(" "),
+                            _c("td", [_vm._v(_vm._s(post1.pax))]),
                             _vm._v(" "),
                             _c("td", [
                               _vm._v(_vm._s(_vm._f("currency")(post1.ppn))),
@@ -70866,6 +70891,8 @@ var staticRenderFns = [
         _c("th", [_vm._v("No")]),
         _vm._v(" "),
         _c("th", [_vm._v("Tgl")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Pax")]),
         _vm._v(" "),
         _c("th", [_vm._v("PPn")]),
         _vm._v(" "),
@@ -72313,7 +72340,7 @@ var render = function () {
                                           [
                                             _c("vue-numeric-input", {
                                               attrs: {
-                                                min: 1,
+                                                min: 0,
                                                 max: trx.qtyTmp,
                                                 value: 1,
                                                 required: "",
@@ -74120,6 +74147,10 @@ var render = function () {
                                     _vm._v(" "),
                                     _c("b", [_vm._v("Kasir : ")]),
                                     _vm._v(_vm._s(_vm.$session.get("user"))),
+                                    _c("br"),
+                                    _vm._v(" "),
+                                    _c("b", [_vm._v("Pax: ")]),
+                                    _vm._v(_vm._s(_vm.post.paxMeja)),
                                     _c("br"),
                                     _vm._v(" "),
                                     _c("b", [_vm._v("Type : ")]),

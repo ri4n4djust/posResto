@@ -77,6 +77,7 @@
                                         <th>Customer</th>
                                         <th>Type Pembayaran</th>
                                         <th>Tgl</th>
+                                        <th>Pax</th>
                                         <th>PPn</th>
                                         <th>Diskon</th>
                                         <th>Total</th>
@@ -98,6 +99,7 @@
                                             </span>
                                         </td>
                                         <td>{{ post1.tglNota }}</td>
+                                        <td>{{ post1.pax }}</td>
                                         <td>{{ post1.taxNota | currency }}</td>
                                         <td>{{ post1.diskonNota | currency }}</td>
                                         <td>{{ post1.totalNota | currency}}</td>
@@ -109,6 +111,7 @@
                                             <th></th>
                                             <th></th>
                                             <th></th>
+                                            <th>{{pax}}</th>
                                             <th>{{pajakS | currency}}</th>
                                             <th>{{diskonS | currency}}</th>
                                             <th>{{totalS | currency}}</th>
@@ -252,6 +255,7 @@ Vue.component("data-table", DataTable);
                 totalS: [],
                 pajakS: [],
                 diskonS: [],
+                pax: [],
                 //totalSum: '',
                 load: false,
             }
@@ -382,6 +386,7 @@ Vue.component("data-table", DataTable);
                         this.totalS = response.data.notaSum;
                         this.pajakS = response.data.pajakSum;
                         this.diskonS = response.data.diskonSum;
+                        this.pax = response.data.paxSum;
                         //alert('Data Ditampilkan');
                         //this.loadDataSorting()
                         //this.loadTotal()

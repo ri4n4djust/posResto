@@ -44,6 +44,7 @@
                                     <tr>
                                         <th>No</th>
                                         <th>Tgl</th>
+                                        <th>Pax</th>
                                         <th>PPn</th>
                                         <th>Diskon</th>
                                         <th>Charge</th>
@@ -54,6 +55,7 @@
                                     <tr v-for="post1, key in posts1" :key="post1.id">
                                         <td>{{ key +1 }}</td>
                                         <td>{{ post1.tglNota }}</td>
+                                        <td>{{ post1.pax }}</td>
                                         <td>{{ post1.ppn | currency}}</td>
                                         <td>{{ post1.diskon | currency }}</td>
                                         <td>{{ post1.charge | currency }}</td>
@@ -64,6 +66,7 @@
                                         <tr>
                                             <th></th>
                                             <th></th>
+                                            <th>{{pax }}</th>
                                             <th>{{pajakS | currency}}</th>
                                             <th>{{diskonS | currency}}</th>
                                             <th>{{chargeS | currency}}</th>
@@ -90,6 +93,7 @@
                                     <tr v-for="post1, key in posts1" :key="post1.id">
                                         <td>{{ key +1 }}</td>
                                         <td>{{ post1.tglNota }}</td>
+                                        <td>{{ post1.pax }}</td>
                                         <td>{{ post1.ppn | currency}}</td>
                                         <td>{{ post1.diskon | currency }}</td>
                                         <td>{{ post1.charge | currency }}</td>
@@ -195,6 +199,7 @@ Vue.component("data-table", DataTable);
                 pajakS: [],
                 diskonS: [],
                 chargeS: [],
+                pax: [],
                 //totalSum: '',
             }
 
@@ -293,6 +298,7 @@ Vue.component("data-table", DataTable);
                         this.pajakS = response.data.pajakSum;
                         this.diskonS = response.data.diskonSum;
                         this.chargeS = response.data.chargeSum;
+                        this.pax = response.data.paxSum;
                         //alert('Data Ditampilkan');
                         //this.loadDataSorting()
                         //this.loadTotal()
