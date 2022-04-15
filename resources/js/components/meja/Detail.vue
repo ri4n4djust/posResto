@@ -323,7 +323,7 @@
                                     <td v-if="trx.qtyTmp > 0">{{ trx.nmBarangTmp }} </td>
                                     <td v-if="trx.qtyTmp > 0">{{ trx.hrgJualTmp | currency }}</td>
                                     <td v-if="trx.qtyTmp > 0">
-                                        <vue-numeric-input v-model="qtySplit[index]" :min="1" :max="trx.qtyTmp" required></vue-numeric-input>
+                                        <vue-numeric-input v-model="qtySplit[index]" :min="1" :max="trx.qtyTmp" :value="1" required></vue-numeric-input>
                                     </td>
                                     <td v-if="trx.qtyTmp > 0">{{ trx.hrgJualTmp * qtySplit[index] | currency }}</td>
                                     <td v-if="trx.qtyTmp > 0" class="text-center">
@@ -922,6 +922,13 @@
             this.ListOrder1();
             this.loadPelanggan();
             this.adminuser = this.$session.get('roleID');
+            localStorage.setItem('notaSplit', '[]');
+            if(localStorage.getItem('cartItems') != null){
+              this.crt = JSON.parse(localStorage.getItem('cartItems'));
+              // localStorage.setItem('cartItems',JSON.stringify(trxs));
+            }else{
+              localStorage.setItem('cartItems', '[]');
+            }
             
         },
         watch: {
@@ -938,7 +945,7 @@
             this.showModalSplit = true;
             // let cartItems = this.orders;
             // localStorage.setItem('cartItems', '[]');
-            if(localStorage.getItem('cartItems') === null){
+            if(localStorage.getItem('cartItems') === '[]'){
               localStorage.setItem('cartItems',JSON.stringify(trxs));
               this.getCart();
               this.getSplitNota();
@@ -957,15 +964,15 @@
             }           
           },
           getCart: function() {
-                 if (this.crt === null){
-                      this.crt = localStorage.setItem('cartItems', '[]');
-                 }else{
+                //  if (this.crt === null){
+                //       this.crt = localStorage.setItem('cartItems', '[]');
+                //  }else{
                    this.crt = JSON.parse(localStorage.getItem('cartItems'));
                       // const cartItems = JSON.parse(localStorage.getItem('cartItems'));
                       // const objIndex = cartItems.findIndex((e => e.noMejaTmp === '15'));
                       // this.crt = cartItems.filter(b => b.noMejaTmp === this.mj);
                       // this.isicart = JSON.parse(localStorage.getItem('cartItems')).length;
-                 }
+                 // }
             },
           getSplitNota: function() {
                  if (this.splitNota === null){
@@ -1265,6 +1272,7 @@
                 }).then((response) => {
                         //this.$print(printMe);
                         window.print(printMe)
+                        this.totalBayar = '';
                         localStorage.removeItem('cartItems');
                         setTimeout(function(){
                             window.location.href = '/meja';
@@ -1289,13 +1297,16 @@
                 .then((response) => {
                         //this.$print(printMe);
                         window.print(printMeSplit);
-                        localStorage.setItem('notaSplit', '[]');
-                        this.getSplitNota();
+                        this.totalBayar = '';
+                        setTimeout(() => {    
+                          localStorage.setItem('notaSplit', '[]'); 
+                          this.getSplitNota();
+                        }, 3000);
                 }).catch(error => {
                     alert('error! bro');
                     //console.log(error.response.message)
                 });
-                
+                  
             },
         },
         mounted () {

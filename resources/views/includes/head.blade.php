@@ -45,13 +45,20 @@
      .modal-wrapper {
      display: table-cell;
      vertical-align: middle;
+     max-width: 99%;
      }
      .modal-dialog{
-    overflow-y: initial !important
+    overflow-y: initial !important;
+    max-width: 99%;
     }
     .modal-body{
         height: 80vh;
         overflow-y: auto;
+    }
+    @media (min-width: 992px) {
+      .modal-dialog {
+        max-width: 99%;
+      }
     }
   </style>
 
