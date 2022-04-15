@@ -51,7 +51,7 @@ class penjualanController extends Controller
         $endDate = $request->input('endDate');
 
         $bulan = DB::table('tblPenjualan as w')
-                ->select(array(DB::Raw('sum(w.totalNota) as total'),DB::Raw('sum(w.taxNota) as ppn'),DB::Raw('sum(w.diskonNota) as diskon'),DB::Raw('sum(w.chargeNota) as charge'),DB::Raw('w.tglNota')))
+                ->select(array(DB::Raw('sum(w.totalNota) as total'),DB::Raw('sum(w.pax) as pax'),DB::Raw('sum(w.taxNota) as ppn'),DB::Raw('sum(w.diskonNota) as diskon'),DB::Raw('sum(w.chargeNota) as charge'),DB::Raw('w.tglNota')))
                 ->groupBy('w.tglNota')
                 ->orderBy('w.tglNota')
                 ->whereBetween('w.tglNota', [$startDate, $endDate])

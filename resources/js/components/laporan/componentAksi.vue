@@ -105,6 +105,7 @@
                     <p class="text-muted" style="margin-top: 2px;">
                         <b>Inv: </b>{{data.noNota}}<br>
                         <b>Kasir : </b>{{ data.name }}<br>
+                        <b>Pax: </b>{{data.pax}}<br>
                         <b>Type : </b>
                         <span v-if="data.typePembayaran === '1'">
                             Cash

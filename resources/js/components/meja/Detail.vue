@@ -327,7 +327,9 @@
                                     </td>
                                     <td v-if="trx.qtyTmp > 0">{{ trx.hrgJualTmp * qtySplit[index] | currency }}</td>
                                     <td v-if="trx.qtyTmp > 0" class="text-center">
+                                      <div v-if="qtySplit[index] >= '1'">
                                         <button @click.prevent="updateItem(barcode = trx.id, index, trx)" class="btn btn-sm btn-success">Tambah</button>
+                                      </div>
                                     </td>
                                 </tr>
                                 </tbody>
@@ -452,6 +454,7 @@
                   <address>
                   <b>No Inv: </b>{{noNota}}<br>
                   <b>Kasir : </b>{{$session.get('user')}}<br>
+                  <b>Pax: </b>{{post.paxMeja}}<br>
                   <b>Type : </b>
                   <span v-if="pembayaran === '1'">
                     Cash
