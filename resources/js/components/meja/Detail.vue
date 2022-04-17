@@ -361,6 +361,7 @@
                 <input type="hidden" class="form-control" v-model="totalItem">
                 <input type="hidden" class="form-control" v-model="post.waiterMeja">
                 <input type="hidden" class="form-control" v-model="subtotaltp">
+                <input type="text" class="form-control" v-model="groupNota">
                 <p class="text-muted text-center">
                 <input type="hidden" class="form-control" :value="((totalItem * pajak / 100 + totalItem) - (subtotaltp * diskon / 100))  || 0 " :name="totalTransaksiBayar"  >
                 <h3 class="profile-username ">Total {{ Math.floor(((totalItem * pajak / 100 + totalItem) - (subtotaltp * diskon / 100)) + ((totalItem * pajak / 100 + totalItem) - (subtotaltp * diskon / 100)) * taxDebit / 100)  || 0 | currency }}</h3>
@@ -898,7 +899,8 @@
                 printMeSplit: '',
                 crt: [],
                 splitNota: [],
-                mj: this.$route.params.id,
+                groupNota: '',
+
                 //waitername : this.waiter.name,
                 //optionLabel: users.nmBarang,
                 tglNota: new Date().toJSON().slice(0,10).replace(/-/g,'/'),

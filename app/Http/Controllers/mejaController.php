@@ -455,6 +455,8 @@ class mejaController extends Controller
                     'typeNota'  => $request->input('typeNota'),
                     'chargeNota'  => $request->input('chargeNota'),
                     'pax'  => $request->input('pax'),
+                    'created_at' => date("Y-m-d H:i:s", strtotime('now')),
+                    'updated_at' => date("Y-m-d H:i:s", strtotime('now'))
                 ]);
         
                 $pembayaran = Pembayara::insert([
@@ -463,7 +465,7 @@ class mejaController extends Controller
                     'pajakPembayaran'     => $request->input('pajakPembayaran'),
                     'typePembayaran'     => $request->input('typeNota'),
                     'chargePembayaran'     => $request->input('chargePembayaran'),
-                    'noKartuPembayaran'     => $request->input('noKartuPembayaran'),
+                    'noKartuPembayaran'     => $request->input('noKartuPembayaran')
                 ]);
         
                 
