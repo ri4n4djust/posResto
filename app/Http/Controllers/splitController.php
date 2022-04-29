@@ -23,7 +23,7 @@ class splitController extends Controller
                             'noMeja'    => $s->noMejaTmp,
                             'kdBarang'       => $s->kdBarangTmp,
                             'qtyBarang' => $s->qtyTmp,
-                            'subTotal' => $s->totalTmp,
+                            'subTotal' => $s->qtyTmp * $s->hrgJualTmp,
                             'groupNota' => $s->groupNot,
                             'nmBarang' =>$s->nmBarangTmp,
                             'hrgBarang' =>$s->hrgJualTmp,

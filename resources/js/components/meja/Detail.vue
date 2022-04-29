@@ -4,7 +4,6 @@
     <section class="content">
       <div class="row">
         <div class="col-md-3">
-
           <!-- Profile Image -->
           <div class="box box-primary">
             <div class="box-body box-profile">
@@ -488,7 +487,7 @@
                                     <td >{{ trx.nmBarangTmp }} </td>
                                     <td >{{ trx.qtyTmp}}</td>
                                     <td >{{ trx.hrgJualTmp | currency }}</td>
-                                    <td >{{ trx.totalTmp | currency }}</td>
+                                    <td >{{ trx.qtyTmp * trx.hrgJualTmp | currency }}</td>
                                 </tr>
                                 </tbody>
                                     <tr>
@@ -936,6 +935,9 @@
               localStorage.setItem('cartItems', '[]');
             }
             
+            
+            
+            
         },
         watch: {
           post: function() {
@@ -952,6 +954,10 @@
           },
           opensplit(trxs){
             this.showModalSplit = true;
+            history.pushState(null, null, location.href);
+                    window.onpopstate = function () {
+                        history.go(1);
+                    };
             // let cartItems = this.orders;
             // localStorage.setItem('cartItems', '[]');
             if(localStorage.getItem('cartItems') === '[]'){
@@ -980,7 +986,7 @@
                       // const cartItems = JSON.parse(localStorage.getItem('cartItems'));
                       // const objIndex = cartItems.findIndex((e => e.noMejaTmp === '15'));
                       // this.crt = cartItems.filter(b => b.noMejaTmp === this.mj);
-                      // this.isicart = JSON.parse(localStorage.getItem('cartItems')).length;
+                      this.isicart = Object.keys(JSON.parse(localStorage.getItem('cartItems'))).length;
                  // }
             },
           getSplitNota: function() {
@@ -1024,7 +1030,7 @@
                             
                             this.getCart();
                             this.getSplitNota();
-                            this.isicart = Object.keys(JSON.parse(localStorage.getItem('notaSplit'))).length;
+                            this.isiNotaSplit = Object.keys(JSON.parse(localStorage.getItem('notaSplit'))).length;
                         }else{
                         notaSplit.push(trx);
                         const objIndex = notaSplit.findIndex((e => e.id === trx.id));
@@ -1032,7 +1038,7 @@
                         localStorage.setItem('notaSplit',JSON.stringify(notaSplit));
                         this.getCart();
                         this.getSplitNota();
-                        this.isicart = Object.keys(JSON.parse(localStorage.getItem('notaSplit'))).length;
+                        this.isiNotaSplit = Object.keys(JSON.parse(localStorage.getItem('notaSplit'))).length;
                         alert(trx.nmBarangTmp + " berhasil disimpan")
                         
                         }
@@ -1309,8 +1315,7 @@
               });
               var formData = new FormData();
               formData.append('data', JSON.stringify(isiform));
-              // formData.append('data', 'gr = '+1);
-              console.log(isiform);
+              console.log(JSON.stringify(isiform));
                 let uri = '/api/addSplit/store';
                 this.axios.post(uri, formData)
                 .then((response) => {
@@ -1333,7 +1338,12 @@
             //this.intervalFetchData();
             //this.bindings()
             //loadData.call(this)
-            this.loadTotalTnpPromo()
+            this.loadTotalTnpPromo();
+            this.panjangCart();
+            // if(this.isicart > 0){
+            // window.onbeforeunload = function() { return "Your work will be lost."; };
+            // }
+            
         },
 
         beforeDestroy () {
@@ -1349,6 +1359,17 @@
               }
 
             return sum;
+          },
+          panjangCart: function(){
+              if (this.isicart > 0) {
+                    //Stay on the same page
+                    //window.onbeforeunload = function() { return "Your work will be lost."; };
+                   history.pushState(null, null, location.href);
+                    window.onpopstate = function () {
+                        history.go(1);
+                    };
+                    // next(false);
+              }
           }
 }
         
