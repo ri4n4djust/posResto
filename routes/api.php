@@ -79,6 +79,7 @@ Route::post('/afterorderprint/{id}', 'mejaController@afterPrintOrder');
 
 //============pembayaran
 Route::post('/addSplit/store', 'splitController@add');
+Route::get('/grouppayment/{id}', 'penjualanController@groupPay');
 
 //=========total
 Route::post('/totalTrx/{id}', 'mejaController@totalTrx');

@@ -30,7 +30,24 @@ class penjualanController extends Controller
             'data' => $posts
         ], 200);
     }
-    public function laporanBulanan()
+    public function groupPay($id){
+        $pay = DB::table('splitpayment as w')
+                ->select(array(DB::Raw('sum(w.hrgBarang) as harga'),DB::Raw('sum(w.subTotal) as total'),DB::Raw('w.groupNota')))
+                ->groupBy('w.groupNota')
+                ->where('w.noNota', $id)
+                ->get();
+        $brg = DB::table('splitpayment')
+                ->select(array(DB::Raw('*')))
+                ->where('noNota', $id)
+                ->get();
+        return response([
+                    'success' => true,
+                    'message' => 'List Semua group',
+                    'data' => $pay,
+                    'databarang' => $brg
+                ], 200);
+    }
+    public function laporanBulanan(Request $request)
     {
 
         $bulan = DB::table('tblPenjualan as w')

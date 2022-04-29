@@ -10086,12 +10086,58 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "ActionButtons",
   data: function data() {
     return {
       posts: [],
       pem: [],
+      gro: [],
+      groB: [],
       showModalPenjualan: false,
       np: this.data.noNota,
       sukses: '',
@@ -10150,6 +10196,7 @@ __webpack_require__.r(__webpack_exports__);
 
       this.load = true;
       this.showModalPenjualan = true;
+      this.loadGroup();
       var uri = '/api/detailpenjualan/' + this.data.noNota;
       this.axios.get(uri).then(function (response) {
         _this4.pem = response.data.data;
@@ -10157,11 +10204,20 @@ __webpack_require__.r(__webpack_exports__);
         _this4.load = false; // alert('no nota '+ this.data.noNota);
       });
     },
-    intervalFetchData: function intervalFetchData() {
+    loadGroup: function loadGroup() {
       var _this5 = this;
 
+      var uri = '/api/grouppayment/' + this.data.noNota;
+      this.axios.get(uri).then(function (response) {
+        _this5.gro = response.data.data;
+        _this5.groB = response.data.databarang;
+      });
+    },
+    intervalFetchData: function intervalFetchData() {
+      var _this6 = this;
+
       setInterval(function () {
-        _this5.loadData();
+        _this6.loadData();
       }, 3000);
     }
   },
@@ -68856,15 +68912,15 @@ var render = function () {
                                     { staticClass: "text-bold text-center" },
                                     [
                                       _vm._v(
-                                        "\n                            Terima Kasih "
+                                        "\n                    Terima Kasih "
                                       ),
                                       _c("br"),
                                       _vm._v(
-                                        "\n                            Belanja Anda Hal Baik Bagi Dunia"
+                                        "\n                    Belanja Anda Hal Baik Bagi Dunia"
                                       ),
                                       _c("br"),
                                       _vm._v(
-                                        "\n                            Tidak enak Kasi Tau Kami, ENAK kasi tau temanmu"
+                                        "\n                    Tidak enak Kasi Tau Kami, ENAK kasi tau temanmu"
                                       ),
                                       _c("br"),
                                     ]
@@ -68875,49 +68931,272 @@ var render = function () {
                           ]),
                         ]),
                         _vm._v(" "),
-                        _c(
-                          "table",
-                          { staticClass: "table table-hover table-bordered" },
-                          [
-                            _c("thead", [
-                              _c("tr", [
-                                _c("th", [_vm._v("Nama ")]),
-                                _vm._v(" "),
-                                _c("th", [_vm._v("Qty")]),
-                                _vm._v(" "),
-                                _c("th", [_vm._v("Harga")]),
-                                _vm._v(" "),
-                                _c("th", [_vm._v("Total")]),
+                        _c("div", { staticClass: "col-md-12" }, [
+                          _c("div", { staticClass: "nav-tabs-custom" }, [
+                            _c("ul", { staticClass: "nav nav-tabs" }, [
+                              _c("li", { staticClass: "active" }, [
+                                _c(
+                                  "a",
+                                  {
+                                    attrs: {
+                                      href: "#brg",
+                                      "data-toggle": "tab",
+                                    },
+                                  },
+                                  [_vm._v("Data Barang")]
+                                ),
+                              ]),
+                              _vm._v(" "),
+                              _c("li", [
+                                _c(
+                                  "a",
+                                  {
+                                    attrs: {
+                                      href: "#group",
+                                      "data-toggle": "tab",
+                                    },
+                                  },
+                                  [_vm._v("Group")]
+                                ),
                               ]),
                             ]),
                             _vm._v(" "),
-                            _c(
-                              "tbody",
-                              _vm._l(_vm.pem, function (pe) {
-                                return _c("tr", { key: pe.id }, [
-                                  _c("td", [_vm._v(_vm._s(pe.nmBarang) + " ")]),
-                                  _vm._v(" "),
-                                  _c("td", [_vm._v(_vm._s(pe.qty))]),
-                                  _vm._v(" "),
-                                  _c("td", [
-                                    _vm._v(
-                                      _vm._s(_vm._f("currency")(pe.hrgJual))
-                                    ),
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("td", [
-                                    _vm._v(
-                                      _vm._s(
-                                        _vm._f("currency")(pe.qty * pe.hrgJual)
-                                      )
-                                    ),
-                                  ]),
-                                ])
-                              }),
-                              0
-                            ),
-                          ]
-                        ),
+                            _c("div", { staticClass: "tab-content" }, [
+                              _c(
+                                "div",
+                                {
+                                  staticClass: "active tab-pane",
+                                  attrs: { id: "brg" },
+                                },
+                                [
+                                  _c(
+                                    "table",
+                                    {
+                                      staticClass:
+                                        "table table-hover table-bordered",
+                                    },
+                                    [
+                                      _c("thead", [
+                                        _c("tr", [
+                                          _c("th", [_vm._v("Nama ")]),
+                                          _vm._v(" "),
+                                          _c("th", [_vm._v("Qty")]),
+                                          _vm._v(" "),
+                                          _c("th", [_vm._v("Harga")]),
+                                          _vm._v(" "),
+                                          _c("th", [_vm._v("Total")]),
+                                        ]),
+                                      ]),
+                                      _vm._v(" "),
+                                      _c(
+                                        "tbody",
+                                        _vm._l(_vm.pem, function (pe) {
+                                          return _c("tr", { key: pe.id }, [
+                                            _c("td", [
+                                              _vm._v(_vm._s(pe.nmBarang) + " "),
+                                            ]),
+                                            _vm._v(" "),
+                                            _c("td", [_vm._v(_vm._s(pe.qty))]),
+                                            _vm._v(" "),
+                                            _c("td", [
+                                              _vm._v(
+                                                _vm._s(
+                                                  _vm._f("currency")(pe.hrgJual)
+                                                )
+                                              ),
+                                            ]),
+                                            _vm._v(" "),
+                                            _c("td", [
+                                              _vm._v(
+                                                _vm._s(
+                                                  _vm._f("currency")(
+                                                    pe.qty * pe.hrgJual
+                                                  )
+                                                )
+                                              ),
+                                            ]),
+                                          ])
+                                        }),
+                                        0
+                                      ),
+                                    ]
+                                  ),
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "div",
+                                {
+                                  staticClass: "tab-pane",
+                                  attrs: { id: "group" },
+                                },
+                                [
+                                  _c(
+                                    "table",
+                                    {
+                                      staticClass:
+                                        "table table-hover table-bordered",
+                                    },
+                                    [
+                                      _c("thead", [
+                                        _c("tr", [
+                                          _c("th", [_vm._v("Detail ")]),
+                                        ]),
+                                      ]),
+                                      _vm._v(" "),
+                                      _c(
+                                        "tbody",
+                                        _vm._l(_vm.gro, function (gr) {
+                                          return _c("tr", { key: gr.id }, [
+                                            _c(
+                                              "td",
+                                              [
+                                                _c("tr", [
+                                                  _c(
+                                                    "td",
+                                                    { attrs: { witdh: "400" } },
+                                                    [_vm._v("Group")]
+                                                  ),
+                                                  _vm._v(" "),
+                                                  _c("td", [
+                                                    _vm._v(
+                                                      _vm._s(gr.groupNota)
+                                                    ),
+                                                  ]),
+                                                  _vm._v(" "),
+                                                  _c("td", [
+                                                    _vm._v(
+                                                      _vm._s(
+                                                        _vm._f("currency")(
+                                                          gr.total
+                                                        )
+                                                      )
+                                                    ),
+                                                  ]),
+                                                ]),
+                                                _vm._v(" "),
+                                                _vm._l(
+                                                  _vm.groB,
+                                                  function (grB) {
+                                                    return _c(
+                                                      "tr",
+                                                      { key: grB.id },
+                                                      [
+                                                        _c(
+                                                          "td",
+                                                          {
+                                                            attrs: {
+                                                              colspan: "3",
+                                                            },
+                                                          },
+                                                          [
+                                                            _c(
+                                                              "div",
+                                                              {
+                                                                staticClass:
+                                                                  "col-xs-12 table-responsive",
+                                                              },
+                                                              [
+                                                                _c(
+                                                                  "table",
+                                                                  {
+                                                                    staticClass:
+                                                                      "table table-hover table-bordered",
+                                                                  },
+                                                                  [
+                                                                    _c(
+                                                                      "tbody",
+                                                                      [
+                                                                        gr.groupNota ==
+                                                                        grB.groupNota
+                                                                          ? _c(
+                                                                              "tr",
+                                                                              [
+                                                                                _c(
+                                                                                  "td",
+                                                                                  {
+                                                                                    attrs:
+                                                                                      {
+                                                                                        witdh:
+                                                                                          "40%",
+                                                                                      },
+                                                                                  },
+                                                                                  [
+                                                                                    _vm._v(
+                                                                                      _vm._s(
+                                                                                        grB.nmBarang
+                                                                                      )
+                                                                                    ),
+                                                                                  ]
+                                                                                ),
+                                                                                _vm._v(
+                                                                                  " "
+                                                                                ),
+                                                                                _c(
+                                                                                  "td",
+                                                                                  [
+                                                                                    _vm._v(
+                                                                                      _vm._s(
+                                                                                        grB.hrgBarang
+                                                                                      )
+                                                                                    ),
+                                                                                  ]
+                                                                                ),
+                                                                                _vm._v(
+                                                                                  " "
+                                                                                ),
+                                                                                _c(
+                                                                                  "td",
+                                                                                  [
+                                                                                    _vm._v(
+                                                                                      _vm._s(
+                                                                                        grB.qtyBarang
+                                                                                      )
+                                                                                    ),
+                                                                                  ]
+                                                                                ),
+                                                                                _vm._v(
+                                                                                  " "
+                                                                                ),
+                                                                                _c(
+                                                                                  "td",
+                                                                                  [
+                                                                                    _vm._v(
+                                                                                      _vm._s(
+                                                                                        grB.subTotal
+                                                                                      )
+                                                                                    ),
+                                                                                  ]
+                                                                                ),
+                                                                              ]
+                                                                            )
+                                                                          : _vm._e(),
+                                                                      ]
+                                                                    ),
+                                                                  ]
+                                                                ),
+                                                              ]
+                                                            ),
+                                                          ]
+                                                        ),
+                                                      ]
+                                                    )
+                                                  }
+                                                ),
+                                              ],
+                                              2
+                                            ),
+                                          ])
+                                        }),
+                                        0
+                                      ),
+                                    ]
+                                  ),
+                                ]
+                              ),
+                            ]),
+                          ]),
+                        ]),
                       ]),
                     ]),
                   ]),

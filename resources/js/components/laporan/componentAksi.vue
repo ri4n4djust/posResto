@@ -121,65 +121,64 @@
                     <!-- /.col -->
                     
                     <div class="col-xs-12 table-responsive">
-                        
-                  <table class="table table-striped">
-                                <thead>
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th>Nama </th>
+                                <th>Qty</th>
+                                <th>Harga</th>
+                                <th>Total</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr v-for="trx in pem" :key="trx.noN">
+                                <td>{{ trx.nmBarang }} </td>
+                                <td>{{ trx.qty}}</td>
+                                <td>{{ trx.hrgJual | currency }}</td>
+                                <td>{{ trx.qty * trx.hrgJual | currency }}</td>
+                            </tr>
+                            </tbody>
+                            
                                 <tr>
-                                    <th>Nama </th>
-                                    <th>Qty</th>
-                                    <th>Harga</th>
-                                    <th>Total</th>
+                                    <th colspan="3">subTotal :</th>
+                                    <th>{{ totalJ | currency}}</th>
                                 </tr>
-                                </thead>
-                                <tbody>
-                                <tr v-for="trx in pem" :key="trx.noN">
-                                    <td>{{ trx.nmBarang }} </td>
-                                    <td>{{ trx.qty}}</td>
-                                    <td>{{ trx.hrgJual | currency }}</td>
-                                    <td>{{ trx.qty * trx.hrgJual | currency }}</td>
+                                <tr>
+                                    <th colspan="3">Tax & Service : {{ data.pajakPembayaran }} %</th>
+                                    <th>{{ data.taxNota | currency}}</th>
                                 </tr>
-                                </tbody>
-                                
-                                    <tr>
-                                        <th colspan="3">subTotal :</th>
-                                        <th>{{ totalJ | currency}}</th>
-                                    </tr>
-                                    <tr>
-                                        <th colspan="3">Tax & Service : {{ data.pajakPembayaran }} %</th>
-                                        <th>{{ data.taxNota | currency}}</th>
-                                    </tr>
-                                    <tr>
-                                        <th colspan="3">Discount {{ data.diskonPembayaran }} %</th>
-                                        <th>{{ data.diskonNota | currency}}</th>
-                                    </tr>
-                                    <tr>
-                                        <th colspan="3">subTotal :</th>
-                                        <th>{{ data.totalNota | currency }}</th>
-                                    </tr>
-                                    <tr v-if="data.typePembayaran === '1'">
-                                    </tr>
-                                    <tr v-else-if="data.typePembayaran === '2'">
-                                        <th colspan="3">Card Charge : {{ data.chargePembayaran }} %</th>
-                                        <th>{{ data.chargeNota | currency }}</th>
-                                    </tr>
+                                <tr>
+                                    <th colspan="3">Discount {{ data.diskonPembayaran }} %</th>
+                                    <th>{{ data.diskonNota | currency}}</th>
+                                </tr>
+                                <tr>
+                                    <th colspan="3">subTotal :</th>
+                                    <th>{{ data.totalNota | currency }}</th>
+                                </tr>
+                                <tr v-if="data.typePembayaran === '1'">
+                                </tr>
+                                <tr v-else-if="data.typePembayaran === '2'">
+                                    <th colspan="3">Card Charge : {{ data.chargePembayaran }} %</th>
+                                    <th>{{ data.chargeNota | currency }}</th>
+                                </tr>
 
-                                    <tr>
-                                        <th colspan="3">Payment :</th>
-                                        <th>{{ data.bayarNota | currency }}</th>
-                                    </tr>
+                                <tr>
+                                    <th colspan="3">Payment :</th>
+                                    <th>{{ data.bayarNota | currency }}</th>
+                                </tr>
 
-                                    <tr v-if="data.typePembayaran === '1'">
-                                        <th colspan="3">Kembalian :</th>
-                                        <th>{{ data.kembalianNota | currency }}</th>
-                                    </tr>
-                                    <tr v-else-if="data.typePembayaran === '2'">
-                                    </tr>
-                                </table>
-                                <p class="text-bold text-center">
-                                Terima Kasih <br>
-                                Belanja Anda Hal Baik Bagi Dunia<br>
-                                Tidak enak Kasi Tau Kami, ENAK kasi tau temanmu<br>                              
-                            </p>
+                                <tr v-if="data.typePembayaran === '1'">
+                                    <th colspan="3">Kembalian :</th>
+                                    <th>{{ data.kembalianNota | currency }}</th>
+                                </tr>
+                                <tr v-else-if="data.typePembayaran === '2'">
+                                </tr>
+                        </table>
+                        <p class="text-bold text-center">
+                        Terima Kasih <br>
+                        Belanja Anda Hal Baik Bagi Dunia<br>
+                        Tidak enak Kasi Tau Kami, ENAK kasi tau temanmu<br>                              
+                        </p>
 
                 </div>
                 
@@ -190,28 +189,73 @@
             </div>
 
                                         
-                                        
+                    <div class="col-md-12">
+                        <div class="nav-tabs-custom">
+                            <ul class="nav nav-tabs">
+                            <li class="active"><a href="#brg" data-toggle="tab">Data Barang</a></li>
+                            <li><a href="#group" data-toggle="tab">Group</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="active tab-pane" id="brg">
+                                    <table class="table table-hover table-bordered">
+                                        <thead>
+                                        <tr>
+                                            <th>Nama </th>
+                                            <th>Qty</th>
+                                            <th>Harga</th>
+                                            <th>Total</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr v-for="pe in pem" :key="pe.id">
+                                            <td>{{ pe.nmBarang }} </td>
+                                            <td>{{ pe.qty}}</td>
+                                            <td>{{ pe.hrgJual | currency }}</td>
+                                            <td>{{ pe.qty * pe.hrgJual | currency }}</td>
 
-                                                    <table class="table table-hover table-bordered">
-                                                        <thead>
-                                                        <tr>
-                                                            <th>Nama </th>
-                                                            <th>Qty</th>
-                                                            <th>Harga</th>
-                                                            <th>Total</th>
-                                                        </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                        <tr v-for="pe in pem" :key="pe.id">
-                                                            <td>{{ pe.nmBarang }} </td>
-                                                            <td>{{ pe.qty}}</td>
-                                                            <td>{{ pe.hrgJual | currency }}</td>
-                                                            <td>{{ pe.qty * pe.hrgJual | currency }}</td>
-
-                                                        </tr>
-                                                        </tbody>
-                                                    </table>
-      
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="tab-pane" id="group">
+                                        <table class="table table-hover table-bordered">
+                                        <thead>
+                                        <tr>
+                                            <th>Detail </th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr v-for="gr in gro" :key="gr.id">
+                                            <td >
+                                                <tr>
+                                                    <td witdh="400">Group</td>
+                                                    <td>{{ gr.groupNota}}</td>
+                                                    <td>{{ gr.total | currency }}</td>
+                                                </tr>
+                                                <tr v-for="grB in groB" :key="grB.id">
+                                                    <td colspan="3">
+                                                        <div class="col-xs-12 table-responsive">
+                                                        <table  class="table table-hover table-bordered">
+                                                            <tbody >
+                                                            <tr v-if="gr.groupNota == grB.groupNota" >
+                                                                <td witdh="40%">{{ grB.nmBarang}}</td>
+                                                                <td>{{ grB.hrgBarang}}</td>
+                                                                <td>{{ grB.qtyBarang}}</td>
+                                                                <td>{{ grB.subTotal}}</td>
+                                                            </tr>
+                                                            </tbody>
+                                                        </table>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                                         
 
                                     </div>
@@ -256,6 +300,8 @@ export default {
             return {
                 posts: [],
                 pem: [],
+                gro: [],
+                groB: [],
                 showModalPenjualan: false,
                 np: this.data.noNota,
                 sukses: '',
@@ -311,13 +357,22 @@ export default {
             loadDetailPenjualan:function(){
                 this.load = true;
                 this.showModalPenjualan = true;
+                this.loadGroup();
                 let uri = '/api/detailpenjualan/'+ this.data.noNota;
                 this.axios.get(uri).then(response => {
                     this.pem = response.data.data;
                     this.totalJ = response.data.total;
                     this.load = false;
+                    
                    // alert('no nota '+ this.data.noNota);
             });
+            },
+            loadGroup:function(){
+                let uri = '/api/grouppayment/'+ this.data.noNota;
+                this.axios.get(uri).then(response => {
+                    this.gro = response.data.data;
+                    this.groB = response.data.databarang;
+                });
             },
             intervalFetchData: function () {
             setInterval(() => {    
