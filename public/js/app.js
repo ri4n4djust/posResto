@@ -13717,8 +13717,7 @@ __webpack_require__.r(__webpack_exports__);
     //this.intervalFetchData();
     //this.bindings()
     //loadData.call(this)
-    this.loadTotalTnpPromo();
-    this.panjangCart(); // if(this.isicart > 0){
+    this.loadTotalTnpPromo(); // if(this.isicart > 0){
     // window.onbeforeunload = function() { return "Your work will be lost."; };
     // }
   },
@@ -13735,18 +13734,6 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       return sum;
-    },
-    panjangCart: function panjangCart() {
-      if (this.isicart > 0) {
-        //Stay on the same page
-        //window.onbeforeunload = function() { return "Your work will be lost."; };
-        history.pushState(null, null, location.href);
-
-        window.onpopstate = function () {
-          history.go(1);
-        }; // next(false);
-
-      }
     }
   }
 });
