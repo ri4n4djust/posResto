@@ -24,7 +24,7 @@ class splitController extends Controller
                             'kdBarang'       => $s->kdBarangTmp,
                             'qtyBarang' => $s->qtyTmp,
                             'subTotal' => $s->totalTmp,
-                            'groupNota' => $s->typeTmp,
+                            'groupNota' => $s->groupNot,
                             'nmBarang' =>$s->nmBarangTmp,
                             'hrgBarang' =>$s->hrgJualTmp,
                         ];

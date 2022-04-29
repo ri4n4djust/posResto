@@ -361,7 +361,7 @@
                 <input type="hidden" class="form-control" v-model="totalItem">
                 <input type="hidden" class="form-control" v-model="post.waiterMeja">
                 <input type="hidden" class="form-control" v-model="subtotaltp">
-                <input type="text" class="form-control" v-model="groupNota">
+                <input type="hidden" class="form-control" v-model="groupNota">
                 <p class="text-muted text-center">
                 <input type="hidden" class="form-control" :value="((totalItem * pajak / 100 + totalItem) - (subtotaltp * diskon / 100))  || 0 " :name="totalTransaksiBayar"  >
                 <h3 class="profile-username ">Total {{ Math.floor(((totalItem * pajak / 100 + totalItem) - (subtotaltp * diskon / 100)) + ((totalItem * pajak / 100 + totalItem) - (subtotaltp * diskon / 100)) * taxDebit / 100)  || 0 | currency }}</h3>
@@ -392,7 +392,7 @@
                                   
                                   <h3 class="profile-username ">Kembali : {{ Math.floor(totalBayar - ((totalItem * pajak / 100 + totalItem) - (subtotaltp * diskon / 100)))  || 0 | currency  }}</h3>
                                   <p class="text-muted text-center">
-                                  <button type="submit"  class="btn btn-md btn-success" >Bayar</button> 
+                                  <button type="submit" v-on:click="addG()" class="btn btn-md btn-success" >Bayar</button> 
                                   </p>
                             </div>
                             <div v-else-if="pembayaran === '2'">
@@ -413,7 +413,7 @@
                                   </div>
                                   <br>
                                   <p class="text-muted text-center">
-                                  <button type="submit"  class="btn btn-md btn-success" >Bayar</button>       
+                                  <button type="submit" v-on:click="addG()" class="btn btn-md btn-success" >Bayar</button>       
                                           
                                   </p>
                             </div>
@@ -899,7 +899,7 @@
                 printMeSplit: '',
                 crt: [],
                 splitNota: [],
-                groupNota: '',
+                groupNota: 0,
 
                 //waitername : this.waiter.name,
                 //optionLabel: users.nmBarang,
@@ -947,6 +947,9 @@
 
               
         methods: {
+          addG: function() {
+              this.groupNota++
+          },
           opensplit(trxs){
             this.showModalSplit = true;
             // let cartItems = this.orders;
@@ -1008,7 +1011,7 @@
                         notaSplit = [];
                     }else{
                         notaSplit = JSON.parse(localStorage.getItem('notaSplit'));
-                    }
+                    
                         const oldItems = JSON.parse(localStorage.getItem('notaSplit')) || [];
                         const existingItem = oldItems.find(({ id }) => id === trx.id);
                         if (existingItem) {
@@ -1018,6 +1021,7 @@
                             notaSplit[objIndex].qtyTmp = parseInt(newQty);
                             localStorage.setItem('notaSplit',JSON.stringify(notaSplit));
                             alert('Quantity Update')
+                            
                             this.getCart();
                             this.getSplitNota();
                             this.isicart = Object.keys(JSON.parse(localStorage.getItem('notaSplit'))).length;
@@ -1030,7 +1034,10 @@
                         this.getSplitNota();
                         this.isicart = Object.keys(JSON.parse(localStorage.getItem('notaSplit'))).length;
                         alert(trx.nmBarangTmp + " berhasil disimpan")
+                        
                         }
+                        // this.qtySplit = 0 ;
+                    }
             },
           select_menu(menu){
                 this.post2.id = menu.id
@@ -1295,9 +1302,15 @@
                 }, 3000);    
             },
             PostSplit() {
+              var isiform = this.splitNota;
+              var gr = this.groupNota;
+              isiform.forEach(function (element) {
+                element.groupNot = gr;
+              });
               var formData = new FormData();
-              formData.append('data', JSON.stringify(this.splitNota));
-              
+              formData.append('data', JSON.stringify(isiform));
+              // formData.append('data', 'gr = '+1);
+              console.log(isiform);
                 let uri = '/api/addSplit/store';
                 this.axios.post(uri, formData)
                 .then((response) => {
