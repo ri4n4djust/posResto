@@ -1325,7 +1325,7 @@
                         setTimeout(() => {    
                           localStorage.setItem('notaSplit', '[]'); 
                           this.getSplitNota();
-                        }, 3000);
+                        }, 10000);
                 }).catch(error => {
                     alert('error! bro');
                     //console.log(error.response.message)
