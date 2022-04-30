@@ -36,7 +36,7 @@ class penjualanController extends Controller
                 ->groupBy('w.groupNota')
                 ->where('w.noNota', $id)
                 ->get();
-        $brg = DB::table('splitpayment')
+        $brg = DB::table('splitPayment')
                 ->select(array(DB::Raw('*')))
                 ->where('noNota', $id)
                 ->get();
