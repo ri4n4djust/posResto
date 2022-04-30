@@ -31,7 +31,7 @@ class penjualanController extends Controller
         ], 200);
     }
     public function groupPay($id){
-        $pay = DB::table('splitpayment as w')
+        $pay = DB::table('splitPayment as w')
                 ->select(array(DB::Raw('sum(w.hrgBarang) as harga'),DB::Raw('sum(w.subTotal) as total'),DB::Raw('w.groupNota')))
                 ->groupBy('w.groupNota')
                 ->where('w.noNota', $id)
