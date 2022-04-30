@@ -129,13 +129,13 @@
 
         <!-- /.col -->
         <div class="col-md-9">
-                <a href="#"  @click="showModalMenu = true" class="btn btn-md btn-success"><b>Add Menu</b></a>
-                <a href="#"  @click="showModalMove = true" class="btn btn-md btn-success"><b>Pindah Meja</b></a>
+                <a href="#"  @click="showModalMenu = true" class="btn btn-primary btn-success"><b>Add Menu</b></a>
+                <a href="#"  @click="showModalMove = true" class="btn btn-primary btn-success"><b>Pindah Meja</b></a>
                 <span v-if="adminuser === 'Admin'">
-                  <span v-if=" orders.length == 0 && orders1.length == 0"><a href="#"  class="btn btn-md btn-success disabled" role="button" aria-disabled="true">Print Order</a></span>
-                  <span v-else><a href="#"  @click="printOrder(id= post.id)" class="btn btn-md btn-success" >Print Order</a></span>
+                  <span v-if=" orders.length == 0 && orders1.length == 0"><a href="#"  class="btn btn-primary btn-success disabled" role="button" aria-disabled="true">Print Order</a></span>
+                  <span v-else><a href="#"  @click="printOrder(id= post.id)" class="btn btn-primary btn-success" >Print Order</a></span>
                 </span>
-                <router-link :to="{ name: 'meja' }" class="btn btn-md btn-success">KEMBALI</router-link>
+                <router-link :to="{ name: 'meja' }" class="btn btn-primary btn-success">KEMBALI</router-link>
                 <!-- /.post -->
                             <table class="table table-hover table-bordered">
                                 <thead>
@@ -196,7 +196,7 @@
                       <input type="hidden" class="form-control" v-model="move1.id">
                     </div>
                     <div class="form-group">
-                    <button type="submit" class="btn btn-md btn-success">Pindah</button>
+                    <button type="submit" class="btn btn-primary btn-success">Pindah</button>
                     </div>
                   </form>
                 </div>
@@ -274,7 +274,7 @@
                       <input type="text" class="form-control" :value="(post2.hargaMenu * qtyBarang) || 0" :name="total"  disabled>
                     </div>
                     <div class="form-group">
-                    <button type="submit"  class="btn btn-md btn-success">Add</button>
+                    <button type="submit"  class="btn btn-primary btn-success">Add</button>
                     </div>
                   </form>
                 </div>
@@ -391,7 +391,7 @@
                                   
                                   <h3 class="profile-username ">Kembali : {{ Math.floor(totalBayar - ((totalItem * pajak / 100 + totalItem) - (subtotaltp * diskon / 100)))  || 0 | currency  }}</h3>
                                   <p class="text-muted text-center">
-                                  <button type="submit" v-on:click="addG()" class="btn btn-md btn-success" >Bayar</button> 
+                                  <button type="submit" v-on:click="addG()" class="btn btn-primary btn-success" >Bayar</button> 
                                   </p>
                             </div>
                             <div v-else-if="pembayaran === '2'">
@@ -412,7 +412,7 @@
                                   </div>
                                   <br>
                                   <p class="text-muted text-center">
-                                  <button type="submit" v-on:click="addG()" class="btn btn-md btn-success" >Bayar</button>       
+                                  <button type="submit" v-on:click="addG()" class="btn btn-primary btn-success" >Bayar</button>       
                                           
                                   </p>
                             </div>
@@ -603,8 +603,8 @@
                                   
                                   <h3 class="profile-username ">Kembali : {{ Math.floor(totalBayar - ((subtotal * pajak / 100 + subtotal) - (subtotaltp * diskon / 100)))  || 0 | currency  }}</h3>
                                   <p class="text-muted text-center">
-                                  <button type="submit"  class="btn btn-md btn-success" >Bayar</button> 
-                                  <a href="#"  @click="printBill(printMe)" class="btn btn-md btn-success" >Print Bill</a>               
+                                  <button type="submit"  class="btn btn-primary btn-success" >Bayar</button> 
+                                  <a href="#"  @click="printBill(printMe)" class="btn btn-primary btn-success" >Print Bill</a>               
                                   </p>
                             </div>
                             <div v-else-if="pembayaran === '2'">
@@ -625,8 +625,8 @@
                                   </div>
                                   <br>
                                   <p class="text-muted text-center">
-                                  <button type="submit"  class="btn btn-md btn-success" >Bayar</button>       
-                                  <a href="#"  @click="printBill(printMe)" class="btn btn-md btn-success" >Print Bill</a>         
+                                  <button type="submit"  class="btn btn-primary btn-success" >Bayar</button>       
+                                  <a href="#"  @click="printBill(printMe)" class="btn btn-primary btn-success" >Print Bill</a>         
                                   </p>
                             </div>
                             <div v-else-if="pembayaran === '3'">
