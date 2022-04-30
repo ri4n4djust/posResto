@@ -129,13 +129,13 @@
 
         <!-- /.col -->
         <div class="col-md-9">
-                <a href="#"  @click="showModalMenu = true" class="btn btn-primary btn-success"><b>Add Menu</b></a>
-                <a href="#"  @click="showModalMove = true" class="btn btn-primary btn-success"><b>Pindah Meja</b></a>
+                <a href="#"  @click="showModalMenu = true" class="btn-md btn-success"><b>Add Menu</b></a>
+                <a href="#"  @click="showModalMove = true" class="btn-md btn-success"><b>Pindah Meja</b></a>
                 <span v-if="adminuser === 'Admin'">
-                  <span v-if=" orders.length == 0 && orders1.length == 0"><a href="#"  class="btn btn-primary btn-success disabled" role="button" aria-disabled="true">Print Order</a></span>
-                  <span v-else><a href="#"  @click="printOrder(id= post.id)" class="btn btn-primary btn-success" >Print Order</a></span>
+                  <span v-if=" orders.length == 0 && orders1.length == 0"><a href="#"  class="btn-md btn-success disabled" role="button" aria-disabled="true">Print Order</a></span>
+                  <span v-else><a href="#"  @click="printOrder(id= post.id)" class="btn-md btn-success" >Print Order</a></span>
                 </span>
-                <router-link :to="{ name: 'meja' }" class="btn btn-primary btn-success">KEMBALI</router-link>
+                <router-link :to="{ name: 'meja' }" class="btn-md btn-success">KEMBALI</router-link>
                 <!-- /.post -->
                             <table class="table table-hover table-bordered">
                                 <thead>
