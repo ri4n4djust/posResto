@@ -362,8 +362,8 @@
                 <input type="hidden" class="form-control" v-model="subtotaltp">
                 <input type="hidden" class="form-control" v-model="groupNota">
                 <p class="text-muted text-center">
-                <input type="hidden" class="form-control" :value="((totalItem * pajak / 100 + totalItem) - (subtotaltp * diskon / 100))  || 0 " :name="totalTransaksiBayar"  >
-                <h3 class="profile-username ">Total {{ Math.floor(((totalItem * pajak / 100 + totalItem) - (subtotaltp * diskon / 100)) + ((totalItem * pajak / 100 + totalItem) - (subtotaltp * diskon / 100)) * taxDebit / 100)  || 0 | currency }}</h3>
+                <input type="hidden" class="form-control" :value="((totalItem * pajak / 100 + totalItem) - (totalItem * diskon / 100))  || 0 " :name="totalTransaksiBayar"  >
+                <h3 class="profile-username ">Total {{ Math.floor(((totalItem * pajak / 100 + totalItem) - (totalItem * diskon / 100)) + ((totalItem * pajak / 100 + totalItem) - (totalItem * diskon / 100)) * taxDebit / 100)  || 0 | currency }}</h3>
                 <div class="row input-group">
                 <div class="col-xs-4">
                   <span class="input-group-addon">Tax in %</span>
@@ -373,7 +373,7 @@
                 <div class="col-xs-4">
                   <span class="input-group-addon">Disc in %</span>
                   <input type="number" step=".01" class="form-control" v-model="diskon" placeholder="Diskon">
-                  <input type="hidden" class="form-control" :value="subtotaltp * diskon / 100" :name="diskon1" >
+                  <input type="hidden" class="form-control" :value="totalItem * diskon / 100" :name="diskon1" >
                 </div>
               </div>
               <br>
@@ -386,10 +386,10 @@
                             <div v-if="pembayaran === '1'">
                               <div class="input-group">
                                     <span class="input-group-addon">Rp.</span>
-                                    <input type="number" class="form-control" v-model="totalBayar" placeholder="Bayar" required>
+                                    <input type="number" class="form-control" v-model="totalBayarS" placeholder="Bayar" required>
                                   </div>
                                   
-                                  <h3 class="profile-username ">Kembali : {{ Math.floor(totalBayar - ((totalItem * pajak / 100 + totalItem) - (subtotaltp * diskon / 100)))  || 0 | currency  }}</h3>
+                                  <h3 class="profile-username ">Kembali : {{ Math.floor(totalBayarS - ((totalItem * pajak / 100 + totalItem) - (totalItem * diskon / 100)))  || 0 | currency  }}</h3>
                                   <p class="text-muted text-center">
                                   <button type="submit" v-on:click="addG()" class="btn btn-success" >Bayar</button> 
                                   </p>
@@ -408,7 +408,7 @@
                                   <p>
                                   <div class="input-group">
                                     <span class="input-group-addon">Rp.</span>
-                                    <input type="number" class="form-control" v-model="totalBayar" placeholder="Bayar" required>
+                                    <input type="number" class="form-control" v-model="totalBayarS" placeholder="Bayar" required>
                                   </div>
                                   <br>
                                   <p class="text-muted text-center">
@@ -500,11 +500,11 @@
                                     </tr>
                                     <tr>
                                         <th colspan="3">Discount : {{ diskon }} %</th>
-                                        <th>{{ Math.floor(subtotaltp * diskon / 100) | currency}}</th>
+                                        <th>{{ Math.floor(totalItem * diskon / 100) | currency}}</th>
                                     </tr>
                                     <tr>
                                         <th colspan="3">subTotal :</th>
-                                        <th>{{ Math.floor((totalItem * pajak / 100 + totalItem) - (subtotaltp * diskon / 100))  || 0 | currency }}</th>
+                                        <th>{{ Math.floor((totalItem * pajak / 100 + totalItem) - (totalItem * diskon / 100))  || 0 | currency }}</th>
                                     </tr>
 
                                     <tr v-if="pembayaran === '1'">
@@ -516,12 +516,12 @@
 
                                     <tr>
                                         <th colspan="3">Payment :</th>
-                                        <th>{{ Math.floor(((totalItem * pajak / 100 + totalItem) - (subtotaltp * diskon / 100)) + ((totalItem * pajak / 100 + totalItem) - (subtotaltp * diskon / 100)) * taxDebit / 100)  || 0 | currency }}</th>
+                                        <th>{{ totalBayarS | currency }}</th>
                                     </tr>
 
                                     <tr v-if="pembayaran === '1'">
                                         <th colspan="3">Kembalian :</th>
-                                        <th>{{ Math.floor(totalBayar - ((totalItem * pajak / 100 + totalItem) - (subtotaltp * diskon / 100)))  || 0 | currency }}</th>
+                                        <th>{{ Math.floor(totalBayarS - ((totalItem * pajak / 100 + totalItem) - (totalItem * diskon / 100)))  || 0 | currency }}</th>
                                     </tr>
                                     <tr v-else-if="pembayaran === '2'">
                                     </tr>
@@ -881,6 +881,7 @@
                 totalTransaksi: '',
                 totalTransaksipjk: '',
                 totalBayar: '',
+                totalBayarS: '',
                 kembalianBayar: '0',
                 totalTransaksiBayar: '',
                 type: '',
