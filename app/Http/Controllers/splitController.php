@@ -27,6 +27,8 @@ class splitController extends Controller
                             'groupNota' => $s->groupNot,
                             'nmBarang' =>$s->nmBarangTmp,
                             'hrgBarang' =>$s->hrgJualTmp,
+                            'bayar' =>$s->bayarS,
+                            'kembalian' =>$s->kembalianS
                         ];
                     }
                     DB::table('splitPayment')->insert($dataSet);
