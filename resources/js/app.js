@@ -40,26 +40,32 @@ import vmodal from 'vue-js-modal';
 
 import Vue from 'vue';
 import VueImg from 'v-img';
-    
     Vue.use(VueImg);
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faUserSecret } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
-import printJS from 'print-js'
-//Vue.use(printJS);
+library.add(faUserSecret)
 
-import VueHtmlToPaper from 'vue-html-to-paper';
-const options = {
-  name: '_blank',
-  specs: [
-    'fullscreen=yes',
-    'titlebar=yes',
-    'scrollbars=yes'
-  ],
-  styles: [
-    'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css',
-    'https://unpkg.com/kidlat-css/css/kidlat.css'
-  ]
-}
-Vue.use(VueHtmlToPaper, options);
+Vue.component('font-awesome-icon', FontAwesomeIcon)
+
+// import printJS from 'print-js'
+// //Vue.use(printJS);
+
+// import VueHtmlToPaper from 'vue-html-to-paper';
+// const options = {
+//   name: '_blank',
+//   specs: [
+//     'fullscreen=yes',
+//     'titlebar=yes',
+//     'scrollbars=yes'
+//   ],
+//   styles: [
+//     'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css',
+//     'https://unpkg.com/kidlat-css/css/kidlat.css'
+//   ]
+// }
+// Vue.use(VueHtmlToPaper, options);
 
 
 import IndexComponent from './components/posts/Index.vue';

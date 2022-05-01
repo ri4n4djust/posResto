@@ -14,7 +14,10 @@
                                     <h3>Meja:{{ post.noMeja }}</h3>
                                     <p>{{ post.paxMeja }}</p>
                                     <router-link :to="{name: 'editMeja', params: { id: post.id }}" class="btn btn-md btn-primary">EDIT</router-link>
-                                    <button @click="showModalCekin = post.id" class="btn btn-md btn-success">CEK IN</button>
+                                    
+                                    <button @click="showModalCekin = post.id" class="btn btn-md btn-success">
+                                      <font-awesome-icon icon="setting" />
+                                      CEK IN</button>
                                     </div>
                                     <div class="icon">
                                     <i class="ion ion-bag"></i>
