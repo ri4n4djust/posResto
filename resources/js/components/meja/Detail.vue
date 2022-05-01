@@ -70,23 +70,23 @@
                  
                   <table class="table table-striped">
                     <thead>
-                  <tr>
-                    <th>No.</th>
-                    <th>Menu</th>
-                    <th>Qty</th>
-                    <th>Jam</th>
-                  </tr>
+                      <tr>
+                        <th>No.</th>
+                        <th>Menu</th>
+                        <th>Qty</th>
+                        <th>Jam</th>
+                      </tr>
                     </thead>
                     <tbody>
-                  <tr v-for="order in orders" :key="order.id">
-                    <td>*</td>
-                    <td>{{ order.nmMenu }}<br>
-                        {{order.noteOrder }}</td>
-                    <td>{{ order.qtyOrder }}</td>
-                    <td>{{ order.wktOrder }} </td>
-                  </tr>
+                      <tr v-for="order in orders" :key="order.id">
+                        <td>*</td>
+                        <td>{{ order.nmMenu }}<br>
+                            {{order.noteOrder }}</td>
+                        <td>{{ order.qtyOrder }}</td>
+                        <td>{{ order.wktOrder }} </td>
+                      </tr>
                     </tbody>
-                </table>
+                  </table>
                 </span>
                 <br>
                 <br>
@@ -96,23 +96,23 @@
                 <h3 class="profile-username text-center">Meja No: {{ post.noMeja }}</h3>
                   <table class="table table-striped">
                     <thead>
-                  <tr>
-                    <th>No.</th>
-                    <th>Menu</th>
-                    <th>Qty</th>
-                    <th>Jam</th>
-                  </tr>
+                    <tr>
+                      <th>No.</th>
+                      <th>Menu</th>
+                      <th>Qty</th>
+                      <th>Jam</th>
+                    </tr>
                     </thead>
-                  <tbody>
-                  <tr v-for="order in orders1" :key="order.id">
-                    <td>* </td>
-                    <td>{{ order.nmMenu }}<br>
-                        {{order.noteOrder }}</td>
-                    <td>{{ order.qtyOrder }}</td>
-                    <td>{{ order.wktOrder }} </td>
-                  </tr>
-                  </tbody>
-                </table>                
+                    <tbody>
+                      <tr v-for="order in orders1" :key="order.id">
+                        <td>* </td>
+                        <td>{{ order.nmMenu }}<br>
+                            {{order.noteOrder }}</td>
+                        <td>{{ order.qtyOrder }}</td>
+                        <td>{{ order.wktOrder }} </td>
+                      </tr>
+                    </tbody>
+                  </table>                
                 </span>
               </div>
              
@@ -129,6 +129,7 @@
 
         <!-- /.col -->
         <div class="col-md-9">
+          <div class="box-body">
                 <a href="#"  @click="showModalMenu = true" class="btn btn-success"><b>Add Menu</b></a>
                 <a href="#"  @click="showModalMove = true" class="btn btn-success"><b>Pindah Meja</b></a>
                 <span v-if="adminuser === 'Admin'">
@@ -137,28 +138,31 @@
                 </span>
                 <router-link :to="{ name: 'meja' }" class="btn btn-success">KEMBALI</router-link>
                 <!-- /.post -->
-                            <table class="table table-hover table-bordered">
-                                <thead>
-                                <tr>
-                                    <th>Nama </th>
-                                    <th>Qty</th>
-                                    <th>Harga</th>
-                                    <th>Total</th>
-                                    <th>AKSI</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr v-for="trx in trxs" :key="trx.id">
-                                    <td>{{ trx.nmBarangTmp }} </td>
-                                    <td>{{ trx.qtyTmp}}</td>
-                                    <td>{{ trx.hrgJualTmp | currency }}</td>
-                                    <td>{{ trx.totalTmp | currency }}</td>
-                                    <td class="text-center">
-                                        <button @click.prevent="PostDeleteTrx(trx.id)" class="btn-sm btn-danger">HAPUS</button>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
+          </div>
+          <div class="box box-primary">
+              <table class="table table-hover table-bordered">
+                  <thead>
+                  <tr>
+                      <th>Nama </th>
+                      <th>Qty</th>
+                      <th>Harga</th>
+                      <th>Total</th>
+                      <th>AKSI</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr v-for="trx in trxs" :key="trx.id">
+                      <td>{{ trx.nmBarangTmp }} </td>
+                      <td>{{ trx.qtyTmp}}</td>
+                      <td>{{ trx.hrgJualTmp | currency }}</td>
+                      <td>{{ trx.totalTmp | currency }}</td>
+                      <td class="text-center">
+                          <button @click.prevent="PostDeleteTrx(trx.id)" class="btn-sm btn-danger">HAPUS</button>
+                      </td>
+                  </tr>
+                  </tbody>
+              </table>
+          </div>
         </div>
         <!-- /.col -->
       </div>
@@ -305,52 +309,60 @@
               </div>
               <div class="modal-body">
                 <table class="table table-hover table-bordered">
-                 <thead>
+                  <thead>
                     <tr>
-                     <th colspan="5">Barang Yang Belum di bayar</th>
-                   </tr>
-                                <tr>
-                                    <th>Nama </th>
-                                    <th>Harga</th>
-                                    <th>Qty</th>
-                                    <th>Total</th>
-                                    <th>AKSI</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr v-for="(trx, index) in crt" :key="trx.index" >
-                                    <td v-if="trx.qtyTmp > 0">{{ trx.nmBarangTmp }} </td>
-                                    <td v-if="trx.qtyTmp > 0">{{ trx.hrgJualTmp | currency }}</td>
-                                    <td v-if="trx.qtyTmp > 0">
-                                        <vue-numeric-input v-model="qtySplit[index]" :min="0" :max="trx.qtyTmp" :value="1" required></vue-numeric-input>
-                                    </td>
-                                    <td v-if="trx.qtyTmp > 0">{{ trx.hrgJualTmp * qtySplit[index] | currency }}</td>
-                                    <td v-if="trx.qtyTmp > 0" class="text-center">
-                                      <div v-if="qtySplit[index] >= '1'">
-                                        <button @click.prevent="updateItem(barcode = trx.id, index, trx)" class="btn btn-success">Tambah</button>
-                                      </div>
-                                    </td>
-                                </tr>
-                                </tbody>
+                      <th colspan="5">Barang Yang Belum di bayar</th>
+                    </tr>
+                    <tr>
+                      <th>Nama </th>
+                      <th>Harga</th>
+                      <th>Qty</th>
+                      <th>Total</th>
+                      <th>AKSI</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr v-for="(trx, index) in crt" :key="trx.index" >
+                      <td v-if="trx.qtyTmp > 0">{{ trx.nmBarangTmp }} </td>
+                      <td v-if="trx.qtyTmp > 0">{{ trx.hrgJualTmp | currency }}</td>
+                      <td v-if="trx.qtyTmp > 0">
+                        <input type="number" v-model="qtySplit[index]" :max-value="trx.qtyTmp" @input="onInput"/>
+                          <div hidden>
+                          <vue-numeric-input v-model="qtySplit[index]" :min="0" :max="trx.qtyTmp" :value="1" required></vue-numeric-input>
+                          </div>
+                      </td>
+                      <td v-if="trx.qtyTmp > 0">{{ trx.hrgJualTmp * qtySplit[index] | currency }}</td>
+                      <td v-if="trx.qtyTmp > 0" class="text-center">
+                        <div v-if="qtySplit[index] >= '1'">
+                          <button @click.prevent="updateItem(barcode = trx.id, index, trx)" class="btn btn-success">Tambah</button>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
                 </table>
                 <table class="table table-hover table-bordered">
                  <thead>
                    <tr>
                      <th colspan="4">Barang Yang akan di bayar</th>
                    </tr>
-                                <tr>
-                                    <th>Nama </th>
-                                    <th>Harga</th>
-                                    <th>Qty</th>
-                                    <th>Total</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr v-for="trx in splitNota" :key="trx.id">                                    <td>{{ trx.nmBarangTmp }} </td>
-                                    <td>{{ trx.hrgJualTmp | currency }}</td>
-                                    <td>{{ trx.qtyTmp }}</td>
-                                    <td>{{ trx.hrgJualTmp * trx.qtyTmp | currency }}</td>
-                                </tr>
+                  <tr>
+                      <th>Nama </th>
+                      <th>Harga</th>
+                      <th>Qty</th>
+                      <th>Total</th>
+                      <th>Aksi</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr v-for="(trx, index) in splitNota" :key="trx.id">                                    
+                      <td>{{ trx.nmBarangTmp }} </td>
+                      <td>{{ trx.hrgJualTmp | currency }}</td>
+                      <td>{{ trx.qtyTmp }}</td>
+                      <td>{{ trx.hrgJualTmp * trx.qtyTmp | currency }}</td>
+                      <td>
+                        <button @click.prevent="batalItem(barcode = trx.id, index, trx)" class="btn btn-success">Batal</button>
+                      </td>
+                  </tr>
                   </tbody>
                 </table> 
                 <form  @submit.prevent="PostSplit" >
@@ -474,64 +486,64 @@
 
                 <div class="col-xs-12 table-responsive">
                   <table class="table table-striped">
-                                <thead>
-                                <tr>
-                                    <th>Nama </th>
-                                    <th>Qty</th>
-                                    <th>Harga</th>
-                                    <th>Total</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr v-for="trx in splitNota" :key="trx.id">
-                                    <td >{{ trx.nmBarangTmp }} </td>
-                                    <td >{{ trx.qtyTmp}}</td>
-                                    <td >{{ trx.hrgJualTmp | currency }}</td>
-                                    <td >{{ trx.qtyTmp * trx.hrgJualTmp | currency }}</td>
-                                </tr>
-                                </tbody>
-                                    <tr>
-                                        <th colspan="3">subTotal :</th>
-                                        <th>{{totalItem | currency}}</th>
-                                    </tr>
-                                    <tr>
-                                        <th colspan="3">Tax & Service : {{ pajak }} %</th>
-                                        <th>{{ Math.floor(totalItem * pajak / 100 ) | currency}}</th>
-                                    </tr>
-                                    <tr>
-                                        <th colspan="3">Discount : {{ diskon }} %</th>
-                                        <th>{{ Math.floor(totalItem * diskon / 100) | currency}}</th>
-                                    </tr>
-                                    <tr>
-                                        <th colspan="3">subTotal :</th>
-                                        <th>{{ Math.floor((totalItem * pajak / 100 + totalItem) - (totalItem * diskon / 100))  || 0 | currency }}</th>
-                                    </tr>
+                      <thead>
+                      <tr>
+                          <th>Nama </th>
+                          <th>Qty</th>
+                          <th>Harga</th>
+                          <th>Total</th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                      <tr v-for="trx in splitNota" :key="trx.id">
+                          <td >{{ trx.nmBarangTmp }} </td>
+                          <td >{{ trx.qtyTmp}}</td>
+                          <td >{{ trx.hrgJualTmp | currency }}</td>
+                          <td >{{ trx.qtyTmp * trx.hrgJualTmp | currency }}</td>
+                      </tr>
+                      </tbody>
+                          <tr>
+                              <th colspan="3">subTotal :</th>
+                              <th>{{totalItem | currency}}</th>
+                          </tr>
+                          <tr>
+                              <th colspan="3">Tax & Service : {{ pajak }} %</th>
+                              <th>{{ Math.floor(totalItem * pajak / 100 ) | currency}}</th>
+                          </tr>
+                          <tr>
+                              <th colspan="3">Discount : {{ diskon }} %</th>
+                              <th>{{ Math.floor(totalItem * diskon / 100) | currency}}</th>
+                          </tr>
+                          <tr>
+                              <th colspan="3">subTotal :</th>
+                              <th>{{ Math.floor((totalItem * pajak / 100 + totalItem) - (totalItem * diskon / 100))  || 0 | currency }}</th>
+                          </tr>
 
-                                    <tr v-if="pembayaran === '1'">
-                                    </tr>
-                                    <tr v-else-if="pembayaran === '2'">
-                                        <th colspan="3">Card Charge : {{ taxDebit }} %</th>
-                                        <th>{{ Math.floor((totalItem * pajak / 100 + totalItem) - (subtotaltp * diskon / 100)) * taxDebit / 100 | currency }}</th>
-                                    </tr>
+                          <tr v-if="pembayaran === '1'">
+                          </tr>
+                          <tr v-else-if="pembayaran === '2'">
+                              <th colspan="3">Card Charge : {{ taxDebit }} %</th>
+                              <th>{{ Math.floor((totalItem * pajak / 100 + totalItem) - (subtotaltp * diskon / 100)) * taxDebit / 100 | currency }}</th>
+                          </tr>
 
-                                    <tr>
-                                        <th colspan="3">Payment :</th>
-                                        <th>{{ totalBayarS | currency }}</th>
-                                    </tr>
+                          <tr>
+                              <th colspan="3">Payment :</th>
+                              <th>{{ totalBayarS | currency }}</th>
+                          </tr>
 
-                                    <tr v-if="pembayaran === '1'">
-                                        <th colspan="3">Kembalian :</th>
-                                        <th>{{ Math.floor(totalBayarS - ((totalItem * pajak / 100 + totalItem) - (totalItem * diskon / 100)))  || 0 | currency }}</th>
-                                    </tr>
-                                    <tr v-else-if="pembayaran === '2'">
-                                    </tr>
+                          <tr v-if="pembayaran === '1'">
+                              <th colspan="3">Kembalian :</th>
+                              <th>{{ Math.floor(totalBayarS - ((totalItem * pajak / 100 + totalItem) - (totalItem * diskon / 100)))  || 0 | currency }}</th>
+                          </tr>
+                          <tr v-else-if="pembayaran === '2'">
+                          </tr>
 
-                            </table>
-                            <p class="text-bold text-center">
-                                Terima Kasih <br>
-                                Belanja Anda Hal Baik Bagi Dunia<br>
-                                Tidak enak Kasi Tau Kami, ENAK kasi tau temanmu<br>                              
-                            </p>
+                  </table>
+                  <p class="text-bold text-center">
+                      Terima Kasih <br>
+                      Belanja Anda Hal Baik Bagi Dunia<br>
+                      Tidak enak Kasi Tau Kami, ENAK kasi tau temanmu<br>                              
+                  </p>
                 </div>
               </div>
                 </section>
@@ -950,6 +962,14 @@
 
               
         methods: {
+          onInput(event) {
+            const newValue = parseInt(event.target.value)
+            const clampedValue = Math.min(newValue, this.maxValue)
+            this.$emit('input', newValue)
+            this.$nextTick(()=>{
+              this.$emit('input', clampedValue)
+            })
+          },
           addG: function() {
               this.groupNota++
           },
@@ -1028,7 +1048,7 @@
                             notaSplit[objIndex].qtyTmp = parseInt(newQty);
                             localStorage.setItem('notaSplit',JSON.stringify(notaSplit));
                             alert('Quantity Update')
-                            
+                            this.qtySplit = '';
                             this.getCart();
                             this.getSplitNota();
                             this.isiNotaSplit = Object.keys(JSON.parse(localStorage.getItem('notaSplit'))).length;
@@ -1041,10 +1061,13 @@
                         this.getSplitNota();
                         this.isiNotaSplit = Object.keys(JSON.parse(localStorage.getItem('notaSplit'))).length;
                         alert(trx.nmBarangTmp + " berhasil disimpan")
-                        
+                        this.qtySplit = '';
                         }
                         // this.qtySplit = 0 ;
                     }
+            },
+            batalItem(){
+              
             },
           select_menu(menu){
                 this.post2.id = menu.id
