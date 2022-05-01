@@ -326,7 +326,7 @@
                       <td v-if="trx.qtyTmp > 0">{{ trx.nmBarangTmp }} </td>
                       <td v-if="trx.qtyTmp > 0">{{ trx.hrgJualTmp | currency }}</td>
                       <td v-if="trx.qtyTmp > 0">
-                        <input type="number" v-model="qtySplit[index]" :max-value="trx.qtyTmp" @input="onInput"/>
+                        <input type="number" v-model="qtySplit[index]" />
                           <div hidden>
                           <vue-numeric-input v-model="qtySplit[index]" :min="0" :max="trx.qtyTmp" :value="1" required></vue-numeric-input>
                           </div>
@@ -962,14 +962,7 @@
 
               
         methods: {
-          onInput(event) {
-            const newValue = parseInt(event.target.value)
-            const clampedValue = Math.min(newValue, this.maxValue)
-            this.$emit('input', newValue)
-            this.$nextTick(()=>{
-              this.$emit('input', clampedValue)
-            })
-          },
+          
           addG: function() {
               this.groupNota++
           },
@@ -1048,7 +1041,7 @@
                             notaSplit[objIndex].qtyTmp = parseInt(newQty);
                             localStorage.setItem('notaSplit',JSON.stringify(notaSplit));
                             alert('Quantity Update')
-                            this.qtySplit = '';
+                            this.qtySplit[index] = 0;
                             this.getCart();
                             this.getSplitNota();
                             this.isiNotaSplit = Object.keys(JSON.parse(localStorage.getItem('notaSplit'))).length;
@@ -1061,7 +1054,7 @@
                         this.getSplitNota();
                         this.isiNotaSplit = Object.keys(JSON.parse(localStorage.getItem('notaSplit'))).length;
                         alert(trx.nmBarangTmp + " berhasil disimpan")
-                        this.qtySplit = '';
+                        this.qtySplit[index] = 0;
                         }
                         // this.qtySplit = 0 ;
                     }
@@ -1339,7 +1332,7 @@
               });
               var formData = new FormData();
               formData.append('data', JSON.stringify(isiform));
-              console.log(JSON.stringify(isiform));
+              // console.log(JSON.stringify(isiform));
                 let uri = '/api/addSplit/store';
                 this.axios.post(uri, formData)
                 .then((response) => {
