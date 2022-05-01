@@ -360,7 +360,7 @@
                       <td>{{ trx.qtyTmp }}</td>
                       <td>{{ trx.hrgJualTmp * trx.qtyTmp | currency }}</td>
                       <td>
-                        <button @click.prevent="batalItem(barcode = trx.id, index, trx)" class="btn btn-success">Batal</button>
+                        <button @click.prevent="batalItem(barcode = trx.id, index, trx)" class="btn btn-danger">Batal</button>
                       </td>
                   </tr>
                   </tbody>
@@ -1059,8 +1059,31 @@
                         // this.qtySplit = 0 ;
                     }
             },
-            batalItem(){
-              
+            batalItem(barcode, index, trx){
+              const newCart = JSON.parse(localStorage.getItem('notaSplit'));
+              const oldNota = JSON.parse(localStorage.getItem('notaSplit')) || [];
+              const existingNota = oldNota.find(({ id }) => id === trx.id); 
+              if (existingNota) {
+                  const objIndex = newCart.findIndex((e => e.id === trx.id));
+                  const oldQty = oldNota[objIndex].qtyTmp;
+
+                  const newCartItem = JSON.parse(localStorage.getItem('cartItems'));
+                  const objIndexItem = newCartItem.findIndex((a => a.id === trx.id));
+                  const oldQtyItem = newCartItem[objIndexItem].qtyTmp;
+                  // const nQty = oldItems[objIndex].qtyTmp;
+                  const newQty = parseInt(oldQty) + parseInt(oldQtyItem) ;
+                  newCartItem[objIndexItem].qtyTmp = parseInt(newQty);
+                  localStorage.setItem('cartItems',JSON.stringify(newCartItem));
+
+                  const filtered = newCart.filter(c => c.id !== trx.id);
+                  localStorage.setItem('notaSplit', JSON.stringify(filtered));
+
+                  alert('Quantity Update')
+                  this.getCart();
+                  this.getSplitNota();
+              }else{
+                console.log("tidak ada barangnya");
+              }
             },
           select_menu(menu){
                 this.post2.id = menu.id
