@@ -400,7 +400,7 @@
                                     <span class="input-group-addon">Rp.</span>
                                     <input type="number" class="form-control" v-model="totalBayarS" placeholder="Bayar" required>
                                   </div>
-                                  <input type="text" class="form-control" :value="Math.floor(totalBayarS - ((totalItem * pajak / 100 + totalItem) - (totalItem * diskon / 100)))" :name="kembalianS" >
+                                  <input type="hidden" class="form-control" :value="Math.floor(totalBayarS - ((totalItem * pajak / 100 + totalItem) - (totalItem * diskon / 100)))" :name="kembalianS" >
                                   <h3 class="profile-username ">Kembali : {{ Math.floor(totalBayarS - ((totalItem * pajak / 100 + totalItem) - (totalItem * diskon / 100)))  || 0 | currency  }}</h3>
                                   <p class="text-muted text-center">
                                   <button type="submit" v-on:click="addG()" class="btn btn-success" >Bayar</button> 
@@ -1351,7 +1351,7 @@
               var isiform = this.splitNota;
               var gr = this.groupNota;
               var bs = this.totalBayarS;
-              var km = Math.abs(this.totalBayarS - (((this.totalItem * this.pajak / 100 + this.totalItem) - (this.groupNota * this.diskon / 100)) + ((this.totalItem * this.pajak / 100 + this.totalItem) - (this.totalItem * this.diskon / 100)) * this.taxDebit / 100));
+              var km = Math.floor(this.totalBayarS - ((this.totalItem * this.pajak / 100 + this.totalItem) - (this.totalItem * this.diskon / 100)));// Math.abs(this.totalBayarS - (((this.totalItem * this.pajak / 100 + this.totalItem) - (this.groupNota * this.diskon / 100)) + ((this.totalItem * this.pajak / 100 + this.totalItem) - (this.totalItem * this.diskon / 100)) * this.taxDebit / 100));
               isiform.forEach(function (element) {
                 element.groupNot = gr;
                 element.bayarS = bs;
