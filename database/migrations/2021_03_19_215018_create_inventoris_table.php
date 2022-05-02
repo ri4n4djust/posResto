@@ -16,7 +16,7 @@ class CreateInventorisTable extends Migration
         Schema::create('tblInventori', function (Blueprint $table) {
             $table->id();
             $table->char('kdBarang');
-            $table->char('stkInventori')->nullable();
+            $table->integer('stkInventori')->nullable();
             $table->char('hrgSatuan')->nullable();
             $table->char('satuanInventori')->nullable();
             $table->char('stkSatuan')->nullable();

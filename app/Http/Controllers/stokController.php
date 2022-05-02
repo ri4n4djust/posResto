@@ -79,6 +79,27 @@ class stokController extends Controller
             ], 404);
         }
     }
+    public function stokTipis()
+    {
+        $stk = Inventori::join('tblBarang', 'tblInventori.kdBarang', '=', 'tblBarang.kdBarang')
+                ->select('tblInventori.*', 'tblBarang.kdBarang', 'tblBarang.nmBarang', 'tblBarang.satuanBarang')
+                ->orderBy('tblInventori.stkInventori', 'ASC')
+                ->get();
+
+        if ($stk) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Detail Post!',
+                'data'    => $stk
+            ], 200);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Post Tidak Ditemukan!',
+                'data'    => ''
+            ], 404);
+        }
+    }
 
     public function DetailInventori($id)
     {

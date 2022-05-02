@@ -156,6 +156,7 @@ Route::post('/detailstokopname/{id}', 'stokController@DetailStokOpname');
 Route::get('/stokopname', 'stokController@allOpname');
 Route::post('/addItemOpname/store', 'stokController@addItemOpname');
 Route::post('/dataStokOpname/{id}', 'stokController@listTransaksiOpname');
+Route::get('/stokkurang', 'stokController@stokTipis');
 
 Route::delete('/opnameDelete/{id?}', 'stokController@destroy1');
 Route::post('/totalTrxOpname', 'stokController@totalTrxOpname');
