@@ -436,10 +436,9 @@
               </form>
 
               <div id="printMeSplit">
-                <section class="invoice">
                 <!-- info row -->
                 <p class="text-muted text-center">
-                <img :src="'/image/logoNota.png'" >
+                <img :src="'/image/logoNota.png'" id="logono" >
                 </p>
                 <p class="text-bold text-center">
                
@@ -546,7 +545,6 @@
                   </p>
                 </div>
               </div>
-                </section>
     </div>
               
 
@@ -652,7 +650,7 @@
                 <section class="invoice">
                 <!-- info row -->
                 <p class="text-muted text-center">
-                <img :src="'/image/logoNota.png'" >
+                <img :src="'/image/logoNota.png'" id="logono">
                 </p>
                 <p class="text-bold text-center">
                
@@ -796,9 +794,14 @@
     {
       @page{
         margin: 0;
+        /* width: 90mm; */
+        height: auto;
+        
       }
       body * {
         visibility: hidden;
+        /* width: 90mm; */
+        height: auto;
       }
       #printMe, #printMe * {
         visibility: visible;
@@ -827,6 +830,9 @@
         font-size: 8pt;
         width: 100%;
         height: 100%;
+      }
+      #logono {
+        width: 60px;
       }
 
       #lastOrder {
