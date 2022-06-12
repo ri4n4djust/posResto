@@ -157,7 +157,7 @@
                       <td>{{ trx.hrgJualTmp | currency }}</td>
                       <td>{{ trx.totalTmp | currency }}</td>
                       <td class="text-center">
-                        {{trx.stsPrintOrder}}
+                        <!-- {{trx.stsPrintOrder}} -->
                           <button @click.prevent="PostDeleteTrx(id = trx.id, sts = trx.stsPrintOrder)" class="btn-sm btn-danger">HAPUS</button>
                       </td>
                   </tr>
@@ -235,6 +235,7 @@
               <div class="modal-body">
                 <form @submit.prevent="postAuthCek">
                   <div class="form-group has-feedback">
+                    <input type="hidden" class="form-control" v-model="idWillDelete" disabled>
                     <input type="text" class="form-control" v-model="username" disabled>
                     <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
                   </div>
@@ -903,6 +904,7 @@
             return {
               username: 'Supervisor',
               password: '',
+              idWillDelete: '',
                 post: {},
                 waiters: {},
                 statusMeja:{},
@@ -1021,13 +1023,14 @@
                 }).then(response => {
                   if (response.data.success === true ) {
                     // alert('suskes Login')
-                    this.axios.delete(`/api/orderDelete/${id}`)
+                    this.axios.delete('/api/orderDelete/'+ this.idWillDelete)
                     .then(response => {
                         alert('Berhasil Di Hapus');
                         this.loadDataTransaksi();
                         this.loadTotal();
                         this.ListOrder();
                         this.ListOrder1();
+                        this.showModalAuth = false;
                     }).catch(error => {
                     
                 });
@@ -1329,7 +1332,19 @@
             },
             PostDeleteTrx(id, sts)
             {
+              this.idWillDelete = id;
               if(this.$session.get('roleID') == 'Admin') {
+                this.axios.delete(`/api/orderDelete/${id}`)
+                    .then(response => {
+                        alert('Berhasil Di Hapus');
+                        this.loadDataTransaksi();
+                        this.loadTotal();
+                        this.ListOrder();
+                        this.ListOrder1();
+                    }).catch(error => {
+                    
+                });
+              }else if(sts == '0'){
                 this.axios.delete(`/api/orderDelete/${id}`)
                     .then(response => {
                         alert('Berhasil Di Hapus');
