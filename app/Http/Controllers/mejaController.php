@@ -520,9 +520,12 @@ class mejaController extends Controller
     public function listTransaksi($id)
     {
         //$post = TransaksiDetail::whereId($id)->first();
-        $post = DB::table('tblTmp_TransaksiDetail')
-                    ->where('noMejaTmp',$id)
-                    ->orderBy('ktgMenu', 'ASC')
+        $post = DB::table('tblTmp_TransaksiDetail as a')
+                    ->join('tblOrder as b', 'a.kdBarangTmp', 'b.kdMenu')
+                    ->select('a.*', 'b.idMeja', 'b.kdMenu', 'b.stsPrintOrder')
+                    ->where('a.noMejaTmp',$id)
+                    // ->where('a.kdBarangTmp', 'b.kdMenu')
+                    ->orderBy('a.ktgMenu', 'ASC')
                     ->get();
 
         if ($post) {

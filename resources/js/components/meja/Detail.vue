@@ -132,10 +132,10 @@
           <div class="box-body">
                 <a href="#"  @click="showModalMenu = true" class="btn btn-success"><b>Add Menu</b></a>
                 <a href="#"  @click="showModalMove = true" class="btn btn-success"><b>Pindah Meja</b></a>
-                <span v-if="adminuser === 'Admin'">
+                <!-- <span v-if="adminuser === 'Admin'"> -->
                   <span v-if=" orders.length == 0 && orders1.length == 0"><a href="#"  class="btn btn-success disabled" role="button" aria-disabled="true">Print Order</a></span>
                   <span v-else><a href="#"  @click="printOrder(id= post.id)" class="btn btn-success" >Print Order</a></span>
-                </span>
+                <!-- </span> -->
                 <router-link :to="{ name: 'meja' }" class="btn btn-success">KEMBALI</router-link>
                 <!-- /.post -->
           </div>
@@ -157,7 +157,8 @@
                       <td>{{ trx.hrgJualTmp | currency }}</td>
                       <td>{{ trx.totalTmp | currency }}</td>
                       <td class="text-center">
-                          <button @click.prevent="PostDeleteTrx(trx.id)" class="btn-sm btn-danger">HAPUS</button>
+                        {{trx.stsPrintOrder}}
+                          <button @click.prevent="PostDeleteTrx(id = trx.id, sts = trx.stsPrintOrder)" class="btn-sm btn-danger">HAPUS</button>
                       </td>
                   </tr>
                   </tbody>
@@ -217,6 +218,47 @@
     </transition>
   </div>
   <!------End Modal Move ----->
+
+  <!-- modal Auth start -->
+  <div v-if="showModalAuth">
+    <transition name="modal">
+      <div class="modal-mask">
+        <div class="modal-wrapper">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" @click="showModalAuth=false">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Auth Require</h4>
+              </div>
+              <div class="modal-body">
+                <form @submit.prevent="postAuthCek">
+                  <div class="form-group has-feedback">
+                    <input type="text" class="form-control" v-model="username" disabled>
+                    <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                  </div>
+                  <div class="form-group has-feedback">
+                    <input type="password" class="form-control" v-model="password" placeholder="Password">
+                    <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                  </div>
+                  <div class="row">
+                    
+                    <!-- /.col -->
+                    <div class="col-xs-4">
+                      <button type="submit" class="btn btn-primary btn-block btn-flat">Authorize</button>
+                    </div>
+                    <!-- /.col -->
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </transition>
+  </div>
+  <!------End Modal Auth ----->
 
 
   
@@ -795,7 +837,7 @@
       @page{
         margin: 0;
         /* width: 90mm; */
-        height: auto;
+        /* height: auto; */
         
       }
       body * {
@@ -859,6 +901,8 @@
       components: { DatePicker, VueSingleSelect, Print },
         data() {
             return {
+              username: 'Supervisor',
+              password: '',
                 post: {},
                 waiters: {},
                 statusMeja:{},
@@ -876,6 +920,7 @@
                 mejaKosong: {},
                 validation: [],
                 showModalMove: false,
+                showModalAuth: false,
                 showModal: false,
                 showModalMenu: false,
                 showModalBayar: false,
@@ -968,7 +1013,27 @@
 
               
         methods: {
-          
+          postAuthCek(){
+                let uri = '/api/authcek';
+                this.axios.post(uri, {
+                  username: this.username,
+                  password: this.password
+                }).then(response => {
+                  if (response.data.success === true ) {
+                    // alert('suskes Login')
+                    this.axios.delete(`/api/orderDelete/${id}`)
+                    .then(response => {
+                        alert('Berhasil Di Hapus');
+                        this.loadDataTransaksi();
+                        this.loadTotal();
+                        this.ListOrder();
+                        this.ListOrder1();
+                    }).catch(error => {
+                    
+                });
+                  }
+                });
+          },
           addG: function() {
               this.groupNota++
           },
@@ -1231,7 +1296,7 @@
                 let uri = `/api/transaksi/${this.$route.params.id}`;
                 this.axios.post(uri).then(response => {
                 this.trxs = response.data.data;
-                
+                console.log(this.trxs)
                 
             });
             },
@@ -1262,8 +1327,9 @@
                         this.waiters = response.data.data;
                     }.bind(this));
             },
-            PostDeleteTrx(id)
+            PostDeleteTrx(id, sts)
             {
+              if(this.$session.get('roleID') == 'Admin') {
                 this.axios.delete(`/api/orderDelete/${id}`)
                     .then(response => {
                         alert('Berhasil Di Hapus');
@@ -1274,6 +1340,9 @@
                     }).catch(error => {
                     
                 });
+              }else if(sts == '1' | this.$session.get('roleID') != 'Admin'){
+                this.showModalAuth = true ;
+              }
             },
             
             PostMenu() {

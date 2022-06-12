@@ -19,6 +19,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::post('/login', 'loginController@login');
+Route::post('/authcek', 'loginController@authCek');
 //====dashboard
 Route::get('/awaldashboard', 'loginController@dashboard');
 

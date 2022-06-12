@@ -1,5 +1,6 @@
 <template>
     <div class="mt-3">
+        <status-login></status-login>
         <section class="content">
           <!-- Profile Image -->
           <div class="box box-primary">
@@ -27,7 +28,7 @@
                             <div class="form-group">
                                 <label>Password</label>
                                 <input type="text" class="form-control" v-model="post.password"
-                                       placeholder="Stok" required>
+                                       placeholder="Password" required>
                             </div>
 
                             <div class="form-group">

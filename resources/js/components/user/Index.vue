@@ -1,6 +1,7 @@
 <template>
 
                     <div class="card-body">
+                        <status-login></status-login>
                         <h3>
                         <router-link :to="{ name: 'createUser' }" class="btn btn-md btn-success">TAMBAH USER</router-link>
                         </h3>
@@ -21,8 +22,10 @@
                                     <td>{{ post.email  }}</td>
                                     <td>{{ post.role }}</td>
                                     <td class="text-center">
+                                        <span v-if="$session.get('roleID') === 'Admin'">
                                         <router-link :to="{name: 'editUser', params: { id: post.id }}" class="btn btn-sm btn-primary">EDIT</router-link>
                                         <button @click.prevent="PostDelete(post.id, index)" class="btn btn-sm btn-danger">HAPUS</button>
+                                        </span>
                                     </td>
                                 </tr>
                                 </tbody>
