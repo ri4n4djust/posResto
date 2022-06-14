@@ -73,6 +73,7 @@ Route::post('/addItem/store', 'mejaController@addItem');
 Route::post('/addMenu/store', 'mejaController@addMenu');
 Route::post('/transaksi/{id}', 'mejaController@listTransaksi');
 Route::delete('/orderDelete/{id?}', 'mejaController@destroy1');
+Route::delete('/deleteneworder/{id?}', 'mejaController@destroyNewOrder');
 Route::post('/addTransaksi/store', 'mejaController@addTransaksi');
 Route::post('/orderprint/{id}', 'mejaController@printOrder');
 Route::post('/orderprint1/{id}', 'mejaController@printOrder1');

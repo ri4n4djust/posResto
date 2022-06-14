@@ -12,6 +12,8 @@ use App\KartuStok;
 use App\KartuStokInventori;
 use App\Pembayara;
 use App\Order;
+use App\Menu;
+use App\Inventori;
 
 use Illuminate\Support\Facades\DB;
 
@@ -521,9 +523,10 @@ class mejaController extends Controller
     {
         //$post = TransaksiDetail::whereId($id)->first();
         $post = DB::table('tblTmp_TransaksiDetail as a')
-                    ->join('tblOrder as b', 'a.kdBarangTmp', 'b.kdMenu')
-                    ->select('a.*', 'b.idMeja', 'b.kdMenu', 'b.stsPrintOrder')
+                    // ->join('tblOrder as b', 'a.kdBarangTmp', 'b.kdMenu')
+                    // ->select('a.*', 'b.idMeja', 'b.kdMenu', 'b.stsPrintOrder')
                     ->where('a.noMejaTmp',$id)
+                    // ->groupBy('a.kdBarangTmp')
                     // ->where('a.kdBarangTmp', 'b.kdMenu')
                     ->orderBy('a.ktgMenu', 'ASC')
                     ->get();
@@ -686,31 +689,31 @@ class mejaController extends Controller
         
         if (Barang::where('kdBarang', $kodebarang)->exists()) {
             // exists
-        $barang = DB::table('tblBarang')->where('kdBarang', $kodebarang)->first();
-        $stokLama = $barang->stkBarang;
-        DB::table('tblBarang')->where('kdBarang', $kodebarang)->update([
-                'stkBarang'     => $stokLama + $qtybarang
-        ]);
+            $barang = DB::table('tblBarang')->where('kdBarang', $kodebarang)->first();
+            $stokLama = $barang->stkBarang;
+            DB::table('tblBarang')->where('kdBarang', $kodebarang)->update([
+                    'stkBarang'     => $stokLama + $qtybarang
+            ]);
 
-        $barangInv = DB::table('tblInventori')->where('kdBarang', $kodebarang)->first();
-        $stokLamaInv = $barangInv->stkInventori;
-        DB::table('tblInventori')->where('kdBarang', $kodebarang)->update([
-                'stkInventori'     => $stokLamaInv + $qtybarang
-        ]);
+            $barangInv = DB::table('tblInventori')->where('kdBarang', $kodebarang)->first();
+            $stokLamaInv = $barangInv->stkInventori;
+            DB::table('tblInventori')->where('kdBarang', $kodebarang)->update([
+                    'stkInventori'     => $stokLamaInv + $qtybarang
+            ]);
 
-        DB::table('tblOrder')->where('kdMenu', $kodebarang)->delete();
+            DB::table('tblOrder')->where('kdMenu', $kodebarang)->delete();
 
-        DB::table('tblKartuStok')
-            ->where('kdBarang', $kodebarang)
-            ->where('noTransaksi', $noNotaTmp)
-            ->where('keteranganKartu', 'Penjualan')
-            ->delete();
-            
-        DB::table('tblKartuStokInventori')
-            ->where('kdBarang', $kodebarang)
-            ->where('noTransaksiInv', $noNotaTmp)
-            ->where('keteranganKartuInv', 'Penjualan')
-            ->delete();
+            DB::table('tblKartuStok')
+                ->where('kdBarang', $kodebarang)
+                ->where('noTransaksi', $noNotaTmp)
+                ->where('keteranganKartu', 'Penjualan')
+                ->delete();
+                
+            DB::table('tblKartuStokInventori')
+                ->where('kdBarang', $kodebarang)
+                ->where('noTransaksiInv', $noNotaTmp)
+                ->where('keteranganKartuInv', 'Penjualan')
+                ->delete();
 
             $post->delete();
             return response()->json([
@@ -720,41 +723,153 @@ class mejaController extends Controller
 
         } else {
 
-                $kompo = DB::table('tblKomposisi')
-                            ->where('idMenu', '=', $kodebarang)
-                            ->get();
-                foreach ($kompo as $k){
-                        $ko = $k->idBarang;
-                        $qtyCost = $k->qtyBarang * $qtybarang;
-                        $qtyCostSatuan = $k->totalSatuan * $qtybarang;
+            $kompo = DB::table('tblKomposisi')
+                        ->where('idMenu', '=', $kodebarang)
+                        ->get();
+            foreach ($kompo as $k){
+                    $ko = $k->idBarang;
+                    $qtyCost = $k->qtyBarang * $qtybarang;
+                    $qtyCostSatuan = $k->totalSatuan * $qtybarang;
 
 
-                        $barang = DB::table('tblBarang')->where('kdBarang', $ko)->first();
-                        $stokLama = $barang->stkBarang;
-                        $satuanBarang = $barang->satuanBarang;
-                        DB::table('tblBarang')->where('kdBarang', $ko)
-                        ->update(array('stkBarang' => $stokLama + $qtyCost ));
+                    $barang = DB::table('tblBarang')->where('kdBarang', $ko)->first();
+                    $stokLama = $barang->stkBarang;
+                    $satuanBarang = $barang->satuanBarang;
+                    DB::table('tblBarang')->where('kdBarang', $ko)
+                    ->update(array('stkBarang' => $stokLama + $qtyCost ));
 
-                        $barangInv = DB::table('tblInventori')->where('kdBarang', $ko)->first();
-                        $stokLamaInv = $barangInv->stkInventori;
-                        //$satuanBarang = $barang->satuanBarang;
-                        DB::table('tblInventori')->where('kdBarang', $ko)
-                        ->update(array('stkInventori' => $stokLamaInv + $qtyCostSatuan ));
+                    $barangInv = DB::table('tblInventori')->where('kdBarang', $ko)->first();
+                    $stokLamaInv = $barangInv->stkInventori;
+                    //$satuanBarang = $barang->satuanBarang;
+                    DB::table('tblInventori')->where('kdBarang', $ko)
+                    ->update(array('stkInventori' => $stokLamaInv + $qtyCostSatuan ));
 
-                        //=========Update Kartu Stok
-                        DB::table('tblKartuStok')
-                            ->where('kdBarang', $ko)
-                            ->where('noTransaksi', $noNotaTmp)
-                            ->where('keteranganKartu', 'Penjualan Menu')
-                            ->delete();
-                        DB::table('tblKartuStokInventori')
-                            ->where('kdBarang', $ko)
-                            ->where('noTransaksiInv', $noNotaTmp)
-                            ->where('keteranganKartuInv', 'Penjualan Menu')
-                            ->delete();
-                        //=========endKartu stok
+                    //=========Update Kartu Stok
+                    DB::table('tblKartuStok')
+                        ->where('kdBarang', $ko)
+                        ->where('noTransaksi', $noNotaTmp)
+                        ->where('keteranganKartu', 'Penjualan Menu')
+                        ->delete();
+                    DB::table('tblKartuStokInventori')
+                        ->where('kdBarang', $ko)
+                        ->where('noTransaksiInv', $noNotaTmp)
+                        ->where('keteranganKartuInv', 'Penjualan Menu')
+                        ->delete();
+                    //=========endKartu stok
 
-                }
+            }
+
+        
+            $post->delete();
+            return response()->json([
+                'success' => true,
+                'message' => 'Post Berhasil Dihapus!',
+            ], 200);
+        }
+        
+    }
+
+    public function destroyNewOrder($id)
+    {
+        $post = Order::findOrFail($id);
+
+        $noNotaTmp = $post->idMeja;
+        $kodebarang = $post->kdMenu;
+        $qtybarang = $post->qtyOrder;
+
+        // DB::table('tblOrder')->where('kdMenu', $kodebarang)->delete();
+        // $barang = DB::table('tblBarang')->where('kdBarang', $kodebarang)->first();
+        // $stokLama = $barang->stkBarang;
+        // DB::table('tblBarang')->where('kdBarang', $kodebarang)->update([
+        //         'stkBarang'     => $stokLama + $qtybarang
+        // ]);
+        
+        
+        if (Menu::where('kdMenu', $kodebarang)->exists()) {
+            // exists
+
+            // $barangInv = DB::table('tblInventori')->where('kdBarang', $kodebarang)->first();
+            // $stokLamaInv = $barangInv->stkInventori;
+            // DB::table('tblInventori')->where('kdBarang', $kodebarang)->update([
+            //         'stkInventori'     => $stokLamaInv + $qtybarang
+            // ]);
+
+            $barangTrx = DB::table('tblTmp_TransaksiDetail')
+            ->where('kdBarangTmp', $kodebarang)
+            ->where('noMejaTmp', $noNotaTmp)
+            ->first();
+            $orderT = $barangTrx->qtyTmp;
+            if($orderT-$qtybarang == 0){
+                DB::table('tblTmp_TransaksiDetail')
+                ->where('kdBarangTmp', $kodebarang)
+                ->where('noMejaTmp', $noNotaTmp)
+                ->delete();
+            }else{
+                DB::table('tblTmp_TransaksiDetail')
+                ->where('kdBarangTmp', $kodebarang)
+                ->where('noMejaTmp', $noNotaTmp)
+                ->update([
+                        'qtyTmp'     => $orderT - $qtybarang
+                ]);
+            }
+
+            // DB::table('tblOrder')->where('kdMenu', $kodebarang)->delete();
+
+            DB::table('tblKartuStok')
+                ->where('kdBarang', $kodebarang)
+                ->where('noTransaksi', $noNotaTmp)
+                ->where('keteranganKartu', 'Penjualan')
+                ->delete();
+                
+            DB::table('tblKartuStokInventori')
+                ->where('kdBarang', $kodebarang)
+                ->where('noTransaksiInv', $noNotaTmp)
+                ->where('keteranganKartuInv', 'Penjualan')
+                ->delete();
+
+            $post->delete();
+            return response()->json([
+                'success' => true,
+                'message' => 'Post Berhasil Dihapus!',
+            ], 200);
+
+        } else {
+
+            $kompo = DB::table('tblKomposisi')
+                        ->where('idMenu', '=', $kodebarang)
+                        ->get();
+            foreach ($kompo as $k){
+                    $ko = $k->idBarang;
+                    $qtyCost = $k->qtyBarang * $qtybarang;
+                    $qtyCostSatuan = $k->totalSatuan * $qtybarang;
+
+
+                    $barang = DB::table('tblBarang')->where('kdBarang', $ko)->first();
+                    $stokLama = $barang->stkBarang;
+                    $satuanBarang = $barang->satuanBarang;
+                    DB::table('tblBarang')->where('kdBarang', $ko)
+                    ->update(array('stkBarang' => $stokLama + $qtyCost ));
+
+                    $barangInv = DB::table('tblInventori')->where('kdBarang', $ko)->first();
+                    $stokLamaInv = $barangInv->stkInventori;
+                    //$satuanBarang = $barang->satuanBarang;
+                    DB::table('tblInventori')->where('kdBarang', $ko)
+                    ->update(array('stkInventori' => $stokLamaInv + $qtyCostSatuan ));
+
+                    //=========Update Kartu Stok
+                    DB::table('tblKartuStok')
+                        ->where('kdBarang', $ko)
+                        ->where('noTransaksi', $noNotaTmp)
+                        ->where('keteranganKartu', 'Penjualan Menu')
+                        ->delete();
+                    DB::table('tblKartuStokInventori')
+                        ->where('kdBarang', $ko)
+                        ->where('noTransaksiInv', $noNotaTmp)
+                        ->where('keteranganKartuInv', 'Penjualan Menu')
+                        ->delete();
+                    //=========endKartu stok
+
+            }
 
         
             $post->delete();

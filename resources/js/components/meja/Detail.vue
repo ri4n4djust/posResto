@@ -63,7 +63,7 @@
                 </p>
 
                   
-                <div id="lastOrder" class="lastOrder">
+                <!-- <div id="lastOrder" class="lastOrder">
 
                 <span v-if=" orders.length != 0 ">
                   <h3 class="profile-username text-center">Meja No: {{ post.noMeja }}</h3>
@@ -114,7 +114,7 @@
                     </tbody>
                   </table>                
                 </span>
-              </div>
+              </div> -->
              
               
 
@@ -140,6 +140,67 @@
                 <!-- /.post -->
           </div>
           <div class="box box-primary">
+
+            <div id="lastOrder" class="lastOrder">
+
+                <span v-if=" orders.length != 0 ">
+                  <h3 class="profile-username text-center">Meja No: {{ post.noMeja }}</h3>
+                 
+                  <table class="table table-hover table-bordered">
+                    <thead>
+                      <tr>
+                        <th>No.</th>
+                        <th>Menu</th>
+                        <th>Qty</th>
+                        <th>Jam</th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr v-for="order in orders" :key="order.id">
+                        <td>*</td>
+                        <td>{{ order.nmMenu }}<br>
+                            {{order.noteOrder }}</td>
+                        <td>{{ order.qtyOrder }}</td>
+                        <td>{{ order.wktOrder }} </td>
+                        <td>
+                          {{ order.stsPrintOrder }}
+                          <button @click.prevent="PostDeleteTrxO(id = order.id)" class="btn-sm btn-danger">HAPUS</button></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </span>
+                <br>
+                <br>
+                <br>
+
+                <span v-if=" orders1.length != 0 ">
+                <h3 class="profile-username text-center">Meja No: {{ post.noMeja }}</h3>
+                  <table class="table table-hover table-bordered">
+                    <thead>
+                    <tr>
+                      <th>No.</th>
+                      <th>Menu</th>
+                      <th>Qty</th>
+                      <th>Jam</th>
+                      <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                      <tr v-for="order in orders1" :key="order.id">
+                        <td>* </td>
+                        <td>{{ order.nmMenu }}<br>
+                            {{order.noteOrder }}</td>
+                        <td>{{ order.qtyOrder }}</td>
+                        <td>{{ order.wktOrder }} </td>
+                        <td><button @click.prevent="PostDeleteTrxO(id = order.id)" class="btn-sm btn-danger">HAPUS</button></td>
+                      </tr>
+                    </tbody>
+                  </table>                
+                </span>
+              </div>
+
+
               <table class="table table-hover table-bordered">
                   <thead>
                   <tr>
@@ -157,7 +218,7 @@
                       <td>{{ trx.hrgJualTmp | currency }}</td>
                       <td>{{ trx.totalTmp | currency }}</td>
                       <td class="text-center">
-                        <!-- {{trx.stsPrintOrder}} -->
+                        {{trx.stsPrintOrder}}
                           <button @click.prevent="PostDeleteTrx(id = trx.id, sts = trx.stsPrintOrder)" class="btn-sm btn-danger">HAPUS</button>
                       </td>
                   </tr>
@@ -1233,6 +1294,7 @@
                     .then((response) => {
                         //this.$router.push({name: 'posts'});
                         this.orders = response.data.data;
+                        // console.log(this.orders)
                     }).catch(error => {
                     //this.validation = error.response.data.data;
                       alert('ada yang error');
@@ -1358,6 +1420,21 @@
               }else if(sts == '1' | this.$session.get('roleID') != 'Admin'){
                 this.showModalAuth = true ;
               }
+            },
+
+            PostDeleteTrxO(id)
+            {
+                this.axios.delete('/api/deleteneworder/'+id)
+                    .then(response => {
+                        alert('Berhasil Di Hapus');
+                        this.loadDataTransaksi();
+                        this.loadTotal();
+                        this.ListOrder();
+                        this.ListOrder1();
+                    }).catch(error => {
+                    
+                });
+              
             },
             
             PostMenu() {
