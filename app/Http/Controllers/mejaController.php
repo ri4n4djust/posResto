@@ -785,14 +785,14 @@ class mejaController extends Controller
         // ]);
         
         
-        if (Menu::where('kdMenu', $kodebarang)->exists()) {
+        if (Barang::where('kdBarang', $kodebarang)->exists()) {
             // exists
 
-            // $barangInv = DB::table('tblInventori')->where('kdBarang', $kodebarang)->first();
-            // $stokLamaInv = $barangInv->stkInventori;
-            // DB::table('tblInventori')->where('kdBarang', $kodebarang)->update([
-            //         'stkInventori'     => $stokLamaInv + $qtybarang
-            // ]);
+            $barangInv = DB::table('tblInventori')->where('kdBarang', $kodebarang)->first();
+            $stokLamaInv = $barangInv->stkInventori;
+            DB::table('tblInventori')->where('kdBarang', $kodebarang)->update([
+                    'stkInventori'     => $stokLamaInv + $qtybarang
+            ]);
 
             $barangTrx = DB::table('tblTmp_TransaksiDetail')
             ->where('kdBarangTmp', $kodebarang)
@@ -855,6 +855,25 @@ class mejaController extends Controller
                     //$satuanBarang = $barang->satuanBarang;
                     DB::table('tblInventori')->where('kdBarang', $ko)
                     ->update(array('stkInventori' => $stokLamaInv + $qtyCostSatuan ));
+
+                    $barangTrx = DB::table('tblTmp_TransaksiDetail')
+                    ->where('kdBarangTmp', $kodebarang)
+                    ->where('noMejaTmp', $noNotaTmp)
+                    ->first();
+                    $orderT = $barangTrx->qtyTmp;
+                    if($orderT-$qtybarang == 0){
+                        DB::table('tblTmp_TransaksiDetail')
+                        ->where('kdBarangTmp', $kodebarang)
+                        ->where('noMejaTmp', $noNotaTmp)
+                        ->delete();
+                    }else{
+                        DB::table('tblTmp_TransaksiDetail')
+                        ->where('kdBarangTmp', $kodebarang)
+                        ->where('noMejaTmp', $noNotaTmp)
+                        ->update([
+                                'qtyTmp'     => $orderT - $qtybarang
+                        ]);
+                    }
 
                     //=========Update Kartu Stok
                     DB::table('tblKartuStok')
