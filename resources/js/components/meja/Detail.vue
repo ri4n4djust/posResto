@@ -63,7 +63,7 @@
                 </p>
 
                   
-                <!-- <div id="lastOrder" class="lastOrder">
+                <div id="lastOrder" class="lastOrder">
 
                 <span v-if=" orders.length != 0 ">
                   <h3 class="profile-username text-center">Meja No: {{ post.noMeja }}</h3>
@@ -83,7 +83,11 @@
                         <td>{{ order.nmMenu }}<br>
                             {{order.noteOrder }}</td>
                         <td>{{ order.qtyOrder }}</td>
-                        <td>{{ order.wktOrder }} </td>
+                        <td>{{ order.wktOrder }} 
+                          <button @click.prevent="PostDeleteTrxO(id = order.id)" class="btn-sm btn-danger">
+                            <i class="fa fa-trash"></i>
+                          </button>
+                        </td>
                       </tr>
                     </tbody>
                   </table>
@@ -109,12 +113,16 @@
                         <td>{{ order.nmMenu }}<br>
                             {{order.noteOrder }}</td>
                         <td>{{ order.qtyOrder }}</td>
-                        <td>{{ order.wktOrder }} </td>
+                        <td>{{ order.wktOrder }} 
+                          <button @click.prevent="PostDeleteTrxO(id = order.id)" class="btn-sm btn-danger">
+                            <i class="fa fa-trash"></i>
+                          </button>
+                        </td>
                       </tr>
                     </tbody>
                   </table>                
                 </span>
-              </div> -->
+              </div>
              
               
 
@@ -141,7 +149,7 @@
           </div>
           <div class="box box-primary">
 
-            <div id="lastOrder" class="lastOrder">
+            <!-- <div id="lastOrder" class="lastOrder">
 
                 <span v-if=" orders.length != 0 ">
                   <h3 class="profile-username text-center">Meja No: {{ post.noMeja }}</h3>
@@ -198,7 +206,7 @@
                     </tbody>
                   </table>                
                 </span>
-              </div>
+              </div> -->
 
 
               <table class="table table-hover table-bordered">
@@ -1361,7 +1369,7 @@
                 let uri = `/api/transaksi/${this.$route.params.id}`;
                 this.axios.post(uri).then(response => {
                 this.trxs = response.data.data;
-                console.log(this.trxs)
+                // console.log(this.trxs)
                 
             });
             },
