@@ -108,6 +108,11 @@
                       <div v-if="st.stkInventori >= 5 && st.stkInventori <10" class="progress-bar progress-bar-yellow" style="width: 95%"></div>
                       <div v-if="st.stkInventori >= 10 && st.stkInventori <20" class="progress-bar progress-bar-green" style="width: 95%"></div>
                     </div>
+                    <span v-if="$session.get('roleID') === 'Admin'">
+                      <button class="btn btn-md btn-success" @click="showModal(kdBarang = st.kdBarang, nmBarang = st.nmBarang)" >
+                          Input Inventori
+                      </button>
+                    </span>
                   </div>
 
                   
@@ -168,9 +173,46 @@
       
       <!-- /.row -->
     </section>
-                        
 
-                    </div>  
+<div v-if="ModalInputInventori">
+  <transition name="modal">
+    <div class="modal-mask">
+        <div class="modal-wrapper">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" @click="ModalInputInventori=false">
+                <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Input Inventori</h4>
+            </div>
+            <div class="modal-body">                                                                
+                
+                <form @submit.prevent="PostInput" id="anyName">
+                    <div class="form-group">
+                        <label>Nama Inventori</label>                        
+                        <input type="text" class="form-control" v-model="nmBarang" disabled >
+                        <input type="hidden" class="form-control" v-model="kdBarang" >
+                        <input type="hidden" class="form-control" v-model="tglInv" >
+                    </div>
+                    <div class="form-group">
+                        <label>Qty Inventori</label>
+                        <input type="text" class="form-control" v-model="qty"
+                                placeholder="Stok" required >
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-md btn-success">Input</button>
+                    </div>
+                </form>
+            </div>
+            </div>
+        </div>
+        </div>
+    </div>
+  </transition>
+</div>                     
+
+  </div>  
   
   
 </template>
@@ -182,11 +224,16 @@
         data() {
             return {
                 tglToday: new Date().toJSON().slice(0,10).replace(/-/g,'/'),
+                tglInv: new Date().toJSON().slice(0,10).replace(/-/g,'/'),
                 image_src: '/image/logo.png',
                 akupansimeja: '',
                 notaToday: '',
                 jumlahuser: '',
                 stokT: [],
+                ModalInputInventori: false,
+                kdBarang:'',
+                nmBarang: '',
+                qty: '',
 
             }
         },
@@ -211,6 +258,29 @@
                         this.stokT = response.data.data;
                     }).catch(error => {
                       alert('ada yang error');
+                });
+            },
+            showModal() {
+              this.ModalInputInventori = true;
+
+
+            },
+            PostInput() {
+                let uri = `/api/inputInventori`;
+                this.axios.post(uri, {
+                    kdBarang: this.kdBarang,
+                    qty: this.qty,
+                    tglInv: this.tglInv,
+                })
+                    .then((response) => {
+                        // alert('inventori Berhasil di input');
+                        this.stokMenipis();
+                        // document.getElementById("anyName").reset();
+                        // this.$router.push({name: 'kategori'});
+                        this.ModalInputInventori = false;
+                    }).catch(error => {
+                    //this.validation = error.response.data.data;
+                    alert('ada yang error');
                 });
             },
         },
