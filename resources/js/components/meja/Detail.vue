@@ -79,15 +79,11 @@
                     </thead>
                     <tbody>
                       <tr v-for="order in orders" :key="order.id">
-                        <td>*</td>
+                        <td><a @click.prevent="PostDeleteTrxO(id = order.id)" >del</a></td>
                         <td>{{ order.nmMenu }}<br>
                             {{order.noteOrder }}</td>
                         <td>{{ order.qtyOrder }}</td>
-                        <td>{{ order.wktOrder }} 
-                          <button @click.prevent="PostDeleteTrxO(id = order.id)" class="btn-sm btn-danger">
-                            <i class="fa fa-trash"></i>
-                          </button>
-                        </td>
+                        <td>{{ order.wktOrder }}</td>
                       </tr>
                     </tbody>
                   </table>
@@ -109,15 +105,11 @@
                     </thead>
                     <tbody>
                       <tr v-for="order in orders1" :key="order.id">
-                        <td>* </td>
+                        <td><a @click.prevent="PostDeleteTrxO(id = order.id)" >del</a></td>
                         <td>{{ order.nmMenu }}<br>
                             {{order.noteOrder }}</td>
                         <td>{{ order.qtyOrder }}</td>
-                        <td>{{ order.wktOrder }} 
-                          <button @click.prevent="PostDeleteTrxO(id = order.id)" class="btn-sm btn-danger">
-                            <i class="fa fa-trash"></i>
-                          </button>
-                        </td>
+                        <td>{{ order.wktOrder }}</td>
                       </tr>
                     </tbody>
                   </table>                
