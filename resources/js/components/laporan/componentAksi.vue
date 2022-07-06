@@ -73,6 +73,7 @@
                                             <a href="#"  @click="rePrint()" class="btn btn-md btn-success"><b>Re-Print</b></a>
                                         </div>
                                         <div v-else-if="adminuser === 'Kasir'">
+                                            <button @click="printer(pem)">prin</button>
                                             <a href="#"  @click="rePrint()" class="btn btn-md btn-success"><b>Re-Print</b></a>
                                         </div>
                                         <br>
@@ -138,7 +139,7 @@
                                 <td>{{ trx.qty * trx.hrgJual | currency }}</td>
                             </tr>
                             </tbody>
-                            
+                            <tfoot>
                                 <tr>
                                     <th colspan="3">subTotal :</th>
                                     <th>{{ totalJ | currency}}</th>
@@ -173,12 +174,16 @@
                                 </tr>
                                 <tr v-else-if="data.typePembayaran === '2'">
                                 </tr>
+                                <th colspan="4">
+                                    <p class="text-bold text-center">
+                                    Terima Kasih <br>
+                                    Belanja Anda Hal Baik Bagi Dunia<br>
+                                    Tidak enak Kasi Tau Kami, ENAK kasi tau temanmu<br>                              
+                                    </p>
+                                </th>
+                                </tfoot>
                         </table>
-                        <p class="text-bold text-center">
-                        Terima Kasih <br>
-                        Belanja Anda Hal Baik Bagi Dunia<br>
-                        Tidak enak Kasi Tau Kami, ENAK kasi tau temanmu<br>                              
-                        </p>
+                        
 
                 </div>
                 
@@ -271,27 +276,55 @@
 
 <style type="text/css">
 
+html, body {
+    height: 100%; }
+
     #printMe { display: none; }
 
     @media print
     {
-  body * {
+        
+  html, body {
     visibility: hidden;
+    height: auto;
   }
   #printMe, #printMe * {
     visibility: visible;
+    
   }
   #printMe {
     position: absolute;
-    left: 0;
+    left: 3;
     top: 0;
     font-size: 8pt;
     width: 100%;
+    height: 100vh;
   }
 }
     </style>
 
 <script>
+
+import Vue from 'vue';
+import VueHtmlToPaper from 'vue-html-to-paper';
+
+const options = {
+  name: '_blank',
+  specs: [
+    'fullscreen=yes',
+    'titlebar=yes',
+    'scrollbars=yes'
+  ],
+  styles: [
+    'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css',
+    'https://unpkg.com/kidlat-css/css/kidlat.css'
+  ],
+  timeout: 1000, // default timeout before the print window appears
+  autoClose: true, // if false, the window will not close after printing
+  windowTitle: window.document.title, // override the window title
+}
+
+Vue.use(VueHtmlToPaper, options);
 
 export default {
 
@@ -325,6 +358,28 @@ export default {
     },
        
     methods: {
+        async print () {
+        // Pass the element id here
+        await this.$htmlToPaper('printMe');
+        },
+        printer(pem){
+            var mywindow = window.open('', 'printMe', 'height=auto,width=80mm');
+            mywindow.document.write('<html><head><title>Handskemager Dans</title>');
+            /*optional stylesheet*/ //mywindow.document.write('<link rel="stylesheet" href="main.css" type="text/css" />');
+            mywindow.document.write('</head><body >');
+            mywindow.document.write('<img :src="/image/logoNota.png" >');
+            mywindow.document.write('Phone / Wa: 081 239 099 998');
+            mywindow.document.write('</body></html>');
+
+            mywindow.document.close(); // necessary for IE >= 10
+            mywindow.focus(); // necessary for IE >= 10
+
+            mywindow.print();
+            mywindow.close();
+            popupWindow.hide ();
+
+            return true;
+        },
         rePrint: function(){
             window.print(printMe);
         },
