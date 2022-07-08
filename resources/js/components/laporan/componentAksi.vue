@@ -73,7 +73,7 @@
                                             <a href="#"  @click="rePrint()" class="btn btn-md btn-success"><b>Re-Print</b></a>
                                         </div>
                                         <div v-else-if="adminuser === 'Kasir'">
-                                            <button @click="printer(pem)">prin</button>
+                                            
                                             <a href="#"  @click="rePrint()" class="btn btn-md btn-success"><b>Re-Print</b></a>
                                         </div>
                                         <br>
@@ -367,7 +367,7 @@ export default {
             mywindow.document.write('<html><head><title>Handskemager Dans</title>');
             /*optional stylesheet*/ //mywindow.document.write('<link rel="stylesheet" href="main.css" type="text/css" />');
             mywindow.document.write('</head><body >');
-            mywindow.document.write('<img :src="/image/logoNota.png" >');
+            mywindow.document.write('<img src="/image/logoNota.png" >');
             mywindow.document.write('Phone / Wa: 081 239 099 998');
             mywindow.document.write('</body></html>');
 
