@@ -276,7 +276,7 @@
 
 <style type="text/css">
 
-html, body {
+body {
     height: 100%; }
 
     #printMe { display: none; }
@@ -284,7 +284,7 @@ html, body {
     @media print
     {
         
-  html, body {
+  body {
     visibility: hidden;
     height: auto;
   }
@@ -293,6 +293,7 @@ html, body {
     
   }
   #printMe {
+    page-break-inside: avoid;
     position: absolute;
     left: 3;
     top: 0;
