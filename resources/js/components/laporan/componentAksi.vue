@@ -73,7 +73,8 @@
                                             <a href="#"  @click="rePrint()" class="btn btn-md btn-success"><b>Re-Print</b></a>
                                         </div>
                                         <div v-else-if="adminuser === 'Kasir'">
-                                            
+                                        <a href="#"  @click="print()" class="btn btn-md btn-success"><b>Print to Paper</b></a>
+                                            <a href="#"  @click="printer(printMe)" class="btn btn-md btn-success"><b>Print Html</b></a>
                                             <a href="#"  @click="rePrint()" class="btn btn-md btn-success"><b>Re-Print</b></a>
                                         </div>
                                         <br>
@@ -363,13 +364,12 @@ export default {
         // Pass the element id here
         await this.$htmlToPaper('printMe');
         },
-        printer(pem){
+        printer(printMe){
             var mywindow = window.open('', 'printMe', 'height=auto,width=80mm');
             mywindow.document.write('<html><head><title>Handskemager Dans</title>');
             /*optional stylesheet*/ //mywindow.document.write('<link rel="stylesheet" href="main.css" type="text/css" />');
             mywindow.document.write('</head><body >');
-            mywindow.document.write('<img src="/image/logoNota.png" >');
-            mywindow.document.write('Phone / Wa: 081 239 099 998');
+            mywindow.document.write(document.getElementById(printMe).innerHTML);
             mywindow.document.write('</body></html>');
 
             mywindow.document.close(); // necessary for IE >= 10
