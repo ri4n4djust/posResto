@@ -294,8 +294,9 @@ body {
     
   }
   #printMe {
-    page-break-inside: avoid;   
-    page-break-before: always;
+    /* page-break-inside: none;   
+    page-break-before: none; */
+    page-break-after:initial;
     position: absolute;
     left: 3;
     top: 0;
@@ -318,10 +319,10 @@ const options = {
     'titlebar=yes',
     'scrollbars=yes'
   ],
-//   styles: [
-//     'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css',
-//     'https://unpkg.com/kidlat-css/css/kidlat.css'
-//   ],
+  styles: [
+    'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css',
+    // 'https://unpkg.com/kidlat-css/css/kidlat.css'
+  ],
   timeout: 1000, // default timeout before the print window appears
   autoClose: true, // if false, the window will not close after printing
   windowTitle: window.document.title, // override the window title
