@@ -123,7 +123,7 @@
                     <!-- /.col -->
                     
                     <div class="col-xs-12 table-responsive">
-                        <table class="table table-striped">
+                        <table border="10">
                             <thead>
                             <tr>
                                 <th>Nama </th>
@@ -277,8 +277,6 @@
 
 <style type="text/css">
 
-body {
-    height: 100%; }
 
     #printMe { display: none; }
 
@@ -367,11 +365,14 @@ export default {
         await this.$htmlToPaper('printMe');
         },
         printer(printMe){
-            var mywindow = window.open('', 'printMe', 'height=auto,width=80mm');
+            var mywindow = window.open('', 'printMe', 'height=auto,width=400');
             mywindow.document.write('<html><head><title>Handskemager Dans</title>');
-            /*optional stylesheet*/ //mywindow.document.write('<link rel="stylesheet" href="main.css" type="text/css" />');
+            // mywindow.document.write('<link rel="stylesheet" href="assets/bower_components/bootstrap/dist/css/bootstrap.min.css">');
+            // mywindow.document.write('<link rel="stylesheet" href="assets/bower_components/font-awesome/css/font-awesome.min.css">');
+            // mywindow.document.write('<link rel="stylesheet" href="assets/dist/css/AdminLTE.min.css">');
+            // mywindow.document.write('<link rel="stylesheet" href="./plugins/print.css" type="text/css" />');
             mywindow.document.write('</head><body >');
-            mywindow.document.write(document.getElementById(printMe).innerHTML);
+            mywindow.document.write(document.getElementById("printMe").innerHTML);
             mywindow.document.write('</body></html>');
 
             mywindow.document.close(); // necessary for IE >= 10
