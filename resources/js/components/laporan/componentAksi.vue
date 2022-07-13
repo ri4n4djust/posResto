@@ -3,7 +3,13 @@
         <button  @click="loadDetailPenjualan()">
             <i class="fa fa-eye"></i>
         </button>
-            <div id="printMe">
+            
+        
+       
+
+                        <div v-if="showModalPenjualan">
+
+                            <div id="printMe">
                 <div>
                     <table width="98%" >
                         <thead>
@@ -112,10 +118,8 @@
                     </table>
                 </div>
             </div>
-        
-       
 
-                        <div v-if="showModalPenjualan">
+            
                             <transition name="modal">
                             <div class="modal-mask">
                                 <div class="modal-wrapper">
@@ -181,11 +185,120 @@
                                             <a href="#"  @click="rePrint()" class="btn btn-md btn-success"><b>Re-Print</b></a>
                                         </div>
                                         <div v-else-if="adminuser === 'Kasir'">
-                                            <a href="#"  @click="printer(printMe)" class="btn btn-md btn-success"><b>Print Html</b></a>
-                                            <a href="#"  @click="rePrint(printMe)" class="btn btn-md btn-success"><b>Re-Print</b></a>
+                                            <a href="#"  @click="rePrint()" class="btn btn-md btn-success"><b>Re-Print</b></a>
                                         </div>
                                         <br>
-            
+            <div id="printMe">
+            <section class="invoice">
+                <!-- info row -->
+                <p class="text-muted text-center">
+                <img :src="'/image/logoNota.png'" >
+                </p>
+               <p class="text-bold text-center">
+               
+                    Phone / Wa: 081 239 099 998<br>
+                    Email: warungdaladesa@gmail.com<br>
+                    FB : warungdaladesa<br>
+                    IG : warung.daladesa.sangeh
+                  
+                </p>
+              <div class="row invoice-info">
+                  <!-- accepted payments column -->
+                    <div class="col-xs-6">
+                    <p class="text-muted" style="margin-top: 2px;">
+                        <strong>Customer :</strong> {{data.pelangganNota}}<br>
+                        <b> Tgl : </b>{{data.tglNota}}<br>
+                        <b> Meja No : </b>{{data.noMeja}}<br>
+                        <b>Waiter : </b>{{data.waiterNota}}<br>
+                    </p>
+                    </div>
+                    <!-- /.col -->
+                    <div class="col-xs-6">
+                    <p class="text-muted" style="margin-top: 2px;">
+                        <b>Inv: </b>{{data.noNota}}<br>
+                        <b>Kasir : </b>{{ data.name }}<br>
+                        <b>Pax: </b>{{data.pax}}<br>
+                        <b>Type : </b>
+                        <span v-if="data.typePembayaran === '1'">
+                            Cash
+                        </span>
+                        <span v-else-if="data.typePembayaran === '2'">
+                            Debit
+                        </span>
+                        <span v-else-if="data.typePembayaran === '3'">
+                            E-Money
+                        </span>
+                    </p>
+                    </div>
+                    <!-- /.col -->
+                    
+                    <div class="col-xs-12 table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th>Nama </th>
+                                <th>Qty</th>
+                                <th>Harga</th>
+                                <th>Total</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr v-for="trx in pem" :key="trx.noN">
+                                <td>{{ trx.nmBarang }} </td>
+                                <td>{{ trx.qty}}</td>
+                                <td>{{ trx.hrgJual | currency }}</td>
+                                <td>{{ trx.qty * trx.hrgJual | currency }}</td>
+                            </tr>
+                            </tbody>
+                            
+                                <tr>
+                                    <th colspan="3">subTotal :</th>
+                                    <th>{{ totalJ | currency}}</th>
+                                </tr>
+                                <tr>
+                                    <th colspan="3">Tax & Service : {{ data.pajakPembayaran }} %</th>
+                                    <th>{{ data.taxNota | currency}}</th>
+                                </tr>
+                                <tr>
+                                    <th colspan="3">Discount {{ data.diskonPembayaran }} %</th>
+                                    <th>{{ data.diskonNota | currency}}</th>
+                                </tr>
+                                <tr>
+                                    <th colspan="3">subTotal :</th>
+                                    <th>{{ data.totalNota | currency }}</th>
+                                </tr>
+                                <tr v-if="data.typePembayaran === '1'">
+                                </tr>
+                                <tr v-else-if="data.typePembayaran === '2'">
+                                    <th colspan="3">Card Charge : {{ data.chargePembayaran }} %</th>
+                                    <th>{{ data.chargeNota | currency }}</th>
+                                </tr>
+
+                                <tr>
+                                    <th colspan="3">Payment :</th>
+                                    <th>{{ data.bayarNota | currency }}</th>
+                                </tr>
+
+                                <tr v-if="data.typePembayaran === '1'">
+                                    <th colspan="3">Kembalian :</th>
+                                    <th>{{ data.kembalianNota | currency }}</th>
+                                </tr>
+                                <tr v-else-if="data.typePembayaran === '2'">
+                                </tr>
+                        </table>
+                        <p class="text-bold text-center">
+                        Terima Kasih <br>
+                        Belanja Anda Hal Baik Bagi Dunia<br>
+                        Tidak enak Kasi Tau Kami, ENAK kasi tau temanmu<br>                              
+                        </p>
+
+                </div>
+                
+              </div>
+              <!-- /.row -->
+                
+            </section>
+            </div>
 
                                         
                     <div class="col-md-12">
@@ -270,36 +383,27 @@
 
 <style>
 
-
-    #printMe { display: block; }
+    #printMe { display: none; }
 
     @media print
     {
-        
-  body {
+  body * {
     visibility: hidden;
-    height: 100%;
   }
   #printMe, #printMe * {
     visibility: visible;
-    
   }
   #printMe {
-    /* page-break-inside: none;   
-    page-break-before: none; */
-    /* page-break-after:initial;
-    position: absolute; */
-    left: 3;
+    position: absolute;
+    left: 0;
     top: 0;
     font-size: 8pt;
     width: 100%;
-    height: 100vh;
   }
 }
     </style>
 
 <script>
-
 
 export default {
 
@@ -334,26 +438,6 @@ export default {
     },
        
     methods: {
-        printer(){
-            var mywindow = window.open('', 'printMe', 'height=auto,width=400');
-            mywindow.document.write('<html><head><title>Nota</title>');
-            // mywindow.document.write('<link rel="stylesheet" href="assets/bower_components/bootstrap/dist/css/bootstrap.min.css">');
-            // mywindow.document.write('<link rel="stylesheet" href="assets/bower_components/font-awesome/css/font-awesome.min.css">');
-            // mywindow.document.write('<link rel="stylesheet" href="assets/dist/css/AdminLTE.min.css">');
-            // mywindow.document.write('<link rel="stylesheet" href="./plugins/print.css" type="text/css" />');
-            mywindow.document.write('</head><body >');
-            mywindow.document.write(document.getElementById("printMe").innerHTML);
-            mywindow.document.write('</body></html>');
-
-            mywindow.document.close(); // necessary for IE >= 10
-            mywindow.focus(); // necessary for IE >= 10
-
-            mywindow.print();
-            mywindow.close();
-            popupWindow.hide ();
-
-            return true;
-        },
         rePrint: function(){
             window.print(printMe);
         },

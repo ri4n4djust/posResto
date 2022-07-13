@@ -62,6 +62,8 @@
                 <a href="#" @click="opensplit(trxs)" class="btn btn-primary btn-block"><b>Split Payment</b></a>
                 </p>
 
+                
+
                   
                 <div id="lastOrder" class="lastOrder">
 
@@ -200,6 +202,8 @@
                 </span>
               </div> -->
 
+              
+
 
               <table class="table table-hover table-bordered">
                   <thead>
@@ -224,6 +228,10 @@
                   </tr>
                   </tbody>
               </table>
+
+              
+
+
           </div>
         </div>
         <!-- /.col -->
@@ -320,7 +328,7 @@
       </div>
     </transition>
   </div>
-  <!------End Modal Auth ----->
+  <!------End Modal Auth ---->
 
 
   
@@ -338,7 +346,7 @@
               </div>
               <div class="modal-body">
 
-                <!------Tes Select menu ----->
+                <!------Tes Select menu ---->
                 <label>Menu cari:</label>
                   <input type="text" ref="menu" v-model="menu" v-on:keyup="get_menu" class="form-control " >
                     
@@ -354,7 +362,7 @@
                       </span>
                     
 
-                <!------End Tes ----->
+                <!------End Tes ---->
                 
            
                 <div v-if="post2">
@@ -400,6 +408,120 @@
   </div>
 
 <div v-if="showModalSplit">
+
+  <div id="printMeSplit">
+                <!-- info row -->
+                <p class="text-muted text-center">
+                <img :src="'/image/logoNota.png'" id="logono" >
+                </p>
+                <p class="text-bold text-center">
+               
+                    Phone / Wa: 081 239 099 998<br>
+                    Email: warungdaladesa@gmail.com<br>
+                    FB : warungdaladesa<br>
+                    IG : warung.daladesa.sangeh
+                  
+                </p>
+              <div class="row invoice-info">
+                <div class="col-xs-6">
+                  <p class="text-muted" style="margin-top: 2px;">
+                  <address>
+                    <strong>Customer :</strong> {{pelanggan}}<br>
+                    <b> Tgl : </b>{{tglNota}}<br>
+                    <b> Meja No : </b>{{post.noMeja}}<br>
+                    <b>Waiter : </b>{{post.name}}<br>
+                  </address>
+                  
+                </div>
+                <!-- /.col -->
+                <div class="col-xs-6">
+                  <p class="text-muted" style="margin-top: 2px;">
+                  <address>
+                  <b>No Inv: </b>{{noNota}}<br>
+                  <b>Kasir : </b>{{$session.get('user')}}<br>
+                  <b>Pax: </b>{{post.paxMeja}}<br>
+                  <b>Type : </b>
+                  <span v-if="pembayaran === '1'">
+                    Cash
+                  </span>
+                  <span v-else-if="pembayaran === '2'">
+                    Debit
+                  </span>
+                  <span v-else-if="pembayaran === '3'">
+                    E-Money
+                  </span>
+                  </address>
+                  
+                </div>
+
+                <!-- /.col -->
+              <!-- /.row -->
+
+                <div class="col-xs-12 table-responsive">
+                  <table class="table table-striped">
+                      <thead>
+                      <tr>
+                          <th>Nama </th>
+                          <th>Qty</th>
+                          <th>Harga</th>
+                          <th>Total</th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                      <tr v-for="trx in splitNota" :key="trx.id">
+                          <td >{{ trx.nmBarangTmp }} </td>
+                          <td >{{ trx.qtyTmp}}</td>
+                          <td >{{ trx.hrgJualTmp | currency }}</td>
+                          <td >{{ trx.qtyTmp * trx.hrgJualTmp | currency }}</td>
+                      </tr>
+                      </tbody>
+                          <tr>
+                              <th colspan="3">subTotal :</th>
+                              <th>{{totalItem | currency}}</th>
+                          </tr>
+                          <tr>
+                              <th colspan="3">Tax & Service : {{ pajak }} %</th>
+                              <th>{{ Math.floor(totalItem * pajak / 100 ) | currency}}</th>
+                          </tr>
+                          <tr>
+                              <th colspan="3">Discount : {{ diskon }} %</th>
+                              <th>{{ Math.floor(totalItem * diskon / 100) | currency}}</th>
+                          </tr>
+                          <tr>
+                              <th colspan="3">subTotal :</th>
+                              <th>{{ Math.floor((totalItem * pajak / 100 + totalItem) - (totalItem * diskon / 100))  || 0 | currency }}</th>
+                          </tr>
+
+                          <tr v-if="pembayaran === '1'">
+                          </tr>
+                          <tr v-else-if="pembayaran === '2'">
+                              <th colspan="3">Card Charge : {{ taxDebit }} %</th>
+                              <th>{{ Math.floor((totalItem * pajak / 100 + totalItem) - (groupNota * diskon / 100)) * taxDebit / 100 | currency }}</th>
+                          </tr>
+
+                          <tr>
+                              <th colspan="3">Payment :</th>
+                              <th>{{ totalBayarS | currency }}</th>
+                          </tr>
+
+                          <tr v-if="pembayaran === '1'">
+                              <th colspan="3">Kembalian :</th>
+                              <th>{{ Math.floor(totalBayarS - ((totalItem * pajak / 100 + totalItem) - (totalItem * diskon / 100)))  || 0 | currency }}</th>
+                          </tr>
+                          <tr v-else-if="pembayaran === '2'">
+                          </tr>
+
+                  </table>
+                  <p class="text-bold text-center">
+                      Terima Kasih <br>
+                      Belanja Anda Hal Baik Bagi Dunia<br>
+                      Tidak enak Kasi Tau Kami, ENAK kasi tau temanmu<br>                              
+                  </p>
+                </div>
+              </div>
+    </div>
+
+    
     <transition name="modal">
       <div class="modal-mask">
         <div class="modal-wrapper">
@@ -539,10 +661,27 @@
                
               </form>
 
-              <div id="printMeSplit">
+              
+              
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </transition>
+  </div>
+<!---- Modal Bayar End ---->
+  
+
+  <div v-if="showModalBayar">
+
+    <div id="printMe">
+                <section class="invoice">
                 <!-- info row -->
                 <p class="text-muted text-center">
-                <img :src="'/image/logoNota.png'" id="logono" >
+                <img :src="'/image/logoNota.png'" id="logono">
                 </p>
                 <p class="text-bold text-center">
                
@@ -589,81 +728,71 @@
 
                 <div class="col-xs-12 table-responsive">
                   <table class="table table-striped">
-                      <thead>
-                      <tr>
-                          <th>Nama </th>
-                          <th>Qty</th>
-                          <th>Harga</th>
-                          <th>Total</th>
-                      </tr>
-                      </thead>
-                      <tbody>
-                      <tr v-for="trx in splitNota" :key="trx.id">
-                          <td >{{ trx.nmBarangTmp }} </td>
-                          <td >{{ trx.qtyTmp}}</td>
-                          <td >{{ trx.hrgJualTmp | currency }}</td>
-                          <td >{{ trx.qtyTmp * trx.hrgJualTmp | currency }}</td>
-                      </tr>
-                      </tbody>
-                          <tr>
-                              <th colspan="3">subTotal :</th>
-                              <th>{{totalItem | currency}}</th>
-                          </tr>
-                          <tr>
-                              <th colspan="3">Tax & Service : {{ pajak }} %</th>
-                              <th>{{ Math.floor(totalItem * pajak / 100 ) | currency}}</th>
-                          </tr>
-                          <tr>
-                              <th colspan="3">Discount : {{ diskon }} %</th>
-                              <th>{{ Math.floor(totalItem * diskon / 100) | currency}}</th>
-                          </tr>
-                          <tr>
-                              <th colspan="3">subTotal :</th>
-                              <th>{{ Math.floor((totalItem * pajak / 100 + totalItem) - (totalItem * diskon / 100))  || 0 | currency }}</th>
-                          </tr>
+                                <thead>
+                                <tr>
+                                    <th>Nama </th>
+                                    <th>Qty</th>
+                                    <th>Harga</th>
+                                    <th>Total</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr v-for="trx in trxs" :key="trx.id">
+                                    <td >{{ trx.nmBarangTmp }} </td>
+                                    <td >{{ trx.qtyTmp}}</td>
+                                    <td >{{ trx.hrgJualTmp | currency }}</td>
+                                    <td >{{ trx.totalTmp | currency }}</td>
+                                </tr>
+                                </tbody>
+                                <tfoot style="display: table-row-group">
+                                    <tr>
+                                        <th colspan="3">subTotal :</th>
+                                        <th>{{subtotal | currency}}</th>
+                                    </tr>
+                                    <tr>
+                                        <th colspan="3">Tax & Service : {{ pajak }} %</th>
+                                        <th>{{ Math.floor(subtotal * pajak / 100 ) | currency}}</th>
+                                    </tr>
+                                    <tr>
+                                        <th colspan="3">Discount : {{ diskon }} %</th>
+                                        <th>{{ Math.floor(subtotaltp * diskon / 100) | currency}}</th>
+                                    </tr>
+                                    <tr>
+                                        <th colspan="3">subTotal :</th>
+                                        <th>{{ Math.floor((subtotal * pajak / 100 + subtotal) - (subtotaltp * diskon / 100))  || 0 | currency }}</th>
+                                    </tr>
 
-                          <tr v-if="pembayaran === '1'">
-                          </tr>
-                          <tr v-else-if="pembayaran === '2'">
-                              <th colspan="3">Card Charge : {{ taxDebit }} %</th>
-                              <th>{{ Math.floor((totalItem * pajak / 100 + totalItem) - (groupNota * diskon / 100)) * taxDebit / 100 | currency }}</th>
-                          </tr>
+                                    <tr v-if="pembayaran === '1'">
+                                    </tr>
+                                    <tr v-else-if="pembayaran === '2'">
+                                        <th colspan="3">Card Charge : {{ taxDebit }} %</th>
+                                        <th>{{ Math.floor((subtotal * pajak / 100 + subtotal) - (subtotaltp * diskon / 100)) * taxDebit / 100 | currency }}</th>
+                                    </tr>
 
-                          <tr>
-                              <th colspan="3">Payment :</th>
-                              <th>{{ totalBayarS | currency }}</th>
-                          </tr>
+                                    <tr>
+                                        <th colspan="3">Payment :</th>
+                                        <th>{{ Math.floor(((subtotal * pajak / 100 + subtotal) - (subtotaltp * diskon / 100)) + ((subtotal * pajak / 100 + subtotal) - (subtotaltp * diskon / 100)) * taxDebit / 100)  || 0 | currency }}</th>
+                                    </tr>
 
-                          <tr v-if="pembayaran === '1'">
-                              <th colspan="3">Kembalian :</th>
-                              <th>{{ Math.floor(totalBayarS - ((totalItem * pajak / 100 + totalItem) - (totalItem * diskon / 100)))  || 0 | currency }}</th>
-                          </tr>
-                          <tr v-else-if="pembayaran === '2'">
-                          </tr>
-
-                  </table>
-                  <p class="text-bold text-center">
-                      Terima Kasih <br>
-                      Belanja Anda Hal Baik Bagi Dunia<br>
-                      Tidak enak Kasi Tau Kami, ENAK kasi tau temanmu<br>                              
-                  </p>
-                </div>
-              </div>
-    </div>
-              
-
-
-              </div>
+                                    <tr v-if="pembayaran === '1'">
+                                        <th colspan="3">Kembalian :</th>
+                                        <th>{{ Math.floor(totalBayar - ((subtotal * pajak / 100 + subtotal) - (subtotaltp * diskon / 100)))  || 0 | currency }}</th>
+                                    </tr>
+                                    <tr v-else-if="pembayaran === '2'">
+                                    </tr>
+                              </tfoot>
+                            </table>
+                            <p class="text-bold text-center">
+                                Terima Kasih <br>
+                                Belanja Anda Hal Baik Bagi Dunia<br>
+                                Tidak enak Kasi Tau Kami, ENAK kasi tau temanmu<br>                              
+                            </p>
+                        </div>
+                      </div>
+                        </section>
             </div>
-          </div>
-        </div>
-      </div>
-    </transition>
-  </div>
-<!---- Modal Bayar End ---->
-  
 
-  <div v-if="showModalBayar">
+
     <transition name="modal">
       <div class="modal-mask">
         <div class="modal-wrapper">
@@ -750,119 +879,7 @@
                
               </form>
 
-              <div id="printMe">
-                <section class="invoice">
-                <!-- info row -->
-                <p class="text-muted text-center">
-                <img :src="'/image/logoNota.png'" id="logono">
-                </p>
-                <p class="text-bold text-center">
-               
-                    Phone / Wa: 081 239 099 998<br>
-                    Email: warungdaladesa@gmail.com<br>
-                    FB : warungdaladesa<br>
-                    IG : warung.daladesa.sangeh
-                  
-                </p>
-              <div class="row invoice-info">
-                <div class="col-xs-6">
-                  <p class="text-muted" style="margin-top: 2px;">
-                  <address>
-                    <strong>Customer :</strong> {{pelanggan}}<br>
-                    <b> Tgl : </b>{{tglNota}}<br>
-                    <b> Meja No : </b>{{post.noMeja}}<br>
-                    <b>Waiter : </b>{{post.name}}<br>
-                  </address>
-                  
-                </div>
-                <!-- /.col -->
-                <div class="col-xs-6">
-                  <p class="text-muted" style="margin-top: 2px;">
-                  <address>
-                  <b>No Inv: </b>{{noNota}}<br>
-                  <b>Kasir : </b>{{$session.get('user')}}<br>
-                  <b>Pax: </b>{{post.paxMeja}}<br>
-                  <b>Type : </b>
-                  <span v-if="pembayaran === '1'">
-                    Cash
-                  </span>
-                  <span v-else-if="pembayaran === '2'">
-                    Debit
-                  </span>
-                  <span v-else-if="pembayaran === '3'">
-                    E-Money
-                  </span>
-                  </address>
-                  
-                </div>
-
-                <!-- /.col -->
-              <!-- /.row -->
-
-                <div class="col-xs-12 table-responsive">
-                  <table class="table table-striped">
-                                <thead>
-                                <tr>
-                                    <th>Nama </th>
-                                    <th>Qty</th>
-                                    <th>Harga</th>
-                                    <th>Total</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr v-for="trx in trxs" :key="trx.id">
-                                    <td >{{ trx.nmBarangTmp }} </td>
-                                    <td >{{ trx.qtyTmp}}</td>
-                                    <td >{{ trx.hrgJualTmp | currency }}</td>
-                                    <td >{{ trx.totalTmp | currency }}</td>
-                                </tr>
-                                </tbody>
-                                    <tr>
-                                        <th colspan="3">subTotal :</th>
-                                        <th>{{subtotal | currency}}</th>
-                                    </tr>
-                                    <tr>
-                                        <th colspan="3">Tax & Service : {{ pajak }} %</th>
-                                        <th>{{ Math.floor(subtotal * pajak / 100 ) | currency}}</th>
-                                    </tr>
-                                    <tr>
-                                        <th colspan="3">Discount : {{ diskon }} %</th>
-                                        <th>{{ Math.floor(subtotaltp * diskon / 100) | currency}}</th>
-                                    </tr>
-                                    <tr>
-                                        <th colspan="3">subTotal :</th>
-                                        <th>{{ Math.floor((subtotal * pajak / 100 + subtotal) - (subtotaltp * diskon / 100))  || 0 | currency }}</th>
-                                    </tr>
-
-                                    <tr v-if="pembayaran === '1'">
-                                    </tr>
-                                    <tr v-else-if="pembayaran === '2'">
-                                        <th colspan="3">Card Charge : {{ taxDebit }} %</th>
-                                        <th>{{ Math.floor((subtotal * pajak / 100 + subtotal) - (subtotaltp * diskon / 100)) * taxDebit / 100 | currency }}</th>
-                                    </tr>
-
-                                    <tr>
-                                        <th colspan="3">Payment :</th>
-                                        <th>{{ Math.floor(((subtotal * pajak / 100 + subtotal) - (subtotaltp * diskon / 100)) + ((subtotal * pajak / 100 + subtotal) - (subtotaltp * diskon / 100)) * taxDebit / 100)  || 0 | currency }}</th>
-                                    </tr>
-
-                                    <tr v-if="pembayaran === '1'">
-                                        <th colspan="3">Kembalian :</th>
-                                        <th>{{ Math.floor(totalBayar - ((subtotal * pajak / 100 + subtotal) - (subtotaltp * diskon / 100)))  || 0 | currency }}</th>
-                                    </tr>
-                                    <tr v-else-if="pembayaran === '2'">
-                                    </tr>
-
-                            </table>
-                            <p class="text-bold text-center">
-                                Terima Kasih <br>
-                                Belanja Anda Hal Baik Bagi Dunia<br>
-                                Tidak enak Kasi Tau Kami, ENAK kasi tau temanmu<br>                              
-                            </p>
-                </div>
-              </div>
-                </section>
-    </div>
+              
               
 
 
@@ -891,8 +908,8 @@
   z-index: 1;
 }
 
-    #printMe { display: none; }
-
+    #printMe { display: block; }
+    #lastOrder { display: block; }
 
     @media print
     {
