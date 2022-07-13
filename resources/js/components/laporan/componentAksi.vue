@@ -3,7 +3,115 @@
         <button  @click="loadDetailPenjualan()">
             <i class="fa fa-eye"></i>
         </button>
+            <div id="printMe">
+                <div>
+                    <table width="98%" >
+                        <thead>
+                        <tr>
+                            <td colspan="4" align="center">
+                                <img :src="gambar" ><br>
+                                Phone / Wa: 081 239 099 998<br>
+                                Email: warungdaladesa@gmail.com<br>
+                                FB : warungdaladesa<br>
+                                IG : warung.daladesa.sangeh
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" align="left">
+                                <strong>Customer :</strong> {{data.pelangganNota}}<br>
+                                <b> Tgl : </b>{{data.tglNota}}<br>
+                                <b> Meja No : </b>{{data.noMeja}}<br>
+                                <b>Waiter : </b>{{data.waiterNota}}<br>
+                            </td>
+                            <td colspan="2" align="left">
+                                <b>Inv: </b>{{data.noNota}}<br>
+                                <b>Kasir : </b>{{ data.name }}<br>
+                                <b>Pax: </b>{{data.pax}}<br>
+                                <b>Type : </b>
+                                <span v-if="data.typePembayaran === '1'">
+                                    Cash
+                                </span>
+                                <span v-else-if="data.typePembayaran === '2'">
+                                    Debit
+                                </span>
+                                <span v-else-if="data.typePembayaran === '3'">
+                                    E-Money
+                                </span>
+                            </td>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+                <div>
+                    <table width="98%" >
+                        <tr>
+                            <td>Nama </td>
+                            <td>Qty</td>
+                            <td>Harga</td>
+                            <td>Total</td>
+                        </tr>
+                        
+                        <!-- <tbody border="2"> -->
+                        <tr v-for="trx in pem" :key="trx.noN">
+                            <td>{{ trx.nmBarang }} </td>
+                            <td>{{ trx.qty}}</td>
+                            <td>{{ trx.hrgJual | currency }}</td>
+                            <td>{{ trx.qty * trx.hrgJual | currency }}</td>
+                        </tr>
+                    </table>
+                </div>
+                <div>
+                    <table width="98%" >
+                    <!-- </tbody> -->
+                    <!-- <tfoot style="display: table-row-group"> -->
+                        <tr>
+                            <td colspan="3" align="right">subTotal :</td>
+                            <td align="right">{{ totalJ | currency}}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="3" align="right">Tax & Service : {{ data.pajakPembayaran }} %</td>
+                            <td align="right">{{ data.taxNota | currency}}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="3" align="right">Discount {{ data.diskonPembayaran }} %</td>
+                            <td align="right">{{ data.diskonNota | currency}}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="3" align="right">subTotal :</td>
+                            <td align="right">{{ data.totalNota | currency }}</td>
+                        </tr>
+                        <tr v-if="data.typePembayaran === '1'">
+                        </tr>
+                        <tr v-else-if="data.typePembayaran === '2'">
+                            <td colspan="3" align="right">Card Charge : {{ data.chargePembayaran }} %</td>
+                            <td align="right">{{ data.chargeNota | currency }}</td>
+                        </tr>
 
+                        <tr>
+                            <td colspan="3" align="right">Payment :</td>
+                            <td align="right">{{ data.bayarNota | currency }}</td>
+                        </tr>
+
+                        <tr v-if="data.typePembayaran === '1'">
+                            <td colspan="3" align="right">Kembalian :</td>
+                            <td align="right">{{ data.kembalianNota | currency }}</td>
+                        </tr>
+                        <tr v-else-if="data.typePembayaran === '2'">
+                        </tr>
+                        <tr>
+                        <td colspan="4" align="center">
+                            <p class="text-bold text-center">
+                            Terima Kasih <br>
+                            Belanja Anda Hal Baik Bagi Dunia<br>
+                            Tidak enak Kasi Tau Kami, ENAK kasi tau temanmu<br>                              
+                            </p>
+                        </td>
+                        </tr>
+                        <!-- </tfoot> -->
+                    <!-- </tbody> -->
+                    </table>
+                </div>
+            </div>
         
        
 
@@ -74,104 +182,10 @@
                                         </div>
                                         <div v-else-if="adminuser === 'Kasir'">
                                             <a href="#"  @click="printer(printMe)" class="btn btn-md btn-success"><b>Print Html</b></a>
-                                            <a href="#"  @click="rePrint()" class="btn btn-md btn-success"><b>Re-Print</b></a>
+                                            <a href="#"  @click="rePrint(printMe)" class="btn btn-md btn-success"><b>Re-Print</b></a>
                                         </div>
                                         <br>
-            <div id="printMe">
-                <table >
-                    <thead>
-                    <tr>
-                        <th colspan="4" align="center">
-                            <img v-bind:src="gambar" ><br>
-                            Phone / Wa: 081 239 099 998<br>
-                            Email: warungdaladesa@gmail.com<br>
-                            FB : warungdaladesa<br>
-                            IG : warung.daladesa.sangeh
-                        </th>
-                    </tr>
-                    <tr>
-                        <th colspan="2" align="left">
-                            <strong>Customer :</strong> {{data.pelangganNota}}<br>
-                            <b> Tgl : </b>{{data.tglNota}}<br>
-                            <b> Meja No : </b>{{data.noMeja}}<br>
-                            <b>Waiter : </b>{{data.waiterNota}}<br>
-                        </th>
-                        <th colspan="2" align="left">
-                            <b>Inv: </b>{{data.noNota}}<br>
-                            <b>Kasir : </b>{{ data.name }}<br>
-                            <b>Pax: </b>{{data.pax}}<br>
-                            <b>Type : </b>
-                            <span v-if="data.typePembayaran === '1'">
-                                Cash
-                            </span>
-                            <span v-else-if="data.typePembayaran === '2'">
-                                Debit
-                            </span>
-                            <span v-else-if="data.typePembayaran === '3'">
-                                E-Money
-                            </span>
-                        </th>
-                    </tr>
-                    <tr>
-                        <th>Nama </th>
-                        <th>Qty</th>
-                        <th>Harga</th>
-                        <th>Total</th>
-                    </tr>
-                    </thead>
-                    <tbody border="2">
-                    <tr v-for="trx in pem" :key="trx.noN">
-                        <td>{{ trx.nmBarang }} </td>
-                        <td>{{ trx.qty}}</td>
-                        <td>{{ trx.hrgJual | currency }}</td>
-                        <td>{{ trx.qty * trx.hrgJual | currency }}</td>
-                    </tr>
-                    </tbody>
-                    <tfoot style="display: table-row-group">
-                        <tr>
-                            <th colspan="3" align="right">subTotal :</th>
-                            <th align="right">{{ totalJ | currency}}</th>
-                        </tr>
-                        <tr>
-                            <th colspan="3" align="right">Tax & Service : {{ data.pajakPembayaran }} %</th>
-                            <th align="right">{{ data.taxNota | currency}}</th>
-                        </tr>
-                        <tr>
-                            <th colspan="3" align="right">Discount {{ data.diskonPembayaran }} %</th>
-                            <th align="right">{{ data.diskonNota | currency}}</th>
-                        </tr>
-                        <tr>
-                            <th colspan="3" align="right">subTotal :</th>
-                            <th align="right">{{ data.totalNota | currency }}</th>
-                        </tr>
-                        <tr v-if="data.typePembayaran === '1'">
-                        </tr>
-                        <tr v-else-if="data.typePembayaran === '2'">
-                            <th colspan="3" align="right">Card Charge : {{ data.chargePembayaran }} %</th>
-                            <th align="right">{{ data.chargeNota | currency }}</th>
-                        </tr>
-
-                        <tr>
-                            <th colspan="3" align="right">Payment :</th>
-                            <th align="right">{{ data.bayarNota | currency }}</th>
-                        </tr>
-
-                        <tr v-if="data.typePembayaran === '1'">
-                            <th colspan="3" align="right">Kembalian :</th>
-                            <th align="right">{{ data.kembalianNota | currency }}</th>
-                        </tr>
-                        <tr v-else-if="data.typePembayaran === '2'">
-                        </tr>
-                        <th colspan="4" align="center">
-                            <p class="text-bold text-center">
-                            Terima Kasih <br>
-                            Belanja Anda Hal Baik Bagi Dunia<br>
-                            Tidak enak Kasi Tau Kami, ENAK kasi tau temanmu<br>                              
-                            </p>
-                        </th>
-                        </tfoot>
-                </table>
-            </div>
+            
 
                                         
                     <div class="col-md-12">
@@ -254,17 +268,17 @@
     </div>
 </template>
 
-<style type="text/css">
+<style>
 
 
-    #printMe { display: none; }
+    #printMe { display: block; }
 
     @media print
     {
         
   body {
     visibility: hidden;
-    height: auto;
+    height: 100%;
   }
   #printMe, #printMe * {
     visibility: visible;
@@ -273,8 +287,8 @@
   #printMe {
     /* page-break-inside: none;   
     page-break-before: none; */
-    page-break-after:initial;
-    position: absolute;
+    /* page-break-after:initial;
+    position: absolute; */
     left: 3;
     top: 0;
     font-size: 8pt;
@@ -302,7 +316,7 @@ export default {
                 adminuser: '',
                 totalJ:'',
                 load: false,
-                gambar: 'image/logoNota.jpg',
+                gambar: 'image/logoNota.png',
             }
 
         },

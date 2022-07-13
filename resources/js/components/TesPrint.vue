@@ -1,12 +1,40 @@
 <template>
-<div>
+<div id="tesp1">
     <p>tess print</p>
     <div ref="printContent"> this is content to print </div>
     <div> this is normal content </div>
     <Printer :content="content">
       <button>print</button>
     </Printer>
-        <div id="print">
+        <div id="tesp">
+            <span>this is normal content</span><br>
+            <span>this is normal content</span><br>
+            <span>this is normal content</span><br>
+            <span>this is normal content</span><br>
+            <span>this is normal content</span><br>
+            <span>this is normal content</span><br>
+            <span>this is normal content</span><br>
+            <span>this is normal content</span><br>
+            <span>this is normal content</span><br>
+            <span>this is normal content</span><br>
+            <span>this is normal content</span><br>
+            <span>this is normal content</span><br>
+            <span>this is normal content</span><br>
+            <span>this is normal content</span><br>
+            <span>this is normal content</span><br>
+            <span>this is normal content</span><br>
+            <span>this is normal content</span><br>
+            <span>this is normal content</span><br>
+            <span>this is normal content</span><br>
+            <span>this is normal content</span><br>
+            <span>this is normal content</span><br>
+            <span>this is normal content</span><br>
+            <span>this is normal content</span><br>
+            <span>this is normal content</span><br>
+            <span>this is normal content</span><br>
+            <span>this is normal content</span><br>
+            <span>this is normal content</span><br>
+            <span>this is normal content</span><br>
             <span>this is normal content</span><br>
             <span>this is normal content</span><br>
             <span>this is normal content</span><br>
@@ -86,10 +114,38 @@
             <span>this is normal content</span><br>
             <span>this is normal content</span><br>
         </div>
+        <button @click="rePrint()">re-print</button>
         <button @click="print()">print</button>
+        <button @click="buildMessage()">printer</button>
     </div>
 </template>
+<style>
+#tesp { display: block; }
 
+    @media print
+    {
+        
+  body {
+    visibility: hidden;
+    height: 100%;
+  }
+  #tesp, #tesp * {
+    visibility: visible;
+    
+  }
+  #tesp {
+    /* page-break-inside: none;   
+    page-break-before: none; */
+    /* page-break-after:initial;
+    position: absolute;
+    left: 3;
+    top: 0;
+    font-size: 8pt;
+    width: 100%;
+    height: 1024px; */
+  }
+}
+</style>
 <script>
 // import epson from './plugins/epson/epos-2.20.0.js';
 // import epson from './plugins/epson/epos-2.20.0.js';
@@ -108,6 +164,9 @@ Vue.component('Printer',Printer)
         },
 
         methods:{
+            rePrint: function(){
+                window.print(tesp);
+            },
             print() {
                 var prtContent = document.getElementById("print");
                 var WinPrint = window.open('', '', 'left=0,top=0,width=800,height=900,toolbar=0,scrollbars=0,status=0');
