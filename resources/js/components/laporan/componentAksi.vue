@@ -73,125 +73,104 @@
                                             <a href="#"  @click="rePrint()" class="btn btn-md btn-success"><b>Re-Print</b></a>
                                         </div>
                                         <div v-else-if="adminuser === 'Kasir'">
-                                        <a href="#"  @click="print()" class="btn btn-md btn-success"><b>Print to Paper</b></a>
                                             <a href="#"  @click="printer(printMe)" class="btn btn-md btn-success"><b>Print Html</b></a>
                                             <a href="#"  @click="rePrint()" class="btn btn-md btn-success"><b>Re-Print</b></a>
                                         </div>
                                         <br>
             <div id="printMe">
-            <section class="invoice">
-                <!-- info row -->
-                <p class="text-muted text-center">
-                <img :src="'/image/logoNota.png'" >
-                </p>
-               <p class="text-bold text-center">
-               
-                    Phone / Wa: 081 239 099 998<br>
-                    Email: warungdaladesa@gmail.com<br>
-                    FB : warungdaladesa<br>
-                    IG : warung.daladesa.sangeh
-                  
-                </p>
-              <div class="row invoice-info">
-                  <!-- accepted payments column -->
-                    <div class="col-xs-6">
-                    <p class="text-muted" style="margin-top: 2px;">
-                        <strong>Customer :</strong> {{data.pelangganNota}}<br>
-                        <b> Tgl : </b>{{data.tglNota}}<br>
-                        <b> Meja No : </b>{{data.noMeja}}<br>
-                        <b>Waiter : </b>{{data.waiterNota}}<br>
-                    </p>
-                    </div>
-                    <!-- /.col -->
-                    <div class="col-xs-6">
-                    <p class="text-muted" style="margin-top: 2px;">
-                        <b>Inv: </b>{{data.noNota}}<br>
-                        <b>Kasir : </b>{{ data.name }}<br>
-                        <b>Pax: </b>{{data.pax}}<br>
-                        <b>Type : </b>
-                        <span v-if="data.typePembayaran === '1'">
-                            Cash
-                        </span>
-                        <span v-else-if="data.typePembayaran === '2'">
-                            Debit
-                        </span>
-                        <span v-else-if="data.typePembayaran === '3'">
-                            E-Money
-                        </span>
-                    </p>
-                    </div>
-                    <!-- /.col -->
-                    
-                    <div class="col-xs-12 table-responsive">
-                        <table border="10">
-                            <thead>
-                            <tr>
-                                <th>Nama </th>
-                                <th>Qty</th>
-                                <th>Harga</th>
-                                <th>Total</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr v-for="trx in pem" :key="trx.noN">
-                                <td>{{ trx.nmBarang }} </td>
-                                <td>{{ trx.qty}}</td>
-                                <td>{{ trx.hrgJual | currency }}</td>
-                                <td>{{ trx.qty * trx.hrgJual | currency }}</td>
-                            </tr>
-                            </tbody>
-                            <tfoot>
-                                <tr>
-                                    <th colspan="3">subTotal :</th>
-                                    <th>{{ totalJ | currency}}</th>
-                                </tr>
-                                <tr>
-                                    <th colspan="3">Tax & Service : {{ data.pajakPembayaran }} %</th>
-                                    <th>{{ data.taxNota | currency}}</th>
-                                </tr>
-                                <tr>
-                                    <th colspan="3">Discount {{ data.diskonPembayaran }} %</th>
-                                    <th>{{ data.diskonNota | currency}}</th>
-                                </tr>
-                                <tr>
-                                    <th colspan="3">subTotal :</th>
-                                    <th>{{ data.totalNota | currency }}</th>
-                                </tr>
-                                <tr v-if="data.typePembayaran === '1'">
-                                </tr>
-                                <tr v-else-if="data.typePembayaran === '2'">
-                                    <th colspan="3">Card Charge : {{ data.chargePembayaran }} %</th>
-                                    <th>{{ data.chargeNota | currency }}</th>
-                                </tr>
+                <table >
+                    <thead>
+                    <tr>
+                        <th colspan="4" align="center">
+                            <img v-bind:src="gambar" ><br>
+                            Phone / Wa: 081 239 099 998<br>
+                            Email: warungdaladesa@gmail.com<br>
+                            FB : warungdaladesa<br>
+                            IG : warung.daladesa.sangeh
+                        </th>
+                    </tr>
+                    <tr>
+                        <th colspan="2" align="left">
+                            <strong>Customer :</strong> {{data.pelangganNota}}<br>
+                            <b> Tgl : </b>{{data.tglNota}}<br>
+                            <b> Meja No : </b>{{data.noMeja}}<br>
+                            <b>Waiter : </b>{{data.waiterNota}}<br>
+                        </th>
+                        <th colspan="2" align="left">
+                            <b>Inv: </b>{{data.noNota}}<br>
+                            <b>Kasir : </b>{{ data.name }}<br>
+                            <b>Pax: </b>{{data.pax}}<br>
+                            <b>Type : </b>
+                            <span v-if="data.typePembayaran === '1'">
+                                Cash
+                            </span>
+                            <span v-else-if="data.typePembayaran === '2'">
+                                Debit
+                            </span>
+                            <span v-else-if="data.typePembayaran === '3'">
+                                E-Money
+                            </span>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>Nama </th>
+                        <th>Qty</th>
+                        <th>Harga</th>
+                        <th>Total</th>
+                    </tr>
+                    </thead>
+                    <tbody border="2">
+                    <tr v-for="trx in pem" :key="trx.noN">
+                        <td>{{ trx.nmBarang }} </td>
+                        <td>{{ trx.qty}}</td>
+                        <td>{{ trx.hrgJual | currency }}</td>
+                        <td>{{ trx.qty * trx.hrgJual | currency }}</td>
+                    </tr>
+                    </tbody>
+                    <tfoot style="display: table-row-group">
+                        <tr>
+                            <th colspan="3" align="right">subTotal :</th>
+                            <th align="right">{{ totalJ | currency}}</th>
+                        </tr>
+                        <tr>
+                            <th colspan="3" align="right">Tax & Service : {{ data.pajakPembayaran }} %</th>
+                            <th align="right">{{ data.taxNota | currency}}</th>
+                        </tr>
+                        <tr>
+                            <th colspan="3" align="right">Discount {{ data.diskonPembayaran }} %</th>
+                            <th align="right">{{ data.diskonNota | currency}}</th>
+                        </tr>
+                        <tr>
+                            <th colspan="3" align="right">subTotal :</th>
+                            <th align="right">{{ data.totalNota | currency }}</th>
+                        </tr>
+                        <tr v-if="data.typePembayaran === '1'">
+                        </tr>
+                        <tr v-else-if="data.typePembayaran === '2'">
+                            <th colspan="3" align="right">Card Charge : {{ data.chargePembayaran }} %</th>
+                            <th align="right">{{ data.chargeNota | currency }}</th>
+                        </tr>
 
-                                <tr>
-                                    <th colspan="3">Payment :</th>
-                                    <th>{{ data.bayarNota | currency }}</th>
-                                </tr>
+                        <tr>
+                            <th colspan="3" align="right">Payment :</th>
+                            <th align="right">{{ data.bayarNota | currency }}</th>
+                        </tr>
 
-                                <tr v-if="data.typePembayaran === '1'">
-                                    <th colspan="3">Kembalian :</th>
-                                    <th>{{ data.kembalianNota | currency }}</th>
-                                </tr>
-                                <tr v-else-if="data.typePembayaran === '2'">
-                                </tr>
-                                <th colspan="4">
-                                    <p class="text-bold text-center">
-                                    Terima Kasih <br>
-                                    Belanja Anda Hal Baik Bagi Dunia<br>
-                                    Tidak enak Kasi Tau Kami, ENAK kasi tau temanmu<br>                              
-                                    </p>
-                                </th>
-                                </tfoot>
-                        </table>
-                        
-
-                </div>
-                
-              </div>
-              <!-- /.row -->
-                
-            </section>
+                        <tr v-if="data.typePembayaran === '1'">
+                            <th colspan="3" align="right">Kembalian :</th>
+                            <th align="right">{{ data.kembalianNota | currency }}</th>
+                        </tr>
+                        <tr v-else-if="data.typePembayaran === '2'">
+                        </tr>
+                        <th colspan="4" align="center">
+                            <p class="text-bold text-center">
+                            Terima Kasih <br>
+                            Belanja Anda Hal Baik Bagi Dunia<br>
+                            Tidak enak Kasi Tau Kami, ENAK kasi tau temanmu<br>                              
+                            </p>
+                        </th>
+                        </tfoot>
+                </table>
             </div>
 
                                         
@@ -307,26 +286,6 @@
 
 <script>
 
-import Vue from 'vue';
-import VueHtmlToPaper from 'vue-html-to-paper';
-
-const options = {
-  name: '_blank',
-  specs: [
-    'fullscreen=yes',
-    'titlebar=yes',
-    'scrollbars=yes'
-  ],
-  styles: [
-    'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css',
-    // 'https://unpkg.com/kidlat-css/css/kidlat.css'
-  ],
-  timeout: 1000, // default timeout before the print window appears
-  autoClose: true, // if false, the window will not close after printing
-  windowTitle: window.document.title, // override the window title
-}
-
-Vue.use(VueHtmlToPaper, options);
 
 export default {
 
@@ -343,6 +302,7 @@ export default {
                 adminuser: '',
                 totalJ:'',
                 load: false,
+                gambar: 'image/logoNota.jpg',
             }
 
         },
@@ -360,13 +320,9 @@ export default {
     },
        
     methods: {
-        async print () {
-        // Pass the element id here
-        await this.$htmlToPaper('printMe');
-        },
-        printer(printMe){
+        printer(){
             var mywindow = window.open('', 'printMe', 'height=auto,width=400');
-            mywindow.document.write('<html><head><title>Handskemager Dans</title>');
+            mywindow.document.write('<html><head><title>Nota</title>');
             // mywindow.document.write('<link rel="stylesheet" href="assets/bower_components/bootstrap/dist/css/bootstrap.min.css">');
             // mywindow.document.write('<link rel="stylesheet" href="assets/bower_components/font-awesome/css/font-awesome.min.css">');
             // mywindow.document.write('<link rel="stylesheet" href="assets/dist/css/AdminLTE.min.css">');
