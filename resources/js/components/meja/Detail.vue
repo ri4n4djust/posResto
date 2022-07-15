@@ -1456,6 +1456,8 @@
             
             PostMenu() {
                 let uri = '/api/addMenu/store';
+                var harga = this.post2.hargaMenu;
+                var jumlah = this.qtyBarang;
                 this.axios.post(uri, 
                 {
                     noNota: this.noNota,
@@ -1464,7 +1466,7 @@
                     idBarang: this.post2.kdMenu,
                     hargaJual: this.post2.hargaMenu,
                     qtyBarang: this.qtyBarang,
-                    total: this.post2.hargaMenu * this.qtyBarang,
+                    total: harga * jumlah,
                     type: this.post2.kdMenu,
                     tglNota: this.tglNota,
                     waiterOrder: this.post.name,

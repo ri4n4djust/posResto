@@ -50,6 +50,7 @@
      .modal-dialog{
     overflow-y: initial !important;
     max-width: 99%;
+    height: 100%;
     }
     .modal-body{
         height: 80vh;
@@ -58,6 +59,7 @@
     @media (min-width: 992px) {
       .modal-dialog {
         max-width: 99%;
+        height: 100%;
       }
     }
   </style>
