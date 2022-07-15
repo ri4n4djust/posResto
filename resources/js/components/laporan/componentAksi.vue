@@ -3,6 +3,7 @@
         <button  @click="loadDetailPenjualan()">
             <i class="fa fa-eye"></i>
         </button>
+        
             
         
        
@@ -10,186 +11,7 @@
                         <div v-if="showModalPenjualan">
 
                             <div id="printMe">
-                <div>
-                    <table width="98%" >
-                        <thead>
-                        <tr>
-                            <td colspan="4" align="center">
-                                <img :src="gambar" ><br>
-                                Phone / Wa: 081 239 099 998<br>
-                                Email: warungdaladesa@gmail.com<br>
-                                FB : warungdaladesa<br>
-                                IG : warung.daladesa.sangeh
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="2" align="left">
-                                <strong>Customer :</strong> {{data.pelangganNota}}<br>
-                                <b> Tgl : </b>{{data.tglNota}}<br>
-                                <b> Meja No : </b>{{data.noMeja}}<br>
-                                <b>Waiter : </b>{{data.waiterNota}}<br>
-                            </td>
-                            <td colspan="2" align="left">
-                                <b>Inv: </b>{{data.noNota}}<br>
-                                <b>Kasir : </b>{{ data.name }}<br>
-                                <b>Pax: </b>{{data.pax}}<br>
-                                <b>Type : </b>
-                                <span v-if="data.typePembayaran === '1'">
-                                    Cash
-                                </span>
-                                <span v-else-if="data.typePembayaran === '2'">
-                                    Debit
-                                </span>
-                                <span v-else-if="data.typePembayaran === '3'">
-                                    E-Money
-                                </span>
-                            </td>
-                        </tr>
-                        </thead>
-                    </table>
-                </div>
-                <div>
-                    <table width="98%" >
-                        <tr>
-                            <td>Nama </td>
-                            <td>Qty</td>
-                            <td>Harga</td>
-                            <td>Total</td>
-                        </tr>
-                        
-                        <!-- <tbody border="2"> -->
-                        <tr v-for="trx in pem" :key="trx.noN">
-                            <td>{{ trx.nmBarang }} </td>
-                            <td>{{ trx.qty}}</td>
-                            <td>{{ trx.hrgJual | currency }}</td>
-                            <td>{{ trx.qty * trx.hrgJual | currency }}</td>
-                        </tr>
-                    </table>
-                </div>
-                <div>
-                    <table width="98%" >
-                    <!-- </tbody> -->
-                    <!-- <tfoot style="display: table-row-group"> -->
-                        <tr>
-                            <td colspan="3" align="right">subTotal :</td>
-                            <td align="right">{{ totalJ | currency}}</td>
-                        </tr>
-                        <tr>
-                            <td colspan="3" align="right">Tax & Service : {{ data.pajakPembayaran }} %</td>
-                            <td align="right">{{ data.taxNota | currency}}</td>
-                        </tr>
-                        <tr>
-                            <td colspan="3" align="right">Discount {{ data.diskonPembayaran }} %</td>
-                            <td align="right">{{ data.diskonNota | currency}}</td>
-                        </tr>
-                        <tr>
-                            <td colspan="3" align="right">subTotal :</td>
-                            <td align="right">{{ data.totalNota | currency }}</td>
-                        </tr>
-                        <tr v-if="data.typePembayaran === '1'">
-                        </tr>
-                        <tr v-else-if="data.typePembayaran === '2'">
-                            <td colspan="3" align="right">Card Charge : {{ data.chargePembayaran }} %</td>
-                            <td align="right">{{ data.chargeNota | currency }}</td>
-                        </tr>
-
-                        <tr>
-                            <td colspan="3" align="right">Payment :</td>
-                            <td align="right">{{ data.bayarNota | currency }}</td>
-                        </tr>
-
-                        <tr v-if="data.typePembayaran === '1'">
-                            <td colspan="3" align="right">Kembalian :</td>
-                            <td align="right">{{ data.kembalianNota | currency }}</td>
-                        </tr>
-                        <tr v-else-if="data.typePembayaran === '2'">
-                        </tr>
-                        <tr>
-                        <td colspan="4" align="center">
-                            <p class="text-bold text-center">
-                            Terima Kasih <br>
-                            Belanja Anda Hal Baik Bagi Dunia<br>
-                            Tidak enak Kasi Tau Kami, ENAK kasi tau temanmu<br>                              
-                            </p>
-                        </td>
-                        </tr>
-                        <!-- </tfoot> -->
-                    <!-- </tbody> -->
-                    </table>
-                </div>
-            </div>
-
             
-                            <transition name="modal">
-                            <div class="modal-mask">
-                                <div class="modal-wrapper">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                    <div class="modal-header">
-                                        <button type="button" class="close" @click="showModalPenjualan=false">
-                                        <span aria-hidden="true">&times;</span>
-                                        </button>
-                                        <h4 class="modal-title">Detail Penjualan</h4>
-                                    </div>
-                                    <div class="modal-body">
-                                        
-                                        <div class="row invoice-info">
-                                        <!-- accepted payments column -->
-                                            <div class="col-xs-6">
-                                            <p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">
-                                                <strong>Customer :</strong> {{data.pelangganNota}}<br>
-                                                <b> Tgl : </b>{{data.tglNota}}<br>
-                                                <b> Meja No : </b>{{data.noMeja}}<br>
-                                                <b>Waiter : </b>{{data.waiterNota}}<br>
-                                                <b>Bayar : </b>{{data.bayarNota | currency}}<br>
-                                                <b>Kembalian : </b>{{data.kembalianNota | currency}}<br>
-                                            </p>
-                                            </div>
-                                            <!-- /.col -->
-                                            <div class="col-xs-6">
-                                            <p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">
-                                                <b>No Inv: </b>{{data.noNota}}<br>
-                                                <b>Kasir : </b>{{ data.name }}<br>
-                                                <b>Type : </b>
-                                                <span v-if="data.typePembayaran === '1'">
-                                                    Cash
-                                                </span>
-                                                <span v-else-if="data.typePembayaran === '2'">
-                                                    Debit
-                                                </span>
-                                                <span v-else-if="data.typePembayaran === '3'">
-                                                    E-Money
-                                                </span>
-                                                <br>
-                                                <b>Tax: </b>{{data.taxNota | currency}}<br>
-                                                <b>Diskon : </b>{{ data.diskonNota | currency }}<br>
-                                                <b>Card Charge : {{ data.chargePembayaran }} %</b>
-                                            </p>
-                                            </div>
-                                            <!-- /.col -->
-                                        
-                                    </div>
-                                        <h3 class="profile-username text-left">
-                                            <label>Total : </label>
-                                            {{ data.totalNota  || 0 | currency }}</h3>
-                                        
-                                        <p class="text-muted text-center">
-                                        </p>
-                                        
-                                        <div v-if="adminuser === 'Admin'">
-                                            <a href="#"  @click="rePrint()" class="btn btn-md btn-success"><b>Re-Print</b></a>
-                                            <!-- <a href="#"   @click.prevent="DeletePenjualan(id = data.id)" class="btn btn-md btn-success"><b>Delete</b></a> -->
-                                        </div>
-                                        <span v-if="load">Loading...</span>
-                                        <div v-else-if="adminuser === 'Operator'">
-                                            <a href="#"  @click="rePrint()" class="btn btn-md btn-success"><b>Re-Print</b></a>
-                                        </div>
-                                        <div v-else-if="adminuser === 'Kasir'">
-                                            <a href="#"  @click="rePrint()" class="btn btn-md btn-success"><b>Re-Print</b></a>
-                                        </div>
-                                        <br>
-            <div id="printMe">
-            <section class="invoice">
                 <!-- info row -->
                 <p class="text-muted text-center">
                 <img :src="'/image/logoNota.png'" >
@@ -285,20 +107,100 @@
                                 </tr>
                                 <tr v-else-if="data.typePembayaran === '2'">
                                 </tr>
+                                <tr>
+                                    <td colspan="4">
+                                        <p class="text-bold text-center">
+                                        Terima Kasih <br>
+                                        Belanja Anda Hal Baik Bagi Dunia<br>
+                                        Tidak enak Kasi Tau Kami, ENAK kasi tau temanmu<br>                              
+                                        </p>
+                                    </td>
+                                </tr>
                         </table>
-                        <p class="text-bold text-center">
-                        Terima Kasih <br>
-                        Belanja Anda Hal Baik Bagi Dunia<br>
-                        Tidak enak Kasi Tau Kami, ENAK kasi tau temanmu<br>                              
-                        </p>
+                        
 
                 </div>
                 
               </div>
               <!-- /.row -->
                 
-            </section>
-            </div>
+            </div>  
+
+            
+                            <transition name="modal">
+                            <div class="modal-mask">
+                                <div class="modal-wrapper">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                    <div class="modal-header">
+
+                                        
+
+
+                                        <button type="button" class="close" @click="showModalPenjualan=false">
+                                        <span aria-hidden="true">&times;</span>
+                                        </button>
+                                        <h4 class="modal-title">Detail Penjualan</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        
+                                        <div class="row invoice-info">
+                                        <!-- accepted payments column -->
+                                            <div class="col-xs-6">
+                                            <p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">
+                                                <strong>Customer :</strong> {{data.pelangganNota}}<br>
+                                                <b> Tgl : </b>{{data.tglNota}}<br>
+                                                <b> Meja No : </b>{{data.noMeja}}<br>
+                                                <b>Waiter : </b>{{data.waiterNota}}<br>
+                                                <b>Bayar : </b>{{data.bayarNota | currency}}<br>
+                                                <b>Kembalian : </b>{{data.kembalianNota | currency}}<br>
+                                            </p>
+                                            </div>
+                                            <!-- /.col -->
+                                            <div class="col-xs-6">
+                                            <p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">
+                                                <b>No Inv: </b>{{data.noNota}}<br>
+                                                <b>Kasir : </b>{{ data.name }}<br>
+                                                <b>Type : </b>
+                                                <span v-if="data.typePembayaran === '1'">
+                                                    Cash
+                                                </span>
+                                                <span v-else-if="data.typePembayaran === '2'">
+                                                    Debit
+                                                </span>
+                                                <span v-else-if="data.typePembayaran === '3'">
+                                                    E-Money
+                                                </span>
+                                                <br>
+                                                <b>Tax: </b>{{data.taxNota | currency}}<br>
+                                                <b>Diskon : </b>{{ data.diskonNota | currency }}<br>
+                                                <b>Card Charge : {{ data.chargePembayaran }} %</b>
+                                            </p>
+                                            </div>
+                                            <!-- /.col -->
+                                        
+                                    </div>
+                                        <h3 class="profile-username text-left">
+                                            <label>Total : </label>
+                                            {{ data.totalNota  || 0 | currency }}</h3>
+                                        
+                                        <p class="text-muted text-center">
+                                        </p>
+                                        
+                                        <div v-if="adminuser === 'Admin'">
+                                            <a href="#"  @click="rePrint()" class="btn btn-md btn-success"><b>Re-Print</b></a>
+                                            <!-- <a href="#"   @click.prevent="DeletePenjualan(id = data.id)" class="btn btn-md btn-success"><b>Delete</b></a> -->
+                                        </div>
+                                        <span v-if="load">Loading...</span>
+                                        <div v-else-if="adminuser === 'Operator'">
+                                            <a href="#"  @click="rePrint()" class="btn btn-md btn-success"><b>Re-Print</b></a>
+                                        </div>
+                                        <div v-else-if="adminuser === 'Kasir'">
+                                            <a href="#"  @click="pri('printMe')" class="btn btn-md btn-success"><b>Re-PrintOpen</b></a>
+                                            <a href="#"  @click="rePrint()" class="btn btn-md btn-success"><b>Re-Print</b></a>
+                                        </div>
+                                        <br>
+            
 
                                         
                     <div class="col-md-12">
@@ -309,6 +211,8 @@
                             </ul>
                             <div class="tab-content">
                                 <div class="active tab-pane" id="brg">
+
+
                                     <table class="table table-hover table-bordered">
                                         <thead>
                                         <tr>
@@ -381,26 +285,47 @@
     </div>
 </template>
 
-<style>
+<style type="text/css">
+.autocomplete-box-li:hover {
+  background-color: #f2f2f2;
+}
+.autocomplete-box{
+  position: absolute;
+  z-index: 1;
+}
 
-    #printMe { display: none; }
+    #printMe { display: block; }
+    
 
     @media print
     {
-  body * {
-    visibility: hidden;
-  }
-  #printMe, #printMe * {
-    visibility: visible;
-  }
-  #printMe {
-    position: absolute;
-    left: 0;
-    top: 0;
-    font-size: 8pt;
-    width: 100%;
-  }
-}
+      @page{
+        margin: 0;
+        /* width: 90mm; */
+        /* height: auto; */
+        
+      }
+      body * {
+        visibility: hidden;
+        /* width: 90mm; */
+        height: auto;
+      }
+      /* #printMe, #printMe * {
+        visibility: visible;
+        font-size: 8pt;
+      } */
+     
+
+      /* #printMe {
+        position: absolute;
+        left: 0;
+        top: 0;
+        font-size: 8pt;
+        width: 100%;
+        height: 100%;
+      } */
+      
+    }
     </style>
 
 <script>
@@ -438,6 +363,17 @@ export default {
     },
        
     methods: {
+        pri(printMe){
+            var printContent = document.getElementById(printMe);
+            var WinPrint = window.open('', '', 'width=900,height=650');
+            WinPrint.document.write('<html><head><title>reprint</title><link rel="stylesheet" href="assets/dist/css/AdminLTE.min.css"><link rel="stylesheet" href="assets/bower_components/bootstrap/dist/css/bootstrap.min.css"></head><body>');
+            WinPrint.document.write(printContent.innerHTML);
+            WinPrint.document.write('</body></html>');
+            WinPrint.document.close();
+            WinPrint.focus();
+            WinPrint.print();
+            setTimeout(() => WinPrint.close(), 15000);
+        },
         rePrint: function(){
             window.print(printMe);
         },
