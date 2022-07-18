@@ -609,30 +609,45 @@ class mejaController extends Controller
 
     public function afterPrintOrder($id)
     {
+
+        try {
+            $exception = DB::transaction(function() use ($request, $id){
         //$post = TransaksiDetail::whereId($id)->first();
-        Order::where('idMeja', $id)->update([
-            'stsPrintOrder'     => '1',
-        ]);
-        $post = Order::join('tblMeja', 'tblOrder.idMeja', '=', 'tblMeja.id')
-                        ->join('tblMenu', 'tblOrder.kdMenu', 'tblMenu.kdMenu')
-                ->where('tblOrder.idMeja', $id)
-                ->where('tblOrder.stsPrintOrder', '0')
-                ->select('tblMeja.noMeja', 'tblOrder.*', 'tblMenu.nmMenu')
-                ->orderBy('tblOrder.id', 'ASC')
-                ->get();
-        if ($post) {
-            return response()->json([
-                'success' => true,
-                'message' => 'Detail Post!',
-                'data'    => $post
-            ], 200);
-        } else {
-            return response()->json([
-                'success' => false,
-                'message' => 'Post Tidak Ditemukan!',
-                'data'    => ''
-            ], 404);
-        }
+                $or = Order::where('idMeja', $id)->update(['stsPrintOrder'     => '1',]);
+                DB::commit();
+
+                $post = Order::join('tblMeja', 'tblOrder.idMeja', '=', 'tblMeja.id')
+                                ->join('tblMenu', 'tblOrder.kdMenu', 'tblMenu.kdMenu')
+                        ->where('tblOrder.idMeja', $id)
+                        ->where('tblOrder.stsPrintOrder', '0')
+                        ->select('tblMeja.noMeja', 'tblOrder.*', 'tblMenu.nmMenu')
+                        ->orderBy('tblOrder.id', 'ASC')
+                        ->get();
+            });
+                if (is_null($exception)) {
+                    return response()->json([
+                        'success' => true,
+                        'message' => 'Detail Post!',
+                        'data'    => $post
+                    ], 200);
+                } else {
+                    DB::rollback();
+                    return response()->json([
+                        
+                        'success' => false,
+                        'message' => 'Post Tidak Ditemukan!',
+                        'data'    => ''
+                    ], 404);
+                }
+            
+            } catch (\Exception $e) {
+                //DB::rollback();
+                // something went wrong
+                return response()->json([
+                 'success' => false,
+                 'message' => 'exception'.$e,
+             ], 400);
+            }
     }
 
     public function totalTrx($id)
