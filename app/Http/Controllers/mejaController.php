@@ -611,20 +611,19 @@ class mejaController extends Controller
     {
 
         try {
-            $exception = DB::transaction(function() use ($request, $id){
-        //$post = TransaksiDetail::whereId($id)->first();
+            $exception = DB::transaction(function() use ($id){
+            //$post = TransaksiDetail::whereId($id)->first();
                 $or = Order::where('idMeja', $id)->update(['stsPrintOrder'     => '1',]);
                 DB::commit();
-
-                $post = Order::join('tblMeja', 'tblOrder.idMeja', '=', 'tblMeja.id')
+            });
+                if (is_null($exception)) {
+                    $post = Order::join('tblMeja', 'tblOrder.idMeja', '=', 'tblMeja.id')
                                 ->join('tblMenu', 'tblOrder.kdMenu', 'tblMenu.kdMenu')
                         ->where('tblOrder.idMeja', $id)
                         ->where('tblOrder.stsPrintOrder', '0')
                         ->select('tblMeja.noMeja', 'tblOrder.*', 'tblMenu.nmMenu')
                         ->orderBy('tblOrder.id', 'ASC')
                         ->get();
-            });
-                if (is_null($exception)) {
                     return response()->json([
                         'success' => true,
                         'message' => 'Detail Post!',
