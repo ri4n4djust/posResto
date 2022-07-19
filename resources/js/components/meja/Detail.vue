@@ -1288,22 +1288,23 @@
             printOrder(id) {
                // alert('print last order'+ id);
                 window.print(lastOrder);
-                setTimeout(function(){
+                // setTimeout(function(){
                   let uri = '/api/afterorderprint/'+ id;
-                  this.axios.post(uri, this.post)
+                  this.axios.post(uri)
                       .then((response) => {
                           //this.$router.push({name: 'posts'});
                           this.orders = response.data.data;
-                          this.ListOrder();
-                          this.ListOrder1();
+                          // this.ListOrder();
+                          // this.ListOrder1();
+                          console.log('print order sukses');
                           //this.intervalFetchData();
                       }).catch(error => {
-                        this.ListOrder();
+                        // this.ListOrder();
                       //this.validation = error.response.data.data;
-                        //alert('ada yang error stelah print');
+                        console.log('ada yang error stelah print');
                   });
-                }, 12000); 
-                setTimeout(() => this.$router.push({name: 'meja'}), 13000);
+                // }, 12000); 
+                setTimeout(() => this.$router.push({name: 'meja'}), 12000);
             },
             ListOrder(){
               let uri = `/api/orderprint/${this.$route.params.id}`;
