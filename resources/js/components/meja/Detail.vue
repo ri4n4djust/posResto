@@ -1470,7 +1470,7 @@
                     idBarang: this.post2.kdMenu,
                     hargaJual: this.post2.hargaMenu,
                     qtyBarang: this.qtyBarang,
-                    total: harga * jumlah,
+                    total: Number(harga) * Number(jumlah),
                     type: this.post2.kdMenu,
                     tglNota: this.tglNota,
                     waiterOrder: this.post.name,

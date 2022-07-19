@@ -191,13 +191,19 @@
                                             <a href="#"  @click="rePrint()" class="btn btn-md btn-success"><b>Re-Print</b></a>
                                             <!-- <a href="#"   @click.prevent="DeletePenjualan(id = data.id)" class="btn btn-md btn-success"><b>Delete</b></a> -->
                                         </div>
-                                        <span v-if="load">Loading...</span>
+                                        <span v-if="load">
+                                            <looping-rhombuses-spinner
+                                            :animation-duration="2500"
+                                            :rhombus-size="15"
+                                            color="#ff1d5e"
+                                            />
+                                        </span>
                                         <div v-else-if="adminuser === 'Operator'">
                                             <a href="#"  @click="rePrint()" class="btn btn-md btn-success"><b>Re-Print</b></a>
                                         </div>
                                         <div v-else-if="adminuser === 'Kasir'">
                                             <a href="#"  @click="pri('printMe')" class="btn btn-md btn-success"><b>Re-PrintOpen</b></a>
-                                            <a href="#"  @click="rePrint()" class="btn btn-md btn-success"><b>Re-Print</b></a>
+                                            <!-- <a href="#"  @click="rePrint()" class="btn btn-md btn-success"><b>Re-Print</b></a> -->
                                         </div>
                                         <br>
             
@@ -329,9 +335,9 @@
     </style>
 
 <script>
-
+import { LoopingRhombusesSpinner   } from 'epic-spinners'
 export default {
-
+    components: { LoopingRhombusesSpinner  },
     name: "ActionButtons",
     data() {
             return {
