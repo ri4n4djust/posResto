@@ -348,7 +348,7 @@
 
                 <!------Tes Select menu ---->
                 <label>Menu cari:</label>
-                  <input type="text" ref="menu" v-model="menu" v-on:keyup="get_menu" class="form-control " >
+                  <input type="text" ref="menu" v-model="menu" v-on:keyup="get_menu" class="form-control "  >
                     
                       <span v-if="menuss.lenght === 0">
                       </span>
@@ -906,6 +906,9 @@
 .autocomplete-box{
   position: absolute;
   z-index: 1;
+}
+.swal2-container {
+  z-index: 20000 !important;
 }
 
     #printMe { display: block; }
@@ -1476,7 +1479,14 @@
                     promoMenu: this.post2.promoMenu
                 }).then((response) => {
                         //alert('sukses donkkkkkkkk');
-                        alert('sukses ditambahkan');
+                        // alert('sukses ditambahkan');
+                        this.$swal.fire({
+                          position: 'center',
+                          icon: 'success',
+                          title: 'Menu di tambahkan',
+                          showConfirmButton: false,
+                          timer: 1500
+                        })
                         this.loadDataTransaksi();
                         this.loadTotal();
                         this.loadTotalTnpPromo();

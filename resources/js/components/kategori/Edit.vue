@@ -62,6 +62,7 @@
                 this.axios.post(uri, this.post)
                     .then((response) => {
                         this.$router.push({name: 'kategori'});
+                        this.$swal('suskes Edit');
                     }).catch(error => {
                     this.validation = error.response.data.data;
                 });

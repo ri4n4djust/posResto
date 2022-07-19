@@ -67,7 +67,16 @@
                     this.$session.set('userId', response.data.data.id)
                     this.$session.set('roleID', response.data.data.role)
                     //Vue.http.headers.common['Authorization'] = 'Bearer ' + response.body.token
-                    alert('suskes Login')
+                    // this.$swal('suskes Login');
+
+                    this.$swal.fire({
+                      position: 'top-end',
+                      icon: 'success',
+                      title: 'Your work has been saved',
+                      showConfirmButton: false,
+                      timer: 1500
+                    })
+                    // alert('suskes Login')
                     //if (response.data.role == 'Admin' ) {
                       //router.push({ name: 'barang' });
                       //window.location.href = "/barang"

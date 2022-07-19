@@ -32,6 +32,11 @@ import App from './app.vue';
 Vue.use(VueAxios, axios);
 //axios.defaults.baseURL = 'http://35.184.16.20/api/';
 
+import VueSweetalert2 from 'vue-sweetalert2';
+import 'sweetalert2/dist/sweetalert2.min.css';
+
+Vue.use(VueSweetalert2);
+
 import VueSession from 'vue-session';
 Vue.use(VueSession);
 
@@ -100,6 +105,8 @@ import EditUserComponent from './components/user/Edit.vue';
 
 import CreatePembelian from './components/PembelianCreate.vue';
 import liveorder from './components/LiveOrder.vue';
+
+import Tesprint from './components/TesPrint.vue';
 
 import homeComponent from './components/Home.vue';
 import Dashboard from './components/Dashboard.vue';
@@ -269,6 +276,12 @@ const routes = [
         name: 'liveorder',
         path: '/liveorder',
         component: liveorder
+    },
+
+    {
+        name: 'tesprint',
+        path: '/tesprint',
+        component: Tesprint
     },
 
     //=======Laporan
