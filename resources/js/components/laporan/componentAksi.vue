@@ -372,7 +372,13 @@ export default {
         pri(printMe){
             var printContent = document.getElementById(printMe);
             var WinPrint = window.open('', '', 'width=900,height=650');
-            WinPrint.document.write('<html><head><title>reprint</title><link rel="stylesheet" href="assets/dist/css/AdminLTE.min.css"><link rel="stylesheet" href="assets/bower_components/bootstrap/dist/css/bootstrap.min.css"></head><body>');
+            WinPrint.document.write('<html><head><title>reprint</title><link rel="stylesheet" href="assets/dist/css/AdminLTE.min.css">');
+            WinPrint.document.write('<link rel="stylesheet" href="assets/bower_components/font-awesome/css/font-awesome.min.css">');
+            WinPrint.document.write('<script type="text/javascript" src="assets/bower_components/jquery/dist/jquery.min.js"></scr' + 'ipt>');
+            WinPrint.document.write('<script src="assets/bower_components/bootstrap/dist/js/bootstrap.min.js"></scr' + 'ipt>');
+            WinPrint.document.write('<script src="assets/dist/js/adminlte.min.js"></scr' + 'ipt>');
+            // WinPrint.document.write('<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">');
+            WinPrint.document.write('<link rel="stylesheet" href="assets/bower_components/bootstrap/dist/css/bootstrap.min.css"></head><body>');
             WinPrint.document.write(printContent.innerHTML);
             WinPrint.document.write('</body></html>');
             WinPrint.document.close();

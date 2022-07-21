@@ -62,12 +62,9 @@
                 <a href="#" @click="opensplit(trxs)" class="btn btn-primary btn-block"><b>Split Payment</b></a>
                 </p>
 
-                
+                <!-- <div id="lastOrder" > -->
 
-                  
-                <div id="lastOrder" class="lastOrder">
-
-                <span v-if=" orders.length != 0 ">
+                <!-- <span v-if=" orders.length != 0 ">
                   <h3 class="profile-username text-center">Meja No: {{ post.noMeja }}</h3>
                  
                   <table class="table table-striped">
@@ -115,8 +112,8 @@
                       </tr>
                     </tbody>
                   </table>                
-                </span>
-              </div>
+                </span> -->
+              <!-- </div> -->
              
               
 
@@ -136,7 +133,11 @@
                 <a href="#"  @click="showModalMove = true" class="btn btn-success"><b>Pindah Meja</b></a>
                 <!-- <span v-if="adminuser === 'Admin'"> -->
                   <span v-if=" orders.length == 0 && orders1.length == 0"><a href="#"  class="btn btn-success disabled" role="button" aria-disabled="true">Print Order</a></span>
-                  <span v-else><a href="#"  @click="printOrder(id= post.id)" class="btn btn-success" >Print Order</a></span>
+                  <span v-else>
+                    <!-- <a href="#"  @click="printOrder(id= post.id)" class="btn btn-success" >Print Order</a> -->
+                    <a href="#"  @click="openOrder(id= post.id)" class="btn btn-success" >Open Print Order</a>
+                    
+                    </span>
                 <!-- </span> -->
                 <router-link :to="{ name: 'meja' }" class="btn btn-success">KEMBALI</router-link>
                 <!-- /.post -->
@@ -202,6 +203,59 @@
                 </span>
               </div> -->
 
+              <!-- <div id="lastOrder" >
+
+                <span v-if=" orders.length != 0 ">
+                  <h3 class="profile-username text-center">Meja No: {{ post.noMeja }}</h3>
+                 
+                  <table class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th>No.</th>
+                        <th>Menu</th>
+                        <th>Qty</th>
+                        <th>Jam</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr v-for="order in orders" :key="order.id">
+                        <td><a @click.prevent="PostDeleteTrxO(id = order.id)" >del</a></td>
+                        <td>{{ order.nmMenu }}<br>
+                            {{order.noteOrder }}</td>
+                        <td>{{ order.qtyOrder }}</td>
+                        <td>{{ order.wktOrder }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </span>
+                <br>
+                <br>
+                <br>
+
+                <span v-if=" orders1.length != 0 ">
+                <h3 class="profile-username text-center">Meja No: {{ post.noMeja }}</h3>
+                  <table class="table table-striped">
+                    <thead>
+                    <tr>
+                      <th>No.</th>
+                      <th>Menu</th>
+                      <th>Qty</th>
+                      <th>Jam</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                      <tr v-for="order in orders1" :key="order.id">
+                        <td><a @click.prevent="PostDeleteTrxO(id = order.id)" >del</a></td>
+                        <td>{{ order.nmMenu }}<br>
+                            {{order.noteOrder }}</td>
+                        <td>{{ order.qtyOrder }}</td>
+                        <td>{{ order.wktOrder }}</td>
+                      </tr>
+                    </tbody>
+                  </table>                
+                </span>
+              </div> -->
+
               
 
 
@@ -240,7 +294,134 @@
 
     </section>
 
+<!-- modal Order start -->
+  <div v-if="showModalOrder">
+    <div id="lastOrder" >
 
+                <span v-if=" orders.length != 0 ">
+                  <h3 class="profile-username text-center">Meja No: {{ post.noMeja }}</h3>
+                 
+                  <table class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th>No.</th>
+                        <th>Menu</th>
+                        <th>Qty</th>
+                        <th>Jam</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr v-for="order in orders" :key="order.id">
+                        <td><a @click.prevent="PostDeleteTrxO(id = order.id)" >del</a></td>
+                        <td>{{ order.nmMenu }}<br>
+                            {{order.noteOrder }}</td>
+                        <td>{{ order.qtyOrder }}</td>
+                        <td>{{ order.wktOrder }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </span>
+                <br>
+                <br>
+                <br>
+
+                <span v-if=" orders1.length != 0 ">
+                <h3 class="profile-username text-center">Meja No: {{ post.noMeja }}</h3>
+                  <table class="table table-striped">
+                    <thead>
+                    <tr>
+                      <th>No.</th>
+                      <th>Menu</th>
+                      <th>Qty</th>
+                      <th>Jam</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                      <tr v-for="order in orders1" :key="order.id">
+                        <td><a @click.prevent="PostDeleteTrxO(id = order.id)" >del</a></td>
+                        <td>{{ order.nmMenu }}<br>
+                            {{order.noteOrder }}</td>
+                        <td>{{ order.qtyOrder }}</td>
+                        <td>{{ order.wktOrder }}</td>
+                      </tr>
+                    </tbody>
+                  </table>                
+                </span>
+              </div>
+
+    <transition name="modal">
+      <div class="modal-mask">
+        <div class="modal-wrapper">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" @click="showModalOrder=false">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">List Order</h4>
+              </div>
+              <div class="modal-body">
+
+                <span v-if=" orders.length != 0 ">
+                  <h3 class="profile-username text-center">Meja No: {{ post.noMeja }}</h3>
+                 
+                  <table class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th>No.</th>
+                        <th>Menu</th>
+                        <th>Qty</th>
+                        <th>Jam</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr v-for="order in orders" :key="order.id">
+                        <td><a @click.prevent="PostDeleteTrxO(id = order.id)" >del</a></td>
+                        <td>{{ order.nmMenu }}<br>
+                            {{order.noteOrder }}</td>
+                        <td>{{ order.qtyOrder }}</td>
+                        <td>{{ order.wktOrder }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </span>
+                <br>
+                <br>
+                <br>
+
+                <span v-if=" orders1.length != 0 ">
+                <h3 class="profile-username text-center">Meja No: {{ post.noMeja }}</h3>
+                  <table class="table table-striped">
+                    <thead>
+                    <tr>
+                      <th>No.</th>
+                      <th>Menu</th>
+                      <th>Qty</th>
+                      <th>Jam</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                      <tr v-for="order in orders1" :key="order.id">
+                        <td><a @click.prevent="PostDeleteTrxO(id = order.id)" >del</a></td>
+                        <td>{{ order.nmMenu }}<br>
+                            {{order.noteOrder }}</td>
+                        <td>{{ order.qtyOrder }}</td>
+                        <td>{{ order.wktOrder }}</td>
+                      </tr>
+                    </tbody>
+                  </table>                
+                </span>
+                
+                
+<a href="#"  @click="printOrder(id= post.id)" class="btn btn-success" >Print Order</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </transition>
+  </div>
+  <!------End Modal Order ----->
 
 <!-- modal start -->
   <div v-if="showModalMove">
@@ -738,45 +919,45 @@
                                 </thead>
                                 <tbody>
                                 <tr v-for="trx in trxs" :key="trx.id">
-                                    <td >{{ trx.nmBarangTmp }} </td>
-                                    <td >{{ trx.qtyTmp}}</td>
-                                    <td >{{ trx.hrgJualTmp | currency }}</td>
-                                    <td >{{ trx.totalTmp | currency }}</td>
+                                    <td width="40%">{{ trx.nmBarangTmp }} </td>
+                                    <td width="10">{{ trx.qtyTmp}}</td>
+                                    <td width="25%">{{ trx.hrgJualTmp | currency }}</td>
+                                    <td width="25%" style="text-align:right">{{ trx.totalTmp | currency }}</td>
                                 </tr>
                                 </tbody>
                                 <tfoot style="display: table-row-group">
                                     <tr>
-                                        <th colspan="3">subTotal :</th>
-                                        <th>{{subtotal | currency}}</th>
+                                        <th colspan="2">subTotal :</th>
+                                        <th colspan="2" style="text-align:right">{{subtotal | currency}}</th>
                                     </tr>
                                     <tr>
-                                        <th colspan="3">Tax & Service : {{ pajak }} %</th>
-                                        <th>{{ Math.floor(subtotal * pajak / 100 ) | currency}}</th>
+                                        <th colspan="2">Tax & Service : {{ pajak }} %</th>
+                                        <th colspan="2" style="text-align:right">{{ Math.floor(subtotal * pajak / 100 ) | currency}}</th>
                                     </tr>
                                     <tr>
-                                        <th colspan="3">Discount : {{ diskon }} %</th>
-                                        <th>{{ Math.floor(subtotaltp * diskon / 100) | currency}}</th>
+                                        <th colspan="2">Discount : {{ diskon }} %</th>
+                                        <th colspan="2" style="text-align:right">{{ Math.floor(subtotaltp * diskon / 100) | currency}}</th>
                                     </tr>
                                     <tr>
-                                        <th colspan="3">subTotal :</th>
-                                        <th>{{ Math.floor((subtotal * pajak / 100 + subtotal) - (subtotaltp * diskon / 100))  || 0 | currency }}</th>
+                                        <th colspan="2">subTotal :</th>
+                                        <th colspan="2" style="text-align:right">{{ Math.floor((subtotal * pajak / 100 + subtotal) - (subtotaltp * diskon / 100))  || 0 | currency }}</th>
                                     </tr>
 
                                     <tr v-if="pembayaran === '1'">
                                     </tr>
                                     <tr v-else-if="pembayaran === '2'">
-                                        <th colspan="3">Card Charge : {{ taxDebit }} %</th>
-                                        <th>{{ Math.floor((subtotal * pajak / 100 + subtotal) - (subtotaltp * diskon / 100)) * taxDebit / 100 | currency }}</th>
+                                        <th colspan="2">Card Charge : {{ taxDebit }} %</th>
+                                        <th colspan="2" style="text-align:right">{{ Math.floor((subtotal * pajak / 100 + subtotal) - (subtotaltp * diskon / 100)) * taxDebit / 100 | currency }}</th>
                                     </tr>
 
                                     <tr>
-                                        <th colspan="3">Payment :</th>
-                                        <th>{{ Math.floor(((subtotal * pajak / 100 + subtotal) - (subtotaltp * diskon / 100)) + ((subtotal * pajak / 100 + subtotal) - (subtotaltp * diskon / 100)) * taxDebit / 100)  || 0 | currency }}</th>
+                                        <th colspan="2">Payment :</th>
+                                        <th colspan="2" style="text-align:right">{{ Math.floor(((subtotal * pajak / 100 + subtotal) - (subtotaltp * diskon / 100)) + ((subtotal * pajak / 100 + subtotal) - (subtotaltp * diskon / 100)) * taxDebit / 100)  || 0 | currency }}</th>
                                     </tr>
 
                                     <tr v-if="pembayaran === '1'">
-                                        <th colspan="3">Kembalian :</th>
-                                        <th>{{ Math.floor(totalBayar - ((subtotal * pajak / 100 + subtotal) - (subtotaltp * diskon / 100)))  || 0 | currency }}</th>
+                                        <th colspan="2">Kembalian :</th>
+                                        <th colspan="2" style="text-align:right">{{ Math.floor(totalBayar - ((subtotal * pajak / 100 + subtotal) - (subtotaltp * diskon / 100)))  || 0 | currency }}</th>
                                     </tr>
                                     <tr v-else-if="pembayaran === '2'">
                                     </tr>
@@ -937,6 +1118,8 @@
       }
       #lastOrder, #lastOrder * {
         visibility: visible;
+        font-size: 8pt;
+        
       }
 
       #printMe {
@@ -965,6 +1148,7 @@
         top: 0;
         font-size: 8pt;
         width: 100%;
+        height: 100%;
       }
     }
     </style>
@@ -1003,6 +1187,7 @@
                 mejaKosong: {},
                 validation: [],
                 showModalMove: false,
+                showModalOrder: false,
                 showModalAuth: false,
                 showModal: false,
                 showModalMenu: false,
@@ -1288,9 +1473,26 @@
                 window.print(printMeSplit);
                 //this.showModalBayar = false
             },
+            openOrder(){
+              this.showModalOrder = true;
+            },
             printOrder(id) {
-               // alert('print last order'+ id);
-                window.print(lastOrder);
+                  var printOrder = document.getElementById("lastOrder");
+                  var WinPrint = window.open('', '', 'width=900,height=650');
+                  WinPrint.document.write('<html><head><title>reprint</title><link rel="stylesheet" href="assets/dist/css/AdminLTE.min.css">');
+                  WinPrint.document.write('<link rel="stylesheet" href="assets/bower_components/font-awesome/css/font-awesome.min.css">');
+                  // WinPrint.document.write('<script type="text/javascript" src="assets/bower_components/jquery/dist/jquery.min.js"></scr' + 'ipt>');
+                  // WinPrint.document.write('<script src="assets/bower_components/bootstrap/dist/js/bootstrap.min.js"></scr' + 'ipt>');
+                  // WinPrint.document.write('<script src="assets/dist/js/adminlte.min.js"></scr' + 'ipt>');
+                  WinPrint.document.write('<link rel="stylesheet" href="assets/bower_components/bootstrap/dist/css/bootstrap.min.css"></head><body>');
+                  WinPrint.document.write(printOrder.innerHTML);
+                  WinPrint.document.write('</body></html>');
+                  WinPrint.document.close();
+                  WinPrint.focus();
+                  WinPrint.print();
+                  setTimeout(() => WinPrint.close(), 15000);
+                // alert('print last order'+ id);
+                // window.print(printOrder);
                 // setTimeout(function(){
                   let uri = '/api/afterorderprint/'+ id;
                   this.axios.post(uri)

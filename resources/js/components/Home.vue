@@ -72,7 +72,7 @@
                     this.$swal.fire({
                       position: 'top-end',
                       icon: 'success',
-                      title: 'Your work has been saved',
+                      title: 'Successfuly Login',
                       showConfirmButton: false,
                       timer: 1500
                     })
