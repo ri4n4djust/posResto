@@ -301,7 +301,7 @@
                 <span v-if=" orders.length != 0 ">
                   <h3 class="profile-username text-center">Meja No: {{ post.noMeja }}</h3>
                  
-                  <table class="table table-striped">
+                  <table style="font-size:12px">
                     <thead>
                       <tr>
                         <th>No.</th>
@@ -327,7 +327,7 @@
 
                 <span v-if=" orders1.length != 0 ">
                 <h3 class="profile-username text-center">Meja No: {{ post.noMeja }}</h3>
-                  <table class="table table-striped">
+                  <table style="font-size:12px">
                     <thead>
                     <tr>
                       <th>No.</th>
@@ -365,7 +365,7 @@
                 <span v-if=" orders.length != 0 ">
                   <h3 class="profile-username text-center">Meja No: {{ post.noMeja }}</h3>
                  
-                  <table class="table table-striped">
+                  <table class="table table-striped" width="100%">
                     <thead>
                       <tr>
                         <th>No.</th>
