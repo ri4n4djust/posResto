@@ -889,6 +889,8 @@ class mejaController extends Controller
             ->where('noMejaTmp', $noNotaTmp)
             ->first();
             $orderT = $barangTrx->qtyTmp;
+            $hrgT = $barangTrx->hrgJualTmp;
+            $nqty = $orderT - $qtybarang;
             if($orderT-$qtybarang == 0){
                 DB::table('tblTmp_TransaksiDetail')
                 ->where('kdBarangTmp', $kodebarang)
@@ -899,7 +901,8 @@ class mejaController extends Controller
                 ->where('kdBarangTmp', $kodebarang)
                 ->where('noMejaTmp', $noNotaTmp)
                 ->update([
-                        'qtyTmp'     => $orderT - $qtybarang
+                        'qtyTmp'     => $nqty,
+                        'totalTmp'    => $nqty * $hrgT
                 ]);
             }
 

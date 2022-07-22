@@ -268,7 +268,7 @@
             <div class="modal-content">
               <div class="modal-header">
                 <button type="button" class="close" @click="showModalMove=false">
-                  <span aria-hidden="true">&times;</span>
+                  <span aria-hidden="true">&times;</span>CLOSE
                 </button>
                 <h4 class="modal-title">Pindah Ke Meja</h4>
               </div>
@@ -314,7 +314,7 @@
             <div class="modal-content">
               <div class="modal-header">
                 <button type="button" class="close" @click="showModalAuth=false">
-                  <span aria-hidden="true">&times;</span>
+                  <span aria-hidden="true">&times;</span>CLOSE
                 </button>
                 <h4 class="modal-title">Auth Require</h4>
               </div>
@@ -357,7 +357,7 @@
             <div class="modal-content">
               <div class="modal-header">
                 <button type="button" class="close" @click="showModalMenu=false">
-                  <span aria-hidden="true">&times;</span>
+                  <span aria-hidden="true">&times;</span>CLOSE
                 </button>
                 <h4 class="modal-title">Add Menu</h4>
               </div>
@@ -546,7 +546,7 @@
             <div class="modal-content">
               <div class="modal-header">
                 <button type="button" class="close" @click="showModalSplit=false">
-                  <span aria-hidden="true">&times;</span>
+                  <span aria-hidden="true">&times;</span>CLOSE
                 </button>
                 <h4 class="modal-title">Split Bill</h4>
               </div>
@@ -817,7 +817,7 @@
             <div class="modal-content">
               <div class="modal-header">
                 <button type="button" class="close" @click="showModalBayar=false">
-                  <span aria-hidden="true">&times;</span>
+                  <span aria-hidden="true">&times;</span>CLOSE
                 </button>
                 <h4 class="modal-title">Add Payment</h4>
               </div>
@@ -1216,7 +1216,14 @@
                             const newQty = parseInt(oldQty) + parseInt(this.qtySplit[index]) ;
                             notaSplit[objIndex].qtyTmp = parseInt(newQty);
                             localStorage.setItem('notaSplit',JSON.stringify(notaSplit));
-                            alert('Quantity Update')
+                            this.$swal.fire({
+                              position: 'center',
+                              icon: 'success',
+                              title: 'Quantity Update',
+                              showConfirmButton: false,
+                              timer: 1500
+                            });
+                            // alert('Quantity Update')
                             this.qtySplit[index] = 0;
                             this.getCart();
                             this.getSplitNota();
@@ -1229,7 +1236,14 @@
                         this.getCart();
                         this.getSplitNota();
                         this.isiNotaSplit = Object.keys(JSON.parse(localStorage.getItem('notaSplit'))).length;
-                        alert(trx.nmBarangTmp + " berhasil disimpan")
+                        this.$swal.fire({
+                          position: 'center',
+                          icon: 'success',
+                          title: trx.nmBarangTmp + 'Menu di tambahkan',
+                          showConfirmButton: false,
+                          timer: 1500
+                        });
+                        // alert(trx.nmBarangTmp + " berhasil disimpan")
                         this.qtySplit[index] = 0;
                         }
                         // this.qtySplit = 0 ;
@@ -1253,8 +1267,14 @@
 
                   const filtered = newCart.filter(c => c.id !== trx.id);
                   localStorage.setItem('notaSplit', JSON.stringify(filtered));
-
-                  alert('Quantity Update')
+                  this.$swal.fire({
+                          position: 'center',
+                          icon: 'success',
+                          title: 'Quantity Update',
+                          showConfirmButton: false,
+                          timer: 1500
+                        });
+                  // alert('Quantity Update')
                   this.getCart();
                   this.getSplitNota();
               }else{
@@ -1457,7 +1477,13 @@
               if(this.$session.get('roleID') == 'Admin') {
                 this.axios.delete(`/api/orderDelete/${id}`)
                     .then(response => {
-                        alert('Berhasil Di Hapus');
+                        this.$swal.fire({
+                          position: 'center',
+                          icon: 'success',
+                          title: 'Berhasil Di Hapus',
+                          showConfirmButton: false,
+                          timer: 1500
+                        });
                         this.loadDataTransaksi();
                         this.loadTotal();
                         this.ListOrder();
@@ -1468,7 +1494,13 @@
               }else if(sts == '0'){
                 this.axios.delete(`/api/orderDelete/${id}`)
                     .then(response => {
-                        alert('Berhasil Di Hapus');
+                        this.$swal.fire({
+                          position: 'center',
+                          icon: 'success',
+                          title: 'Berhasil DI Hapus',
+                          showConfirmButton: false,
+                          timer: 1500
+                        });
                         this.loadDataTransaksi();
                         this.loadTotal();
                         this.ListOrder();
@@ -1485,7 +1517,13 @@
             {
                 this.axios.delete('/api/deleteneworder/'+id)
                     .then(response => {
-                        alert('Berhasil Di Hapus');
+                        this.$swal.fire({
+                          position: 'center',
+                          icon: 'success',
+                          title: 'Berhasil Di Hapus',
+                          showConfirmButton: false,
+                          timer: 1500
+                        })
                         this.loadDataTransaksi();
                         this.loadTotal();
                         this.ListOrder();
@@ -1524,7 +1562,7 @@
                           title: 'Menu di tambahkan',
                           showConfirmButton: false,
                           timer: 1500
-                        })
+                        });
                         this.loadDataTransaksi();
                         this.loadTotal();
                         this.loadTotalTnpPromo();
