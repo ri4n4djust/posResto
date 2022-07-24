@@ -25,36 +25,43 @@
                                     </p>
                                 <div class="row invoice-info">
                                     <!-- accepted payments column -->
-                                        <div class="col-xs-6">
-                                        <p class="text-muted" style="margin-top: 2px;">
-                                            <strong>Customer :</strong> {{data.pelangganNota}}<br>
-                                            <b> Tgl : </b>{{data.tglNota}}<br>
-                                            <b> Meja No : </b>{{data.noMeja}}<br>
-                                            <b>Waiter : </b>{{data.waiterNota}}<br>
-                                        </p>
-                                        </div>
-                                        <!-- /.col -->
-                                        <div class="col-xs-6">
-                                        <p class="text-muted" style="margin-top: 2px;">
-                                            <b>Inv: </b>{{data.noNota}}<br>
-                                            <b>Kasir : </b>{{ data.name }}<br>
-                                            <b>Pax: </b>{{data.pax}}<br>
-                                            <b>Type : </b>
-                                            <span v-if="data.typePembayaran === '1'">
-                                                Cash
-                                            </span>
-                                            <span v-else-if="data.typePembayaran === '2'">
-                                                Debit
-                                            </span>
-                                            <span v-else-if="data.typePembayaran === '3'">
-                                                E-Money
-                                            </span>
-                                        </p>
-                                        </div>
-                                        <!-- /.col -->
                                         
+                                        <!-- /.col -->
                                         <div class="col-xs-12 table-responsive">
-                                            <table class="table table-striped">
+                                            <table width="100%" style="font-size:12px">
+                                                <thead>
+                                                <tr>
+                                                    <th>
+                                                        
+                                                            <strong>Customer :</strong> {{data.pelangganNota}}<br>
+                                                            <b> Tgl : </b>{{data.tglNota}}<br>
+                                                            <b> Meja No : </b>{{data.noMeja}}<br>
+                                                            <b>Waiter : </b>{{data.waiterNota}}<br>
+                                                    
+                                                    </th>
+                                                    <th>
+                                                        
+                                                            <b>Inv: </b>{{data.noNota}}<br>
+                                                            <b>Kasir : </b>{{ data.name }}<br>
+                                                            <b>Pax: </b>{{data.pax}}<br>
+                                                            <b>Type : </b>
+                                                            <span v-if="data.typePembayaran === '1'">
+                                                                Cash
+                                                            </span>
+                                                            <span v-else-if="data.typePembayaran === '2'">
+                                                                Debit
+                                                            </span>
+                                                            <span v-else-if="data.typePembayaran === '3'">
+                                                                E-Money
+                                                            </span>
+                                                        
+                                                    </th>
+                                                </tr>
+                                                </thead>
+                                            </table>
+                                        </div>
+                                        <div class="col-xs-12 table-responsive">
+                                            <table class="table table-striped" width="100%" style="font-size:12px">
                                                 <thead>
                                                 <tr>
                                                     <th>Nama </th>
@@ -216,7 +223,6 @@
                             <div class="tab-content">
                                 <div class="active tab-pane" id="brg">
 
-
                                     <table class="table table-hover table-bordered">
                                         <thead>
                                         <tr>
@@ -328,12 +334,12 @@ export default {
             var printContent = document.getElementById(printMe);
             var WinPrint = window.open('', '', 'width=900,height=650');
             WinPrint.document.write('<html><head><title>reprint</title><link rel="stylesheet" href="assets/dist/css/AdminLTE.min.css">');
-            WinPrint.document.write('<link rel="stylesheet" href="assets/bower_components/font-awesome/css/font-awesome.min.css">');
+            // WinPrint.document.write('<link rel="stylesheet" href="assets/bower_components/font-awesome/css/font-awesome.min.css">');
             // WinPrint.document.write('<script type="text/javascript" src="assets/bower_components/jquery/dist/jquery.min.js"></scr' + 'ipt>');
             // WinPrint.document.write('<script src="assets/bower_components/bootstrap/dist/js/bootstrap.min.js"></scr' + 'ipt>');
             // WinPrint.document.write('<script src="assets/dist/js/adminlte.min.js"></scr' + 'ipt>');
             // WinPrint.document.write('<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">');
-            WinPrint.document.write('<link rel="stylesheet" href="assets/bower_components/bootstrap/dist/css/bootstrap.min.css"></head><body>');
+            // WinPrint.document.write('<link rel="stylesheet" href="assets/bower_components/bootstrap/dist/css/bootstrap.min.css"></head><body>');
             WinPrint.document.write(printContent.innerHTML);
             WinPrint.document.write('</body></html>');
             WinPrint.document.close();
