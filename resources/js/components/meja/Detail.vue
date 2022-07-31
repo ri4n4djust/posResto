@@ -24,7 +24,6 @@
             <!-- /.box-header -->
             <div class="box-body">
 
-              
                 <p class="text-muted text-center">
                 <date-picker v-model="tglNota" value-type="format" format="YYYY/MM/DD"></date-picker>
                 </p>
@@ -994,7 +993,7 @@
   import DatePicker from 'vue2-datepicker';
   import 'vue2-datepicker/index.css';
   import VueSingleSelect from "vue-single-select";
-
+  import moment from 'moment'
   import Print from 'vue-print-plugin';
  
 
@@ -1070,7 +1069,9 @@
                 kembalianS: '',
                 //waitername : this.waiter.name,
                 //optionLabel: users.nmBarang,
-                tglNota: new Date().toJSON().slice(0,10).replace(/-/g,'/'),
+                // tglNota: new Date().toJSON().slice(0,10).replace(/-/g,'/'),
+                tglNota: moment().format('YYYY/MM/DD'),
+                // toDay: moment().format('YYYY/MM/DD'),
                 
             }
         },
