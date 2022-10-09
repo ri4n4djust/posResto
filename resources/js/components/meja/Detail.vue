@@ -787,7 +787,12 @@
 
                                     <tr>
                                         <th colspan="2">Payment :</th>
-                                        <th colspan="2" style="text-align:right">{{ Math.floor(((subtotal * pajak / 100 + subtotal) - (subtotaltp * diskon / 100)) + ((subtotal * pajak / 100 + subtotal) - (subtotaltp * diskon / 100)) * taxDebit / 100)  || 0 | currency }}</th>
+                                        <th colspan="2" style="text-align:right">
+
+                                        {{totalBayar || 0 | currency }}
+                                        
+
+                                        </th>
                                     </tr>
 
                                     <tr v-if="pembayaran === '1'">
