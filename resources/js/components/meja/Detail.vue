@@ -136,8 +136,10 @@
   <div v-if="showModalOrder">
 
               <div id="lastOrder" >
+              <div>
+              ke1
                 <span v-if=" orders.length != 0 ">
-                  <h3 class="profile-username text-center">Meja No: {{ post.noMeja }}</h3>
+                  <h3 class="profile-username text-center">Meja No: {{ post.noMeja }} | Makanan</h3>
                  
                   <table style="font-size:12px" width="100%">
                     <thead>
@@ -162,7 +164,7 @@
                 <br>
         
                 <span v-if=" orders1.length != 0 ">
-                <h3 class="profile-username text-center">Meja No: {{ post.noMeja }}</h3>
+                <h3 class="profile-username text-center">Meja No: {{ post.noMeja }} | Minuman</h3>
                   <table style="font-size:12px" width="100%">
                     <thead>
                     <tr>
@@ -183,6 +185,62 @@
                     </tbody>
                   </table>                
                 </span>
+                </div>
+                <p>
+                <p>
+                <h3 class="profile-username text-center">===========================================</h3>
+                <p>
+                <p>
+                <div>
+                ke 2
+                <span v-if=" orders.length != 0 ">
+                  <h3 class="profile-username text-center">Meja No: {{ post.noMeja }} | Makanan</h3>
+                 
+                  <table style="font-size:12px" width="100%">
+                    <thead>
+                      <tr>
+                        <th>No.</th>
+                        <th>Menu</th>
+                        <th>Qty</th>
+                        <th>Jam</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr v-for="order in orders" :key="order.id">
+                        <td><a @click.prevent="PostDeleteTrxO(id = order.id)" >del</a></td>
+                        <td>{{ order.nmMenu }}<br>
+                            {{order.noteOrder }}</td>
+                        <td>{{ order.qtyOrder }}</td>
+                        <td>{{ order.wktOrder }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </span>
+                <br>
+        
+                <span v-if=" orders1.length != 0 ">
+                <h3 class="profile-username text-center">Meja No: {{ post.noMeja }} | Minuman</h3>
+                  <table style="font-size:12px" width="100%">
+                    <thead>
+                    <tr>
+                      <th>No.</th>
+                      <th>Menu</th>
+                      <th>Qty</th>
+                      <th>Jam</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                      <tr v-for="order in orders1" :key="order.id">
+                        <td><a @click.prevent="PostDeleteTrxO(id = order.id)" >del</a></td>
+                        <td>{{ order.nmMenu }}<br>
+                            {{order.noteOrder }}</td>
+                        <td>{{ order.qtyOrder }}</td>
+                        <td>{{ order.wktOrder }}</td>
+                      </tr>
+                    </tbody>
+                  </table>                
+                </span>
+                </div>
               </div>
 
     <transition name="modal">
