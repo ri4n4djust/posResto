@@ -165,7 +165,7 @@
         
                 <span v-if=" orders1.length != 0 ">
                 <h3 class="profile-username text-center">Meja No: {{ post.noMeja }} | Minuman</h3>
-                  <table style="font-size:12px" width="100%">
+                  <table style="font-size:14px" width="100%">
                     <thead>
                     <tr>
                       <th>No.</th>
@@ -220,7 +220,7 @@
         
                 <span v-if=" orders1.length != 0 ">
                 <h3 class="profile-username text-center">Meja No: {{ post.noMeja }} | Minuman</h3>
-                  <table style="font-size:12px" width="100%">
+                  <table style="font-size:14px" width="100%">
                     <thead>
                     <tr>
                       <th>No.</th>
