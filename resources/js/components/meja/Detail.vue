@@ -135,16 +135,15 @@
 <!-- modal Order start -->
   <div v-if="showModalOrder">
 
-              <div id="lastOrder" >
+              <div id="lastOrder" style="margin:0 0 0 0;">
               <div>
               ke1
                 <span v-if=" orders.length != 0 ">
                   <h3 class="profile-username text-center">Meja No: {{ post.noMeja }} | Makanan</h3>
                  
-                  <table style="font-size:14px" width="100%">
+                  <table style="font-size:18px;font-family: Courier New;font-weight: bold;width:100%">
                     <thead>
                       <tr>
-                        <th>No.</th>
                         <th>Menu</th>
                         <th>Qty</th>
                         <th>Jam</th>
@@ -152,11 +151,10 @@
                     </thead>
                     <tbody>
                       <tr v-for="order in orders" :key="order.id">
-                        <td><a @click.prevent="PostDeleteTrxO(id = order.id)" >del</a></td>
                         <td>{{ order.nmMenu }}<br>
                             {{order.noteOrder }}</td>
                         <td>{{ order.qtyOrder }}</td>
-                        <td>{{ order.wktOrder }}</td>
+                        <td>{{ new Date(order.wktOrder).toLocaleTimeString() }}</td>
                       </tr>
                     </tbody>
                   </table>
@@ -165,10 +163,9 @@
         
                 <span v-if=" orders1.length != 0 ">
                 <h3 class="profile-username text-center">Meja No: {{ post.noMeja }} | Minuman</h3>
-                  <table style="font-size:14px" width="100%">
+                  <table style="font-size:18px;font-family: Courier New;font-weight: bold;width:100%">
                     <thead>
                     <tr>
-                      <th>No.</th>
                       <th>Menu</th>
                       <th>Qty</th>
                       <th>Jam</th>
@@ -176,11 +173,10 @@
                     </thead>
                     <tbody>
                       <tr v-for="order in orders1" :key="order.id">
-                        <td><a @click.prevent="PostDeleteTrxO(id = order.id)" >del</a></td>
                         <td>{{ order.nmMenu }}<br>
                             {{order.noteOrder }}</td>
                         <td>{{ order.qtyOrder }}</td>
-                        <td>{{ order.wktOrder }}</td>
+                        <td>{{ new Date(order.wktOrder).toLocaleTimeString() }}</td>
                       </tr>
                     </tbody>
                   </table>                
@@ -188,7 +184,7 @@
                 </div>
                 <p>
                 <p>
-                <h3 class="profile-username text-center">===========================================</h3>
+                <h3 class="profile-username text-center">===============================</h3>
                 <p>
                 <p>
                 <div>
@@ -196,10 +192,9 @@
                 <span v-if=" orders.length != 0 ">
                   <h3 class="profile-username text-center">Meja No: {{ post.noMeja }} | Makanan</h3>
                  
-                  <table style="font-size:14px" width="100%">
+                  <table style="font-size:18px;font-family: Courier New;font-weight: bold;width:100%">
                     <thead>
                       <tr>
-                        <th>No.</th>
                         <th>Menu</th>
                         <th>Qty</th>
                         <th>Jam</th>
@@ -207,11 +202,10 @@
                     </thead>
                     <tbody>
                       <tr v-for="order in orders" :key="order.id">
-                        <td><a @click.prevent="PostDeleteTrxO(id = order.id)" >del</a></td>
                         <td>{{ order.nmMenu }}<br>
                             {{order.noteOrder }}</td>
                         <td>{{ order.qtyOrder }}</td>
-                        <td>{{ order.wktOrder }}</td>
+                        <td>{{ new Date(order.wktOrder).toLocaleTimeString() }}</td>
                       </tr>
                     </tbody>
                   </table>
@@ -220,10 +214,9 @@
         
                 <span v-if=" orders1.length != 0 ">
                 <h3 class="profile-username text-center">Meja No: {{ post.noMeja }} | Minuman</h3>
-                  <table style="font-size:14px" width="100%">
+                  <table style="font-size:18px;font-family: Courier New;font-weight: bold;width:100%">
                     <thead>
                     <tr>
-                      <th>No.</th>
                       <th>Menu</th>
                       <th>Qty</th>
                       <th>Jam</th>
@@ -231,11 +224,10 @@
                     </thead>
                     <tbody>
                       <tr v-for="order in orders1" :key="order.id">
-                        <td><a @click.prevent="PostDeleteTrxO(id = order.id)" >del</a></td>
                         <td>{{ order.nmMenu }}<br>
                             {{order.noteOrder }}</td>
                         <td>{{ order.qtyOrder }}</td>
-                        <td>{{ order.wktOrder }}</td>
+                        <td>{{ new Date(order.wktOrder).toLocaleTimeString() }}</td>
                       </tr>
                     </tbody>
                   </table>                
@@ -274,7 +266,7 @@
                         <td>{{ order.nmMenu }}<br>
                             {{order.noteOrder }}</td>
                         <td>{{ order.qtyOrder }}</td>
-                        <td>{{ order.wktOrder }}</td>
+                        <td>{{ new Date(order.wktOrder).toLocaleTimeString() }}</td>
                       </tr>
                     </tbody>
                   </table>
@@ -300,7 +292,7 @@
                         <td>{{ order.nmMenu }}<br>
                             {{order.noteOrder }}</td>
                         <td>{{ order.qtyOrder }}</td>
-                        <td>{{ order.wktOrder }}</td>
+                        <td>{{ new Date(order.wktOrder).toLocaleTimeString() }}</td>
                       </tr>
                     </tbody>
                   </table>                
@@ -837,6 +829,7 @@
                                     </tr>
 
                                     <tr v-if="pembayaran === '1'">
+                                      
                                     </tr>
                                     <tr v-else-if="pembayaran === '2'">
                                         <th colspan="2">Card Charge : {{ taxDebit }} %</th>
@@ -847,7 +840,7 @@
                                         <th colspan="2">Payment :</th>
                                         <th colspan="2" style="text-align:right">
 
-                                        {{totalBayar || 0 | currency }}
+                                        {{ totalBayar || 0 | currency }}
                                         
 
                                         </th>
@@ -1642,6 +1635,7 @@
                 
             },
             PostTransaksi() {
+                // totalBayar = this.totalBayar;
                 let uri = '/api/addTransaksi/store';
                 this.axios.post(uri, 
                 {
@@ -1666,9 +1660,9 @@
                     kembalianNota: Math.abs(this.totalBayar - (((this.subtotal * this.pajak / 100 + this.subtotal) - (this.subtotaltp * this.diskon / 100)) + ((this.subtotal * this.pajak / 100 + this.subtotal) - (this.subtotal * this.diskon / 100)) * this.taxDebit / 100)),
                     
                 }).then((response) => {
-                        //this.$print(printMe);
+                        // this.$print(printMe);
                         window.print(printMe)
-                        this.totalBayar = '';
+                        // this.totalBayar = '';
                         localStorage.removeItem('cartItems');
                         setTimeout(function(){
                             window.location.href = '/meja';

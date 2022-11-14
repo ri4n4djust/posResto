@@ -273,17 +273,36 @@ class mejaController extends Controller
 
     public function addMenu(Request $request)
     {
-        Order::create([
-            'kdMenu'    => $request->input('idBarang'),
-            'idMeja'    => $request->input('noMeja'),
-            'wktOrder'  => date("Y-m-d h:i:sa"),
-            'waiterOrder'   =>$request->input('waiterOrder'),
-            'stsPrintOrder' => '0',
-            'qtyOrder'  => $request->input('qtyBarang'),
-            'noteOrder'  => $request->input('note'),
-            'ktgMenuOrder'  => $request->input('ktgMenu'),
 
-        ]);
+        $cekorder = DB::table('tblOrder')
+                ->where('kdMenu', $request->input('idBarang'))
+                ->where('idMeja', $request->input('noMeja'))
+                ->where('stsPrintOrder', '0')
+                ->first();
+
+        if($cekorder != null ){
+
+            Order::where('kdMenu', $request->input('idBarang'))
+                ->where('idMeja', $request->input('noMeja'))
+                ->where('stsPrintOrder', '0')  
+                ->update([
+                'qtyOrder'   => $cekorder->qtyOrder + $request->input('qtyBarang'),
+            ]);
+
+
+        }else{
+            Order::create([
+                'kdMenu'    => $request->input('idBarang'),
+                'idMeja'    => $request->input('noMeja'),
+                'wktOrder'  => date("Y-m-d h:i:s"),
+                'waiterOrder'   =>$request->input('waiterOrder'),
+                'stsPrintOrder' => '0',
+                'qtyOrder'  => $request->input('qtyBarang'),
+                'noteOrder'  => $request->input('note'),
+                'ktgMenuOrder'  => $request->input('ktgMenu'),
+
+            ]);
+        }
         $brg = DB::table('tblTmp_TransaksiDetail')
                 ->where('kdBarangTmp', $request->input('idBarang'))
                 ->where('noMejaTmp', $request->input('noMeja'))
