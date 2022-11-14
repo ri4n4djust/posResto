@@ -135,13 +135,13 @@
 <!-- modal Order start -->
   <div v-if="showModalOrder">
 
-              <div id="lastOrder" style="margin:0 0 0 0;">
+              <div id="lastOrder">
               <div>
               ke1
                 <span v-if=" orders.length != 0 ">
                   <h3 class="profile-username text-center">Meja No: {{ post.noMeja }} | Makanan</h3>
                  
-                  <table style="font-size:18px;font-family: Courier New;font-weight: bold;width:100%">
+                  <table style="font-size:18px;font-family: Courier New;width:100%">
                     <thead>
                       <tr>
                         <th>Menu</th>
@@ -163,7 +163,7 @@
         
                 <span v-if=" orders1.length != 0 ">
                 <h3 class="profile-username text-center">Meja No: {{ post.noMeja }} | Minuman</h3>
-                  <table style="font-size:18px;font-family: Courier New;font-weight: bold;width:100%">
+                  <table style="font-size:18px;font-family: Courier New;width:100%">
                     <thead>
                     <tr>
                       <th>Menu</th>
@@ -192,7 +192,7 @@
                 <span v-if=" orders.length != 0 ">
                   <h3 class="profile-username text-center">Meja No: {{ post.noMeja }} | Makanan</h3>
                  
-                  <table style="font-size:18px;font-family: Courier New;font-weight: bold;width:100%">
+                  <table style="font-size:18px;font-family: Courier New;width:100%">
                     <thead>
                       <tr>
                         <th>Menu</th>
@@ -214,7 +214,7 @@
         
                 <span v-if=" orders1.length != 0 ">
                 <h3 class="profile-username text-center">Meja No: {{ post.noMeja }} | Minuman</h3>
-                  <table style="font-size:18px;font-family: Courier New;font-weight: bold;width:100%">
+                  <table style="font-size:18px;font-family: Courier New;width:100%">
                     <thead>
                     <tr>
                       <th>Menu</th>
@@ -1256,7 +1256,7 @@
                 this.getCart();
                 this.isicart = Object.keys(JSON.parse(localStorage.getItem('cartItems'))).length;
 
-                // notaSplit.push(trx);	
+                // notaSplit.push(trx); 
                 // localStorage.setItem('cartItems',JSON.stringify(cartItems));
                 // localStorage.setItem('notaSplit',JSON.stringify(trx));
                   let notaSplit;
@@ -1288,7 +1288,7 @@
                         }else{
                         notaSplit.push(trx);
                         const objIndex = notaSplit.findIndex((e => e.id === trx.id));
-                        notaSplit[objIndex].qtyTmp = parseInt(this.qtySplit[index]);	
+                        notaSplit[objIndex].qtyTmp = parseInt(this.qtySplit[index]);  
                         localStorage.setItem('notaSplit',JSON.stringify(notaSplit));
                         this.getCart();
                         this.getSplitNota();
