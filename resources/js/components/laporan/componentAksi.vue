@@ -326,7 +326,7 @@ export default {
             //this.intervalFetchData1();
             //this.intervalFetchData();
             //this.bindings()
-            this.loadData()
+            // this.loadData()
     },
        
     methods: {
@@ -394,11 +394,11 @@ export default {
                 this.groB = response.data.databarang;
             });
         },
-        intervalFetchData: function () {
-        setInterval(() => {    
-            this.loadData();
-            }, 3000);    
-        },
+        // intervalFetchData: function () {
+        // setInterval(() => {    
+        //     this.loadData();
+        //     }, 3000);    
+        // },
                       
     },
     props: {
