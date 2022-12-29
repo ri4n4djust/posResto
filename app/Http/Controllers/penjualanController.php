@@ -23,6 +23,7 @@ class penjualanController extends Controller
                 'tblPembayaran.pajakPembayaran', 'tblPembayaran.diskonPembayaran',
                 'tblPembayaran.typePembayaran', 'tblPembayaran.chargePembayaran', 'tblPembayaran.noKartuPembayaran')
                 ->orderBy('tblPenjualan.id', 'DESC')
+                ->take(100)
                 ->get();
         return response([
             'success' => true,
