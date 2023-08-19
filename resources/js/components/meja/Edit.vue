@@ -31,7 +31,9 @@
 
                             <div class="form-group">
                                 <button type="submit" class="btn btn-md btn-success">UPDATE</button>
-                                <button @click.prevent="PostDelete(post.id)" class="btn btn-md btn-danger">HAPUS</button>
+                                <span v-if="$session.get('roleID') === 'Admin'">
+                                    <button @click.prevent="PostDelete(post.id)" class="btn btn-md btn-danger">HAPUS</button>
+                                </span>
                                 <router-link :to="{ name: 'meja' }" class="btn btn-primary btn-success">KEMBALI</router-link>
                             </div>
 
