@@ -20,27 +20,27 @@ use Illuminate\Support\Facades\DB;
 class nomorController extends Controller
 {
     //
-    public function noNota($id)
-    {
-        $newid =  strlen($id);
-        if($newid === 1){
-            $id = '0'.$id;
-        }elseif($newid === 2){
-            $id = $id;
-        }
+    public function noNota($id){
+        // $newid =  strlen($id);
+        // if($newid === 1){
+        //     $id = '0'.$id;
+        // }elseif($newid === 2){
+        //     $id = $id;
+        // }
+        $tahun = date('Y');
 
-        $count = Penjualan::all();
-        if($count->isEmpty()){
-            $tahun = date('Y');
+        // $count = Penjualan::all();
+        // if($count->isEmpty()){
+        //     $tahun = date('Y');
             
-            $post = 'INV'.$tahun.'0'.$id.'0'.'1';
-            return response()->json([
-                'success' => true,
-                'message' => 'Detail Post!',
-                'noNota'    => $post,
-                'panjang' => $newid
-            ], 200);
-        }else{
+        //     $post = 'INV'.$tahun.'0'.$id.'0'.'1';
+        //     return response()->json([
+        //         'success' => true,
+        //         'message' => 'Detail Post!',
+        //         'noNota'    => $post,
+        //         // 'panjang' => $newid
+        //     ], 200);
+        // }else{
             $no = 0 ;
             $count = Penjualan::all()->last();
             $terakhir = substr($count->noNota, 11);
@@ -48,6 +48,8 @@ class nomorController extends Controller
 
             $tahun = date('Y');
             $post = 'INV'.$tahun.'0'.$id.'0'.$kodeBaru;
+
+            // echo $count ;
             
 
             if (Penjualan::where('noNota', $post)->exists()) {
@@ -57,20 +59,20 @@ class nomorController extends Controller
                     'success' => true,
                     'message' => 'Detail Post!',
                     'noNota'    => $post,
-                    'panjang' => $newid
+                    // 'panjang' => $newid
                 ], 200);
             } else {
                 return response()->json([
                     'success' => true,
                     'message' => 'Post Tidak Ditemukan!',
                     'noNota'    => $post,
-                    'panjang' => $newid
+                    // 'panjang' => $newid
                 ], 200);
             }
-        }
+        // }
     }
-    public function kodeBarang()
-    {
+    public function kodeBarang(){
+
         $count = Barang::all();
         if($count->isEmpty()){
             $tahun = date('Y');
