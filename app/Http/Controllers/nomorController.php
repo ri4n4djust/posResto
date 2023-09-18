@@ -27,7 +27,7 @@ class nomorController extends Controller
         // }elseif($newid === 2){
         //     $id = $id;
         // }
-        $tahun = date('Y');
+        // $tahun = date('YM');
 
         // $count = Penjualan::all();
         // if($count->isEmpty()){
@@ -44,17 +44,17 @@ class nomorController extends Controller
             $no = 0 ;
             $count = Penjualan::all()->last();
             $terakhir = substr($count->noNota, 11);
-            $kodeBaru = $terakhir + 1  ;
+            $kodeBaru = intval($terakhir) + 1  ;
 
-            $tahun = date('Y');
-            $post = 'INV'.$tahun.'0'.$id.'0'.$kodeBaru;
+            $tahun = date('Ym');
+            $post = 'INV'.$tahun.$id.$kodeBaru;
 
             // echo $count ;
             
 
             if (Penjualan::where('noNota', $post)->exists()) {
                 $kodeBarulagi = $kodeBaru + 1 ;
-                $post = 'INV'.$tahun.'0'.$id.'0'.$kodeBarulagi;
+                $post = 'INV'.$tahun.$id.$kodeBarulagi;
                 return response()->json([
                     'success' => true,
                     'message' => 'Detail Post!',
