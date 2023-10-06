@@ -197,4 +197,65 @@ class penjualanController extends Controller
             ], 500);
         }
     }
+
+    public function destroyPembayaran($id)
+    {
+        
+        $post = Penjualan::findOrFail($id);
+        $kdPenjualan = $post->noNota;
+        $noMeja = $post->noMeja;
+        $pax = $post->pax;
+
+        $kodisiMeja = DB::table('tblMeja')->where('id', $noMeja)->first();
+        if($kodisiMeja->status === '1'){
+            return response()->json([
+                'success' => false,
+                'message' => 'Meja blm kosong',
+            ], 500);
+        }else{
+
+            $tmpTrx = DB::table('tblPenjualanDetail')
+                        ->where('noMeja', $noMeja)
+                        ->where('noNota', $kdPenjualan)->get();
+            $dataSet = [];
+            foreach ($tmpTrx as $s) {
+                $dataSet[] = [
+                    'noNotaTmp'     => $kdPenjualan,
+                    'noMejaTmp'     => $s->noMeja,
+                    'kdBarangTmp'     => $s->kdBarang,
+                    'hrgJualTmp'     => $s->hrgJual,
+                    'qtyTmp'     => $s->qty,
+                    'totalTmp'     => $s->total,
+                    'typeTmp'     => $s->type,
+                    'nmBarangTmp'     => $s->nmBarang, 
+                    'note'  => $s->note, 
+                    'ktgMenu'  => $s->ktgMenu,
+                    'promoMenu'  => $s->promoMenu,
+                ];
+            }
+            $detpost = DB::table('tblTmp_TransaksiDetail')->insert($dataSet);
+
+            DB::table('tblMeja')->where('id', $noMeja)->update([
+                'status' => '1',
+                'paxMeja' => $pax,
+            ]);
+
+            PenjualanDetail::where('noNota', $kdPenjualan)->delete();
+            Pembayara::where('notaPembayaran', $kdPenjualan)->delete();
+
+            $post->delete();
+
+            if ($post) {
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Post Berhasil Dihapus!',
+                ], 200);
+            } else {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Post Gagal Dihapus!',
+                ], 500);
+            }
+        }
+    }
 }

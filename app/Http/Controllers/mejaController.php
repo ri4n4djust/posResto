@@ -502,6 +502,9 @@ class mejaController extends Controller
                         'total' => $s->totalTmp,
                         'type' => $s->typeTmp,
                         'nmBarang' =>$s->nmBarangTmp, 
+                        'note' => $s->note,
+                        'ktgMenu' => $s->ktgMenu,
+                        'promoMenu' => $s->promoMenu,
                     ];
                 }
                 $detpost = DB::table('tblPenjualanDetail')->insert($dataSet);

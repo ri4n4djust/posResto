@@ -143,6 +143,7 @@ Route::post('/lapPenjualan', 'penjualanController@sorting');
 Route::post('/lapPenjualanBulanan', 'penjualanController@laporanBulananSorting');
 Route::get('/detailpenjualan/{id}', 'penjualanController@listDetailPenjualan');
 Route::delete('/hapuspenjualan/{id?}', 'penjualanController@destroy');
+Route::delete('/voidPembayaran/{id?}', 'penjualanController@destroyPembayaran');
 
 //=====Laporan Pembelian
 Route::get('/pembelian', 'pembelianController@index');

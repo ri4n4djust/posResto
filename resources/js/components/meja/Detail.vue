@@ -25,7 +25,7 @@
             <div class="box-body">
 
                 <p class="text-muted text-center">
-                <date-picker v-model="tglNota" value-type="format" format="YYYY/MM/DD"></date-picker>
+                <date-picker v-model="tglNota" value-type="format" format="YYYY/MM/DD HH:mm:ss"></date-picker>
                 </p>
                 <p class="text-muted text-center">
                   <div class="input-group">
@@ -1126,7 +1126,7 @@
                 //waitername : this.waiter.name,
                 //optionLabel: users.nmBarang,
                 // tglNota: new Date().toJSON().slice(0,10).replace(/-/g,'/'),
-                tglNota: moment().format('YYYY/MM/DD'),
+                tglNota: moment().format('YYYY/MM/DD HH:mm:ss'),
                 // toDay: moment().format('YYYY/MM/DD'),
                 
             }

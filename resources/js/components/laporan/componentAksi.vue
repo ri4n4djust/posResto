@@ -34,7 +34,7 @@
                                                     <th>
                                                         
                                                             <strong>Customer :</strong> {{data.pelangganNota}}<br>
-                                                            <b> Tgl : </b>{{data.tglNota}}<br>
+                                                            <b> Tgl : </b>{{data.tglNota}} <br>
                                                             <b> Meja No : </b>{{data.noMeja}}<br>
                                                             <b>Waiter : </b>{{data.waiterNota}}<br>
                                                     
@@ -195,6 +195,7 @@
                                         
                                         <div v-if="adminuser === 'Admin'">
                                             <a href="#"  @click="pri('printMe')" class="btn btn-md btn-success"><b>Re-Print</b></a>
+                                            <a href="#"   @click="showModalAuth=true" class="btn btn-md btn-success"><b>Void</b></a>
                                             <!-- <a href="#"   @click.prevent="DeletePenjualan(id = data.id)" class="btn btn-md btn-success"><b>Delete</b></a> -->
                                         </div>
                                         <span v-if="load">
@@ -209,10 +210,51 @@
                                         </div>
                                         <div v-else-if="adminuser === 'Kasir'">
                                             <a href="#"  @click="pri('printMe')" class="btn btn-md btn-success"><b>Re-Print</b></a>
+                                            <a href="#"   @click="showModalAuth=true" class="btn btn-md btn-success"><b>Void</b></a>
                                         </div>
                                         <br>
             
-
+                    <!-- modal Auth start -->
+                    <div v-if="showModalAuth">
+                        <transition name="modal">
+                        <div class="modal-mask">
+                            <div class="modal-wrapper">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" @click="showModalAuth=false">
+                                    <span aria-hidden="true">&times;</span>CLOSE
+                                    </button>
+                                    <h4 class="modal-title">Auth Require</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <form @submit.prevent="postAuthCek" autocomplete='off'>
+                                    <div class="form-group has-feedback">
+                                        <input type="text" class="form-control" v-model="data.noNota" disabled>
+                                        <input type="text" class="form-control" v-model="username" disabled>
+                                        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                                    </div>
+                                    <div class="form-group has-feedback">
+                                        <input type="password" class="form-control" v-model="password" placeholder="Password" autocomplete='off'>
+                                        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                                    </div>
+                                    <div class="row">
+                                        
+                                        <!-- /.col -->
+                                        <div class="col-xs-4">
+                                        <button type="submit" class="btn btn-primary btn-block btn-flat">Authorize</button>
+                                        </div>
+                                        <!-- /.col -->
+                                    </div>
+                                    </form>
+                                </div>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                        </transition>
+                    </div>
+                    <!------End Modal Auth ---->
                                         
                     <div class="col-md-12">
                         <div class="nav-tabs-custom">
@@ -302,6 +344,9 @@ export default {
     name: "ActionButtons",
     data() {
             return {
+                username: 'Supervisor',
+                password: '',
+                showModalAuth: false,
                 posts: [],
                 pem: [],
                 gro: [],
@@ -346,6 +391,31 @@ export default {
             WinPrint.focus();
             setTimeout(() =>WinPrint.print(), 3000);
             setTimeout(() => WinPrint.close(), 15000);
+        },
+        
+        postAuthCek(){
+            let uri = '/api/authcek';
+            this.axios.post(uri, {
+                username: this.username,
+                password: this.password
+            }).then(response => {
+                if (response.data.success === true ) {
+                // alert('suskes Login')
+                this.axios.delete('/api/voidPembayaran/'+ this.data.id)
+                .then(response => {
+                    alert('Berhasil Di Void');
+                    // this.loadDataTransaksi();
+                    this.loadData();
+                    // this.ListOrder();
+                    // this.ListOrder1();
+                    this.showModalAuth = false;
+                    this.showModalPenjualan = false;
+                }).catch(error => {
+                    // console.log(error)
+                    alert('Meja Belum Kosong');
+            });
+                }
+            });
         },
         
         DeletePenjualan(id)
