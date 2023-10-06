@@ -21,19 +21,19 @@ class nomorController extends Controller
 {
     //
     public function noNota($id){
-        // $newid =  strlen($id);
-        // if($newid === 1){
-        //     $id = '0'.$id;
-        // }elseif($newid === 2){
-        //     $id = $id;
-        // }
+        $newid =  strlen($id);
+        if($newid === 1){
+            $id = '0'.$id;
+        }elseif($newid === 2){
+            $id = $id;
+        }
         // $tahun = date('YM');
 
         // $count = Penjualan::all();
         // if($count->isEmpty()){
-        //     $tahun = date('Y');
+        //     $tahun = date('Ym');
             
-        //     $post = 'INV'.$tahun.'0'.$id.'0'.'1';
+        //     $post = 'INV'.$tahun.$id.'1';
         //     return response()->json([
         //         'success' => true,
         //         'message' => 'Detail Post!',
@@ -59,14 +59,14 @@ class nomorController extends Controller
                     'success' => true,
                     'message' => 'Detail Post!',
                     'noNota'    => $post,
-                    // 'panjang' => $newid
+                    'panjang' => $newid
                 ], 200);
             } else {
                 return response()->json([
                     'success' => true,
                     'message' => 'Post Tidak Ditemukan!',
                     'noNota'    => $post,
-                    // 'panjang' => $newid
+                    'panjang' => $newid
                 ], 200);
             }
         // }
