@@ -97,8 +97,10 @@ class penjualanController extends Controller
     {
         //$from = date('2021/02/01');
         //$to = date('2021/02/02');
-        $startDate = $request->input('startDate');
-        $endDate = $request->input('endDate');
+        $startDate1 = $request->input('startDate');
+        $endDate1 = $request->input('endDate');
+        $startDate = $startDate1." 00:00:00";
+        $endDate = $endDate1." 23:59:59";
         $cr = $request->input('typeNotaCari');
         $crpel = $request->input('typePelangganCari');
         if($cr == 0 && $crpel == 'Cash'){
