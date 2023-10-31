@@ -40,6 +40,8 @@ Route::get('/kategori/{id?}', 'kategoriController@show');
 Route::post('/kategori/update/{id?}', 'kategoriController@update');
 Route::delete('/kategori/{id?}', 'kategoriController@destroy');
 
+Route::get('/update-penjualan', 'kategoriController@updatePenjualan');
+
 //========supplier
 Route::get('/supplier', 'supplierController@index');
 Route::post('/supplier/store', 'supplierController@store');

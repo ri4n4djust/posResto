@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Kategori;
 //use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use App\Penjualan;
 
 class kategoriController extends Controller
 {
@@ -141,6 +142,20 @@ class kategoriController extends Controller
                 'message' => 'Post Gagal Dihapus!',
             ], 500);
         }
+    }
+
+    public function updatePenjualan()
+    {
+        $post = Penjualan::whereBetween('tglNota', ['2023/10/01', '2023/10/25'])->get(['tglNota']);
+        
+        for($i=0; $i<count($post); $i++){
+            echo $post[$i]->tglNota.'<br>';
+            $old_date = $post[$i]->tglNota ;
+            Penjualan::where('tglNota', $old_date)->update([
+                'tglNota' => $old_date.' 18:30:00',
+            ]);
+        }
+        
     }
 
 }
