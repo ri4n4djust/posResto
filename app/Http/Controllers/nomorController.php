@@ -42,7 +42,7 @@ class nomorController extends Controller
         //     ], 200);
         // }else{
             $no = 0 ;
-            $count = Penjualan::all()->last();
+            $count = Penjualan::latest('id')->first();
             $terakhir = substr($count->noNota, 11);
             $kodeBaru = intval($terakhir) + 1  ;
 
