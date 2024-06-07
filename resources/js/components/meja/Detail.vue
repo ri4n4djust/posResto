@@ -115,8 +115,10 @@
                       <td>{{ trx.totalTmp | currency }}</td>
                       <td class="text-center">
                         {{trx.stsPrintOrder}}
-                          <button @click.prevent="PostDeleteTrx(id = trx.id, sts = trx.stsPrintOrder)" class="btn-sm btn-danger">HAPUS</button>
+                          <button @click.prevent="PostEditTrx(id = trx.id, sts = trx.stsPrintOrder, aksi='ubah')" class="btn-sm btn-warning"><i class="fa fa-pencil"></i></button>
+                          <button @click.prevent="PostDeleteTrx(id = trx.id, sts = trx.stsPrintOrder, aksi='hapus')" class="btn-sm btn-danger"><i class="fa fa-trash"></i></button>
                       </td>
+
                   </tr>
                   </tbody>
               </table>
@@ -262,7 +264,7 @@
                     </thead>
                     <tbody>
                       <tr v-for="order in orders" :key="order.id">
-                        <td><a @click.prevent="PostDeleteTrxO(id = order.id)" >del</a></td>
+                        <td><a @click.prevent="PostDeleteTrxO(id = order.id)" ><i class="fa fa-trash"></i></a></td>
                         <td>{{ order.nmMenu }}<br>
                             {{order.noteOrder }}</td>
                         <td>{{ order.qtyOrder }}</td>
@@ -288,7 +290,7 @@
                     </thead>
                     <tbody>
                       <tr v-for="order in orders1" :key="order.id">
-                        <td><a @click.prevent="PostDeleteTrxO(id = order.id)" >del</a></td>
+                        <td><a @click.prevent="PostDeleteTrxO(id = order.id)" ><i class="fa fa-trash"></i></a></td>
                         <td>{{ order.nmMenu }}<br>
                             {{order.noteOrder }}</td>
                         <td>{{ order.qtyOrder }}</td>
@@ -371,7 +373,8 @@
                 <form @submit.prevent="postAuthCek">
                   <div class="form-group has-feedback">
                     <input type="hidden" class="form-control" v-model="idWillDelete" disabled>
-                    <input type="text" class="form-control" v-model="username" disabled>
+                    <input type="text" class="form-control" v-model="aksi" disabled>
+                    <input type="hidden" class="form-control" v-model="username" disabled>
                     <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
                   </div>
                   <div class="form-group has-feedback">
@@ -379,6 +382,9 @@
                     <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                   </div>
                   <div class="row">
+                    <div class="col-xs-4" v-if="aksi === 'ubah'">
+                      <input type="text" class="form-control" v-model="newqty" placeholder="new Qty">
+                    </div>
                     
                     <!-- /.col -->
                     <div class="col-xs-4">
@@ -1061,6 +1067,8 @@
               username: 'Supervisor',
               password: '',
               idWillDelete: '',
+              aksi: '',
+              newqty: 1,
                 post: {},
                 waiters: {},
                 statusMeja:{},
@@ -1180,20 +1188,44 @@
                   username: this.username,
                   password: this.password
                 }).then(response => {
+
                   if (response.data.success === true ) {
-                    // alert('suskes Login')
-                    this.axios.delete('/api/orderDelete/'+ this.idWillDelete)
-                    .then(response => {
-                        alert('Berhasil Di Hapus');
+                    // alert(this.aksi)
+                    if(this.aksi === 'hapus'){
+                      this.axios.delete('/api/orderDelete/'+ this.idWillDelete)
+                      .then(response => {
+                          alert('Berhasil Di Hapus');
+                          this.loadDataTransaksi();
+                          this.loadTotal();
+                          this.ListOrder();
+                          this.ListOrder1();
+                          this.showModalAuth = false;
+                      }).catch(error => {
+                        alert('gagal hapus')
+                      });
+                    }else if(this.aksi === 'ubah'){
+                      let uri = '/api/editqty';
+                      this.axios.post(uri, {
+                        id: this.idWillDelete,
+                        qty: this.newqty
+                      }).then(response => {
+
                         this.loadDataTransaksi();
-                        this.loadTotal();
-                        this.ListOrder();
-                        this.ListOrder1();
-                        this.showModalAuth = false;
-                    }).catch(error => {
-                    
-                });
+                          this.loadTotal();
+                          this.ListOrder();
+                          this.ListOrder1();
+                          this.showModalAuth = false;
+                      });
+                      // console.log('ubah qty');
+
+                    }
+
+                  }else{
+                    alert('you not authorize');
                   }
+
+                }).catch(error => {
+                  alert('gagal login')
                 });
           },
           addG: function() {
@@ -1528,8 +1560,7 @@
                         this.waiters = response.data.data;
                     }.bind(this));
             },
-            PostDeleteTrx(id, sts)
-            {
+            PostDeleteTrx(id, sts){
               this.idWillDelete = id;
               if(this.$session.get('roleID') == 'Admin') {
                 this.axios.delete(`/api/orderDelete/${id}`)
@@ -1570,8 +1601,50 @@
               }
             },
 
-            PostDeleteTrxO(id)
-            {
+            PostEditTrx(id, sts){
+              this.idWillDelete = id;
+              if(this.$session.get('roleID') == 'Admin') {
+                // this.axios.delete(`/api/orderDelete/${id}`)
+                //     .then(response => {
+                //         this.$swal.fire({
+                //           position: 'center',
+                //           icon: 'success',
+                //           title: 'Berhasil Di Hapus',
+                //           showConfirmButton: false,
+                //           timer: 1500
+                //         });
+                //         this.loadDataTransaksi();
+                //         this.loadTotal();
+                //         this.ListOrder();
+                //         this.ListOrder1();
+                //     }).catch(error => {
+                    
+                // });
+                console.log('langsung eksekusi')
+              }else if(sts == '0'){
+                // this.axios.delete(`/api/orderDelete/${id}`)
+                //     .then(response => {
+                //         this.$swal.fire({
+                //           position: 'center',
+                //           icon: 'success',
+                //           title: 'Berhasil DI Hapus',
+                //           showConfirmButton: false,
+                //           timer: 1500
+                //         });
+                //         this.loadDataTransaksi();
+                //         this.loadTotal();
+                //         this.ListOrder();
+                //         this.ListOrder1();
+                //     }).catch(error => {
+                    
+                // });
+                console.log('langsung eksekusi blm di print order')
+              }else if(this.$session.get('roleID') != 'Admin'){
+                this.showModalAuth = true ;
+              }
+            },
+
+            PostDeleteTrxO(id){
                 this.axios.delete('/api/deleteneworder/'+id)
                     .then(response => {
                         this.$swal.fire({

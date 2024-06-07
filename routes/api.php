@@ -71,6 +71,7 @@ Route::post('/meja/cancelcekin/{id?}', 'mejaController@cancelcekin');
 Route::delete('/meja/{id?}', 'mejaController@destroy');
 
 //===========transaksi
+Route::post('/editqty', 'mejaController@editQty');
 Route::post('/addItem/store', 'mejaController@addItem');
 Route::post('/addMenu/store', 'mejaController@addMenu');
 Route::post('/transaksi/{id}', 'mejaController@listTransaksi');

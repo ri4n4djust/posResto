@@ -955,4 +955,26 @@ class mejaController extends Controller
             ], 500);
         }
     }
+
+    public function editQty(Request $request){
+        $id = $request->input('id');
+        $nqty = $request->input('qty');
+        $post = TransaksiDetail::findOrFail($id);
+        $harga = $post->hrgJualTmp ;
+        $idmeja = $post->noMejaTmp ;
+        $idMenu = $post->kdBarangTmp ;
+        TransaksiDetail::where('id', $id)->update([
+            'qtyTmp' => $nqty,
+            'totalTmp' => $nqty * $harga
+        ]);
+        Order::where('kdMenu', $idMenu)->where('idMeja', $idmeja)->update([
+            'qtyOrder' => $nqty ,
+        ]);
+        return response()->json([
+            'success' => true,
+            'message' => 'Post Berhasil diambil!',
+            'data' => $harga
+        ], 200);
+
+    }
 }
