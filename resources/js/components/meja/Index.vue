@@ -190,7 +190,7 @@
             intervalFetchData: function () {
             this.my_timer = setInterval(() => {    
                 this.loadData();
-                }, 3000);    
+                }, 5000);    
             },
             
         },

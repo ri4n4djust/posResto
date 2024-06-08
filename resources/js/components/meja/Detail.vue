@@ -1746,11 +1746,11 @@
                 });
                 
             },
-            intervalFetchData: function () {
-            this.mytimer = setInterval(() => {    
-                this.ListOrder();
-                }, 3000);    
-            },
+            // intervalFetchData: function () {
+            // this.mytimer = setInterval(() => {    
+            //     this.ListOrder();
+            //     }, 3000);    
+            // },
             PostSplit() {
               var isiform = this.splitNota;
               var gr = this.groupNota;
