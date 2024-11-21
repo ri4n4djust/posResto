@@ -115,8 +115,8 @@
                       <td>{{ trx.totalTmp | currency }}</td>
                       <td class="text-center">
                         {{trx.stsPrintOrder}}
-                          <button @click.prevent="PostEditTrx(id = trx.id, sts = trx.stsPrintOrder, aksi='ubah')" class="btn-sm btn-warning"><i class="fa fa-pencil"></i></button>
-                          <button @click.prevent="PostDeleteTrx(id = trx.id, sts = trx.stsPrintOrder, aksi='hapus')" class="btn-sm btn-danger"><i class="fa fa-trash"></i></button>
+                          <button @click.prevent="PostEditTrx(id = trx.id, kode=trx.kdBarangTmp, meja = trx.noMejaTmp, nama= trx.nmBarangTmp, aksi='ubah')" class="btn-sm btn-warning"><i class="fa fa-pencil"></i></button>
+                          <button @click.prevent="PostDeleteTrx(id = trx.id, kode=trx.kdBarangTmp, meja = trx.noMejaTmp,nama= trx.nmBarangTmp, aksi='hapus')" class="btn-sm btn-danger"><i class="fa fa-trash"></i></button>
                       </td>
 
                   </tr>
@@ -373,6 +373,8 @@
                 <form @submit.prevent="postAuthCek">
                   <div class="form-group has-feedback">
                     <input type="hidden" class="form-control" v-model="idWillDelete" disabled>
+                    <input type="hidden" class="form-control" v-model="menuWillEdit" disabled>
+                    <input type="hidden" class="form-control" v-model="mejaWillEdit" disabled>
                     <input type="text" class="form-control" v-model="aksi" disabled>
                     <input type="hidden" class="form-control" v-model="username" disabled>
                     <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
@@ -382,6 +384,9 @@
                     <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                   </div>
                   <div class="row">
+                    <div class="col-xs-4" v-if="aksi === 'ubah'">
+                      <h4 class="modal-title">Masukkan Jumlah {{ namaWillEdit }}</h4>
+                    </div>
                     <div class="col-xs-4" v-if="aksi === 'ubah'">
                       <input type="text" class="form-control" v-model="newqty" placeholder="new Qty">
                     </div>
@@ -401,6 +406,51 @@
     </transition>
   </div>
   <!------End Modal Auth ---->
+
+  <!-- modal edit start -->
+  <div v-if="showModalEdit">
+    <transition name="modal">
+      <div class="modal-mask">
+        <div class="modal-wrapper">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" @click="showModalEdit=false">
+                  <span aria-hidden="true">&times;</span>CLOSE
+                </button>
+                <h4 class="modal-title">Edit Qty</h4>
+              </div>
+              <div class="modal-body">
+                <form @submit.prevent="SimpanEdit">
+                  <div class="form-group has-feedback">
+                    <input type="hidden" class="form-control" v-model="idWillDelete" disabled>
+                    <input type="hidden" class="form-control" v-model="menuWillEdit" disabled>
+                    <input type="hidden" class="form-control" v-model="mejaWillEdit" disabled>
+                    <!-- <span class="glyphicon glyphicon-envelope form-control-feedback"></span> -->
+                  </div>
+                  <div class="row">
+                      <div class="col-xs-9" >
+                        <h4 class="modal-title">Masukkan Jumlah {{namaWillEdit}}</h4>
+                      </div>
+                      <div class="col-xs-4" >
+                        <input type="text" class="form-control" v-model="newqty" placeholder="new Qty">
+                      </div>
+                      
+                      <!-- /.col -->
+                      <div class="col-xs-4">
+                        <button type="submit" class="btn btn-primary btn-block btn-flat">Ubah</button>
+                      </div>
+                      <!-- /.col -->
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </transition>
+  </div>
+  <!------End Modal Edit ---->
 
 
   
@@ -1067,75 +1117,79 @@
               username: 'Supervisor',
               password: '',
               idWillDelete: '',
+              menuWillEdit: '',
+              mejaWillEdit: '',
+              namaWillEdit: '',
               aksi: '',
               newqty: 1,
-                post: {},
-                waiters: {},
-                statusMeja:{},
-                orders:[],
-                orders1:{},
-                move1: null,
-                post1: null,
-                post2: [],
-                waiter: {},
-                users: {},
-                menus: {},
-                menu:'',
-                menuss: [],
-                trxs: [],
-                mejaKosong: {},
-                validation: [],
-                showModalMove: false,
-                showModalOrder: false,
-                showModalAuth: false,
-                showModal: false,
-                showModalMenu: false,
-                showModalBayar: false,
-                showModalSplit: false,
-                nmBarang: '',
-                idBarang: '',
-                hargaJual: '',
-                qtyBarang: '',
-                note:  '',
-                sisaStok: '',
-                noNota: '',
-                pelanggans: {},
-                pelanggan: 'Cash',
-                noMeja: '',
-                total: '',
-                subtotal: '',
-                subtotaltp: '',
-                pajak: '0',
-                diskon: '0',
-                diskon1: '',
-                totalTransaksi: '',
-                totalTransaksipjk: '',
-                totalBayar: '',
-                totalBayarS: '',
-                kembalianBayar: '0',
-                totalTransaksiBayar: '',
-                type: '',
-                brg: '',
-                taxDebit: '0',
-                noDebit: '0',
-                pembayaran: '1',
-                pajakKartu:'',
-                mytimer: 0,
-                adminuser: '',
-                nmMenu1: '',
-                kdMenu1: '',
-                qtySplit: [],
-                printMe: '',
-                printMeSplit: '',
-                crt: [],
-                splitNota: [],
-                groupNota: 0,
-                kembalianS: '',
-                //waitername : this.waiter.name,
-                //optionLabel: users.nmBarang,
-                // tglNota: new Date().toJSON().slice(0,10).replace(/-/g,'/'),
-                tglNota: moment().format('YYYY/MM/DD HH:mm:ss'),
-                // toDay: moment().format('YYYY/MM/DD'),
+              post: {},
+              waiters: {},
+              statusMeja:{},
+              orders:[],
+              orders1:{},
+              move1: null,
+              post1: null,
+              post2: [],
+              waiter: {},
+              users: {},
+              menus: {},
+              menu:'',
+              menuss: [],
+              trxs: [],
+              mejaKosong: {},
+              validation: [],
+              showModalMove: false,
+              showModalOrder: false,
+              showModalAuth: false,
+              showModalEdit: false,
+              showModal: false,
+              showModalMenu: false,
+              showModalBayar: false,
+              showModalSplit: false,
+              nmBarang: '',
+              idBarang: '',
+              hargaJual: '',
+              qtyBarang: '',
+              note:  '',
+              sisaStok: '',
+              noNota: '',
+              pelanggans: {},
+              pelanggan: 'Cash',
+              noMeja: '',
+              total: '',
+              subtotal: '',
+              subtotaltp: '',
+              pajak: '0',
+              diskon: '0',
+              diskon1: '',
+              totalTransaksi: '',
+              totalTransaksipjk: '',
+              totalBayar: '',
+              totalBayarS: '',
+              kembalianBayar: '0',
+              totalTransaksiBayar: '',
+              type: '',
+              brg: '',
+              taxDebit: '0',
+              noDebit: '0',
+              pembayaran: '1',
+              pajakKartu:'',
+              mytimer: 0,
+              adminuser: '',
+              nmMenu1: '',
+              kdMenu1: '',
+              qtySplit: [],
+              printMe: '',
+              printMeSplit: '',
+              crt: [],
+              splitNota: [],
+              groupNota: 0,
+              kembalianS: '',
+              //waitername : this.waiter.name,
+              //optionLabel: users.nmBarang,
+              // tglNota: new Date().toJSON().slice(0,10).replace(/-/g,'/'),
+              tglNota: moment().format('YYYY/MM/DD HH:mm:ss'),
+              // toDay: moment().format('YYYY/MM/DD'),
                 
             }
         },
@@ -1192,9 +1246,17 @@
                   if (response.data.success === true ) {
                     // alert(this.aksi)
                     if(this.aksi === 'hapus'){
+
                       this.axios.delete('/api/orderDelete/'+ this.idWillDelete)
                       .then(response => {
-                          alert('Berhasil Di Hapus');
+                          // alert('Berhasil Di Hapus');
+                          this.$swal.fire({
+                            position: 'center',
+                            icon: 'success',
+                            title: 'Berhasil Di Hapus',
+                            showConfirmButton: false,
+                            timer: 1500
+                          });
                           this.loadDataTransaksi();
                           this.loadTotal();
                           this.ListOrder();
@@ -1203,20 +1265,28 @@
                       }).catch(error => {
                         alert('gagal hapus')
                       });
+
                     }else if(this.aksi === 'ubah'){
+
                       let uri = '/api/editqty';
                       this.axios.post(uri, {
                         id: this.idWillDelete,
                         qty: this.newqty
                       }).then(response => {
-
+                        this.$swal.fire({
+                          position: 'center',
+                          icon: 'success',
+                          title: 'Qty Di Update',
+                          showConfirmButton: false,
+                          timer: 1500
+                        });
                         this.loadDataTransaksi();
-                          this.loadTotal();
-                          this.ListOrder();
-                          this.ListOrder1();
-                          this.showModalAuth = false;
+                        this.loadTotal();
+                        this.ListOrder();
+                        this.ListOrder1();
+                        this.showModalAuth = false;
                       });
-                      // console.log('ubah qty');
+                      console.log('ubah qty dengan auth');
 
                     }
 
@@ -1601,47 +1671,60 @@
               }
             },
 
-            PostEditTrx(id, sts){
+            PostEditTrx(id, kode, meja, nama){
               this.idWillDelete = id;
+              this.menuWillEdit = kode;
+              this.mejaWillEdit = meja;
+              this.namaWillEdit = nama;
+              // console.log(id+' dan '+meja);
               if(this.$session.get('roleID') == 'Admin') {
-                // this.axios.delete(`/api/orderDelete/${id}`)
-                //     .then(response => {
-                //         this.$swal.fire({
-                //           position: 'center',
-                //           icon: 'success',
-                //           title: 'Berhasil Di Hapus',
-                //           showConfirmButton: false,
-                //           timer: 1500
-                //         });
-                //         this.loadDataTransaksi();
-                //         this.loadTotal();
-                //         this.ListOrder();
-                //         this.ListOrder1();
-                //     }).catch(error => {
-                    
-                // });
+
+                this.showModalEdit = true ;
                 console.log('langsung eksekusi')
-              }else if(sts == '0'){
-                // this.axios.delete(`/api/orderDelete/${id}`)
-                //     .then(response => {
-                //         this.$swal.fire({
-                //           position: 'center',
-                //           icon: 'success',
-                //           title: 'Berhasil DI Hapus',
-                //           showConfirmButton: false,
-                //           timer: 1500
-                //         });
-                //         this.loadDataTransaksi();
-                //         this.loadTotal();
-                //         this.ListOrder();
-                //         this.ListOrder1();
-                //     }).catch(error => {
+              }else{
+                this.axios.post('/api/getprintstatus/', { kodeMenu : kode, meja: meja})
+                    .then(response => {
+                      var sts = response.data.data;
+                      // console.log(sts.stsPrintOrder)
+
+                      if(sts.stsPrintOrder == '0'){
+
+                        console.log('langsung eksekusi blm di print order')
+                        this.showModalEdit = true ;
+                      }else if(this.$session.get('roleID') != 'Admin'){
+
+                        this.showModalAuth = true ;
+                      }
+
+                    }).catch(error => {
+                      console.log(error)
                     
-                // });
-                console.log('langsung eksekusi blm di print order')
-              }else if(this.$session.get('roleID') != 'Admin'){
-                this.showModalAuth = true ;
+                });                
               }
+
+            },
+
+            SimpanEdit(){
+              // console.log('langsung ubah')
+              // this.idWillDelete = id;
+              let uri = '/api/editqty';
+              this.axios.post(uri, {
+                id: this.idWillDelete,
+                qty: this.newqty
+              }).then(response => {
+                this.$swal.fire({
+                  position: 'center',
+                  icon: 'success',
+                  title: 'Qty Di Update',
+                  showConfirmButton: false,
+                  timer: 1500
+                });
+                this.loadDataTransaksi();
+                this.loadTotal();
+                this.ListOrder();
+                this.ListOrder1();
+                this.showModalEdit = false;
+              });
             },
 
             PostDeleteTrxO(id){

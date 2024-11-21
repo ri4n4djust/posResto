@@ -81,6 +81,7 @@ Route::post('/addTransaksi/store', 'mejaController@addTransaksi');
 Route::post('/orderprint/{id}', 'mejaController@printOrder');
 Route::post('/orderprint1/{id}', 'mejaController@printOrder1');
 Route::post('/afterorderprint/{id}', 'mejaController@afterPrintOrder');
+Route::post('/getprintstatus', 'mejaController@printStatus');
 
 //============pembayaran
 Route::post('/addSplit/store', 'splitController@add');

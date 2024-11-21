@@ -564,6 +564,19 @@ class mejaController extends Controller
         }
     }
 
+    public function printStatus(Request $request){
+
+        $menu  = $request->input('kodeMenu');
+        $meja = $request->input('meja');
+        $data = Order::where('idMeja', $meja)->where('kdMenu', $menu)->first();
+        return response()->json([
+            'success' => true,
+            'message' => 'Detail ststus!',
+            'data'    => $data,
+        ], 200);
+
+    }
+
     public function listOrder()
     {
         //$post = TransaksiDetail::whereId($id)->first();
@@ -969,11 +982,12 @@ class mejaController extends Controller
         ]);
         Order::where('kdMenu', $idMenu)->where('idMeja', $idmeja)->update([
             'qtyOrder' => $nqty ,
+            'stsPrintOrder' => '0'
         ]);
         return response()->json([
             'success' => true,
-            'message' => 'Post Berhasil diambil!',
-            'data' => $harga
+            'message' => 'Post Berhasil diubah!',
+            // 'data' => $harga
         ], 200);
 
     }
