@@ -206,14 +206,12 @@ class penjualanController extends Controller
                         WHERE tblpenjualan.noNota = tblpenjualandetail.noNota 
                         AND tblpenjualan.tglNota BETWEEN '$startDate' AND '$endDate'
                         AND tblpenjualandetail.kdBarang = '$cr'
-                        ORDER BY tblpenjualan.tglNota DESC
-                        Limit 2000");
+                        ORDER BY tblpenjualan.tglNota DESC");
             $NotalTOtal = DB::select("SELECT SUM(qty) total FROM( SELECT tblpenjualandetail.kdBarang, tblpenjualandetail.qty as qty, tblpenjualandetail.nmBarang, tblpenjualan.tglNota, tblpenjualan.noNota 
                         FROM tblpenjualandetail, tblpenjualan 
                         WHERE tblpenjualan.noNota = tblpenjualandetail.noNota 
                         AND tblpenjualan.tglNota BETWEEN '$startDate' AND '$endDate'
-                        ORDER BY tblpenjualan.tglNota DESC
-                        Limit 2000) as sc WHERE sc.kdBarang = '$cr' ");
+                        ORDER BY tblpenjualan.tglNota DESC) as sc WHERE sc.kdBarang = '$cr' ");
             //$posts = Penjualan::latest()->get();
             return response([
                 'success' => true,
