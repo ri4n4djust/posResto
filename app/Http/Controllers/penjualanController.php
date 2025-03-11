@@ -31,6 +31,21 @@ class penjualanController extends Controller
             'data' => $posts
         ], 200);
     }
+    public function penjualanBarang()
+    {
+        $posts = DB::select("SELECT tblpenjualandetail.kdBarang, tblpenjualandetail.qty, tblpenjualandetail.nmBarang, tblpenjualan.tglNota, tblpenjualan.noNota 
+                            FROM tblpenjualandetail, tblpenjualan 
+                            WHERE tblpenjualan.noNota = tblpenjualandetail.noNota 
+                            ORDER BY tblpenjualan.tglNota DESC
+                            Limit 2000");
+                // ->take(2000)
+                // ->get();
+        return response([
+            'success' => true,
+            'message' => 'List Semua SPenjualanBarang',
+            'data' => $posts
+        ], 200);
+    }
     public function groupPay($id){
         $pay = DB::table('splitPayment as w')
                 ->select(array(DB::Raw('sum(w.hrgBarang) as harga'),DB::Raw('sum(w.subTotal) as total'),DB::Raw('w.groupNota')))
@@ -151,6 +166,63 @@ class penjualanController extends Controller
             'diskonSum' => $diskonSum,
             'data' => $posts
         ], 200);
+        }
+    }
+    public function sortingBarang(Request $request)
+    {
+        //$from = date('2021/02/01');
+        //$to = date('2021/02/02');
+        $startDate1 = $request->input('startDate');
+        $endDate1 = $request->input('endDate');
+        $startDate = $startDate1." 00:00:00";
+        $endDate = $endDate1." 23:59:59";
+        $cr = $request->input('namaMenu');
+        if($cr == ''){
+            $posts = DB::select("SELECT tblpenjualandetail.kdBarang, tblpenjualandetail.qty, tblpenjualandetail.nmBarang, tblpenjualan.tglNota, tblpenjualan.noNota 
+                            FROM tblpenjualandetail, tblpenjualan 
+                            WHERE tblpenjualan.noNota = tblpenjualandetail.noNota 
+                            AND tblpenjualan.tglNota BETWEEN '$startDate' AND '$endDate'
+                            ORDER BY tblpenjualan.tglNota DESC
+                            Limit 2000");
+            $NotalTOtal = DB::select("SELECT SUM(qty) total FROM( SELECT tblpenjualandetail.kdBarang, tblpenjualandetail.qty as qty, tblpenjualandetail.nmBarang, tblpenjualan.tglNota, tblpenjualan.noNota 
+                            FROM tblpenjualandetail, tblpenjualan 
+                            WHERE tblpenjualan.noNota = tblpenjualandetail.noNota 
+                            AND tblpenjualan.tglNota BETWEEN '$startDate' AND '$endDate'
+                            ORDER BY tblpenjualan.tglNota DESC
+                            Limit 2000) as sc WHERE sc.kdBarang = 'MN-2021-71';");
+            
+            //$posts = Penjualan::latest()->get();
+            return response([
+                'success' => true,
+                'message' => 'List Semua SPenjualan Barang',
+                'startDate' => $startDate,
+                'endDate' => $endDate,
+                'totalSum' => $NotalTOtal[0]->total,
+                'data' => $posts
+            ], 200);
+        }else{
+            $posts = DB::select("SELECT tblpenjualandetail.kdBarang, tblpenjualandetail.qty as qty, tblpenjualandetail.nmBarang, tblpenjualan.tglNota, tblpenjualan.noNota 
+                        FROM tblpenjualandetail, tblpenjualan 
+                        WHERE tblpenjualan.noNota = tblpenjualandetail.noNota 
+                        AND tblpenjualan.tglNota BETWEEN '$startDate' AND '$endDate'
+                        AND tblpenjualandetail.kdBarang = '$cr'
+                        ORDER BY tblpenjualan.tglNota DESC
+                        Limit 2000");
+            $NotalTOtal = DB::select("SELECT SUM(qty) total FROM( SELECT tblpenjualandetail.kdBarang, tblpenjualandetail.qty as qty, tblpenjualandetail.nmBarang, tblpenjualan.tglNota, tblpenjualan.noNota 
+                        FROM tblpenjualandetail, tblpenjualan 
+                        WHERE tblpenjualan.noNota = tblpenjualandetail.noNota 
+                        AND tblpenjualan.tglNota BETWEEN '$startDate' AND '$endDate'
+                        ORDER BY tblpenjualan.tglNota DESC
+                        Limit 2000) as sc WHERE sc.kdBarang = '$cr' ");
+            //$posts = Penjualan::latest()->get();
+            return response([
+                'success' => true,
+                'message' => 'List Semua SPenjualan',
+                'startDate' => $startDate,
+                'endDate' => $endDate,
+                'totalSum' => $NotalTOtal[0]->total,
+                'data' => $posts
+            ], 200);
         }
     }
     public function listDetailPenjualan($id)
