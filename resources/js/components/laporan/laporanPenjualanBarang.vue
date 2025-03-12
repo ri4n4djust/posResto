@@ -44,8 +44,49 @@
                                         <div class="input-group">
                                             <div class="col-xl-12">
                                                 <label class="control-label" ><i class="fa fa-check"></i>Nama Menu</label>
-                                                <input type="text" class="form-control" v-model="namaMenu" placeholder="Nama Menu">
+                                                <input type="hidden" class="form-control" v-model="kodeMenu"  >
+                                                <input type="text" class="form-control" v-model="namaMenu"  @click="showModalMenu = true" placeholder="Nama Menu">
                                             </div>
+
+                                            <div v-if="showModalMenu">
+                                                <transition name="modal">
+                                                <div class="modal-mask">
+                                                    <div class="modal-wrapper">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <button type="button" class="close" @click="showModalMenu=false">
+                                                            <span aria-hidden="true">&times;</span>CLOSE
+                                                            </button>
+                                                            <h4 class="modal-title">Cari Menu</h4>
+                                                        </div>
+                                                        <div class="modal-body">
+
+                                                            <!------Tes Select menu ---->
+                                                            <input type="text" ref="menu" v-model="menu" v-on:keyup="get_menu" class="form-control "  >
+                                                                
+                                                                <span v-if="menuss.lenght === 0">
+                                                                </span>
+                                                                <span v-else>
+                                                                    <ul class="list-group">
+                                                                    <li v-for="(menu, id) in menuss" @click="select_menu(menu)" :key="menu.id" class="list-group-item autocomplete-box-li">
+                                                                        {{ id+1 }}
+                                                                        {{ menu.nmMenu }}
+                                                                    </li>
+                                                                    </ul>
+                                                                </span>
+                                                            <!------End Tes ---->
+                                                            
+
+
+                                                        </div>
+                                                        </div>
+                                                    </div>
+                                                    </div>
+                                                </div>
+                                                </transition>
+                                            </div>
+
                                         </div>
                                         
                                         <br>
@@ -215,6 +256,7 @@ Vue.component("data-table", DataTable);
                 posts1: [],
                 startDate: '',
                 endDate: '',
+                kodeMenu: '',
                 namaMenu: '',
                 ActionButtons: '',
                 validation: null,
@@ -224,6 +266,10 @@ Vue.component("data-table", DataTable);
                 diskonS: [],
                 pax: [],
                 //totalSum: '',
+                menus: {},
+                menu:'',
+                menuss: [],
+                showModalMenu: false,
                 load: false,
             }
 
@@ -311,7 +357,7 @@ Vue.component("data-table", DataTable);
         },
         created() {
             this.loadData();
-            this.loadPelanggan();
+            // this.loadPelanggan();
         },
         mounted () {
             //this.intervalFetchData1();
@@ -320,6 +366,23 @@ Vue.component("data-table", DataTable);
             this.loadData()
         },
         methods: {
+
+            select_menu(menu){
+                this.kodeMenu = menu.kdMenu
+                this.namaMenu = menu.nmMenu
+                this.menuss = [];
+                this.showModalMenu = false;
+            },
+            get_menu(){
+                if(this.menu.length == 0){
+                    this.menuss = [];
+                }
+                if(this.menu.length > 0){
+                    axios.get('/api/carimenu',{params: {menu: this.menu}}).then(response => {
+                        this.menuss = response.data.data;
+                    });
+                }
+            },
 
             print () {
             // Pass the element id here
@@ -333,13 +396,6 @@ Vue.component("data-table", DataTable);
                         
             });
             },
-            loadPelanggan:function(){
-                let uri = '/api/pelanggan';
-                this.axios.get(uri).then(response => {
-                this.pelanggans = response.data.data;
-                
-            });
-            },
             lapPenjualan() {
                 this.load = true;
                 let uri = '/api/lapPenjualanBarang';
@@ -347,7 +403,7 @@ Vue.component("data-table", DataTable);
                 {
                     startDate: this.startDate,
                     endDate: this.endDate,
-                    namaMenu: this.namaMenu,
+                    namaMenu: this.kodeMenu,
                 })
                     .then((response) => {
                         this.posts1 = response.data.data;
