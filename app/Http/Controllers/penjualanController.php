@@ -178,17 +178,17 @@ class penjualanController extends Controller
         $endDate = $endDate1." 23:59:59";
         $cr = $request->input('namaMenu');
         if($cr == ''){
-            $posts = DB::select("SELECT tblpenjualandetail.kdBarang, tblpenjualandetail.qty, tblpenjualandetail.nmBarang, tblpenjualan.tglNota, tblpenjualan.noNota 
-                            FROM tblpenjualandetail, tblpenjualan 
-                            WHERE tblpenjualan.noNota = tblpenjualandetail.noNota 
-                            AND tblpenjualan.tglNota BETWEEN '$startDate' AND '$endDate'
-                            ORDER BY tblpenjualan.tglNota DESC
+            $posts = DB::select("SELECT tblPenjualanDetail.kdBarang, tblPenjualanDetail.qty, tblPenjualanDetail.nmBarang, tblPenjualan.tglNota, tblPenjualan.noNota 
+                            FROM tblPenjualanDetail, tblPenjualan 
+                            WHERE tblPenjualan.noNota = tblPenjualanDetail.noNota 
+                            AND tblPenjualan.tglNota BETWEEN '$startDate' AND '$endDate'
+                            ORDER BY tblPenjualan.tglNota DESC
                             Limit 2000");
-            $NotalTOtal = DB::select("SELECT SUM(qty) total FROM( SELECT tblpenjualandetail.kdBarang, tblpenjualandetail.qty as qty, tblpenjualandetail.nmBarang, tblpenjualan.tglNota, tblpenjualan.noNota 
-                            FROM tblpenjualandetail, tblpenjualan 
-                            WHERE tblpenjualan.noNota = tblpenjualandetail.noNota 
-                            AND tblpenjualan.tglNota BETWEEN '$startDate' AND '$endDate'
-                            ORDER BY tblpenjualan.tglNota DESC
+            $NotalTOtal = DB::select("SELECT SUM(qty) total FROM( SELECT tblPenjualanDetail.kdBarang, tblPenjualanDetail.qty as qty, tblPenjualanDetail.nmBarang, tblPenjualan.tglNota, tblPenjualan.noNota 
+                            FROM tblPenjualanDetail, tblPenjualan 
+                            WHERE tblPenjualan.noNota = tblPenjualanDetail.noNota 
+                            AND tblPenjualan.tglNota BETWEEN '$startDate' AND '$endDate'
+                            ORDER BY tblPenjualan.tglNota DESC
                             Limit 2000) as sc WHERE sc.kdBarang = 'MN-2021-71';");
             
             //$posts = Penjualan::latest()->get();
@@ -201,17 +201,17 @@ class penjualanController extends Controller
                 'data' => $posts
             ], 200);
         }else{
-            $posts = DB::select("SELECT tblpenjualandetail.kdBarang, tblpenjualandetail.qty as qty, tblpenjualandetail.nmBarang, tblpenjualan.tglNota, tblpenjualan.noNota 
-                        FROM tblpenjualandetail, tblpenjualan 
-                        WHERE tblpenjualan.noNota = tblpenjualandetail.noNota 
-                        AND tblpenjualan.tglNota BETWEEN '$startDate' AND '$endDate'
-                        AND tblpenjualandetail.kdBarang = '$cr'
-                        ORDER BY tblpenjualan.tglNota DESC");
-            $NotalTOtal = DB::select("SELECT SUM(qty) total FROM( SELECT tblpenjualandetail.kdBarang, tblpenjualandetail.qty as qty, tblpenjualandetail.nmBarang, tblpenjualan.tglNota, tblpenjualan.noNota 
-                        FROM tblpenjualandetail, tblpenjualan 
-                        WHERE tblpenjualan.noNota = tblpenjualandetail.noNota 
-                        AND tblpenjualan.tglNota BETWEEN '$startDate' AND '$endDate'
-                        ORDER BY tblpenjualan.tglNota DESC) as sc WHERE sc.kdBarang = '$cr' ");
+            $posts = DB::select("SELECT tblPenjualanDetail.kdBarang, tblPenjualanDetail.qty as qty, tblPenjualanDetail.nmBarang, tblPenjualan.tglNota, tblPenjualan.noNota 
+                        FROM tblPenjualanDetail, tblPenjualan 
+                        WHERE tblPenjualan.noNota = tblPenjualanDetail.noNota 
+                        AND tblPenjualan.tglNota BETWEEN '$startDate' AND '$endDate'
+                        AND tblPenjualanDetail.kdBarang = '$cr'
+                        ORDER BY tblPenjualan.tglNota DESC");
+            $NotalTOtal = DB::select("SELECT SUM(qty) total FROM( SELECT tblPenjualanDetail.kdBarang, tblPenjualanDetail.qty as qty, tblPenjualanDetail.nmBarang, tblPenjualan.tglNota, tblPenjualan.noNota 
+                        FROM tblPenjualanDetail, tblPenjualan 
+                        WHERE tblPenjualan.noNota = tblPenjualanDetail.noNota 
+                        AND tblPenjualan.tglNota BETWEEN '$startDate' AND '$endDate'
+                        ORDER BY tblPenjualan.tglNota DESC) as sc WHERE sc.kdBarang = '$cr' ");
             //$posts = Penjualan::latest()->get();
             return response([
                 'success' => true,
