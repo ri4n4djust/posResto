@@ -33,10 +33,10 @@ class penjualanController extends Controller
     }
     public function penjualanBarang()
     {
-        $posts = DB::select("SELECT tblpenjualandetail.kdBarang, tblpenjualandetail.qty, tblpenjualandetail.nmBarang, tblpenjualan.tglNota, tblpenjualan.noNota 
-                            FROM tblpenjualandetail, tblpenjualan 
-                            WHERE tblpenjualan.noNota = tblpenjualandetail.noNota 
-                            ORDER BY tblpenjualan.tglNota DESC
+        $posts = DB::select("SELECT tblPenjualanDetail.kdBarang, tblPenjualanDetail.qty, tblPenjualanDetail.nmBarang, tblPenjualan.tglNota, tblPenjualan.noNota 
+                            FROM tblPenjualanDetail, tblPenjualan 
+                            WHERE tblPenjualan.noNota = tblPenjualanDetail.noNota 
+                            ORDER BY tblPenjualan.tglNota DESC
                             Limit 2000");
                 // ->take(2000)
                 // ->get();
