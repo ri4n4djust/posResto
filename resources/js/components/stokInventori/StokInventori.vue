@@ -137,8 +137,6 @@
 }
 </style>
 
-</style>
-
 <script>
 import Vue from 'vue';
 

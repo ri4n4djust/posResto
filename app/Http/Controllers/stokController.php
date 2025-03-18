@@ -9,6 +9,7 @@ use App\Inventori;
 use App\StokOpnameDetail;
 use App\StokOpname;
 
+
 use Illuminate\Support\Facades\DB;
 
 class stokController extends Controller
@@ -106,6 +107,7 @@ class stokController extends Controller
         //$post = TransaksiDetail::whereId($id)->first();
         $post = KartuStokInventori::where('kdBarang', $id)
                                     ->orderBy('id', 'DESC')
+                                    ->limit(50)
                                     ->get();
 
         if ($post) {
@@ -113,6 +115,38 @@ class stokController extends Controller
                 'success' => true,
                 'message' => 'Detail Post!',
                 'data'    => $post
+            ], 200);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Post Tidak Ditemukan!',
+                'data'    => ''
+            ], 404);
+        }
+    }
+
+    public function DetailInventoriByDate(Request $request, $id){
+        $startDate1 = $request->input('startDate');
+        $endDate1 = $request->input('endDate');
+        $startDate = $startDate1." 00:00:00";
+        $endDate = $endDate1." 23:59:59";
+        $post = KartuStokInventori::where('kdBarang', $id)
+                                    ->whereBetween('tglInv', [$startDate, $endDate])
+                                    ->orderBy('id', 'DESC')
+                                    ->get();
+        $sumQtyKeluarInv = KartuStokInventori::where('kdBarang', $id)
+                                            ->whereBetween('tglInv', [$startDate, $endDate])
+                                            ->sum('qtyKeluarInv');
+        $sumQtyMasukInv = KartuStokInventori::where('kdBarang', $id)
+                                            ->whereBetween('tglInv', [$startDate, $endDate])
+                                            ->sum('qtyMasukInv');
+        if ($post) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Detail Post!',
+                'data'    => $post,
+                'qtyKeluarInv' => $sumQtyKeluarInv,
+                'qtyMasukInv' => $sumQtyMasukInv
             ], 200);
         } else {
             return response()->json([

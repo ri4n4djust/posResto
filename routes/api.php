@@ -175,6 +175,7 @@ Route::post('/addOpname/store', 'stokController@addTransaksiOpname');
 Route::get('/inventori', 'stokController@indexInventori');
 Route::get('/baranginventori', 'salesController@barangInventori');
 Route::post('/detailinventori/{id}', 'stokController@DetailInventori');
+Route::post('/detailinventoridate/{id}', 'stokController@DetailInventoriByDate');
 Route::post('/inputInventori', 'stokController@inputInv');
 Route::post('/dataStokInventori/{id}', 'stokController@listTransaksiInventori');
 Route::delete('/opnameInvDelete/{id?}', 'stokController@destroyInv');
