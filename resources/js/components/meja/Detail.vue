@@ -139,9 +139,9 @@
 
               <div id="lastOrder">
               <div>
-              ke1
+              <h5>ke 1 | Nama Waiter : {{post.name}}</h5> 
                 <span v-if=" orders.length != 0 ">
-                  <h3 class="profile-username text-center">Meja No: {{ post.noMeja }} | Makanan</h3>
+                  <h3 class="profile-username text-center">Meja No: {{ post.noMeja }} | Makanan | Nama Waiter : {{post.name}}</h3>
                  
                   <table style="font-size:18px;font-family: Courier New;width:100%">
                     <thead>
@@ -190,7 +190,7 @@
                 <p>
                 <p>
                 <div>
-                ke 2
+                <h5>ke 2 | Nama Waiter : {{post.name}}</h5>
                 <span v-if=" orders.length != 0 ">
                   <h3 class="profile-username text-center">Meja No: {{ post.noMeja }} | Makanan</h3>
                  
