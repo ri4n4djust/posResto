@@ -91,7 +91,48 @@
     </transition>
   </div>
   <!------End Modal Move ----->
-    
+  
+  <!-- modal Auth start -->
+  <div v-if="showModalAuth">
+    <transition name="modal">
+      <div class="modal-mask">
+        <div class="modal-wrapper">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" @click="showModalAuth=false">
+                  <span aria-hidden="true">&times;</span>CLOSE
+                </button>
+                <h4 class="modal-title">Auth Require</h4>
+              </div>
+              <div class="modal-body">
+                <form @submit.prevent="postAuthCek">
+                  <div class="form-group has-feedback">
+                    <input type="hidden" class="form-control" v-model="idWillCancel" disabled>
+                    <input type="hidden" class="form-control" v-model="username" disabled>
+                    <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                  </div>
+                  <div class="form-group has-feedback">
+                    <input type="password" class="form-control" v-model="password" placeholder="Password">
+                    <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                  </div>
+                  <div class="row">
+                    
+                    <!-- /.col -->
+                    <div class="col-xs-4">
+                      <button type="submit" class="btn btn-primary btn-block btn-flat">Authorize</button>
+                    </div>
+                    <!-- /.col -->
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </transition>
+  </div>
+  <!------End Modal Auth ---->
     
     </div>
 
@@ -110,9 +151,13 @@
                 showModal: false,
                 showModalCekin: false,
                 selectedItem: undefined,
+                showModalAuth: false,
                 status: '1',
                 paxMeja: '',
                 my_timer: 0,
+                username: 'Supervisor',
+                password: '',
+                idWillCancel: '',
             }
         },
         beforeCreate: function () {
@@ -161,16 +206,57 @@
                     }).catch(error => {
                 });
             },
+            postAuthCek(){
+                  let uri = '/api/authcek';
+                  this.axios.post(uri, {
+                    username: this.username,
+                    password: this.password
+                  }).then(response => {
+
+                    if (response.data.success === true ) {
+                      // alert(this.aksi)
+                      let id = this.idWillCancel ;
+                      let uri = '/api/meja/cancelcekin/'+ id;
+                      this.axios.post(uri, {
+                          status: '0'
+                      })
+                          .then((response) => {
+                              //alert('Cancel cek in')
+                              this.loadData();
+                              this.password = '' ;
+                          }).catch(error => {
+                      });
+                      this.showModalAuth = false ;
+
+                    }else{
+                      alert('you not authorize');
+                    }
+
+                  }).catch(error => {
+                    alert('gagal login')
+                  });
+            },
             CancelCekIn(id) {
-                let uri = '/api/meja/cancelcekin/'+ id;
-                this.axios.post(uri, {
-                    status: '0'
-                })
-                    .then((response) => {
-                        //alert('Cancel cek in')
-                        this.loadData();
-                    }).catch(error => {
-                });
+                // prevent non-admin users from cancelling
+                const sessionUser = this.$session.get('user') || {};
+                const role = sessionUser.role || this.$session.get('roleID');
+                if (role !== 'Admin') {
+                  this.showModalAuth = true ;
+                  this.idWillCancel = id;
+                  return;
+                }else {
+                  console.log('User role:', role); // Debugging line
+                  let uri = '/api/meja/cancelcekin/'+ id;
+                  this.axios.post(uri, {
+                      status: '0'
+                  })
+                      .then((response) => {
+                          //alert('Cancel cek in')
+                          this.loadData();
+                      }).catch(error => {
+                  });
+                }
+                
             },
             PostDelete(id, index)
             {

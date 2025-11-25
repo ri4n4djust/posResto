@@ -1262,6 +1262,7 @@
                           this.ListOrder();
                           this.ListOrder1();
                           this.showModalAuth = false;
+                          this.password = '';
                       }).catch(error => {
                         alert('gagal hapus')
                       });
@@ -1285,6 +1286,7 @@
                         this.ListOrder();
                         this.ListOrder1();
                         this.showModalAuth = false;
+                        this.password = '';
                       });
                       console.log('ubah qty dengan auth');
 
