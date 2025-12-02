@@ -80,8 +80,12 @@ class penjualanController extends Controller
     public function laporanBulananSorting(Request $request)
     {
 
-        $startDate = $request->input('startDate');
-        $endDate = $request->input('endDate');
+        $startDate1 = $request->input('startDate');
+        $endDate1 = $request->input('endDate');
+        $startDate = $startDate1." 00:00:00";
+        $endDate = $endDate1." 23:59:59";
+        // $startDate = $request->input('startDate');
+        // $endDate = $request->input('endDate');
 
         $bulan = DB::table('tblPenjualan as w')
                 ->select(array(DB::Raw('sum(w.totalNota) as total'),DB::Raw('sum(w.pax) as pax'),DB::Raw('sum(w.taxNota) as ppn'),DB::Raw('sum(w.diskonNota) as diskon'),DB::Raw('sum(w.chargeNota) as charge'),DB::Raw('w.tglNota')))
