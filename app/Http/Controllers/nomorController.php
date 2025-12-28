@@ -21,54 +21,73 @@ class nomorController extends Controller
 {
     //
     public function noNota($id){
-        $newid =  strlen($id);
-        if($newid === 1){
-            $id = '0'.$id;
-        }elseif($newid === 2){
-            $id = $id;
+        // $newid =  strlen($id);
+        // if($newid === 1){
+        //     $id = '0'.$id;
+        // }elseif($newid === 2){
+        //     $id = $id;
+        // }
+        // Format tanggal
+        $tanggalFormat = now()->format('Ymd');
+        $today = now()->format('Y/m/d');
+
+        // Cari urutan terakhir untuk meja & tanggal ini
+        $lastNota = Penjualan::where('noMeja', $id)
+            ->where('tglNota', 'LIKE', $today . '%')
+            ->orderBy('id', 'desc')
+            ->first();
+
+        if ($lastNota) {
+            $parts = explode('-', $lastNota->noNota);
+            $lastUrutan = intval(end($parts));
+            $urutanBaru = str_pad($lastUrutan + 1, 3, '0', STR_PAD_LEFT);
+        } else {
+            $urutanBaru = '001';
         }
-        // $tahun = date('YM');
 
-        // $count = Penjualan::all();
-        // if($count->isEmpty()){
-        //     $tahun = date('Ym');
+        // Generate nomor nota
+        return response()->json([
+            'success' => true,
+            'message' => 'Detail Post!',
+            'noNota'  => $tanggalFormat . '-' . str_pad($id, 2, '0', STR_PAD_LEFT) . '-' . $urutanBaru,
+            'panjang' => $lastNota
+        ], 200);
+        // $nota->nomor_nota = $tanggalFormat . '-' . str_pad($nota->no_meja, 2, '0', STR_PAD_LEFT) . '-' . $urutanBaru;
+
+        // Pastikan tanggal terisi
+        // if (!$nota->tanggal) {
+        //     $nota->tanggal = now()->toDateString();
+        // }
+
+
+            // $no = 0 ;
+            // $count = Penjualan::latest('id')->first();
+            // $terakhir = substr($count->noNota, 11);
+            // $kodeBaru = intval($terakhir) + 1  ;
+
+            // $tahun = date('Ym');
+            // $post = 'INV'.$tahun.$id.$kodeBaru;
+
+            // // echo $count ;
             
-        //     $post = 'INV'.$tahun.$id.'1';
-        //     return response()->json([
-        //         'success' => true,
-        //         'message' => 'Detail Post!',
-        //         'noNota'    => $post,
-        //         // 'panjang' => $newid
-        //     ], 200);
-        // }else{
-            $no = 0 ;
-            $count = Penjualan::latest('id')->first();
-            $terakhir = substr($count->noNota, 11);
-            $kodeBaru = intval($terakhir) + 1  ;
 
-            $tahun = date('Ym');
-            $post = 'INV'.$tahun.$id.$kodeBaru;
-
-            // echo $count ;
-            
-
-            if (Penjualan::where('noNota', $post)->exists()) {
-                $kodeBarulagi = $kodeBaru + 1 ;
-                $post = 'INV'.$tahun.$id.$kodeBarulagi;
-                return response()->json([
-                    'success' => true,
-                    'message' => 'Detail Post!',
-                    'noNota'    => $post,
-                    'panjang' => $newid
-                ], 200);
-            } else {
-                return response()->json([
-                    'success' => true,
-                    'message' => 'Post Tidak Ditemukan!',
-                    'noNota'    => $post,
-                    'panjang' => $newid
-                ], 200);
-            }
+            // if (Penjualan::where('noNota', $post)->exists()) {
+            //     $kodeBarulagi = $kodeBaru + 1 ;
+            //     $post = 'INV'.$tahun.$id.$kodeBarulagi;
+            //     return response()->json([
+            //         'success' => true,
+            //         'message' => 'Detail Post!',
+            //         'noNota'    => $post,
+            //         'panjang' => $newid
+            //     ], 200);
+            // } else {
+            //     return response()->json([
+            //         'success' => true,
+            //         'message' => 'Post Tidak Ditemukan!',
+            //         'noNota'    => $post,
+            //         'panjang' => $newid
+            //     ], 200);
+            // }
         // }
     }
     public function kodeBarang(){
