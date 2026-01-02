@@ -509,7 +509,7 @@
                       <input type="number" class="form-control" v-model="qtyBarang" placeholder="Qty" @keypress="onlyNumber" required>
                     </div>
                     <div class="form-group">
-                      <input type="text" class="form-control" :value="(post2.hargaMenu * qtyBarang) || 0" :name="total"  disabled>
+                      <input type="text" class="form-control" :value="(post2.hargaMenu * qtyBarang) || 1" :name="total"  disabled>
                     </div>
                     <div class="form-group">
                     <button type="submit"  class="btn btn-success">Add</button>
