@@ -509,7 +509,7 @@
                       <input type="number" class="form-control" v-model="qtyBarang" placeholder="Qty" @keypress="onlyNumber" required>
                     </div>
                     <div class="form-group">
-                      <input type="text" class="form-control" :value="(post2.hargaMenu * qtyBarang) || 1" :name="total"  disabled>
+                      <input type="text" class="form-control" :value="(post2.hargaMenu * qtyBarang) || 0" :name="total"  disabled>
                     </div>
                     <div class="form-group">
                     <button type="submit"  class="btn btn-success">Add</button>
@@ -1149,7 +1149,7 @@
               nmBarang: '',
               idBarang: '',
               hargaJual: '',
-              qtyBarang: '',
+              qtyBarang: 1,
               note:  '',
               sisaStok: '',
               noNota: '',
@@ -1785,7 +1785,7 @@
                         this.ListOrder1();
                         this.menu= '';
                         this.note= '';
-                        this.qtyBarang= '';
+                        this.qtyBarang= 1;
                         this.post2.hargaMenu= '';
                         //this.cekStatusMeja()
                         //this.showModalMenu = false
