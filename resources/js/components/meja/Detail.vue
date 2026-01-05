@@ -1793,43 +1793,48 @@
                 
             },
             PostTransaksi() {
-                // totalBayar = this.totalBayar;
-                let uri = '/api/addTransaksi/store';
-                this.axios.post(uri, 
-                {
-                    noNota: this.noNota,
-                    noMeja: this.post.id,
-                    pelanggan: this.pelanggan,
-                    tglNota: this.tglNota,
-                    taxNota: Math.floor(this.subtotal * this.pajak / 100),
-                    chargeNota: Math.floor((this.subtotal * this.pajak / 100 + this.subtotal) - (this.subtotaltp * this.diskon / 100)) * this.taxDebit / 100,
-                    diskonNota: Math.floor(this.subtotaltp * this.diskon / 100),
-                    totalNota: Math.floor((this.subtotal * this.pajak / 100 + this.subtotal) - (this.subtotaltp * this.diskon / 100)) + ((this.subtotal * this.pajak / 100 + this.subtotal) - (this.subtotaltp * this.diskon / 100)) * this.taxDebit / 100,
-                    bayarNota: this.totalBayar,
-                    userNota: this.$session.get('userId'),
-                    waiterNota: this.post.name,
-                    typeNota: this.pembayaran,
-                    pax: this.post.paxMeja,
-                    pajakPembayaran: this.pajak,
-                    diskonPembayaran: this.diskon,
-                    chargePembayaran: this.taxDebit,
-                    noKartuPembayaran: this.noDebit,
-                    
-                    kembalianNota: Math.abs(this.totalBayar - (((this.subtotal * this.pajak / 100 + this.subtotal) - (this.subtotaltp * this.diskon / 100)) + ((this.subtotal * this.pajak / 100 + this.subtotal) - (this.subtotal * this.diskon / 100)) * this.taxDebit / 100)),
-                    
-                }).then((response) => {
-                        // this.$print(printMe);
-                        window.print(printMe)
-                        // this.totalBayar = '';
-                        localStorage.removeItem('cartItems');
-                        setTimeout(function(){
-                            window.location.href = '/meja';
-                        }, 13000);           
-                }).catch(error => {
-                    alert('error! bro');
-                    //console.log(error.response.message)
-                });
-                
+              let totalinv = Math.floor((this.subtotal * this.pajak / 100 + this.subtotal) - (this.subtotaltp * this.diskon / 100)) + ((this.subtotal * this.pajak / 100 + this.subtotal) - (this.subtotaltp * this.diskon / 100)) * this.taxDebit / 100;
+              if(this.totalBayar < totalinv){
+                alert('Jumlah Bayar Kurang Dari Total Invoice');
+                }else{
+                  // totalBayar = this.totalBayar;
+                  let uri = '/api/addTransaksi/store';
+                  this.axios.post(uri, 
+                  {
+                      noNota: this.noNota,
+                      noMeja: this.post.id,
+                      pelanggan: this.pelanggan,
+                      tglNota: this.tglNota,
+                      taxNota: Math.floor(this.subtotal * this.pajak / 100),
+                      chargeNota: Math.floor((this.subtotal * this.pajak / 100 + this.subtotal) - (this.subtotaltp * this.diskon / 100)) * this.taxDebit / 100,
+                      diskonNota: Math.floor(this.subtotaltp * this.diskon / 100),
+                      totalNota: Math.floor((this.subtotal * this.pajak / 100 + this.subtotal) - (this.subtotaltp * this.diskon / 100)) + ((this.subtotal * this.pajak / 100 + this.subtotal) - (this.subtotaltp * this.diskon / 100)) * this.taxDebit / 100,
+                      bayarNota: this.totalBayar,
+                      userNota: this.$session.get('userId'),
+                      waiterNota: this.post.name,
+                      typeNota: this.pembayaran,
+                      pax: this.post.paxMeja,
+                      pajakPembayaran: this.pajak,
+                      diskonPembayaran: this.diskon,
+                      chargePembayaran: this.taxDebit,
+                      noKartuPembayaran: this.noDebit,
+                      
+                      kembalianNota: Math.abs(this.totalBayar - (((this.subtotal * this.pajak / 100 + this.subtotal) - (this.subtotaltp * this.diskon / 100)) + ((this.subtotal * this.pajak / 100 + this.subtotal) - (this.subtotal * this.diskon / 100)) * this.taxDebit / 100)),
+                      
+                  }).then((response) => {
+                          // this.$print(printMe);
+                          window.print(printMe)
+                          // this.totalBayar = '';
+                          localStorage.removeItem('cartItems');
+                          setTimeout(function(){
+                              window.location.href = '/meja';
+                          }, 13000);           
+                  }).catch(error => {
+                      alert('error! bro');
+                      //console.log(error.response.message)
+                  });
+              
+                }
             },
             // intervalFetchData: function () {
             // this.mytimer = setInterval(() => {    
